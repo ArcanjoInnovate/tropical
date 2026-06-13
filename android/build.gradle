@@ -1,0 +1,39 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force 'androidx.media3:media3-exoplayer:1.4.1'
+            force 'androidx.media3:media3-exoplayer-dash:1.4.1'
+            force 'androidx.media3:media3-exoplayer-hls:1.4.1'
+            force 'androidx.media3:media3-exoplayer-rtsp:1.4.1'
+            force 'androidx.media3:media3-datasource:1.4.1'
+            force 'androidx.media3:media3-datasource-okhttp:1.4.1'
+            force 'androidx.media3:media3-decoder:1.4.1'
+            force 'androidx.media3:media3-common:1.4.1'
+            force 'androidx.media3:media3-common-ktx:1.4.1'
+            force 'androidx.media3:media3-extractor:1.4.1'
+            force 'androidx.media3:media3-container:1.4.1'
+            force 'androidx.media3:media3-muxer:1.4.1'
+            force 'androidx.media3:media3-session:1.4.1'
+            force 'androidx.media3:media3-ui:1.4.1'
+            force 'androidx.media3:media3-transformer:1.4.1'
+            force 'androidx.media3:media3-effect:1.4.1'
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

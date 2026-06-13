@@ -1,0 +1,2645 @@
+﻿
+
+===== lib\services\services_app\follow_service.dart =====
+// lib/services/services_app/follow_service.dart
+//
+// OTIMIZAÃ‡ÃƒO NÃVEL 1:
+//   â€¢ streamFollowersCount() â€” agora lÃª do campo atÃ´mico
+//     Users/{userId}/followers_count (int) mantido pela CF updateFollowersCount,
+//     em vez de fazer listener no nÃ³ inteiro Users/{userId}/followers
+//     e contar .length do Map a cada evento.
+//
+//   â€¢ streamFollowingCount() â€” mesmo padrÃ£o, lÃª Users/{userId}/following_count.
+//
+//   â€¢ getFollowersCount() e getFollowingCount() â€” agora leem o campo atÃ´mico
+//     quando disponÃ­vel, com fallback para contagem do Map.
+//
+//   Requer: CF updateFollowersCount deployada (triggers em Followers/ e Following/).
+//
+// NOTIFICAÃ‡Ã•ES:
+//   Novo seguidor â†’ CF trigger em Followers/{followedUid}/{followerUid}
+//   Nova festa    â†’ CF trigger em Festas/{festaId} lÃª Followers/{creatorUid}
+//   Disparadas automaticamente. Nenhuma chamada manual ao
+//   NotificationService Ã© necessÃ¡ria neste arquivo.
+//
+// Estrutura no RTDB:
+//   Users/{meuUid}/following/{userId}:  true  â†’ quem eu sigo  (estado local)
+//   Users/{userId}/followers/{meuUid}:  true  â†’ quem me segue (estado local)
+//   Followers/{userId}/{meuUid}:        true  â†’ dispara CF de seguidor
+//   Users/{meuUid}/vip_friends/{userId}: true â†’ amigos VIP
+//
+// PaginaÃ§Ã£o:
+//   Todas as listas de UIDs suportam cursor via [startAfterKey].
+//   Tamanho padrÃ£o de pÃ¡gina: [pageSize] = 10.
+
+import 'package:firebase_database/firebase_database.dart';
+
+class FollowService {
+  FollowService._();
+  static final FollowService instance = FollowService._();
+
+  final _db = FirebaseDatabase.instance;
+
+  static const int pageSize = 10;
+
+  // â”€â”€ ReferÃªncias â€” estado local â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  DatabaseReference _followingRef(String myUid, String targetUid) =>
+      _db.ref('Users/$myUid/following/$targetUid');
+
+  DatabaseReference _followerRef(String targetUid, String myUid) =>
+      _db.ref('Users/$targetUid/followers/$myUid');
+
+  DatabaseReference _followersRef(String userId) =>
+      _db.ref('Users/$userId/followers');
+
+  DatabaseReference _followingAllRef(String userId) =>
+      _db.ref('Users/$userId/following');
+
+  // â”€â”€ ReferÃªncia do trigger â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  /// Caminho que dispara notificarNovoSeguidor (e Ã© lido por notificarNovaFesta).
+  DatabaseReference _cfFollowerRef(String targetUid, String myUid) =>
+      _db.ref('Followers/$targetUid/$myUid');
+
+  DatabaseReference _cfFollowersAllRef(String userId) =>
+      _db.ref('Followers/$userId');
+
+  // â”€â”€ ReferÃªncias â€” VIP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  DatabaseReference _vipRef(String myUid, String targetUid) =>
+      _db.ref('Users/$myUid/vip_friends/$targetUid');
+
+  DatabaseReference _vipAllRef(String myUid) =>
+      _db.ref('Users/$myUid/vip_friends');
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  CONSULTAS SIMPLES
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Verifica se [myUid] jÃ¡ segue [targetUid].
+  Future<bool> isSeguindo(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty || myUid == targetUid) return false;
+    try {
+      final snap = await _followerRef(targetUid, myUid).get();
+      return snap.exists && snap.value == true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Alias em inglÃªs para compatibilidade com as telas.
+  Future<bool> isFollowing(String myUid, String targetUid) =>
+      isSeguindo(myUid, targetUid);
+
+  /// Stream em tempo real: true se [myUid] segue [targetUid].
+  Stream<bool> streamIsSeguindo(String myUid, String targetUid) {
+    if (myUid.isEmpty || targetUid.isEmpty || myUid == targetUid) {
+      return Stream.value(false);
+    }
+    return _followerRef(targetUid, myUid)
+        .onValue
+        .map((e) => e.snapshot.exists && e.snapshot.value == true);
+  }
+
+  /// NÃºmero total de seguidores de [userId].
+  /// Tenta ler o campo atÃ´mico followers_count primeiro (mantido pela CF).
+  /// Se nÃ£o existir, faz fallback para contagem do Map.
+  Future<int> getFollowersCount(String userId) async {
+    try {
+      // Tenta campo atÃ´mico primeiro
+      final countSnap = await _db.ref('Users/$userId/followers_count').get();
+      if (countSnap.exists && countSnap.value is int) {
+        return countSnap.value as int;
+      }
+      // Fallback: conta o Map
+      final snap = await _followersRef(userId).get();
+      if (!snap.exists || snap.value == null) return 0;
+      if (snap.value is Map) return (snap.value as Map).length;
+      return 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  /// NÃºmero total de pessoas que [userId] segue.
+  Future<int> getFollowingCount(String userId) async {
+    try {
+      final countSnap = await _db.ref('Users/$userId/following_count').get();
+      if (countSnap.exists && countSnap.value is int) {
+        return countSnap.value as int;
+      }
+      final snap = await _followingAllRef(userId).get();
+      if (!snap.exists || snap.value == null) return 0;
+      if (snap.value is Map) return (snap.value as Map).length;
+      return 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  /// NÃºmero total de amigos VIP de [myUid].
+  Future<int> getVipFriendsCount(String myUid) async {
+    try {
+      final snap = await _vipAllRef(myUid).get();
+      if (!snap.exists || snap.value == null) return 0;
+      if (snap.value is Map) return (snap.value as Map).length;
+      return 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  /// Stream do contador de seguidores em tempo real.
+  ///
+  /// ANTES: listener em Users/{userId}/followers (Map inteiro) â†’ contava .length.
+  ///        Com 1.000 seguidores = 1.000 entradas re-enviadas a cada follow/unfollow.
+  ///
+  /// AGORA: listener em Users/{userId}/followers_count (campo int atÃ´mico).
+  ///        Mantido pela CF updateFollowersCount.
+  ///        Se o campo nÃ£o existir (CF nÃ£o deployada), faz fallback para o Map.
+  Stream<int> streamFollowersCount(String userId) {
+    final countRef = _db.ref('Users/$userId/followers_count');
+
+    return countRef.onValue.map((e) {
+      if (e.snapshot.exists && e.snapshot.value is int) {
+        return e.snapshot.value as int;
+      }
+      return 0;
+    });
+  }
+
+  /// Stream do contador de seguindo em tempo real.
+  Stream<int> streamFollowingCount(String userId) {
+    final countRef = _db.ref('Users/$userId/following_count');
+
+    return countRef.onValue.map((e) {
+      if (e.snapshot.exists && e.snapshot.value is int) {
+        return e.snapshot.value as int;
+      }
+      return 0;
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  MUTAÃ‡Ã•ES DE SEGUIR
+  //
+  //  Escreve em TRÃŠS caminhos ao seguir:
+  //    1. Users/{myUid}/following/{targetUid}  â†’ estado local (quem eu sigo)
+  //    2. Users/{targetUid}/followers/{myUid}  â†’ estado local (quem me segue)
+  //    3. Followers/{targetUid}/{myUid}         â†’ dispara CF notificarNovoSeguidor
+  //                                               e Ã© lido por notificarNovaFesta
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// [myUid] passa a seguir [targetUid].
+  Future<void> seguir(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty || myUid == targetUid) return;
+    await Future.wait([
+      _followingRef(myUid, targetUid).set(true),
+      _followerRef(targetUid, myUid).set(true),
+      // Escrever em Followers/ dispara a CF que cria a notificaÃ§Ã£o
+      _cfFollowerRef(targetUid, myUid).set(true),
+    ]);
+  }
+
+  /// Alias em inglÃªs â€” assinatura simplificada (myName/myAvatar nÃ£o sÃ£o mais
+  /// necessÃ¡rios aqui; a CF busca os dados diretamente no RTDB).
+  Future<void> followUser(String myUid, String targetUid) =>
+      seguir(myUid, targetUid);
+
+  /// [myUid] deixa de seguir [targetUid].
+  Future<void> deixarDeSeguir(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty) return;
+    await Future.wait([
+      _followingRef(myUid, targetUid).remove(),
+      _followerRef(targetUid, myUid).remove(),
+      _cfFollowerRef(targetUid, myUid).remove(),
+      _db.ref('Users/$myUid/vip_friends/$targetUid').remove(),
+    ]);
+  }
+
+  /// Alias em inglÃªs.
+  Future<void> unfollowUser(String myUid, String targetUid) =>
+      deixarDeSeguir(myUid, targetUid);
+
+  /// Toggle: segue se nÃ£o seguia, deixa de seguir se seguia.
+  Future<bool> toggle(String myUid, String targetUid) async {
+    final jaSeguindo = await isSeguindo(myUid, targetUid);
+    if (jaSeguindo) {
+      await deixarDeSeguir(myUid, targetUid);
+      return false;
+    } else {
+      await seguir(myUid, targetUid);
+      return true;
+    }
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  LISTAS COMPLETAS (sem paginaÃ§Ã£o â€” uso interno / contagem)
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<List<String>> getFollowers(String userId) async {
+    try {
+      final snap = await _followersRef(userId).get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  /// Alias para compatibilidade com as telas.
+  Future<List<String>?> getUserFollowers(String userId) =>
+      getFollowers(userId);
+
+  Future<List<String>> getFollowing(String userId) async {
+    try {
+      final snap = await _followingAllRef(userId).get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  LISTAS PAGINADAS
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<List<String>> getFollowersPaginated(
+    String userId, {
+    String? startAfterKey,
+    int limit = pageSize,
+  }) async {
+    try {
+      Query query = _followersRef(userId).orderByKey().limitToFirst(limit);
+      if (startAfterKey != null && startAfterKey.isNotEmpty) {
+        query = _followersRef(userId)
+            .orderByKey()
+            .startAfter(startAfterKey)
+            .limitToFirst(limit);
+      }
+      final snap = await query.get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<List<String>> getFollowingPaginated(
+    String userId, {
+    String? startAfterKey,
+    int limit = pageSize,
+  }) async {
+    try {
+      Query query = _followingAllRef(userId).orderByKey().limitToFirst(limit);
+      if (startAfterKey != null && startAfterKey.isNotEmpty) {
+        query = _followingAllRef(userId)
+            .orderByKey()
+            .startAfter(startAfterKey)
+            .limitToFirst(limit);
+      }
+      final snap = await query.get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<List<String>> getVipFriendsPaginated(
+    String myUid, {
+    String? startAfterKey,
+    int limit = pageSize,
+  }) async {
+    try {
+      Query query = _vipAllRef(myUid).orderByKey().limitToFirst(limit);
+      if (startAfterKey != null && startAfterKey.isNotEmpty) {
+        query = _vipAllRef(myUid)
+            .orderByKey()
+            .startAfter(startAfterKey)
+            .limitToFirst(limit);
+      }
+      final snap = await query.get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  AMIGOS VIP
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<bool> isVip(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty) return false;
+    try {
+      final snap = await _vipRef(myUid, targetUid).get();
+      return snap.exists && snap.value == true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> isVipFriend(String myUid, String targetUid) =>
+      isVip(myUid, targetUid);
+
+  Stream<bool> streamIsVip(String myUid, String targetUid) {
+    if (myUid.isEmpty || targetUid.isEmpty) return Stream.value(false);
+    return _vipRef(myUid, targetUid)
+        .onValue
+        .map((e) => e.snapshot.exists && e.snapshot.value == true);
+  }
+
+  /// Adiciona [targetUid] como amigo VIP de [myUid].
+  /// SÃ³ funciona se [myUid] jÃ¡ segue [targetUid].
+  Future<bool> adicionarVip(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty || myUid == targetUid) return false;
+    final seguindo = await isSeguindo(myUid, targetUid);
+    if (!seguindo) return false;
+    await _vipRef(myUid, targetUid).set(true);
+    return true;
+  }
+
+  Future<bool> addVipFriend(String myUid, String targetUid) =>
+      adicionarVip(myUid, targetUid);
+
+  Future<void> removerVip(String myUid, String targetUid) async {
+    if (myUid.isEmpty || targetUid.isEmpty) return;
+    await _vipRef(myUid, targetUid).remove();
+  }
+
+  Future<void> removeVipFriend(String myUid, String targetUid) =>
+      removerVip(myUid, targetUid);
+
+  Future<bool> toggleVip(String myUid, String targetUid) async {
+    final jaVip = await isVip(myUid, targetUid);
+    if (jaVip) {
+      await removerVip(myUid, targetUid);
+      return false;
+    }
+    return adicionarVip(myUid, targetUid);
+  }
+
+  Future<List<String>> getVipFriends(String myUid) async {
+    try {
+      final snap = await _vipAllRef(myUid).get();
+      if (!snap.exists || snap.value is! Map) return [];
+      return (snap.value as Map).keys.map((k) => k.toString()).toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<List<String>?> getUserVipFriends(String myUid) =>
+      getVipFriends(myUid);
+}
+
+
+===== lib\services\services_app\chat_request_service.dart =====
+// lib/services/chat_request_service.dart
+//
+// ESTRATÃ‰GIA DE PATH:
+//   Chave da solicitaÃ§Ã£o = uid menor + "_" + uid maior (mesma lÃ³gica do chatId)
+//   Isso permite leitura direta sem queries que exigem .indexOn no Firebase.
+//
+// Firebase:
+//   ChatRequests/
+//     {uidA_uidB}/
+//       from_uid, to_uid, from_name, from_avatar
+//       status: "pending" | "accepted" | "declined"
+//       created_at, seen
+//
+//   UserChatRequests/
+//     {myUid}/
+//       {uidA_uidB}: "pending" | "accepted" | "declined"
+//
+//   Chats/ e ChatMessages/ sÃ£o criados AQUI ao aceitar (nÃ£o no ChatRoomScreen)
+
+import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:tabuapp/features/chat/data/models/chat_request_model.dart';
+
+
+class ChatRequestService {
+  static final ChatRequestService _i = ChatRequestService._();
+  factory ChatRequestService() => _i;
+  ChatRequestService._();
+
+  final _db = FirebaseDatabase.instance;
+
+  // â”€â”€â”€ Chave determinÃ­stica (igual ao chatId) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  static String buildKey(String uid1, String uid2) {
+    final sorted = [uid1, uid2]..sort();
+    return '${sorted[0]}_${sorted[1]}';
+  }
+
+  static String _requestKey(String uid1, String uid2) => buildKey(uid1, uid2);
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ENVIAR SOLICITAÃ‡ÃƒO
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<String> sendRequest({
+    required String fromUid,
+    required String toUid,
+    required String fromName,
+    required String fromAvatar,
+  }) async {
+    final key = _requestKey(fromUid, toUid);
+
+    final snap = await _db.ref('ChatRequests/$key').get();
+
+    if (snap.exists && snap.value is Map) {
+      final existing = ChatRequest.fromMap(key, snap.value as Map<dynamic, dynamic>);
+      if (existing.isAccepted) return 'accepted';
+      if (existing.isPending)  return 'exists';
+    }
+
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final request = ChatRequest(
+      id:          key,
+      fromUid:     fromUid,
+      toUid:       toUid,
+      fromName:    fromName,
+      fromAvatar:  fromAvatar,
+      status:      'pending',
+      createdAt:   now,
+      seen:        false,
+    );
+
+    await _db.ref().update({
+      'ChatRequests/$key':               request.toMap(),
+      'UserChatRequests/$toUid/$key':    'pending',
+      'UserChatRequests/$fromUid/$key':  'pending',
+    });
+
+    return 'sent';
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // ACEITAR â€” cria o chat no mesmo batch write
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> acceptRequest(String requestKey, String myUid) async {
+    // Busca os dados completos da solicitaÃ§Ã£o
+    final reqSnap = await _db.ref('ChatRequests/$requestKey').get();
+    if (!reqSnap.exists || reqSnap.value is! Map) return;
+
+    final reqData = reqSnap.value as Map<dynamic, dynamic>;
+    final fromUid = reqData['from_uid'] as String? ?? '';
+    if (fromUid.isEmpty) return;
+
+    // chatId = mesmo algoritmo do TabuChat.buildChatId
+    final sorted = ([myUid, fromUid]..sort());
+    final chatId = '${sorted[0]}_${sorted[1]}';
+    final now    = DateTime.now().millisecondsSinceEpoch;
+
+    // Verifica se o chat jÃ¡ existe (nÃ£o sobrescreve mensagens existentes)
+    final chatSnap = await _db.ref('Chats/$chatId').get();
+
+    // Monta o batch â€” atualiza solicitaÃ§Ã£o + cria chat (se necessÃ¡rio)
+    final updates = <String, dynamic>{
+      // SolicitaÃ§Ã£o
+      'ChatRequests/$requestKey/status':         'accepted',
+      'ChatRequests/$requestKey/seen':           true,
+      'UserChatRequests/$myUid/$requestKey':     'accepted',
+      'UserChatRequests/$fromUid/$requestKey':   'accepted',
+    };
+
+    if (!chatSnap.exists) {
+      // Estrutura inicial do chat â€” idÃªntica ao TabuChat.createInitialStructure
+      updates['Chats/$chatId/user1']                              = sorted[0];
+      updates['Chats/$chatId/user2']                              = sorted[1];
+      updates['Chats/$chatId/metadata/last_message']              = '';
+      updates['Chats/$chatId/metadata/last_sender']               = '';
+      updates['Chats/$chatId/metadata/last_timestamp']            = 0;
+      updates['Chats/$chatId/metadata/created_at']                = now;
+      updates['Chats/$chatId/unreadCount/${sorted[0]}']           = 0;
+      updates['Chats/$chatId/unreadCount/${sorted[1]}']           = 0;
+      updates['Chats/$chatId/participants/${sorted[0]}/status']    = 'offline';
+      updates['Chats/$chatId/participants/${sorted[0]}/last_seen'] = now;
+      updates['Chats/$chatId/participants/${sorted[1]}/status']    = 'offline';
+      updates['Chats/$chatId/participants/${sorted[1]}/last_seen'] = now;
+      // Placeholder para o nÃ³ de mensagens (Firebase nÃ£o aceita path vazio)
+      updates['ChatMessages/$chatId/_placeholder/_init']           = true;
+    }
+
+    await _db.ref().update(updates);
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // RECUSAR
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> declineRequest(String requestKey, String myUid) async {
+    final snap    = await _db.ref('ChatRequests/$requestKey/from_uid').get();
+    final fromUid = snap.value as String? ?? '';
+
+    await _db.ref().update({
+      'ChatRequests/$requestKey/status':         'declined',
+      'ChatRequests/$requestKey/seen':           true,
+      'UserChatRequests/$myUid/$requestKey':     'declined',
+      if (fromUid.isNotEmpty)
+        'UserChatRequests/$fromUid/$requestKey': 'declined',
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // CONSULTA PONTUAL
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<ChatRequest?> getRequestBetween(String uid1, String uid2) async {
+    try {
+      final key  = _requestKey(uid1, uid2);
+      final snap = await _db
+          .ref('ChatRequests/$key')
+          .get()
+          .timeout(const Duration(seconds: 8));
+
+      if (!snap.exists || snap.value is! Map) return null;
+      final req = ChatRequest.fromMap(key, snap.value as Map<dynamic, dynamic>);
+      return req.isDeclined ? null : req;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // STREAMS
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Stream<List<ChatRequest>> pendingRequestsStream(String myUid) {
+    return _db
+        .ref('UserChatRequests/$myUid')
+        .onValue
+        .asyncMap((event) async {
+      if (!event.snapshot.exists || event.snapshot.value is! Map) {
+        return <ChatRequest>[];
+      }
+
+      final keys = <String>[];
+      (event.snapshot.value as Map<dynamic, dynamic>).forEach((key, status) {
+        if (status == 'pending') keys.add(key.toString());
+      });
+
+      if (keys.isEmpty) return <ChatRequest>[];
+
+      final futures = keys.map((key) => _db.ref('ChatRequests/$key').get());
+      final snaps   = await Future.wait(futures);
+
+      final list = <ChatRequest>[];
+      for (final s in snaps) {
+        if (s.exists && s.value is Map) {
+          try {
+            final req = ChatRequest.fromMap(
+                s.key!, s.value as Map<dynamic, dynamic>);
+            // SÃ³ recebidas (nÃ£o enviadas)
+            if (req.toUid == myUid && req.isPending) {
+              list.add(req);
+            }
+          } catch (_) {}
+        }
+      }
+
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return list;
+    });
+  }
+
+  Stream<int> unseenCountStream(String myUid) {
+    return pendingRequestsStream(myUid)
+        .map((list) => list.where((r) => !r.seen).length);
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  // MARK AS SEEN
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> markAllAsSeen(String myUid) async {
+    try {
+      final snap = await _db.ref('UserChatRequests/$myUid').get();
+      if (!snap.exists || snap.value is! Map) return;
+
+      final updates = <String, dynamic>{};
+      (snap.value as Map<dynamic, dynamic>).forEach((key, status) {
+        if (status == 'pending') {
+          updates['ChatRequests/$key/seen'] = true;
+        }
+      });
+
+      if (updates.isNotEmpty) await _db.ref().update(updates);
+    } catch (_) {}
+  }
+}
+
+===== lib\services\services_app\presence_service.dart =====
+// lib/services/services_app/presence_service.dart
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+class PresenceService {
+  PresenceService._();
+  static final instance = PresenceService._();
+
+  DatabaseReference? _presenceRef;
+  bool _initialized = false;
+
+  /// Chama no login / quando o usuÃ¡rio estÃ¡ autenticado.
+  Future<void> init() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null || _initialized) return;
+    _initialized = true;
+
+    _presenceRef = FirebaseDatabase.instance.ref('Users/$uid/presence');
+
+    // Observa a conexÃ£o do Firebase com o servidor
+    final connectedRef = FirebaseDatabase.instance.ref('.info/connected');
+
+    connectedRef.onValue.listen((event) async {
+      final connected = event.snapshot.value as bool? ?? false;
+      if (!connected) return;
+
+      // Quando DESCONECTAR (por qualquer motivo), o Firebase executa isso no servidor
+      await _presenceRef!.onDisconnect().update({
+        'online': false,
+        'last_seen': ServerValue.timestamp,
+      });
+
+      // Marca como online agora
+      await _presenceRef!.update({
+        'online': true,
+        'last_seen': ServerValue.timestamp,
+      });
+    });
+  }
+
+  /// Chama no logout explÃ­cito (para marcar offline imediatamente).
+  Future<void> setOffline() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) return;
+    await FirebaseDatabase.instance.ref('Users/$uid/presence').update({
+      'online': false,
+      'last_seen': ServerValue.timestamp,
+    });
+    _initialized = false;
+    _presenceRef = null;
+  }
+}
+
+===== lib\services\services_app\post_service.dart =====
+// lib/services/services_app/post_service.dart
+//
+// OTIMIZAÃ‡ÃƒO NÃVEL 1:
+//   â€¢ fetchPosts() â€” paginaÃ§Ã£o REAL via orderByChild('created_at').limitToLast()
+//     em vez de baixar todos os posts e filtrar client-side.
+//   â€¢ fetchPostsByUser() â€” query filtrada por user_id via orderByChild.equalTo()
+//     em vez de baixar todos os posts.
+//   â€¢ streamPosts() â€” listener com .limitToLast() em vez de onValue no nÃ³ inteiro.
+//   â€¢ fetchActiveStories e streamActiveStories movidos para story_service.dart.
+//
+// NOTIFICAÃ‡Ã•ES:
+//   Like    â†’ CF trigger em PostLikes/{postId}/{likerUid}
+//   Comment â†’ CF trigger em Comments/{postId}/{commentId}
+//   Ambos sÃ£o disparados automaticamente. Nenhuma chamada manual ao
+//   NotificationService Ã© necessÃ¡ria neste arquivo.
+//
+// MUDANÃ‡AS vs versÃ£o anterior:
+//   â€¢ fetchComments e streamComments agora leem do mesmo caminho: Comments/{postId}.
+//     A versÃ£o anterior tinha fetchComments lendo de Comments/{postId} mas
+//     streamComments lendo de Posts/post/{postId}/comments â€” caminhos diferentes,
+//     o que causava inconsistÃªncia dependendo de qual foi populado primeiro.
+//   â€¢ streamComments agora inclui resoluÃ§Ã£o de nomes legados (batch lookup) igual
+//     ao fetchComments, em vez de silenciosamente ignorar campos ausentes.
+//   â€¢ addComment unificado: escreve apenas em Comments/{postId} (caminho do trigger
+//     da CF e da leitura). O caminho em Posts/post/{postId}/comments foi removido
+//     pois criava duplicidade sem benefÃ­cio â€” o stream e o fetch liam de lugares
+//     diferentes e o dado podia aparecer duas vezes ou em nenhum.
+//   â€¢ deleteComment ajustado para remover apenas de Comments/{postId}, consistente
+//     com o caminho unificado.
+//   â€¢ O addComment duplicado no final do arquivo (fora da classe) foi removido.
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
+import 'package:tabuapp/models/comment_model.dart';
+import 'package:tabuapp/models/post_model.dart';
+
+class PostService {
+  PostService._();
+  static final PostService instance = PostService._();
+
+  final _db = FirebaseDatabase.instance;
+
+  // â”€â”€ ReferÃªncias principais â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  DatabaseReference get _postsRef => _db.ref('Posts/post');
+  DatabaseReference _postRef(String id) => _postsRef.child(id);
+
+  /// Caminho de curtidas DENTRO do post (mantido para leitura de isLiked).
+  DatabaseReference _likedByRef(String postId) =>
+      _postRef(postId).child('liked_by');
+
+  /// Caminho de curtidas que dispara a Cloud Function notificarNovaCurtida.
+  DatabaseReference _postLikesRef(String postId, String userId) =>
+      _db.ref('PostLikes/$postId/$userId');
+
+  // FIX: caminho Ãºnico para comentÃ¡rios. Tanto fetch quanto stream leem daqui.
+  // Este Ã© tambÃ©m o caminho que dispara a CF notificarNovoComentario.
+  DatabaseReference _commentsRootRef(String postId) =>
+      _db.ref('Comments/$postId');
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  CRIAR POST
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<String> createPost({
+    required String userId,
+    required String userName,
+    String? userAvatar,
+    required String titulo,
+    String? descricao,
+    required String tipo,
+    required String visibilidade,
+    String? mediaUrl,
+    String? thumbUrl,
+    String? emoji,
+    int? videoDuration,
+  }) async {
+    final ref = _postsRef.push();
+    final id = ref.key!;
+
+    final post = PostModel(
+      id: id,
+      userId: userId,
+      userName: userName,
+      userAvatar: userAvatar,
+      titulo: titulo,
+      descricao: descricao,
+      tipo: tipo,
+      visibilidade: visibilidade,
+      mediaUrl: mediaUrl,
+      thumbUrl: thumbUrl,
+      emoji: emoji,
+      videoDuration: videoDuration,
+      createdAt: DateTime.now(),
+    );
+
+    await ref.set(post.toMap());
+    return id;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  LER â€” COM PAGINAÃ‡ÃƒO REAL (server-side)
+  //
+  //  ANTES: baixava TODOS os posts com _postsRef.get() e filtrava client-side.
+  //  AGORA: usa orderByChild('created_at').limitToLast(limit) para buscar
+  //         apenas os posts necessÃ¡rios diretamente do servidor.
+  //
+  //  Requisito: Ã­ndice em Posts/post/.indexOn: ["created_at"]
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<List<PostModel>> fetchPosts({
+    int limit = 10,
+    DateTime? startAfter,
+  }) async {
+    Query query = _postsRef.orderByChild('created_at');
+
+    if (startAfter != null) {
+      // PaginaÃ§Ã£o: busca posts com created_at ANTES do cursor
+      query = query.endBefore(startAfter.millisecondsSinceEpoch).limitToLast(limit);
+    } else {
+      // Primeira pÃ¡gina: busca os mais recentes
+      query = query.limitToLast(limit);
+    }
+
+    final snap = await query.get();
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final list = <PostModel>[];
+
+    for (final entry in raw.entries) {
+      if (entry.value is! Map) continue;
+      try {
+        final data = Map<dynamic, dynamic>.from(entry.value as Map);
+        if (data['user_id'] == null || data['created_at'] == null) continue;
+        list.add(PostModel.fromMap(entry.key as String, data));
+      } catch (_) {
+        continue;
+      }
+    }
+
+    list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return list;
+  }
+
+  Future<List<PostModel>> fetchPostsByUser(
+    String userId, {
+    int limit = 3,
+    DateTime? startAfter,
+  }) async {
+    // Query filtrada por user_id â€” requer Ã­ndice em Posts/post/.indexOn: ["user_id"]
+    Query query = _postsRef.orderByChild('user_id').equalTo(userId);
+
+    final snap = await query.get();
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final list = <PostModel>[];
+
+    for (final entry in raw.entries) {
+      if (entry.value is! Map) continue;
+      try {
+        final data = Map<dynamic, dynamic>.from(entry.value as Map);
+        if (data['created_at'] == null) continue;
+
+        final post = PostModel.fromMap(entry.key as String, data);
+        if (startAfter != null && !post.createdAt.isBefore(startAfter)) {
+          continue;
+        }
+        list.add(post);
+      } catch (e) {
+        debugPrint('[PostService] parse error: $e');
+      }
+    }
+
+    list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return list.take(limit).toList();
+  }
+
+  Future<PostModel?> fetchPostById(String postId) async {
+    final snap = await _postRef(postId).get();
+    if (!snap.exists || snap.value == null) return null;
+    return PostModel.fromMap(
+      postId,
+      Map<dynamic, dynamic>.from(snap.value as Map),
+    );
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  STREAM TEMPO REAL
+  //
+  //  ANTES: listener onValue em _postsRef inteiro (todos os posts).
+  //  AGORA: listener com .orderByChild('created_at').limitToLast(limit)
+  //         para receber apenas os posts mais recentes.
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Stream<List<PostModel>> streamPosts({int limit = 30}) {
+    return _postsRef
+        .orderByChild('created_at')
+        .limitToLast(limit)
+        .onValue
+        .map((event) {
+      if (event.snapshot.value == null) return [];
+
+      final raw = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+      final list = <PostModel>[];
+
+      for (final entry in raw.entries) {
+        if (entry.value is! Map) continue;
+        try {
+          final data = Map<dynamic, dynamic>.from(entry.value as Map);
+          if (data['user_id'] == null || data['created_at'] == null) continue;
+          list.add(PostModel.fromMap(entry.key as String, data));
+        } catch (_) {
+          continue;
+        }
+      }
+
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return list;
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  CURTIR / DESCURTIR
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<bool> toggleLike(String postId, String userId) async {
+    final likedByRef = _likedByRef(postId).child(userId);
+    final postLikeRef = _postLikesRef(postId, userId);
+
+    final snap = await likedByRef.get();
+    final jaLikado = snap.exists && snap.value == true;
+
+    if (jaLikado) {
+      await Future.wait([
+        postLikeRef.remove(),
+        likedByRef.remove(),
+      ]);
+      await _postRef(postId).child('likes').set(ServerValue.increment(-1));
+      return false;
+    } else {
+      await Future.wait([
+        likedByRef.set(true),
+        postLikeRef.set(true),
+      ]);
+      await _postRef(postId).child('likes').set(ServerValue.increment(1));
+      return true;
+    }
+  }
+
+  Future<bool> isLikedBy(String postId, String userId) async {
+    final snap = await _likedByRef(postId).child(userId).get();
+    return snap.exists && snap.value == true;
+  }
+
+  Stream<bool> streamIsLiked(String postId, String userId) {
+    return _likedByRef(postId).child(userId).onValue.map(
+          (e) => e.snapshot.exists && e.snapshot.value == true,
+        );
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  COMENTÃRIOS
+  //
+  //  FIX: todos os mÃ©todos de comentÃ¡rio agora usam Comments/{postId} como
+  //  caminho Ãºnico. A versÃ£o anterior escrevia em dois caminhos e lia de caminhos
+  //  diferentes (fetchComments â† Comments/{postId}, streamComments â†
+  //  Posts/post/{postId}/comments), causando inconsistÃªncia.
+  //
+  //  Caminho Ãºnico: Comments/{postId}/{commentId}
+  //    â€¢ dispara a CF notificarNovoComentario
+  //    â€¢ Ã© lido por fetchComments e streamComments
+  //    â€¢ evita dados duplicados
+  //
+  //  Se vocÃª jÃ¡ tem dados em Posts/post/{postId}/comments no banco, eles nÃ£o
+  //  vÃ£o aparecer mais via stream/fetch. FaÃ§a uma migraÃ§Ã£o one-time ou mantenha
+  //  o addComment escrevendo nos dois caminhos durante a transiÃ§Ã£o (comente abaixo).
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<CommentModel> addComment({
+    required String postId,
+    required String userId,
+    required String userName,
+    String? userAvatar,
+    required String texto,
+  }) async {
+    final ref = _commentsRootRef(postId).push();
+    final id = ref.key!;
+
+    final comment = CommentModel(
+      id: id,
+      postId: postId,
+      userId: userId,
+      userName: userName,
+      userAvatar: userAvatar,
+      texto: texto,
+      createdAt: DateTime.now(),
+    );
+
+    // FIX: escreve apenas no caminho unificado.
+    // toMap() deve incluir user_name e user_avatar para evitar lookups legados.
+    await Future.wait([
+      ref.set(comment.toMap()),
+      _postRef(postId).child('comment_count').set(ServerValue.increment(1)),
+    ]);
+
+    // TRANSIÃ‡ÃƒO: se ainda hÃ¡ dados em Posts/post/{postId}/comments que precisam
+    // aparecer no stream, descomente o bloco abaixo temporariamente:
+    // await _postRef(postId).child('comments/$id').set(comment.toMap());
+
+    return comment;
+  }
+
+  Future<List<CommentModel>> fetchComments(String postId) async {
+    final snap = await _commentsRootRef(postId).get();
+
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<String, dynamic>.from(snap.value as Map);
+
+    // â”€â”€ Passo 1: identificar UIDs legados (sem user_name no registro) â”€â”€â”€â”€â”€â”€
+    final legacyUids = <String>{};
+    for (final entry in raw.entries) {
+      final data = Map<dynamic, dynamic>.from(entry.value as Map);
+      final hasName = (data['user_name'] as String?)?.isNotEmpty == true;
+      if (!hasName) {
+        final uid = data['user_id'] as String? ?? '';
+        if (uid.isNotEmpty) legacyUids.add(uid);
+      }
+    }
+
+    // â”€â”€ Passo 2: buscar dados de usuÃ¡rio em paralelo (batch) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final Map<String, _ResolvedUser> userCache = {};
+
+    if (legacyUids.isNotEmpty) {
+      final futures = legacyUids.map((uid) async {
+        try {
+          final userSnap =
+              await FirebaseDatabase.instance.ref('Users/$uid').get();
+          if (!userSnap.exists || userSnap.value == null) {
+            userCache[uid] = const _ResolvedUser(exists: false);
+          } else {
+            final u = Map<dynamic, dynamic>.from(userSnap.value as Map);
+            userCache[uid] = _ResolvedUser(
+              exists: true,
+              name: u['name'] as String? ?? u['Name'] as String? ?? '',
+              avatar: u['avatar'] as String? ?? '',
+            );
+          }
+        } catch (_) {
+          userCache[uid] = const _ResolvedUser(exists: true);
+        }
+      });
+      await Future.wait(futures);
+    }
+
+    // â”€â”€ Passo 3: montar CommentModels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final list = <CommentModel>[];
+    for (final entry in raw.entries) {
+      final commentId = entry.key;
+      final data = Map<dynamic, dynamic>.from(entry.value as Map);
+      final uid = data['user_id'] as String? ?? '';
+
+      final savedName = data['user_name'] as String?;
+      final savedAvatar = data['user_avatar'] as String?;
+      final hasName = savedName?.isNotEmpty == true;
+
+      bool deleted = false;
+      String resolvedName = savedName ?? '';
+      String? resolvedAvatar = savedAvatar;
+
+      if (!hasName && uid.isNotEmpty) {
+        final resolved = userCache[uid];
+        if (resolved != null) {
+          deleted = !resolved.exists;
+          resolvedName = resolved.name ?? uid.substring(0, 6);
+          resolvedAvatar =
+              resolved.avatar?.isNotEmpty == true ? resolved.avatar : null;
+        }
+      }
+
+      list.add(CommentModel.fromMap(
+        commentId,
+        data,
+        resolvedName: resolvedName,
+        resolvedAvatar: resolvedAvatar,
+        userDeleted: deleted,
+      ));
+    }
+
+    list.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    return list;
+  }
+
+  // FIX: streamComments agora lÃª de Comments/{postId}, mesmo caminho do
+  // fetchComments. A versÃ£o anterior lia de Posts/post/{postId}/comments,
+  // que Ã© diferente e causava inconsistÃªncia entre stream e fetch.
+  //
+  // Nota: o stream nÃ£o faz resoluÃ§Ã£o de nomes legados (isso requereria
+  // chamadas assÃ­ncronas adicionais a cada evento). ComentÃ¡rios legados
+  // sem user_name aparecerÃ£o com user_id como fallback no stream â€” use
+  // fetchComments() para a listagem inicial completa com nomes resolvidos.
+  Stream<List<CommentModel>> streamComments(String postId) {
+    return _commentsRootRef(postId).onValue.map((event) {
+      if (event.snapshot.value == null) return [];
+
+      final raw = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+      final list = <CommentModel>[];
+
+      for (final entry in raw.entries) {
+        if (entry.value is! Map) continue;
+        try {
+          final data = Map<dynamic, dynamic>.from(entry.value as Map);
+          if (data['user_id'] == null || data['created_at'] == null) continue;
+          list.add(CommentModel.fromMap(entry.key as String, data));
+        } catch (_) {
+          continue;
+        }
+      }
+
+      list.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      return list;
+    });
+  }
+
+  // FIX: deleteComment remove apenas do caminho unificado Comments/{postId}.
+  Future<void> deleteComment(String postId, String commentId) async {
+    await _commentsRootRef(postId).child(commentId).remove();
+    await _postRef(postId)
+        .child('comment_count')
+        .set(ServerValue.increment(-1));
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  DELETAR POST
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> deletePost(String postId) async {
+    await Future.wait([
+      _postRef(postId).remove(),
+      _db.ref('PostLikes/$postId').remove(),
+      _commentsRootRef(postId).remove(),
+    ]);
+  }
+}
+
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//  Modelo auxiliar privado para o cache de resoluÃ§Ã£o de usuÃ¡rios
+// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+class _ResolvedUser {
+  final bool exists;
+  final String? name;
+  final String? avatar;
+  const _ResolvedUser({required this.exists, this.name, this.avatar});
+}
+
+
+===== lib\services\services_app\gallery_service.dart =====
+// lib/services/services_app/gallery_service.dart
+
+import 'package:cloud_functions/cloud_functions.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
+import 'package:tabuapp/models/gallery_item_model.dart';
+
+class GalleryService {
+  static final GalleryService instance = GalleryService._();
+  GalleryService._();
+
+  final _db = FirebaseDatabase.instance.ref();
+
+  // â”€â”€ Criar galeria â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<void> createGallery(String userId) async {
+    await _db.child('Gallery/$userId/created').set(true);
+    await _db.child('Gallery/$userId/created_at')
+        .set(DateTime.now().millisecondsSinceEpoch);
+    await _db.child('Gallery/$userId/items').set({});
+  }
+
+  // â”€â”€ Verificar se tem galeria (tem itens) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<bool> hasGallery(String userId) async {
+    final snap = await _db.child('Gallery/$userId/items').get();
+    if (!snap.exists || snap.value == null) return false;
+    final data = snap.value as Map<dynamic, dynamic>?;
+    return data != null && data.isNotEmpty;
+  }
+
+  // â”€â”€ Verificar se a galeria foi criada (mesmo que vazia) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<bool> isGalleryCreated(String userId) async {
+    final snap = await _db.child('Gallery/$userId/created').get();
+    return snap.exists && snap.value == true;
+  }
+
+  // â”€â”€ Adicionar item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<void> addItem({
+    required String userId,
+    required String type,
+    required String mediaUrl,
+    String? thumbUrl,
+    String? coverUrl,
+    int? videoDuration,
+  }) async {
+    final itemRef = _db.child('Gallery/$userId/items').push();
+    final item = GalleryItem(
+      id:            itemRef.key!,
+      userId:        userId,
+      type:          type,
+      mediaUrl:      mediaUrl,
+      thumbUrl:      thumbUrl,
+      coverUrl:      coverUrl,
+      videoDuration: videoDuration,
+      createdAt:     DateTime.now(),
+    );
+    await itemRef.set(item.toMap());
+  }
+
+  // â”€â”€ Atualizar capa de um item jÃ¡ existente â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<void> updateItemCover({
+    required String userId,
+    required String itemId,
+    required String coverUrl,
+    String? thumbUrl,
+  }) async {
+    final updates = <String, dynamic>{
+      'cover_url': coverUrl,
+      if (thumbUrl != null && thumbUrl.isNotEmpty) 'thumb_url': thumbUrl,
+    };
+    await _db.child('Gallery/$userId/items/$itemId').update(updates);
+  }
+
+  // â”€â”€ Buscar itens (com paginaÃ§Ã£o por cursor de data) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<List<GalleryItem>> fetchItems(
+    String userId, {
+    int limit = 15,
+    DateTime? startAfter,
+  }) async {
+    debugPrint('ðŸ” Buscando galeria de $userId (limit=$limit, cursor=$startAfter)');
+    final snap = await _db.child('Gallery/$userId/items').get();
+
+    debugPrint('ðŸ“¦ Snap exists: ${snap.exists}, value: ${snap.value}');
+
+    if (!snap.exists || snap.value == null) {
+      debugPrint('âŒ Galeria nÃ£o existe ou vazia');
+      return [];
+    }
+
+    final raw = snap.value;
+    if (raw is! Map) {
+      debugPrint('âŒ Value nÃ£o Ã© Map: $raw');
+      return [];
+    }
+
+    final data = Map<String, dynamic>.from(raw);
+    debugPrint('ðŸ“Š Itens raw: ${data.length}');
+
+    final items = <GalleryItem>[];
+    data.forEach((key, value) {
+      if (value is Map) {
+        try {
+          final itemMap = Map<String, dynamic>.from(value);
+          itemMap['id']     = key;
+          itemMap['userId'] = userId;
+
+          final item = GalleryItem.fromMap(itemMap);
+
+          if (startAfter != null && !item.createdAt.isBefore(startAfter)) return;
+
+          items.add(item);
+        } catch (e) {
+          debugPrint('âŒ Parse error [$key]: $e');
+        }
+      }
+    });
+
+    items.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    final page = items.take(limit).toList();
+
+    debugPrint('ðŸŽ‰ fetchItems FINAL: ${page.length} itens');
+    return page;
+  }
+
+  // â”€â”€ Deletar item (Firebase + Cloudinary) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //
+  // 1. Remove o nÃ³ do Firebase Realtime Database.
+  // 2. Chama a Cloud Function `deleteCloudinaryAsset` para deletar
+  //    o arquivo original (e suas transformaÃ§Ãµes) no Cloudinary.
+  //
+  // O publicId Ã© extraÃ­do da mediaUrl do Cloudinary.
+  // Formato tÃ­pico de URL:
+  //   https://res.cloudinary.com/<cloud>/image/upload/v123456/users/uid/abc.jpg
+  //   publicId = "users/uid/abc"  (sem extensÃ£o)
+  //
+  Future<void> deleteItem(String userId, String itemId) async {
+    // 1. Primeiro busca os dados do item para obter mediaUrl e type
+    final snap = await _db.child('Gallery/$userId/items/$itemId').get();
+
+    String? mediaUrl;
+    String? thumbUrl;
+    String  resourceType = 'image';
+
+    if (snap.exists && snap.value != null) {
+      final map  = Map<String, dynamic>.from(snap.value as Map);
+      mediaUrl   = map['media_url'] as String?;
+      thumbUrl   = map['thumb_url'] as String?;
+      final type = map['type']      as String? ?? 'foto';
+      resourceType = type == 'video' ? 'video' : 'image';
+    }
+
+    // 2. Remove do Firebase (independente do resultado do Cloudinary)
+    await _db.child('Gallery/$userId/items/$itemId').remove();
+    debugPrint('âœ… Item $itemId removido do Firebase');
+
+    // 3. Deleta asset principal no Cloudinary
+    if (mediaUrl != null && mediaUrl.isNotEmpty) {
+      await _deleteFromCloudinary(mediaUrl, resourceType);
+    }
+
+    // 4. Se tiver thumbnail separado (vÃ­deo), deleta tambÃ©m
+    if (thumbUrl != null && thumbUrl.isNotEmpty && thumbUrl != mediaUrl) {
+      await _deleteFromCloudinary(thumbUrl, 'image');
+    }
+  }
+
+  // â”€â”€ Auxiliar: extrai publicId e chama a Cloud Function â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<void> _deleteFromCloudinary(String url, String resourceType) async {
+    final publicId = _extractPublicId(url);
+    if (publicId == null) {
+      debugPrint('âš ï¸ NÃ£o foi possÃ­vel extrair publicId de: $url');
+      return;
+    }
+
+    try {
+      final callable = FirebaseFunctions.instance
+          .httpsCallable('deleteCloudinaryAsset');
+      final result = await callable.call<Map<String, dynamic>>({
+        'publicId':     publicId,
+        'resourceType': resourceType,
+      });
+      debugPrint('â˜ï¸ Cloudinary delete: publicId=$publicId, result=${result.data}');
+    } on FirebaseFunctionsException catch (e) {
+      // NÃ£o lanÃ§a â€” a deleÃ§Ã£o do Firebase jÃ¡ ocorreu com sucesso.
+      // Log para monitoramento; itens Ã³rfÃ£os no Cloudinary podem ser
+      // limpos periodicamente pelo painel ou por um cron job.
+      debugPrint('âš ï¸ Erro ao deletar no Cloudinary: [${e.code}] ${e.message}');
+    } catch (e) {
+      debugPrint('âš ï¸ Erro inesperado ao deletar no Cloudinary: $e');
+    }
+  }
+
+  // â”€â”€ Extrai o publicId de uma URL do Cloudinary â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  //
+  // Exemplos de URL:
+  //   https://res.cloudinary.com/mycloud/image/upload/v1234/users/uid/file.jpg
+  //   â†’ publicId = "users/uid/file"
+  //
+  //   https://res.cloudinary.com/mycloud/video/upload/v1234/users/uid/file.mp4
+  //   â†’ publicId = "users/uid/file"
+  //
+  //   https://res.cloudinary.com/mycloud/image/upload/c_fill,w_400/v1234/users/uid/file.jpg
+  //   â†’ publicId = "users/uid/file"
+  //
+  static String? _extractPublicId(String url) {
+    if (!url.contains('cloudinary.com') || !url.contains('/upload/')) {
+      return null;
+    }
+
+    try {
+      final uploadIndex = url.indexOf('/upload/');
+      // Tudo apÃ³s "/upload/"
+      String afterUpload = url.substring(uploadIndex + 8);
+
+      // Remove transformaÃ§Ãµes (ex: "c_fill,w_400/")
+      // TransformaÃ§Ãµes nÃ£o contÃªm "/v" seguido de dÃ­gitos
+      final versionMatch = RegExp(r'^(?:[^/]+/)*?(v\d+/.+)$').firstMatch(afterUpload);
+      if (versionMatch != null) {
+        afterUpload = versionMatch.group(1)!;
+      }
+
+      // Remove o prefixo de versÃ£o "v1234567/"
+      afterUpload = afterUpload.replaceFirst(RegExp(r'^v\d+/'), '');
+
+      // Remove a extensÃ£o do arquivo (.jpg, .mp4, etc.)
+      final dotIndex = afterUpload.lastIndexOf('.');
+      if (dotIndex > 0) {
+        afterUpload = afterUpload.substring(0, dotIndex);
+      }
+
+      return afterUpload.isEmpty ? null : afterUpload;
+    } catch (e) {
+      debugPrint('âš ï¸ _extractPublicId error: $e');
+      return null;
+    }
+  }
+
+  // â”€â”€ Contar itens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  Future<int> countItems(String userId) async {
+    final snap = await _db.child('Gallery/$userId/items').get();
+    if (!snap.exists) return 0;
+    final data = snap.value as Map<dynamic, dynamic>;
+    return data.length;
+  }
+}
+
+===== lib\services\services_app\story_service.dart =====
+// lib/services/story_service.dart
+//
+// OTIMIZAÃ‡ÃƒO NÃVEL 1:
+//   â€¢ fetchActiveStories() â€” usa orderByChild('expires_at').startAt(now)
+//     para buscar apenas stories ativas no servidor, em vez de baixar TODAS
+//     e filtrar client-side.
+//   â€¢ streamActiveStories() â€” mesmo filtro aplicado ao listener.
+//   â€¢ fetchStoriesByUser() â€” usa orderByChild('user_id').equalTo(userId)
+//     em vez de baixar todos os stories.
+//
+//   Requisito: Ã­ndice em Posts/story/.indexOn: ["expires_at", "user_id"]
+//
+// CORREÃ‡ÃƒO DE AVATAR (adicionada):
+//   â€¢ fetchStoriesForUser() agora sobrescreve o user_avatar de cada story
+//     com o valor atual de Users/{uid}/avatar via UserAvatarService.
+//     Isso resolve o bug onde stories criados antes da troca de foto
+//     continuavam exibindo a foto antiga nos bubbles do feed.
+
+import 'package:firebase_database/firebase_database.dart';
+import 'package:tabuapp/models/story_model.dart';
+import 'package:tabuapp/services/services_app/user_avatar_service.dart';
+
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+//  STORY SERVICE  â€”  Firebase Realtime Database
+//
+//  Estrutura no RTDB:
+//
+//  Posts/
+//    story/
+//      {storyId}/
+//        user_id, type, media_url, thumb_url?, background, central_text,
+//        central_emoji, text_style, video_duration?,
+//        created_at, expires_at, view_count
+//        overlays/
+//          0/  { type, content, pos_x, pos_y, scale, style }
+//        views/
+//          {viewerId}/  { viewer_id, seen_at, fully_watched }
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+class StoryService {
+  StoryService._();
+  static final StoryService instance = StoryService._();
+
+  final _db = FirebaseDatabase.instance;
+
+  DatabaseReference get _storiesRef => _db.ref('Posts/story');
+  DatabaseReference _storyRef(String id) => _storiesRef.child(id);
+  DatabaseReference _viewsRef(String storyId) =>
+      _storyRef(storyId).child('views');
+  DatabaseReference _viewerRef(String storyId, String viewerId) =>
+      _viewsRef(storyId).child(viewerId);
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  CRIAR STORY
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<String> createStory({
+    required String userId,
+    required String userName,
+    String? userAvatar,
+    required String type, // 'camera' | 'texto' | 'emoji' | 'video'
+    String? mediaUrl,
+    String? thumbUrl, // thumbnail do vÃ­deo
+    String? background,
+    String? centralText,
+    String? centralEmoji,
+    String? textStyle,
+    int? videoDuration, // duraÃ§Ã£o em segundos
+    List<StoryOverlay> overlays = const [],
+    String visibilidade = 'publico',
+  }) async {
+    final newRef = _storiesRef.push();
+    final id = newRef.key!;
+
+    final now = DateTime.now();
+    final expires = now.add(const Duration(hours: 24));
+
+    // Garante que o avatar salvo no story Ã© o atual do usuÃ¡rio
+    final currentAvatar =
+        await UserAvatarService.instance.getAvatar(userId);
+    final avatarToSave =
+        currentAvatar.isNotEmpty ? currentAvatar : userAvatar;
+
+    final story = StoryModel(
+      id: id,
+      userId: userId,
+      userName: userName,
+      userAvatar: avatarToSave,
+      type: type,
+      mediaUrl: mediaUrl,
+      thumbUrl: thumbUrl,
+      background: background,
+      centralText: centralText,
+      centralEmoji: centralEmoji,
+      visibilidade: visibilidade,
+      textStyle: textStyle,
+      videoDuration: videoDuration,
+      overlays: overlays,
+      createdAt: now,
+      expiresAt: expires,
+    );
+
+    await newRef.set(story.toMap());
+    return id;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  LER STORIES
+  //
+  //  ANTES: _storiesRef.get() baixava TODAS as stories e filtrava client-side.
+  //  AGORA: usa orderByChild('expires_at').startAt(now) para pegar apenas ativas.
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<List<StoryModel>> fetchActiveStories() async {
+    final now = DateTime.now().millisecondsSinceEpoch;
+
+    final snap = await _storiesRef
+        .orderByChild('expires_at')
+        .startAt(now)
+        .get();
+
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final list = <StoryModel>[];
+
+    for (final entry in raw.entries) {
+      if (entry.value is! Map) continue;
+      final id = entry.key as String;
+      final data = Map<dynamic, dynamic>.from(entry.value as Map);
+      list.add(StoryModel.fromMap(id, data));
+    }
+
+    list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    return list;
+  }
+
+  Future<List<StoryModel>> fetchStoriesByUser(String userId) async {
+    final now = DateTime.now().millisecondsSinceEpoch;
+
+    final snap = await _storiesRef
+        .orderByChild('user_id')
+        .equalTo(userId)
+        .get();
+
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final list = <StoryModel>[];
+
+    for (final entry in raw.entries) {
+      if (entry.value is! Map) continue;
+      final id = entry.key as String;
+      final data = Map<dynamic, dynamic>.from(entry.value as Map);
+      final exp = data['expires_at'] as int? ?? 0;
+      if (exp > now) {
+        list.add(StoryModel.fromMap(id, data));
+      }
+    }
+
+    list.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    return list;
+  }
+
+  Future<StoryModel?> fetchStoryById(String storyId) async {
+    final snap = await _storyRef(storyId).get();
+    if (!snap.exists || snap.value == null) return null;
+    return StoryModel.fromMap(
+        storyId, Map<dynamic, dynamic>.from(snap.value as Map));
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  STREAM (tempo real)
+  //
+  //  ANTES: listener onValue em _storiesRef inteiro (todas as stories).
+  //  AGORA: query filtrada por expires_at >= now.
+  //  Nota: o "now" Ã© calculado uma vez ao iniciar o stream. Stories que
+  //  expiram depois que o stream comeÃ§ou sÃ£o filtradas no .map().
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Stream<List<StoryModel>> streamActiveStories() {
+    final now = DateTime.now().millisecondsSinceEpoch;
+
+    return _storiesRef
+        .orderByChild('expires_at')
+        .startAt(now)
+        .onValue
+        .map((event) {
+      if (event.snapshot.value == null) return [];
+
+      final raw = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+      final currentNow = DateTime.now().millisecondsSinceEpoch;
+      final list = <StoryModel>[];
+
+      for (final entry in raw.entries) {
+        if (entry.value is! Map) continue;
+        final id = entry.key as String;
+        final data = Map<dynamic, dynamic>.from(entry.value as Map);
+        final exp = data['expires_at'] as int? ?? 0;
+        if (exp > currentNow) list.add(StoryModel.fromMap(id, data));
+      }
+
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return list;
+    });
+  }
+
+  Stream<List<StoryModel>> streamStoriesByUser(String userId) {
+    return _storiesRef
+        .orderByChild('user_id')
+        .equalTo(userId)
+        .onValue
+        .map((event) {
+      if (event.snapshot.value == null) return [];
+
+      final raw = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+      final now = DateTime.now().millisecondsSinceEpoch;
+      final list = <StoryModel>[];
+
+      for (final entry in raw.entries) {
+        if (entry.value is! Map) continue;
+        final id = entry.key as String;
+        final data = Map<dynamic, dynamic>.from(entry.value as Map);
+        final exp = data['expires_at'] as int? ?? 0;
+        if (exp > now) list.add(StoryModel.fromMap(id, data));
+      }
+
+      list.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      return list;
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  VISUALIZAÃ‡Ã•ES
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> markAsViewed({
+    required String storyId,
+    required String viewerId,
+    bool fullyWatched = false,
+  }) async {
+    final view = StoryView(
+      viewerId: viewerId,
+      seenAt: DateTime.now(),
+      fullyWatched: fullyWatched,
+    );
+    await _viewerRef(storyId, viewerId).set(view.toMap());
+  }
+
+  Future<void> updateFullyWatched({
+    required String storyId,
+    required String viewerId,
+  }) async {
+    await _viewerRef(storyId, viewerId).update({'fully_watched': true});
+  }
+
+  Future<List<StoryView>> fetchViews(String storyId) async {
+    final snap = await _viewsRef(storyId).get();
+    if (!snap.exists || snap.value == null) return [];
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final list = raw.values
+        .whereType<Map>()
+        .map((v) => StoryView.fromMap(v as Map))
+        .toList();
+
+    list.sort((a, b) => b.seenAt.compareTo(a.seenAt));
+    return list;
+  }
+
+  Future<bool> hasViewed(String storyId, String viewerId) async {
+    final snap = await _viewerRef(storyId, viewerId).get();
+    return snap.exists;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  DELETAR
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<void> deleteStory({required String storyId}) async {
+    await _db.ref('Posts/story/$storyId').remove();
+  }
+
+  Future<int> purgeExpiredStories() async {
+    final snap = await _storiesRef.get();
+    if (!snap.exists || snap.value == null) return 0;
+
+    final raw = Map<dynamic, dynamic>.from(snap.value as Map);
+    final now = DateTime.now().millisecondsSinceEpoch;
+    int removed = 0;
+
+    for (final entry in raw.entries) {
+      final data = Map<dynamic, dynamic>.from(entry.value as Map);
+      final exp = data['expires_at'] as int? ?? 0;
+      if (exp <= now) {
+        await _storyRef(entry.key as String).remove();
+        removed++;
+      }
+    }
+
+    return removed;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  HELPERS DE AGRUPAMENTO
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  Future<Map<String, List<StoryModel>>> fetchStoriesGroupedByUser() async {
+    final all = await fetchActiveStories();
+    final map = <String, List<StoryModel>>{};
+    for (final s in all) {
+      map.putIfAbsent(s.userId, () => []).add(s);
+    }
+    return map;
+  }
+
+  /// Busca os stories visÃ­veis para [myUid], agrupados por autor.
+  ///
+  /// CORREÃ‡ÃƒO DE AVATAR: apÃ³s agrupar, substitui o user_avatar de cada story
+  /// pelo avatar atual do usuÃ¡rio (Users/{uid}/avatar), resolvendo o bug de
+  /// fotos de perfil desatualizadas nos story bubbles do feed.
+  Future<Map<String, List<StoryModel>>> fetchStoriesForUser({
+    required String myUid,
+    required List<String> followingIds,
+    required List<String> vipIds,
+  }) async {
+    final all = await fetchActiveStories();
+    final map = <String, List<StoryModel>>{};
+
+    final followingSet = Set<String>.from(followingIds);
+    final vipSet = Set<String>.from(vipIds);
+
+    for (final s in all) {
+      final isOwn = s.userId == myUid;
+      final iFollow = followingSet.contains(s.userId);
+      final iAmVipDeles = vipSet.contains(s.userId);
+
+      bool canSee = false;
+      if (isOwn) {
+        canSee = true;
+      } else if (s.visibilidade == 'publico') {
+        canSee = true;
+      } else if (s.visibilidade == 'seguidores') {
+        canSee = iFollow;
+      } else if (s.visibilidade == 'vip') {
+        canSee = iAmVipDeles;
+      }
+
+      if (canSee) map.putIfAbsent(s.userId, () => []).add(s);
+    }
+
+    // â”€â”€ Corrige avatares desatualizados â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    // Os stories guardam user_avatar no momento da criaÃ§Ã£o. Se o usuÃ¡rio
+    // trocou de foto depois, o bubble do feed ficaria com a foto antiga.
+    // Aqui fazemos um Ãºnico fetch por uid (com cache em memÃ³ria) e
+    // substituÃ­mos o avatar em todos os stories daquele usuÃ¡rio.
+    final avatarService = UserAvatarService.instance;
+
+    for (final uid in map.keys) {
+      final currentAvatar = await avatarService.getAvatar(uid);
+      if (currentAvatar.isEmpty) continue;
+
+      map[uid] = map[uid]!.map((story) {
+        // copyWith sÃ³ aplica se o StoryModel tiver o mÃ©todo.
+        // Caso nÃ£o tenha, use a alternativa abaixo.
+        return story.copyWith(userAvatar: currentAvatar);
+      }).toList();
+    }
+    // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+    return map;
+  }
+
+  Stream<Map<String, List<StoryModel>>> streamStoriesGroupedByUser() {
+    return streamActiveStories().map((list) {
+      final map = <String, List<StoryModel>>{};
+      for (final s in list) {
+        map.putIfAbsent(s.userId, () => []).add(s);
+      }
+      return map;
+    });
+  }
+}
+
+===== lib\services\services_app\invite_request_service.dart =====
+import 'package:firebase_database/firebase_database.dart';
+
+class InviteRequestService {
+  final _database = FirebaseDatabase.instance;
+
+  /// Cria uma nova solicitaÃ§Ã£o de convite
+  Future<void> createInviteRequest({
+    required String name,
+    required String email,
+    required String phone,
+  }) async {
+    try {
+      // Limpar telefone (remover mÃ¡scara)
+      final cleanPhone = phone.replaceAll(RegExp(r'\D'), '');
+
+      // Verificar se jÃ¡ existe uma solicitaÃ§Ã£o pendente com este email
+      final existingRequest = await _checkExistingRequest(email);
+      if (existingRequest != null) {
+        throw 'JÃ¡ existe uma solicitaÃ§Ã£o pendente para este e-mail';
+      }
+
+      // Criar nova solicitaÃ§Ã£o
+      final requestRef = _database.ref('InviteRequests').push();
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+      await requestRef.set({
+        'name': name,
+        'email': email.toLowerCase(),
+        'phone': cleanPhone,
+        'created_at': timestamp,
+        'status': 'pending', // pending, approved, rejected
+        'request_id': requestRef.key,
+      });
+    } catch (e) {
+      if (e is String) {
+        rethrow;
+      }
+      throw 'Erro ao enviar solicitaÃ§Ã£o. Tente novamente.';
+    }
+  }
+
+  /// Verifica se jÃ¡ existe uma solicitaÃ§Ã£o pendente para o email
+  Future<Map<String, dynamic>?> _checkExistingRequest(String email) async {
+    try {
+      final snapshot = await _database
+          .ref('InviteRequests')
+          .orderByChild('email')
+          .equalTo(email.toLowerCase())
+          .get();
+
+      if (!snapshot.exists) return null;
+
+      final requests = snapshot.value as Map<dynamic, dynamic>;
+      
+      // Verificar se hÃ¡ alguma solicitaÃ§Ã£o pendente
+      for (var entry in requests.entries) {
+        final request = entry.value as Map<dynamic, dynamic>;
+        if (request['status'] == 'pending') {
+          return Map<String, dynamic>.from(request);
+        }
+      }
+
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Busca todas as solicitaÃ§Ãµes pendentes (admin)
+  Future<List<Map<String, dynamic>>> getPendingRequests() async {
+    try {
+      final snapshot = await _database
+          .ref('InviteRequests')
+          .orderByChild('status')
+          .equalTo('pending')
+          .get();
+
+      if (!snapshot.exists) return [];
+
+      final requests = snapshot.value as Map<dynamic, dynamic>;
+      final List<Map<String, dynamic>> requestList = [];
+
+      requests.forEach((key, value) {
+        final request = Map<String, dynamic>.from(value as Map);
+        request['key'] = key;
+        requestList.add(request);
+      });
+
+      // Ordenar por data de criaÃ§Ã£o (mais recente primeiro)
+      requestList.sort((a, b) => 
+        (b['created_at'] as int).compareTo(a['created_at'] as int));
+
+      return requestList;
+    } catch (e) {
+      throw 'Erro ao buscar solicitaÃ§Ãµes';
+    }
+  }
+
+  /// Aprova uma solicitaÃ§Ã£o de convite (admin)
+  Future<void> approveRequest(String requestId) async {
+    try {
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+      await _database.ref('InviteRequests/$requestId').update({
+        'status': 'approved',
+        'approved_at': timestamp,
+      });
+    } catch (e) {
+      throw 'Erro ao aprovar solicitaÃ§Ã£o';
+    }
+  }
+
+  /// Rejeita uma solicitaÃ§Ã£o de convite (admin)
+  Future<void> rejectRequest(String requestId, {String? reason}) async {
+    try {
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+      final updates = {
+        'status': 'rejected',
+        'rejected_at': timestamp,
+      };
+
+      if (reason != null && reason.isNotEmpty) {
+        updates['rejection_reason'] = reason;
+      }
+
+      await _database.ref('InviteRequests/$requestId').update(updates);
+    } catch (e) {
+      throw 'Erro ao rejeitar solicitaÃ§Ã£o';
+    }
+  }
+
+  /// Busca uma solicitaÃ§Ã£o especÃ­fica por ID
+  Future<Map<String, dynamic>?> getRequestById(String requestId) async {
+    try {
+      final snapshot = await _database.ref('InviteRequests/$requestId').get();
+
+      if (!snapshot.exists) return null;
+
+      return Map<String, dynamic>.from(snapshot.value as Map);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /// Busca solicitaÃ§Ãµes de um email especÃ­fico
+  Future<List<Map<String, dynamic>>> getRequestsByEmail(String email) async {
+    try {
+      final snapshot = await _database
+          .ref('InviteRequests')
+          .orderByChild('email')
+          .equalTo(email.toLowerCase())
+          .get();
+
+      if (!snapshot.exists) return [];
+
+      final requests = snapshot.value as Map<dynamic, dynamic>;
+      final List<Map<String, dynamic>> requestList = [];
+
+      requests.forEach((key, value) {
+        final request = Map<String, dynamic>.from(value as Map);
+        request['key'] = key;
+        requestList.add(request);
+      });
+
+      // Ordenar por data de criaÃ§Ã£o (mais recente primeiro)
+      requestList.sort((a, b) => 
+        (b['created_at'] as int).compareTo(a['created_at'] as int));
+
+      return requestList;
+    } catch (e) {
+      throw 'Erro ao buscar solicitaÃ§Ãµes';
+    }
+  }
+
+  /// EstatÃ­sticas de solicitaÃ§Ãµes (admin)
+  Future<Map<String, int>> getRequestStats() async {
+    try {
+      final snapshot = await _database.ref('InviteRequests').get();
+
+      if (!snapshot.exists) {
+        return {
+          'total': 0,
+          'pending': 0,
+          'approved': 0,
+          'rejected': 0,
+        };
+      }
+
+      final requests = snapshot.value as Map<dynamic, dynamic>;
+      int total = 0;
+      int pending = 0;
+      int approved = 0;
+      int rejected = 0;
+
+      requests.forEach((key, value) {
+        final request = value as Map<dynamic, dynamic>;
+        total++;
+        
+        switch (request['status']) {
+          case 'pending':
+            pending++;
+            break;
+          case 'approved':
+            approved++;
+            break;
+          case 'rejected':
+            rejected++;
+            break;
+        }
+      });
+
+      return {
+        'total': total,
+        'pending': pending,
+        'approved': approved,
+        'rejected': rejected,
+      };
+    } catch (e) {
+      throw 'Erro ao buscar estatÃ­sticas';
+    }
+  }
+
+  /// Deleta uma solicitaÃ§Ã£o (admin)
+  Future<void> deleteRequest(String requestId) async {
+    try {
+      await _database.ref('InviteRequests/$requestId').remove();
+    } catch (e) {
+      throw 'Erro ao deletar solicitaÃ§Ã£o';
+    }
+  }
+}
+
+===== lib\features\match\data\services\match_service.dart =====
+// lib/features/match/data/services/match_service.dart
+
+import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
+
+import '../models/match_profile_model.dart';
+import '../models/match_filter_model.dart';
+import '../repositories/match_repository.dart';
+
+// Cooldown de dislike: 60 dias em milissegundos
+const int _kDislikeCooldownMs = 60 * 24 * 60 * 60 * 1000;
+
+class MatchService {
+  MatchService({required IMatchRepository repository})
+      : _repository = repository;
+
+  final IMatchRepository _repository;
+
+  // â”€â”€ loadProfiles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<List<MatchProfileModel>> loadProfiles({
+    required String myUid,
+    required MatchFilterModel filter,
+    required double myLat,
+    required double myLng,
+  }) async {
+    debugPrint('[MatchService] â–¶ loadProfiles chamado');
+    debugPrint('[MatchService]   myUid=$myUid');
+    debugPrint('[MatchService]   myLat=$myLat  myLng=$myLng');
+    debugPrint('[MatchService]   onlyInDistance=${filter.onlyInDistance}  distanciaKm=${filter.distanciaKm}');
+    debugPrint('[MatchService]   generos=${filter.generos}  orientacoes=${filter.orientacoes}  relacionamentos=${filter.relacionamentos}');
+
+    if (myUid.trim().isEmpty) {
+      debugPrint('[MatchService] âŒ myUid vazio â€” retornando []');
+      return [];
+    }
+
+    // â”€â”€ 1. Busca tudo em paralelo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final results = await Future.wait([
+      _repository.fetchCandidates(myUid: myUid, filter: filter),
+      _repository.fetchDislikesGiven(myUid),
+      _repository.fetchDislikesReceived(myUid),
+      _repository.fetchLikesGiven(myUid),
+      _repository.fetchMatchedUids(myUid),
+      _repository.fetchChatPartnerUids(myUid), // â† novo: fallback garantido
+    ]);
+
+    final all              = results[0] as List<MatchProfileModel>;
+    final dislikesGiven    = results[1] as Map<String, int>;
+    final dislikesReceived = results[2] as Map<String, int>;
+    final likesGiven       = results[3] as Set<String>;
+    final matchedUids      = results[4] as Set<String>;
+    final chatPartnerUids  = results[5] as Set<String>; // â† novo
+
+    debugPrint('[MatchService] ðŸ“‹ fetchCandidates retornou ${all.length} perfil(is)');
+    debugPrint('[MatchService] ðŸš« dislikes dados: ${dislikesGiven.length}  recebidos: ${dislikesReceived.length}');
+    debugPrint('[MatchService] â¤ï¸  likes jÃ¡ dados: ${likesGiven.length}');
+    debugPrint('[MatchService] ðŸ’¬ matches existentes: ${matchedUids.length}');
+    debugPrint('[MatchService] ðŸ’¬ chat partners: ${chatPartnerUids.length}');
+
+    if (all.isEmpty) {
+      debugPrint('[MatchService] âŒ Nenhum candidato vindo do repositÃ³rio');
+      return [];
+    }
+
+    // â”€â”€ 2. Monta conjunto de UIDs excluÃ­dos â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final now     = DateTime.now().millisecondsSinceEpoch;
+    final blocked = <String>{};
+
+    // Bloqueio pelos dislikes que EU dei (cooldown de 60 dias)
+    for (final entry in dislikesGiven.entries) {
+      final elapsed = now - entry.value;
+      if (elapsed < _kDislikeCooldownMs) {
+        blocked.add(entry.key);
+        debugPrint('[MatchService] ðŸš« bloqueado (eu dei dislike): ${entry.key} â€” faltam ${_remainingDays(elapsed)} dias');
+      }
+    }
+
+    // Bloqueio pelos dislikes que EU RECEBI (essa pessoa nÃ£o quer me ver)
+    for (final entry in dislikesReceived.entries) {
+      final elapsed = now - entry.value;
+      if (elapsed < _kDislikeCooldownMs) {
+        blocked.add(entry.key);
+        debugPrint('[MatchService] ðŸš« bloqueado (recebi dislike de): ${entry.key} â€” faltam ${_remainingDays(elapsed)} dias');
+      }
+    }
+
+    // Bloqueio pelos likes que EU JÃ DEI
+    blocked.addAll(likesGiven);
+    if (likesGiven.isNotEmpty) {
+      debugPrint('[MatchService] â¤ï¸  bloqueados por like jÃ¡ dado: ${likesGiven.length} uid(s)');
+    }
+
+    // Bloqueio por matches jÃ¡ confirmados (Matchs/{myUid}/matched)
+    blocked.addAll(matchedUids);
+    if (matchedUids.isNotEmpty) {
+      debugPrint('[MatchService] ðŸ’¬ bloqueados por match existente: ${matchedUids.length} uid(s)');
+    }
+
+    // â† NOVO: Bloqueio por chats aceitos (UserChatRequests) â€” fallback
+    // garantido para quando o nÃ³ /matched ainda nÃ£o propagou
+    blocked.addAll(chatPartnerUids);
+    if (chatPartnerUids.isNotEmpty) {
+      debugPrint('[MatchService] ðŸ’¬ bloqueados por chat aceito: ${chatPartnerUids.length} uid(s)');
+    }
+
+    // Garante que o prÃ³prio usuÃ¡rio nunca apareÃ§a no deck
+    blocked.add(myUid);
+
+    debugPrint('[MatchService] ðŸ”’ total de UIDs excluÃ­dos: ${blocked.length}');
+
+    // â”€â”€ 3. ReferÃªncia de localizaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final refLat = filter.tipoLocalizacao == TipoLocalizacao.personalizada &&
+            filter.lat != null
+        ? filter.lat!
+        : myLat;
+    final refLng = filter.tipoLocalizacao == TipoLocalizacao.personalizada &&
+            filter.lng != null
+        ? filter.lng!
+        : myLng;
+
+    debugPrint('[MatchService]   refLat=$refLat  refLng=$refLng');
+
+    // â”€â”€ 4. Calcula distÃ¢ncias â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final withDistance = all.map((profile) {
+      final km = _haversineKm(refLat, refLng, profile.lat, profile.lng);
+      return profile.withDistance(km);
+    }).toList();
+
+    // â”€â”€ 5. Aplica filtros â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    final filtered = withDistance.where((profile) {
+      if (blocked.contains(profile.uid)) {
+        debugPrint('[MatchService]   âŒ ${profile.name} excluÃ­do');
+        return false;
+      }
+
+      final pass = _matchesFilter(profile, filter);
+      debugPrint('[MatchService]   filtro ${profile.name}: ${pass ? "âœ… passou" : "âŒ bloqueado"}');
+      return pass;
+    }).toList();
+
+    debugPrint('[MatchService] âœ… ${filtered.length} perfil(is) apÃ³s filtros');
+
+    // â”€â”€ 6. Ordena por distÃ¢ncia â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    filtered.sort((a, b) {
+      final dA = a.distanceKm ?? double.infinity;
+      final dB = b.distanceKm ?? double.infinity;
+      return dA.compareTo(dB);
+    });
+
+    return filtered;
+  }
+
+  // â”€â”€ recordLike â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<void> recordLike({
+    required String myUid,
+    required String targetUid,
+  }) async {
+    if (myUid.isEmpty || targetUid.isEmpty) return;
+    await _repository.recordLike(myUid: myUid, targetUid: targetUid);
+    debugPrint('[MatchService] â¤ï¸ like gravado: $myUid â†’ $targetUid');
+  }
+
+  // â”€â”€ recordDislike â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<void> recordDislike({
+    required String myUid,
+    required String targetUid,
+  }) async {
+    if (myUid.isEmpty || targetUid.isEmpty) return;
+    await _repository.recordDislike(myUid: myUid, targetUid: targetUid);
+    debugPrint('[MatchService] ðŸ‘Ž dislike gravado: $myUid â†’ $targetUid');
+  }
+
+  // â”€â”€ helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  bool _matchesFilter(MatchProfileModel profile, MatchFilterModel filter) {
+    // DistÃ¢ncia
+    if (filter.onlyInDistance) {
+      final km = profile.distanceKm;
+      if (km != null && km > filter.distanciaKm) {
+        debugPrint('[MatchService]     bloqueado por distÃ¢ncia: ${km.toStringAsFixed(1)} km > ${filter.distanciaKm} km');
+        return false;
+      }
+    }
+
+    // GÃªnero
+    if (filter.generos.isNotEmpty) {
+      final g     = profile.genderIdentity.toLowerCase();
+      final match = filter.generos.any((e) => e.name.toLowerCase() == g);
+      if (!match) {
+        debugPrint('[MatchService]     bloqueado por gÃªnero: "$g"');
+        return false;
+      }
+    }
+
+    // OrientaÃ§Ã£o
+    if (filter.orientacoes.isNotEmpty) {
+      final o     = profile.sexualOrientation.toLowerCase();
+      final match = filter.orientacoes.any((e) => e.name.toLowerCase() == o);
+      if (!match) {
+        debugPrint('[MatchService]     bloqueado por orientaÃ§Ã£o: "$o"');
+        return false;
+      }
+    }
+
+    // Tipo de relacionamento
+    if (filter.relacionamentos.isNotEmpty) {
+      final r     = profile.relationshipType.toLowerCase();
+      final match = filter.relacionamentos.any((e) => e.name.toLowerCase() == r);
+      if (!match) {
+        debugPrint('[MatchService]     bloqueado por relacionamento: "$r"');
+        return false;
+      }
+    }
+
+    // Faixa etÃ¡ria
+    if (filter.onlyInAge) {
+      final age = profile.age;
+      if (age == null) {
+        debugPrint('[MatchService]     bloqueado por faixa etÃ¡ria: sem data de nascimento');
+        return false;
+      }
+      if (age < filter.idadeMin || age > filter.idadeMax) {
+        debugPrint('[MatchService]     bloqueado por faixa etÃ¡ria: $age anos fora de [${filter.idadeMin}, ${filter.idadeMax}]');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  int _remainingDays(int elapsedMs) =>
+      ((_kDislikeCooldownMs - elapsedMs) / (24 * 60 * 60 * 1000)).ceil();
+
+  double _haversineKm(double lat1, double lng1, double lat2, double lng2) {
+    const r    = 6371.0;
+    final dLat = _toRad(lat2 - lat1);
+    final dLng = _toRad(lng2 - lng1);
+    final a    = math.sin(dLat / 2) * math.sin(dLat / 2) +
+        math.cos(_toRad(lat1)) *
+            math.cos(_toRad(lat2)) *
+            math.sin(dLng / 2) *
+            math.sin(dLng / 2);
+    return r * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+  }
+
+  double _toRad(double deg) => deg * math.pi / 180;
+}
+
+===== lib\features\match\data\services\like_me_service.dart =====
+// lib/features/match/data/services/like_me_service.dart
+//
+// ServiÃ§o para o sistema "Me Curtiu".
+//
+// Firebase:
+//   Matchs/{uid}/like_me/
+//     {likerUid}: true          â† quem curtiu
+//
+//   Matchs/{uid}/matched/
+//     {otherUid}: true          â† match confirmado (bilateral, gravado em acceptLike)
+
+import 'dart:async';
+import 'package:firebase_database/firebase_database.dart';
+
+class LikeMeService {
+  static final LikeMeService _i = LikeMeService._();
+  factory LikeMeService() => _i;
+  LikeMeService._();
+
+  final _db = FirebaseDatabase.instance;
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  STREAM: lista de UIDs que curtiram [myUid]
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Emite a lista de UIDs que curtiram [myUid] (tempo real).
+  Stream<List<String>> likeMeUidsStream(String myUid) {
+    return _db.ref('Matchs/$myUid/like_me').onValue.map((event) {
+      if (!event.snapshot.exists || event.snapshot.value is! Map) {
+        return <String>[];
+      }
+      final map = event.snapshot.value as Map<dynamic, dynamic>;
+      return map.keys.cast<String>().toList();
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  CONTAGEM para badge
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Conta quantos likes [myUid] recebeu (total).
+  Stream<int> likeCountStream(String myUid) {
+    return likeMeUidsStream(myUid).map((uids) => uids.length);
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  BUSCAR DADOS DE UM USUÃRIO
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Retorna {name, avatar} do usuÃ¡rio [uid] lendo de Users/.
+  Future<Map<String, String>> fetchUserBasicData(String uid) async {
+    final snap = await _db.ref('Users/$uid').get();
+    if (!snap.exists || snap.value is! Map) {
+      return {'name': 'UsuÃ¡rio', 'avatar': ''};
+    }
+    final data = snap.value as Map<dynamic, dynamic>;
+    return {
+      'name':   data['name']   as String? ?? 'UsuÃ¡rio',
+      'avatar': data['avatar'] as String? ?? '',
+    };
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  VERIFICAR SE FOI RECUSADO (dislike)
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Retorna true se [targetUid] jÃ¡ deu dislike em [myUid].
+  Future<bool> hasBeenDislikedBy(String myUid, String targetUid) async {
+    final snap = await _db
+        .ref('Matchs/$myUid/dislikes_received/$targetUid')
+        .get();
+    return snap.exists;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  RECUSAR LIKE (remove like + grava dislike bilateral)
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Recusa o like: remove da lista like_me e grava dislike bilateral.
+  Future<void> declineLike(String myUid, String likerUid) async {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    await _db.ref().update({
+      'Matchs/$myUid/like_me/$likerUid':                      null,
+      'Matchs/$myUid/dislikes/$likerUid/created_at':          now,
+      'Matchs/$likerUid/dislikes_received/$myUid/created_at': now,
+    });
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  ACEITAR LIKE (match mÃºtuo â†’ cria chat + grava matched bilateral)
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Aceita o like mÃºtuo: remove ambos os like_me, cria o chat com origin
+  /// 'match' e grava o Ã­ndice bilateral `Matchs/{uid}/matched/{otherUid}: true`
+  /// nos dois lados para que a tela de match filtre esses perfis de forma
+  /// simples e O(1).
+  ///
+  /// Retorna o chatId criado.
+  Future<String> acceptLike(String myUid, String likerUid) async {
+    final sorted = [myUid, likerUid]..sort();
+    final chatId = '${sorted[0]}_${sorted[1]}';
+    final now    = DateTime.now().millisecondsSinceEpoch;
+
+    final chatSnap = await _db.ref('Chats/$chatId').get();
+
+    final updates = <String, dynamic>{
+      // Remove likes de ambos os lados
+      'Matchs/$myUid/like_me/$likerUid':   null,
+      'Matchs/$likerUid/like_me/$myUid':   null,
+      // Grava Ã­ndice de match bilateral â€” usado pelo deck de match para filtrar
+      'Matchs/$myUid/matched/$likerUid':   true,
+      'Matchs/$likerUid/matched/$myUid':   true,
+      // Registra nos Ã­ndices de chat de ambos
+      'UserChatRequests/$myUid/$chatId':    'accepted',
+      'UserChatRequests/$likerUid/$chatId': 'accepted',
+    };
+
+    if (!chatSnap.exists) {
+      updates['Chats/$chatId/user1']                              = sorted[0];
+      updates['Chats/$chatId/user2']                              = sorted[1];
+      updates['Chats/$chatId/metadata/last_message']              = '';
+      updates['Chats/$chatId/metadata/last_sender']               = '';
+      updates['Chats/$chatId/metadata/last_timestamp']            = 0;
+      updates['Chats/$chatId/metadata/created_at']                = now;
+      updates['Chats/$chatId/unreadCount/${sorted[0]}']           = 0;
+      updates['Chats/$chatId/unreadCount/${sorted[1]}']           = 0;
+      updates['Chats/$chatId/participants/${sorted[0]}/status']    = 'offline';
+      updates['Chats/$chatId/participants/${sorted[0]}/last_seen'] = now;
+      updates['Chats/$chatId/participants/${sorted[1]}/status']    = 'offline';
+      updates['Chats/$chatId/participants/${sorted[1]}/last_seen'] = now;
+      updates['Chats/$chatId/origin']                              = 'match';
+      updates['Chats/$chatId/block_dialog']                        = false;
+      updates['ChatMessages/$chatId/_placeholder/_init']           = true;
+    }
+
+    await _db.ref().update(updates);
+    return chatId;
+  }
+
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  //  REMOVER LIKE (simples)
+  // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+
+  /// Remove o like de [likerUid] da lista de [myUid].
+  Future<void> removeLike(String myUid, String likerUid) async {
+    await _db.ref('Matchs/$myUid/like_me/$likerUid').remove();
+  }
+}
+
+===== lib\features\profile\data\services\profile_service.dart =====
+// features/profile/data/services/profile_service.dart
+
+import '../models/profile_user_model.dart';
+import '../repositories/profile_repository.dart';
+
+class ProfileService {
+  ProfileService._();
+  static final instance = ProfileService._();
+
+  final _repo = ProfileRepository.instance;
+
+  /// Carrega perfil completo com contadores.
+  Future<ProfileUserModel?> loadFullProfile(String uid) async {
+    final results = await Future.wait([
+      _repo.fetchUser(uid),
+      _repo.fetchFollowersCount(uid),
+      _repo.fetchFollowingCount(uid),
+    ]);
+
+    final user = results[0] as ProfileUserModel?;
+    if (user == null) return null;
+
+    return user.copyWith(
+      followers: results[1] as int,
+      following: results[2] as int,
+    );
+  }
+
+  Future<List<String>> fetchFollowersList(String uid) =>
+      _repo.fetchFollowersList(uid);
+
+  Future<List<String>> fetchVipFriends(String uid) =>
+      _repo.fetchVipFriends(uid);
+
+  Future<bool> isFollowing(String myUid, String targetUid) =>
+      _repo.isFollowing(myUid, targetUid);
+
+  Future<bool> isVip(String myUid, String targetUid) =>
+      _repo.isVip(myUid, targetUid);
+
+  Future<bool> checkStoryVisibility({
+    required String viewerUid,
+    required String ownerUid,
+    required String visibilidade,
+  }) async {
+    switch (visibilidade) {
+      case 'publico':
+        return true;
+      case 'seguidores':
+        return _repo.isFollowing(viewerUid, ownerUid);
+      case 'vip':
+        final snap = await _repo.isVip(ownerUid, viewerUid);
+        return snap;
+      default:
+        return true;
+    }
+  }
+}
+
+
+===== lib\features\chat\data\services\chat_service.dart =====
+// lib/features/chat/data/services/chat_service.dart
+//
+// Camada de serviÃ§o: orquestra o IChatRepository, mantÃ©m o cache de mensagens
+// em memÃ³ria e expÃµe streams compostos prontos para o controller consumir.
+
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import '../models/chat_model.dart';
+import '../repositories/chat_repository.dart';
+
+class ChatService {
+  ChatService({required IChatRepository repository})
+      : _repository = repository;
+
+  final IChatRepository _repository;
+
+  static const int _initialLimit = 20;
+  static const int _olderLimit   = 20;
+
+  // Cache por chatId â€” mantido aqui para que o controller seja stateless
+  // em relaÃ§Ã£o ao histÃ³rico de mensagens.
+  final Map<String, List<ChatMessage>> _cache         = {};
+  final Map<String, int>               _lastTimestamp = {};
+
+  // â”€â”€ InicializaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<TabuChat> initializeChat(String myUid, String otherUid) =>
+      _repository.initializeChat(myUid, otherUid);
+
+  // â”€â”€ PresenÃ§a â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<void> setGlobalOnline(String uid)  => _repository.setGlobalOnline(uid);
+  Future<void> setGlobalOffline(String uid) => _repository.setGlobalOffline(uid);
+  Future<void> setOnline(String chatId, String uid)  =>
+      _repository.setOnline(chatId, uid);
+  Future<void> setOffline(String chatId, String uid) =>
+      _repository.setOffline(chatId, uid);
+  Future<void> updateHeartbeat(String chatId, String uid) =>
+      _repository.updateHeartbeat(chatId, uid);
+
+  Stream<bool> userOnlineStream(String uid)    => _repository.userOnlineStream(uid);
+  Stream<int>  userLastSeenStream(String uid)  => _repository.userLastSeenStream(uid);
+
+  Stream<ParticipantStatus> otherStatusStream(String chatId, String otherUid) =>
+      _repository.otherStatusStream(chatId, otherUid);
+
+  // â”€â”€ Envio â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<void> sendMessage({
+    required String chatId,
+    required String text,
+    required String senderId,
+    required String recipientId,
+  }) =>
+      _repository.sendMessage(
+        chatId:      chatId,
+        text:        text,
+        senderId:    senderId,
+        recipientId: recipientId,
+      );
+
+  // â”€â”€ Stream de mensagens (com cache) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  /// Retorna um stream de snapshots completos da lista de mensagens.
+  /// O primeiro evento traz o histÃ³rico inicial; eventos seguintes
+  /// refletem novas mensagens e atualizaÃ§Ãµes de leitura.
+  Stream<List<ChatMessage>> messagesStream(String chatId) {
+    final controller = StreamController<List<ChatMessage>>.broadcast();
+    final subs       = <StreamSubscription>[];
+
+    _repository
+        .loadInitialMessages(chatId, _initialLimit)
+        .then((initial) {
+      _cache[chatId]         = initial;
+      _lastTimestamp[chatId] = initial.isNotEmpty ? initial.last.timestamp : 0;
+      controller.add(List.from(initial));
+
+      // Novas mensagens
+      final addSub = _repository
+          .newMessagesStream(chatId, _lastTimestamp[chatId] ?? 0)
+          .listen((msg) {
+        final list = _cache[chatId] ?? [];
+        if (!list.any((m) => m.id == msg.id)) {
+          list.add(msg);
+          _cache[chatId]         = list;
+          _lastTimestamp[chatId] = msg.timestamp;
+          controller.add(List.from(list));
+        }
+      });
+
+      // AtualizaÃ§Ãµes (leitura)
+      final changeSub = _repository
+          .updatedMessagesStream(chatId)
+          .listen((updated) {
+        final list = _cache[chatId] ?? [];
+        final idx  = list.indexWhere((m) => m.id == updated.id);
+        if (idx != -1) {
+          list[idx] = updated;
+          _cache[chatId] = list;
+          controller.add(List.from(list));
+        }
+      });
+
+      subs.addAll([addSub, changeSub]);
+    });
+
+    // Fecha subscriptions quando o controller for cancelado
+    controller.onCancel = () {
+      for (final s in subs) { s.cancel(); }
+    };
+
+    return controller.stream;
+  }
+
+  // â”€â”€ PaginaÃ§Ã£o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  /// Carrega mensagens mais antigas e atualiza o cache.
+  /// Retorna lista vazia quando nÃ£o hÃ¡ mais mensagens.
+  Future<List<ChatMessage>> loadOlderMessages(String chatId) async {
+    final cached   = _cache[chatId] ?? [];
+    final oldest   = cached.isEmpty ? 0 : cached.first.timestamp;
+    final older    = await _repository.loadOlderMessages(
+        chatId, oldest, _olderLimit);
+    if (older.isEmpty) return [];
+
+    final existing  = cached.map((m) => m.id).toSet();
+    final newOnes   = older.where((m) => !existing.contains(m.id)).toList();
+    _cache[chatId]  = [...newOnes, ...cached];
+    return newOnes;
+  }
+
+  // â”€â”€ Leitura â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Future<void> markAsRead(String chatId, String myUid) =>
+      _repository.markAsRead(chatId, myUid);
+
+  Stream<int> unreadCountStream(String chatId, String myUid) =>
+      _repository.unreadCountStream(chatId, myUid);
+
+  // â”€â”€ Bloqueio â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Stream<bool> blockDialogStream(String chatId) =>
+      _repository.blockDialogStream(chatId);
+
+  // â”€â”€ Lista de chats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  Stream<List<String>> chatIdsStream(String myUid) =>
+      _repository.chatIdsStream(myUid);
+
+  Stream<TabuChat?> singleChatStream(String chatId) =>
+      _repository.singleChatStream(chatId);
+
+  // â”€â”€ Cleanup â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+  void disposeChat(String chatId) {
+    _cache.remove(chatId);
+    _lastTimestamp.remove(chatId);
+    debugPrint('[ChatService] cache limpo: $chatId');
+  }
+
+  void disposeAll() {
+    _cache.clear();
+    _lastTimestamp.clear();
+  }
+}
