@@ -613,7 +613,7 @@ class _LogoSection extends StatelessWidget {
 
     return Column(children: [
       SizedBox(height:5),
-      Image.asset('assets/logo.png', width: size.width * 0.5, height: size.height * 0.2, fit: BoxFit.contain),
+      Image.asset('assets/logo_no_bg.png', width: size.width * 0.6, height: size.height * 0.25),
       
       
     ]);

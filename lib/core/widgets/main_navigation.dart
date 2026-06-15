@@ -126,7 +126,7 @@ class _TclubNavBar extends StatelessWidget {
     _NavItem(icon: Icons.person_outline,      activeIcon: Icons.person,             label: 'PERFIL'),
   ];
 
-  int get _chatIndex => isAdmin ? 4 : 3;
+  int get _chatIndex => isAdmin ? 3 : 2;
 
   /// Lê o badge combinado: mensagens + solicitações + likes de match.
   /// A Cloud Function grava em UserBadges/$myUid/chatTabBadge sempre que

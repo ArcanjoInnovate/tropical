@@ -2,7 +2,7 @@ name: tclub
 description: "TCLUB - O app de eventos e entretenimento para todos os gostos!"
 publish_to: "none"
 
-version: 1.0.1+1
+version: 1.0.1+2
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -66,6 +66,7 @@ flutter:
   assets:
     - assets/tabu_logo.png
     - assets/logo.png
+    - assets/logo_no_bg.png
 
 flutter_icons:
   android: true
