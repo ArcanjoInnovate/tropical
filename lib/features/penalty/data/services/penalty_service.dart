@@ -1,7 +1,7 @@
 // lib/features/penalty/domain/services/penalty_service.dart
 
-import 'package:tabuapp/features/penalty/data/repositories/penalty_repository.dart';
-import 'package:tabuapp/core/services/presence_service.dart';
+import 'package:tclub/features/penalty/data/repositories/penalty_repository.dart';
+import 'package:tclub/core/services/presence_service.dart';
 
 class PenaltyService {
   final PenaltyRepository _repository;
@@ -35,3 +35,4 @@ class PenaltyService {
     await _repository.signOut();
   }
 }
+

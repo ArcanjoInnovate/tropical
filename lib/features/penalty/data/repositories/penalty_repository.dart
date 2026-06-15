@@ -87,3 +87,4 @@ class PenaltyRepository {
     await _auth.signOut();
   }
 }
+

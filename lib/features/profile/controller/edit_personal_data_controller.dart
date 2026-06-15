@@ -4,8 +4,8 @@
 // parâmetros birthDate e age no método save().
 
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/profile/data/models/personal_data_model.dart';
-import 'package:tabuapp/features/profile/data/services/personal_data_service.dart';
+import 'package:tclub/features/profile/data/models/personal_data_model.dart';
+import 'package:tclub/features/profile/data/services/personal_data_service.dart';
 
 enum _Status { idle, loading, success, error }
 
@@ -67,3 +67,4 @@ class EditPersonalDataController extends ChangeNotifier {
     notifyListeners();
   }
 }
+

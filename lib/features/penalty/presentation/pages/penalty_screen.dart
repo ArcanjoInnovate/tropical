@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  SHARED — Neon line + helpers
@@ -14,8 +14,8 @@ Widget _neonLine() => Positioned(
   top: 0, left: 0, right: 0,
   child: Container(height: 2,
     decoration: const BoxDecoration(gradient: LinearGradient(colors: [
-      TabuColors.rosaDeep, TabuColors.rosaPrincipal,
-      TabuColors.rosaClaro, TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+      TClubColors.redDeep, TClubColors.redPrincipal,
+      TClubColors.redClaro, TClubColors.redPrincipal, TClubColors.redDeep,
     ]))));
 
 Widget _infoChip(String label, Color color) => Container(
@@ -24,7 +24,7 @@ Widget _infoChip(String label, Color color) => Container(
     color: color.withOpacity(0.12),
     border: Border.all(color: color.withOpacity(0.5), width: 0.8)),
   child: Text(label, style: TextStyle(
-    fontFamily: TabuTypography.bodyFont,
+    fontFamily: TClubTypography.bodyFont,
     fontSize: 9, fontWeight: FontWeight.w700,
     letterSpacing: 1.5, color: color)));
 
@@ -130,11 +130,11 @@ class _AdvertenciaScreenState extends State<AdvertenciaScreen>
                       child: Icon(_icon, color: _cor, size: 32)),
                     const SizedBox(height: 18),
                     Text(_titulo, style: TextStyle(
-                      fontFamily: TabuTypography.displayFont,
+                      fontFamily: TClubTypography.displayFont,
                       fontSize: 18, letterSpacing: 5, color: _cor)),
                     const SizedBox(height: 4),
                     Text(_subtitulo, style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 8, letterSpacing: 2.5,
                       color: Colors.white.withOpacity(0.3))),
                     const SizedBox(height: 28),
@@ -153,7 +153,7 @@ class _AdvertenciaScreenState extends State<AdvertenciaScreen>
                           if (em != null) Text(
                             fmt.format(DateTime.fromMillisecondsSinceEpoch(em)),
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 9, color: Colors.white38)),
                         ]),
                         if (motivo.isNotEmpty) ...[
@@ -161,7 +161,7 @@ class _AdvertenciaScreenState extends State<AdvertenciaScreen>
                           _divider(),
                           const SizedBox(height: 14),
                           Text(motivo, style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13, height: 1.75, color: Colors.white70)),
                         ],
                       ]),
@@ -207,7 +207,7 @@ class _AdvertenciaScreenState extends State<AdvertenciaScreen>
                               const Icon(Icons.check_rounded, color: Colors.white, size: 16),
                               const SizedBox(width: 10),
                               const Text('LI E ESTOU CIENTE', style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 12, fontWeight: FontWeight.w700,
                                 letterSpacing: 3.5, color: Colors.white)),
                             ]))),
@@ -217,7 +217,7 @@ class _AdvertenciaScreenState extends State<AdvertenciaScreen>
                       'Ao confirmar, você declara estar ciente desta notificação oficial.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9, color: Colors.white.withOpacity(0.22))),
                   ]),
                 ),
@@ -364,11 +364,11 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                     child: const Icon(Icons.pause_circle_outline_rounded, color: _cor, size: 32)),
                   const SizedBox(height: 18),
                   const Text('CONTA SUSPENSA', style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 18, letterSpacing: 5, color: _cor)),
                   const SizedBox(height: 4),
                   Text('ACESSO TEMPORARIAMENTE BLOQUEADO', style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8, letterSpacing: 2.5, color: Colors.white.withOpacity(0.3))),
                   const SizedBox(height: 28),
 
@@ -382,7 +382,7 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                         border: Border.all(color: _cor.withOpacity(0.35), width: 0.8)),
                       child: Column(children: [
                         Text('PERÍODO DE SUSPENSÃO', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 8, fontWeight: FontWeight.w700,
                           letterSpacing: 2.5, color: _cor.withOpacity(0.7))),
                         const SizedBox(height: 16),
@@ -403,10 +403,10 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                             const Icon(Icons.timer_outlined, color: Color(0xFFFF8C00), size: 13),
                             const SizedBox(width: 6),
                             Text('Tempo restante: ', style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10, color: Colors.white38)),
                             Text(tempoRestante, style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10, fontWeight: FontWeight.w700,
                               color: _cor)),
                           ]),
@@ -430,7 +430,7 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                         _divider(),
                         const SizedBox(height: 14),
                         Text(motivo, style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13, height: 1.75, color: Colors.white70)),
                       ],
                     ]),
@@ -464,15 +464,15 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                               Icon(Icons.mark_email_unread_outlined, color: _cor, size: 16),
                               SizedBox(width: 10),
                               Text('SOLICITAR REATIVAÇÃO ANTECIPADA', style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 10, fontWeight: FontWeight.w700,
                                 letterSpacing: 1.5, color: _cor)),
                             ]))),
                     ),
                     const SizedBox(height: 8),
-                    Text('A solicitação será analisada pela equipe do Tabu.',
+                    Text('A solicitação será analisada pela equipe do Tclub.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontFamily: TabuTypography.bodyFont,
+                      style: TextStyle(fontFamily: TClubTypography.bodyFont,
                         fontSize: 9, color: Colors.white.withOpacity(0.25))),
                   ] else ...[
                     Container(
@@ -485,9 +485,9 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                         Icon(Icons.check_circle_rounded, color: Color(0xFF4CAF50), size: 16),
                         SizedBox(width: 10),
                         Expanded(child: Text(
-                          'Solicitação enviada. A equipe do Tabu irá analisá-la em breve '
+                          'Solicitação enviada. A equipe do Tclub irá analisá-la em breve '
                           'e você será notificado por e-mail.',
-                          style: TextStyle(fontFamily: TabuTypography.bodyFont,
+                          style: TextStyle(fontFamily: TClubTypography.bodyFont,
                             fontSize: 11, height: 1.5, color: Colors.white60))),
                       ])),
                   ],
@@ -505,7 +505,7 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
                         Icon(Icons.logout_rounded, color: Colors.white.withOpacity(0.3), size: 14),
                         const SizedBox(width: 8),
                         Text('SAIR DA CONTA', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 10, fontWeight: FontWeight.w600,
                           letterSpacing: 2, color: Colors.white.withOpacity(0.3))),
                       ]))),
@@ -521,12 +521,12 @@ class _SuspensaoScreenState extends State<SuspensaoScreen>
 
   Widget _dateBlock(String label, String value, Color color) => Column(children: [
     Text(label, style: TextStyle(
-      fontFamily: TabuTypography.bodyFont,
+      fontFamily: TClubTypography.bodyFont,
       fontSize: 7, fontWeight: FontWeight.w700,
       letterSpacing: 2, color: color.withOpacity(0.7))),
     const SizedBox(height: 6),
     Text(value, textAlign: TextAlign.center, style: TextStyle(
-      fontFamily: TabuTypography.bodyFont,
+      fontFamily: TClubTypography.bodyFont,
       fontSize: 11, fontWeight: FontWeight.w700, color: color, height: 1.4)),
   ]);
 }
@@ -628,11 +628,11 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                     child: const Icon(Icons.block_rounded, color: _cor, size: 32)),
                   const SizedBox(height: 18),
                   const Text('CONTA BANIDA', style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 18, letterSpacing: 5, color: _cor)),
                   const SizedBox(height: 4),
                   Text('ACESSO PERMANENTEMENTE REVOGADO', style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8, letterSpacing: 2.5, color: Colors.white.withOpacity(0.3))),
                   const SizedBox(height: 28),
 
@@ -649,7 +649,7 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                         const Spacer(),
                         if (em != null) Text(
                           fmt.format(DateTime.fromMillisecondsSinceEpoch(em)),
-                          style: const TextStyle(fontFamily: TabuTypography.bodyFont,
+                          style: const TextStyle(fontFamily: TClubTypography.bodyFont,
                             fontSize: 9, color: Colors.white38)),
                       ]),
                       if (motivo.isNotEmpty) ...[
@@ -657,7 +657,7 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                         _divider(),
                         const SizedBox(height: 14),
                         Text(motivo, style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13, height: 1.75, color: Colors.white70)),
                       ],
                     ]),
@@ -679,7 +679,7 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                         const Icon(Icons.mail_outline_rounded, color: Colors.white38, size: 14),
                         const SizedBox(width: 8),
                         Text('CONTESTAÇÃO FORMAL', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 8, fontWeight: FontWeight.w700,
                           letterSpacing: 2, color: Colors.white38)),
                       ]),
@@ -687,14 +687,14 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                       Text(
                         'Esta decisão é definitiva. Para contestar formalmente, envie um '
                         'e-mail com o número de protocolo no assunto:',
-                        style: TextStyle(fontFamily: TabuTypography.bodyFont,
+                        style: TextStyle(fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, height: 1.6, color: Colors.white.withOpacity(0.4))),
                       const SizedBox(height: 8),
                       Container(
                         padding: const EdgeInsets.all(10),
                         color: Colors.white.withOpacity(0.03),
-                        child: Text('tabuadministrative@gmail.com',
-                          style: TextStyle(fontFamily: TabuTypography.displayFont,
+                        child: Text('tclubadministrative@gmail.com',
+                          style: TextStyle(fontFamily: TClubTypography.displayFont,
                             fontSize: 11, letterSpacing: 1, color: _cor.withOpacity(0.8)))),
                     ]),
                   ),
@@ -711,7 +711,7 @@ class _BanimentoScreenState extends State<BanimentoScreen>
                         Icon(Icons.logout_rounded, color: _cor, size: 16),
                         SizedBox(width: 10),
                         Text('SAIR DA CONTA', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, fontWeight: FontWeight.w700,
                           letterSpacing: 3, color: _cor)),
                       ]))),
@@ -746,12 +746,12 @@ class _ProtoCard extends StatelessWidget {
         const Icon(Icons.tag_rounded, color: Colors.white24, size: 13),
         const SizedBox(width: 8),
         Text('PROTOCOLO', style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 8, fontWeight: FontWeight.w700,
           letterSpacing: 2, color: Colors.white24)),
         const Spacer(),
         Text(protocolo, style: TextStyle(
-          fontFamily: TabuTypography.displayFont,
+          fontFamily: TClubTypography.displayFont,
           fontSize: 11, letterSpacing: 1.5, color: color.withOpacity(0.8))),
       ]),
     );
@@ -776,9 +776,10 @@ class _AvisoBox extends StatelessWidget {
         Icon(icon, color: color, size: 14),
         const SizedBox(width: 10),
         Expanded(child: Text(texto, style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 11, height: 1.6, color: Colors.white.withOpacity(0.4)))),
       ]),
     );
   }
 }
+

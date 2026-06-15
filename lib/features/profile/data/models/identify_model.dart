@@ -67,3 +67,4 @@ class PartnerModel {
         avatarUrl:          map['avatar_url']          as String? ?? '',
       );
 }
+

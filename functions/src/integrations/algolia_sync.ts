@@ -1,4 +1,4 @@
-// src/algolia_sync.ts
+﻿// src/algolia_sync.ts
 //
 // NÍVEL 3.1 — Indexar usuários no Algolia para busca full-text + geo.
 // Esta CF sincroniza Users/{uid} → índice Algolia "users" automaticamente.
@@ -65,7 +65,7 @@ function algoliaFieldsChanged(
 export const syncUserToAlgolia = onValueWritten(
   {
     ref:     "Users/{uid}",
-    region:  "us-central1", instance: "tabuapp-4325a-default-rtdb",
+    region:  "us-central1", instance: "tropical-64d1b-default-rtdb",
     secrets: [algoliaAppId, algoliaAdminKey],
   },
   async (event) => {
@@ -114,7 +114,7 @@ export const syncUserToAlgolia = onValueWritten(
 export const removeUserFromAlgolia = onValueDeleted(
   {
     ref:     "Users/{uid}",
-    region:  "us-central1", instance: "tabuapp-4325a-default-rtdb",
+    region:  "us-central1", instance: "tropical-64d1b-default-rtdb",
     secrets: [algoliaAppId, algoliaAdminKey],
   },
   async (event) => {

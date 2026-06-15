@@ -32,3 +32,4 @@ class UserDataNotifier extends ValueNotifier<Map<String, dynamic>> {
   String get city       => value['city']   as String? ?? '';
   String get state      => value['state']  as String? ?? '';
 }
+

@@ -105,7 +105,7 @@ export function baseTemplate(opts: {
       <td id="bodyCell" align="center" valign="top" style="background-color:#07000F; padding:0;">
         <div class="wrap">
           <div class="neon"></div>
-          <div class="logo">TABU · SISTEMA OFICIAL</div>
+          <div class="logo">TCLUB · SISTEMA OFICIAL</div>
           <div class="badge">${badgeLabel}</div>
           <div class="titulo">${titulo}</div>
           <div class="subtitulo">${subtitulo}</div>
@@ -113,10 +113,10 @@ export function baseTemplate(opts: {
           ${protocolo ? `<div class="proto-box"><div class="proto-lbl">NÚMERO DE PROTOCOLO — GUARDE ESTA INFORMAÇÃO</div><div class="proto-val">${protocolo}</div></div>` : ""}
           <div class="footer">
             <p>E-mail automático gerado em <strong>${formatarData(agora)}</strong></p>
-            <p>Este é um e-mail oficial do sistema Tabu. Não responda a este endereço diretamente.</p>
-            <p>Dúvidas ou contestações: <a href="mailto:tabuadministrative@gmail.com">tabuadministrative@gmail.com</a></p>
+            <p>Este é um e-mail oficial do sistema TCLUB. Não responda a este endereço diretamente.</p>
+            <p>Dúvidas ou contestações: <a href="mailto:tclubadministrative@gmail.com">tclubadministrative@gmail.com</a></p>
             ${protocolo ? `<p>Informe sempre o protocolo <strong>${protocolo}</strong> em qualquer contato.</p>` : ""}
-            <p style="margin-top:16px; color: rgba(255,255,255,0.15);">TABU BAR & LOUNGE · Plataforma de entretenimento noturno · Termos de Uso aplicáveis</p>
+            <p style="margin-top:16px; color: rgba(255,255,255,0.15);">TCLUB BAR & LOUNGE · Plataforma de entretenimento noturno · Termos de Uso aplicáveis</p>
           </div>
         </div>
       </td>
@@ -130,7 +130,7 @@ export function baseTemplate(opts: {
 export function emailAdvertenciaReportado(opts: { nome: string; artigo: string; motivo: string; protocolo: string; agora: number; denunciaMotivo: string }): string {
   const corpo = `
     <div class="card-accent">
-      <div class="aviso"><p>⚠️ &nbsp;<strong>Sua conta recebeu uma Advertência Formal</strong> registrada pela equipe do Tabu.</p></div>
+      <div class="aviso"><p>⚠️ &nbsp;<strong>Sua conta recebeu uma Advertência Formal</strong> registrada pela equipe do TCLUB.</p></div>
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
       <p class="val">Esta notificação é oficial e permanece registrada no seu histórico de conduta na plataforma.</p>
     </div>
@@ -139,7 +139,7 @@ export function emailAdvertenciaReportado(opts: { nome: string; artigo: string; 
       <div class="sep"></div>
       <span class="lbl">MOTIVO DA DENÚNCIA ORIGINAL</span>
       <p class="val" style="margin-bottom:16px;">${opts.denunciaMotivo}</p>
-      <span class="lbl">POSIÇÃO OFICIAL DO TABU</span>
+      <span class="lbl">POSIÇÃO OFICIAL DO TCLUB</span>
       <div class="motivo-box"><p>${opts.motivo}</p></div>
     </div>
     <div class="conseq"><span class="lbl" style="margin-bottom:10px;">O QUE ACONTECE AGORA</span><ul>
@@ -148,13 +148,13 @@ export function emailAdvertenciaReportado(opts: { nome: string; artigo: string; 
       <li>Reincidências resultarão em penalidades progressivas.</li>
       <li>Em caso de nova violação, a punição pode ser suspensão ou banimento permanente.</li>
     </ul></div>`;
-  return baseTemplate({ accentColor: "#D4AF37", badgeLabel: "PENALIDADE · ADVERTÊNCIA", titulo: "ADVERTÊNCIA FORMAL", subtitulo: "NOTIFICAÇÃO OFICIAL DE CONDUTA · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#D4AF37", badgeLabel: "PENALIDADE · ADVERTÊNCIA", titulo: "ADVERTÊNCIA FORMAL", subtitulo: "NOTIFICAÇÃO OFICIAL DE CONDUTA · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 export function emailSuspensaoReportado(opts: { nome: string; artigo: string; motivo: string; protocolo: string; inicioMs: number; fimMs: number; agora: number; denunciaMotivo: string }): string {
   const corpo = `
     <div class="card-accent">
-      <div class="aviso"><p>🚫 &nbsp;<strong>Sua conta foi suspensa temporariamente</strong> por decisão da equipe do Tabu.</p></div>
+      <div class="aviso"><p>🚫 &nbsp;<strong>Sua conta foi suspensa temporariamente</strong> por decisão da equipe do TCLUB.</p></div>
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
     </div>
     <div class="card">
@@ -168,16 +168,16 @@ export function emailSuspensaoReportado(opts: { nome: string; artigo: string; mo
       <div class="sep"></div>
       <span class="lbl">MOTIVO DA DENÚNCIA ORIGINAL</span>
       <p class="val" style="margin-bottom:16px;">${opts.denunciaMotivo}</p>
-      <span class="lbl">POSIÇÃO OFICIAL DO TABU</span>
+      <span class="lbl">POSIÇÃO OFICIAL DO TCLUB</span>
       <div class="motivo-box"><p>${opts.motivo}</p></div>
     </div>`;
-  return baseTemplate({ accentColor: "#FF8C00", badgeLabel: "PENALIDADE · SUSPENSÃO", titulo: "CONTA SUSPENSA", subtitulo: "ACESSO TEMPORARIAMENTE BLOQUEADO · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#FF8C00", badgeLabel: "PENALIDADE · SUSPENSÃO", titulo: "CONTA SUSPENSA", subtitulo: "ACESSO TEMPORARIAMENTE BLOQUEADO · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 export function emailBanimentoReportado(opts: { nome: string; artigo: string; motivo: string; protocolo: string; agora: number; denunciaMotivo: string }): string {
   const corpo = `
     <div class="card-accent">
-      <div class="aviso"><p>⛔ &nbsp;<strong>Sua conta foi permanentemente banida</strong> da plataforma Tabu.</p></div>
+      <div class="aviso"><p>⛔ &nbsp;<strong>Sua conta foi permanentemente banida</strong> da plataforma TCLUB.</p></div>
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
     </div>
     <div class="card">
@@ -185,22 +185,22 @@ export function emailBanimentoReportado(opts: { nome: string; artigo: string; mo
       <div class="sep"></div>
       <span class="lbl">MOTIVO DA DENÚNCIA ORIGINAL</span>
       <p class="val" style="margin-bottom:16px;">${opts.denunciaMotivo}</p>
-      <span class="lbl">POSIÇÃO OFICIAL DO TABU</span>
+      <span class="lbl">POSIÇÃO OFICIAL DO TCLUB</span>
       <div class="motivo-box"><p>${opts.motivo}</p></div>
     </div>
     <div class="card" style="border-color:rgba(255,255,255,0.06);">
       <span class="lbl">CONTESTAÇÃO FORMAL</span>
-      <div class="info-row"><span class="info-label">E-MAIL</span><span class="info-value" style="color:#E85D5D !important;">tabuadministrative@gmail.com</span></div>
+      <div class="info-row"><span class="info-label">E-MAIL</span><span class="info-value" style="color:#E85D5D !important;">tclubadministrative@gmail.com</span></div>
       <div class="info-row"><span class="info-label">ASSUNTO</span><span class="info-value">Contestação — ${opts.protocolo}</span></div>
     </div>`;
-  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "PENALIDADE · BANIMENTO", titulo: "CONTA BANIDA", subtitulo: "ACESSO PERMANENTEMENTE REVOGADO · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "PENALIDADE · BANIMENTO", titulo: "CONTA BANIDA", subtitulo: "ACESSO PERMANENTEMENTE REVOGADO · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 export function emailConteudoRemovidoReportado(opts: { nome: string; artigo: string; motivo: string; protocolo: string; conteudoTipo: string; agora: number; denunciaMotivo: string }): string {
   const tipoLabel = opts.conteudoTipo === "posts" ? "publicação" : opts.conteudoTipo === "stories" ? "story" : opts.conteudoTipo === "chats" ? "mensagem" : "conteúdo";
   const corpo = `
     <div class="card-accent">
-      <div class="aviso"><p>🗑️ &nbsp;<strong>Um ${tipoLabel} seu foi removido</strong> da plataforma Tabu.</p></div>
+      <div class="aviso"><p>🗑️ &nbsp;<strong>Um ${tipoLabel} seu foi removido</strong> da plataforma TCLUB.</p></div>
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
     </div>
     <div class="card">
@@ -209,10 +209,10 @@ export function emailConteudoRemovidoReportado(opts: { nome: string; artigo: str
       <div class="sep"></div>
       <span class="lbl">MOTIVO DA DENÚNCIA ORIGINAL</span>
       <p class="val" style="margin-bottom:16px;">${opts.denunciaMotivo}</p>
-      <span class="lbl">POSIÇÃO OFICIAL DO TABU</span>
+      <span class="lbl">POSIÇÃO OFICIAL DO TCLUB</span>
       <div class="motivo-box"><p>${opts.motivo}</p></div>
     </div>`;
-  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "CONTEÚDO · REMOVIDO", titulo: "CONTEÚDO REMOVIDO", subtitulo: "NOTIFICAÇÃO OFICIAL DE REMOÇÃO · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "CONTEÚDO · REMOVIDO", titulo: "CONTEÚDO REMOVIDO", subtitulo: "NOTIFICAÇÃO OFICIAL DE REMOÇÃO · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 // ── Denunciante ───────────────────────────────────────────────────────────────
@@ -220,26 +220,26 @@ export function emailDenunciaIgnorada(opts: { nome: string; denunciaMotivo: stri
   const corpo = `
     <div class="card">
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
-      <p class="val">Sua denúncia foi recebida e analisada cuidadosamente pela equipe do Tabu.</p>
+      <p class="val">Sua denúncia foi recebida e analisada cuidadosamente pela equipe do TCLUB.</p>
       <div class="sep"></div>
       <span class="lbl">RESULTADO DA ANÁLISE</span>
       <div class="sucesso"><p>Após revisão detalhada, a equipe não identificou violações suficientes que justifiquem medidas disciplinares neste momento.</p></div>
       <div class="info-row" style="margin-top:16px;"><span class="info-label">MOTIVO</span><span class="info-value">${opts.denunciaMotivo}</span></div>
     </div>`;
-  return baseTemplate({ accentColor: "#8B6914", badgeLabel: "DENÚNCIA · ANALISADA", titulo: "DENÚNCIA REVISADA", subtitulo: "RESULTADO DA ANÁLISE · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#8B6914", badgeLabel: "DENÚNCIA · ANALISADA", titulo: "DENÚNCIA REVISADA", subtitulo: "RESULTADO DA ANÁLISE · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 export function emailDenunciaResolvida(opts: { nome: string; acaoLabel: string; denunciaMotivo: string; artigo: string; protocolo: string; agora: number }): string {
   const corpo = `
     <div class="card">
       <p class="val" style="margin-bottom:16px;">Olá, <strong>${opts.nome}</strong>.</p>
-      <p class="val">Sua denúncia foi revisada e <strong>medidas foram tomadas</strong> pela equipe do Tabu.</p>
+      <p class="val">Sua denúncia foi revisada e <strong>medidas foram tomadas</strong> pela equipe do TCLUB.</p>
       <div class="sep"></div>
       <div class="sucesso"><p>✅ &nbsp;<strong>Ação aplicada: ${opts.acaoLabel}</strong></p></div>
       <div class="info-row" style="margin-top:16px;"><span class="info-label">MOTIVO</span><span class="info-value">${opts.denunciaMotivo}</span></div>
       <div class="info-row"><span class="info-label">ARTIGO</span><span class="info-value">${opts.artigo}</span></div>
     </div>`;
-  return baseTemplate({ accentColor: "#4CAF50", badgeLabel: "DENÚNCIA · RESOLVIDA", titulo: "MEDIDA APLICADA", subtitulo: "SUA DENÚNCIA GEROU RESULTADO · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#4CAF50", badgeLabel: "DENÚNCIA · RESOLVIDA", titulo: "MEDIDA APLICADA", subtitulo: "SUA DENÚNCIA GEROU RESULTADO · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 // ── Convites ──────────────────────────────────────────────────────────────────
@@ -255,7 +255,7 @@ export function emailConviteAprovado(opts: { nome: string; codigo: string; proto
         <div style="font-family:'Syne',sans-serif; font-size:30px; font-weight:800; letter-spacing:8px; color:#FF2D7A !important;">${opts.codigo}</div>
       </div>
     </div>`;
-  return baseTemplate({ accentColor: "#FF2D7A", badgeLabel: "ACESSO · APROVADO", titulo: "BEM-VINDO AO TABU", subtitulo: "SUA SOLICITAÇÃO FOI APROVADA · ACESSO LIBERADO", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#FF2D7A", badgeLabel: "ACESSO · APROVADO", titulo: "BEM-VINDO AO TCLUB", subtitulo: "SUA SOLICITAÇÃO FOI APROVADA · ACESSO LIBERADO", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 export function emailConviteRecusado(opts: { nome: string; motivo: string; protocolo: string; agora: number }): string {
@@ -269,7 +269,7 @@ export function emailConviteRecusado(opts: { nome: string; motivo: string; proto
       <span class="lbl">FUNDAMENTAÇÃO DA DECISÃO</span>
       <div class="motivo-box"><p>${motivoFinal}</p></div>
     </div>`;
-  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "ACESSO · RECUSADO", titulo: "SOLICITAÇÃO RECUSADA", subtitulo: "SEU PEDIDO DE ACESSO NÃO FOI APROVADO · TABU", corpo, protocolo: opts.protocolo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#E85D5D", badgeLabel: "ACESSO · RECUSADO", titulo: "SOLICITAÇÃO RECUSADA", subtitulo: "SEU PEDIDO DE ACESSO NÃO FOI APROVADO · TCLUB", corpo, protocolo: opts.protocolo, agora: opts.agora });
 }
 
 // ── Match ─────────────────────────────────────────────────────────────────────
@@ -285,8 +285,8 @@ export function emailMatch(opts: { nomeRecipient: string; nomeMatch: string; ava
     </div>
     ${opts.avatarMatch ? `<div style="text-align:center; margin:24px 0 8px;"><img src="${opts.avatarMatch}" alt="${opts.nomeMatch}" width="80" height="80" style="border-radius:50%; border:2px solid rgba(255,45,122,0.65); object-fit:cover; display:inline-block; box-shadow:0 0 24px rgba(255,45,122,0.4);"/></div>` : ""}
     <div class="card" style="text-align:center; margin-top:16px;">
-      <p class="val" style="margin-bottom:24px; line-height:1.85; font-size:13px;">Olá, <strong>${opts.nomeRecipient}</strong>. Agora vocês podem conversar no Tabu. Não deixe o momento esfriar!</p>
-      <a href="tabuapp://chat/${opts.chatId}" style="display:inline-block; background:linear-gradient(135deg,#FF2D7A 0%,#FF6B9D 100%); color:#ffffff !important; font-family:'Syne',sans-serif; font-size:11px; font-weight:800; letter-spacing:3px; padding:15px 36px; text-decoration:none; box-shadow:0 0 28px rgba(255,45,122,0.5);">ABRIR CONVERSA</a>
+      <p class="val" style="margin-bottom:24px; line-height:1.85; font-size:13px;">Olá, <strong>${opts.nomeRecipient}</strong>. Agora vocês podem conversar no TCLUB. Não deixe o momento esfriar!</p>
+      <a href="tclub://chat/${opts.chatId}" style="display:inline-block; background:linear-gradient(135deg,#FF2D7A 0%,#FF6B9D 100%); color:#ffffff !important; font-family:'Syne',sans-serif; font-size:11px; font-weight:800; letter-spacing:3px; padding:15px 36px; text-decoration:none; box-shadow:0 0 28px rgba(255,45,122,0.5);">ABRIR CONVERSA</a>
     </div>`;
-  return baseTemplate({ accentColor: "#FF2D7A", badgeLabel: "CONEXÃO · MATCH", titulo: "É UM MATCH!", subtitulo: `VOCÊ E ${opts.nomeMatch.toUpperCase()} SE CURTIRAM · TABU`, corpo, agora: opts.agora });
+  return baseTemplate({ accentColor: "#FF2D7A", badgeLabel: "CONEXÃO · MATCH", titulo: "É UM MATCH!", subtitulo: `VOCÊ E ${opts.nomeMatch.toUpperCase()} SE CURTIRAM · TCLUB`, corpo, agora: opts.agora });
 }

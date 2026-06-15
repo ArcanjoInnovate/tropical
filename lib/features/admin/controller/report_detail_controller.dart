@@ -2,7 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
+import 'package:tclub/core/theme/admin_theme.dart';
 import '../data/models/report_model.dart';
 import '../data/models/user_model.dart';
 import '../data/services/report_service.dart';
@@ -194,3 +194,4 @@ class ReportDetailController extends ChangeNotifier {
     }
   }
 }
+

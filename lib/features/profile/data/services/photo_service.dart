@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:image_picker/image_picker.dart';
-import 'package:tabuapp/features/profile/data/repositories/photo_repository.dart';
+import 'package:tclub/features/profile/data/repositories/photo_repository.dart';
 
 class PhotosServiceException implements Exception {
   PhotosServiceException(this.message);
@@ -127,3 +127,4 @@ class PhotosService {
     }
   }
 }
+

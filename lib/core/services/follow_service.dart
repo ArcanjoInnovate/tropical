@@ -393,3 +393,4 @@ class FollowService {
   Future<List<String>?> getUserVipFriends(String myUid) =>
       getVipFriends(myUid);
 }
+

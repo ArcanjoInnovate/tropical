@@ -32,3 +32,4 @@ class MatchFilterPrefs {
     await prefs.remove(_kKey);
   }
 }
+

@@ -3,9 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/services/user_profile_cache.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_profile_cache.dart';
 import '../data/services/photo_service.dart';
 
 enum PhotosStatus { idle, picking, uploading, removing, success, error }
@@ -142,3 +142,4 @@ class EditPhotosController extends ChangeNotifier {
     notifyListeners();
   }
 }
+

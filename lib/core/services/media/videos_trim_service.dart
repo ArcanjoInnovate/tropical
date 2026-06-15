@@ -183,3 +183,4 @@ class VideoTrimException implements Exception {
   @override
   String toString() => 'VideoTrimException: $message';
 }
+

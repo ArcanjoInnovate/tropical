@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-class TabuShellController extends ChangeNotifier {
-  static TabuShellController? _instance;
-  static TabuShellController get instance => _instance ??= TabuShellController._();
-  TabuShellController._();
+class TclubShellController extends ChangeNotifier {
+  static TclubShellController? _instance;
+  static TclubShellController get instance => _instance ??= TclubShellController._();
+  TclubShellController._();
 
   int _currentTabIndex = 0;
   int get currentTabIndex => _currentTabIndex;
@@ -61,3 +61,4 @@ class TabuShellController extends ChangeNotifier {
   }
 
 }
+

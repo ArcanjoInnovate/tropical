@@ -12,9 +12,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
 
 class PartyAttendeesScreen extends StatefulWidget {
   final PartyModel festa;
@@ -142,7 +142,7 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Column(children: [
         _buildHeader(),
         Expanded(
@@ -158,7 +158,7 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
                 onRefresh:   () => _refresh('interessado'),
                 emptyLabel:  'NINGUÉM INTERESSADO AINDA',
                 emptyIcon:   Icons.star_border_rounded,
-                accentColor: TabuColors.rosaClaro,
+                accentColor: TClubColors.redClaro,
               ),
               _AttendeeList(
                 items:       _items['confirmado']!,
@@ -181,8 +181,8 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
   Widget _buildHeader() {
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bg,
-        border: Border(bottom: BorderSide(color: TabuColors.border, width: 0.5)),
+        color: TClubColors.bg,
+        border: Border(bottom: BorderSide(color: TClubColors.border, width: 0.5)),
       ),
       child: SafeArea(
         bottom: false,
@@ -194,7 +194,7 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
               IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: TabuColors.rosaPrincipal, size: 18),
+                    color: TClubColors.redPrincipal, size: 18),
               ),
               const SizedBox(width: 2),
               Expanded(
@@ -202,17 +202,17 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
                   Text(
                     widget.festa.nome.toUpperCase(),
                     style: const TextStyle(
-                      fontFamily: TabuTypography.displayFont,
+                      fontFamily: TClubTypography.displayFont,
                       fontSize: 16, letterSpacing: 2,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const Text('PARTICIPANTES', style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9, fontWeight: FontWeight.w700,
-                    letterSpacing: 3, color: TabuColors.rosaPrincipal,
+                    letterSpacing: 3, color: TClubColors.redPrincipal,
                   )),
                 ]),
               ),
@@ -222,10 +222,10 @@ class _PartyAttendeesScreenState extends State<PartyAttendeesScreen>
           // TabBar — texto compacto para não transbordar
           TabBar(
             controller: _tab,
-            indicatorColor: TabuColors.rosaPrincipal,
+            indicatorColor: TClubColors.redPrincipal,
             indicatorWeight: 1.5,
-            labelColor: TabuColors.rosaPrincipal,
-            unselectedLabelColor: TabuColors.subtle,
+            labelColor: TClubColors.redPrincipal,
+            unselectedLabelColor: TClubColors.subtle,
             labelPadding: EdgeInsets.zero,
             tabs: [
               _CompactTab(
@@ -261,7 +261,7 @@ class _CompactTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active ? TabuColors.rosaPrincipal : TabuColors.subtle;
+    final color = active ? TClubColors.redPrincipal : TClubColors.subtle;
     return SizedBox(
       height: 44,
       child: Center(
@@ -273,7 +273,7 @@ class _CompactTab extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10, fontWeight: FontWeight.w700,
                 letterSpacing: 1.5, color: color,
               ),
@@ -288,7 +288,7 @@ class _CompactTab extends StatelessWidget {
               child: Text(
                 '$count',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 9, fontWeight: FontWeight.w700, color: color,
                 ),
               ),
@@ -324,27 +324,27 @@ class _AttendeeList extends StatelessWidget {
     if (!inited && loading) {
       return const Center(child: SizedBox(width: 20, height: 20,
           child: CircularProgressIndicator(strokeWidth: 1.5,
-              color: TabuColors.rosaPrincipal)));
+              color: TClubColors.redPrincipal)));
     }
 
     // Vazio
     if (inited && items.isEmpty) {
       return RefreshIndicator(
-        color: TabuColors.rosaPrincipal,
-        backgroundColor: TabuColors.bgAlt,
+        color: TClubColors.redPrincipal,
+        backgroundColor: TClubColors.bgAlt,
         onRefresh: onRefresh,
         child: ListView(physics: const AlwaysScrollableScrollPhysics(), children: [
           SizedBox(height: 300, child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(width: 56, height: 56,
-                decoration: BoxDecoration(color: TabuColors.bgCard,
-                    border: Border.all(color: TabuColors.border, width: 0.8)),
-                child: Icon(emptyIcon, color: TabuColors.border, size: 24)),
+                decoration: BoxDecoration(color: TClubColors.bgCard,
+                    border: Border.all(color: TClubColors.border, width: 0.8)),
+                child: Icon(emptyIcon, color: TClubColors.border, size: 24)),
               const SizedBox(height: 16),
               Text(emptyLabel, style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 9,
-                fontWeight: FontWeight.w700, letterSpacing: 3, color: TabuColors.subtle,
+                fontFamily: TClubTypography.bodyFont, fontSize: 9,
+                fontWeight: FontWeight.w700, letterSpacing: 3, color: TClubColors.subtle,
               )),
             ],
           )),
@@ -353,8 +353,8 @@ class _AttendeeList extends StatelessWidget {
     }
 
     return RefreshIndicator(
-      color: TabuColors.rosaPrincipal,
-      backgroundColor: TabuColors.bgAlt,
+      color: TClubColors.redPrincipal,
+      backgroundColor: TClubColors.bgAlt,
       onRefresh: onRefresh,
       child: NotificationListener<ScrollNotification>(
         onNotification: (n) {
@@ -375,19 +375,19 @@ class _AttendeeList extends StatelessWidget {
                 child: Center(child: loading
                     ? const SizedBox(width: 18, height: 18,
                         child: CircularProgressIndicator(strokeWidth: 1.5,
-                            color: TabuColors.rosaPrincipal))
+                            color: TClubColors.redPrincipal))
                     : GestureDetector(
                         onTap: onLoadMore,
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                                color: TClubColors.redPrincipal.withOpacity(0.4),
                                 width: 0.8)),
                           child: const Text('CARREGAR MAIS', style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont, fontSize: 9,
+                            fontFamily: TClubTypography.bodyFont, fontSize: 9,
                             fontWeight: FontWeight.w700, letterSpacing: 2.5,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                           )),
                         ),
                       )),
@@ -414,7 +414,7 @@ class _AttendeeTile extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(border: Border(bottom: BorderSide(
-          color: TabuColors.border.withOpacity(0.4), width: 0.5))),
+          color: TClubColors.border.withOpacity(0.4), width: 0.5))),
       child: Row(children: [
         Container(
           width: 44, height: 44,
@@ -431,9 +431,9 @@ class _AttendeeTile extends StatelessWidget {
         ),
         const SizedBox(width: 14),
         Expanded(child: Text(item.name.toUpperCase(), style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont, fontSize: 13,
+          fontFamily: TClubTypography.bodyFont, fontSize: 13,
           fontWeight: FontWeight.w600, letterSpacing: 1.2,
-          color: TabuColors.textoPrincipal,
+          color: TClubColors.textoPrincipal,
         ), maxLines: 1, overflow: TextOverflow.ellipsis)),
       ]),
     );
@@ -441,8 +441,8 @@ class _AttendeeTile extends StatelessWidget {
 
   Widget _fallback() {
     final initial = item.name.isNotEmpty ? item.name[0].toUpperCase() : '?';
-    return Container(color: TabuColors.bgCard, child: Center(child: Text(initial,
-        style: TextStyle(fontFamily: TabuTypography.displayFont,
+    return Container(color: TClubColors.bgCard, child: Center(child: Text(initial,
+        style: TextStyle(fontFamily: TClubTypography.displayFont,
             fontSize: 18, color: accentColor))));
   }
 }
@@ -452,3 +452,4 @@ class _AttendeeItem {
   final String? avatar;
   const _AttendeeItem({required this.uid, required this.name, required this.avatar});
 }
+

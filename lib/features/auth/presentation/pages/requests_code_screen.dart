@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/admin/data/services/invite_request_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/admin/data/services/invite_request_service.dart';
 
 // ─── Request Invite Screen ───────────────────────────────────────────────────
 class RequestInviteScreen extends StatefulWidget {
@@ -215,7 +215,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
     final theme = Theme.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
@@ -239,9 +239,9 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [
                     Colors.transparent,
-                    TabuColors.rosaPrincipal,
-                    TabuColors.rosaClaro,
-                    TabuColors.rosaPrincipal,
+                    TClubColors.redPrincipal,
+                    TClubColors.redClaro,
+                    TClubColors.redPrincipal,
                     Colors.transparent,
                   ]),
                 ),
@@ -262,20 +262,20 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
             if (_isLoading)
               Positioned.fill(
                 child: Container(
-                  color: TabuColors.bg.withOpacity(0.7),
+                  color: TClubColors.bg.withOpacity(0.7),
                   child: Center(
                     child: Container(
                       width: 52,
                       height: 52,
                       decoration: BoxDecoration(
-                        color: TabuColors.bgCard,
-                        border: Border.all(color: TabuColors.border, width: 0.8),
+                        color: TClubColors.bgCard,
+                        border: Border.all(color: TClubColors.border, width: 0.8),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CircularProgressIndicator(
                           strokeWidth: 1.5,
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                         ),
                       ),
                     ),
@@ -310,7 +310,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.arrow_back, color: TabuColors.subtle, size: 20),
+                        icon: const Icon(Icons.arrow_back, color: TClubColors.subtle, size: 20),
                         onPressed: () => Navigator.of(context).pop(),
                       ),
                       const Spacer(),
@@ -319,7 +319,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                         style: theme.textTheme.labelSmall?.copyWith(
                           fontSize: 11,
                           letterSpacing: 4,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         ),
                       ),
                       const Spacer(),
@@ -349,7 +349,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                     style: theme.textTheme.headlineLarge?.copyWith(
                       fontSize: 20,
                       letterSpacing: 4,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -360,7 +360,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                     'Preencha o formulário para\nreceber seu código de acesso.',
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                       fontSize: 12,
                       height: 1.7,
                       letterSpacing: 0.4,
@@ -471,7 +471,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                                   width: 4,
                                   height: 4,
                                   decoration: const BoxDecoration(
-                                    color: TabuColors.rosaPrincipal,
+                                    color: TClubColors.redPrincipal,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -480,7 +480,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                                   child: Text(
                                     _errorMsg,
                                     style: theme.textTheme.bodySmall?.copyWith(
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                       fontSize: 11,
                                       letterSpacing: 1,
                                     ),
@@ -492,7 +492,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                                   width: 4,
                                   height: 4,
                                   decoration: const BoxDecoration(
-                                    color: TabuColors.rosaPrincipal,
+                                    color: TClubColors.redPrincipal,
                                     shape: BoxShape.circle,
                                   ),
                                 ),
@@ -515,18 +515,18 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(width: 1, height: 12, color: TabuColors.border),
+                      Container(width: 1, height: 12, color: TClubColors.border),
                       const SizedBox(width: 10),
                       Text(
                         'Enviaremos o código por e-mail e WhatsApp',
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           fontSize: 10,
                           letterSpacing: 0.5,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Container(width: 1, height: 12, color: TabuColors.border),
+                      Container(width: 1, height: 12, color: TClubColors.border),
                     ],
                   ),
 
@@ -534,13 +534,13 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
 
                   Column(
                     children: [
-                      Container(width: 24, height: 0.5, color: TabuColors.subtle),
+                      Container(width: 24, height: 0.5, color: TClubColors.subtle),
                       const SizedBox(height: 8),
                       Text(
-                        'TABU BAR & LOUNGE',
+                        'TCLUB BAR & LOUNGE',
                         style: theme.textTheme.labelSmall?.copyWith(
                           letterSpacing: 5,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           fontSize: 7,
                         ),
                       ),
@@ -588,10 +588,10 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
             fontSize: 10,
             letterSpacing: 2,
             color: errorText != null 
-                ? TabuColors.rosaPrincipal 
+                ? TClubColors.redPrincipal 
                 : isFocused 
-                    ? TabuColors.rosaPrincipal 
-                    : TabuColors.subtle,
+                    ? TClubColors.redPrincipal 
+                    : TClubColors.subtle,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -600,31 +600,31 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
           duration: const Duration(milliseconds: 150),
           decoration: BoxDecoration(
             color: errorText != null
-                ? TabuColors.rosaPrincipal.withOpacity(0.15)
+                ? TClubColors.redPrincipal.withOpacity(0.15)
                 : hasValue
                     ? const Color(0x22E85D8A)
                     : isFocused
                         ? const Color(0x14E85D8A)
-                        : TabuColors.bgCard,
+                        : TClubColors.bgCard,
             border: Border.all(
               color: errorText != null
-                  ? TabuColors.rosaPrincipal.withOpacity(0.8)
+                  ? TClubColors.redPrincipal.withOpacity(0.8)
                   : isFocused
-                      ? TabuColors.rosaPrincipal
+                      ? TClubColors.redPrincipal
                       : hasValue
-                          ? TabuColors.borderMid
-                          : TabuColors.border,
+                          ? TClubColors.borderMid
+                          : TClubColors.border,
               width: isFocused ? 1.5 : errorText != null ? 1.2 : 0.8,
             ),
             boxShadow: isFocused
                 ? [
                     BoxShadow(
-                        color: TabuColors.glow.withOpacity(0.3), blurRadius: 16)
+                        color: TClubColors.glow.withOpacity(0.3), blurRadius: 16)
                   ]
                 : hasValue && errorText == null
                     ? [
                         BoxShadow(
-                            color: TabuColors.glow.withOpacity(0.15),
+                            color: TClubColors.glow.withOpacity(0.15),
                             blurRadius: 8)
                       ]
                     : [],
@@ -642,27 +642,27 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
               fontWeight: FontWeight.w500,
               letterSpacing: 0.3,
               color: errorText != null
-                  ? TabuColors.rosaPrincipal
+                  ? TClubColors.redPrincipal
                   : hasValue
-                      ? TabuColors.textoPrincipal
-                      : TabuColors.subtle,
+                      ? TClubColors.textoPrincipal
+                      : TClubColors.subtle,
             ),
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
                 fontSize: 14,
-                color: TabuColors.subtle.withOpacity(0.6),
+                color: TClubColors.subtle.withOpacity(0.6),
                 letterSpacing: 0.3,
               ),
               prefixIcon: Icon(
                 icon,
                 color: errorText != null
-                    ? TabuColors.rosaPrincipal
+                    ? TClubColors.redPrincipal
                     : isFocused
-                        ? TabuColors.rosaPrincipal
+                        ? TClubColors.redPrincipal
                         : hasValue
-                            ? TabuColors.subtle
-                            : TabuColors.subtle.withOpacity(0.5),
+                            ? TClubColors.subtle
+                            : TClubColors.subtle.withOpacity(0.5),
                 size: 20,
               ),
               border: InputBorder.none,
@@ -692,14 +692,14 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                       Icon(
                         Icons.error_outline,
                         size: 12,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                       ),
                       const SizedBox(width: 6),
                       Flexible(
                         child: Text(
                           errorText,
                           style: TextStyle(
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             fontSize: 11,
                             letterSpacing: 0.3,
                             height: 1.3,
@@ -718,14 +718,14 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
                           Icon(
                             Icons.info_outline,
                             size: 11,
-                            color: TabuColors.subtle.withOpacity(0.6),
+                            color: TClubColors.subtle.withOpacity(0.6),
                           ),
                           const SizedBox(width: 6),
                           Flexible(
                             child: Text(
                               helperText,
                               style: TextStyle(
-                                color: TabuColors.subtle.withOpacity(0.8),
+                                color: TClubColors.subtle.withOpacity(0.8),
                                 fontSize: 10,
                                 letterSpacing: 0.3,
                                 height: 1.3,
@@ -767,7 +767,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
               style: theme.textTheme.headlineLarge?.copyWith(
                 fontSize: 19,
                 letterSpacing: 6,
-                color: TabuColors.textoPrincipal,
+                color: TClubColors.textoPrincipal,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -779,7 +779,7 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
               'Seu convite será enviado em breve.\nVerifique seu e-mail e WhatsApp.',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
                 fontSize: 12,
                 height: 1.8,
                 letterSpacing: 0.3,
@@ -799,10 +799,10 @@ class _RequestInviteScreenState extends State<RequestInviteScreen>
           FadeTransition(
             opacity: _successFade,
             child: Text(
-              'TABU BAR & LOUNGE',
+              'TCLUB BAR & LOUNGE',
               style: theme.textTheme.labelSmall?.copyWith(
                 letterSpacing: 5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
                 fontSize: 7,
               ),
             ),
@@ -972,25 +972,25 @@ class _ActionButtonState extends State<_ActionButton>
           gradient: widget.enabled
               ? LinearGradient(
                   colors: _pressed
-                      ? [TabuColors.rosaDeep, TabuColors.rosaPrincipal]
-                      : [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                      ? [TClubColors.redDeep, TClubColors.redPrincipal]
+                      : [TClubColors.redPrincipal, TClubColors.redClaro],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 )
               : null,
-          color: widget.enabled ? null : TabuColors.bgCard,
+          color: widget.enabled ? null : TClubColors.bgCard,
           border: Border.all(
-            color: widget.enabled ? Colors.transparent : TabuColors.border,
+            color: widget.enabled ? Colors.transparent : TClubColors.border,
             width: 0.8,
           ),
           boxShadow: widget.enabled && !_pressed
               ? [
                   BoxShadow(
-                      color: TabuColors.glow,
+                      color: TClubColors.glow,
                       blurRadius: 24,
                       offset: const Offset(0, 6)),
                   BoxShadow(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                      color: TClubColors.redPrincipal.withOpacity(0.25),
                       blurRadius: 32,
                       offset: const Offset(0, 12)),
                 ]
@@ -1016,7 +1016,7 @@ class _ActionButtonState extends State<_ActionButton>
                 fontSize: 12,
                 letterSpacing: 5,
                 fontWeight: FontWeight.w700,
-                color: widget.enabled ? TabuColors.textoPrincipal : TabuColors.subtle,
+                color: widget.enabled ? TClubColors.textoPrincipal : TClubColors.subtle,
               ),
             ),
           ],
@@ -1038,19 +1038,19 @@ class _EnvelopeRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.12)
+          ..color = TClubColors.redPrincipal.withOpacity(0.12)
           ..style = PaintingStyle.fill);
     canvas.drawCircle(
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.4)
+          ..color = TClubColors.redPrincipal.withOpacity(0.4)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
 
     final bodyPaint = Paint()
-      ..color = TabuColors.rosaPrincipal
+      ..color = TClubColors.redPrincipal
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round
@@ -1074,7 +1074,7 @@ class _EnvelopeRosaIcon extends CustomPainter {
     canvas.drawRRect(
         envelopeRect,
         Paint()
-          ..color = TabuColors.glow
+          ..color = TClubColors.glow
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
@@ -1096,14 +1096,14 @@ class _SuccessRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.15)
+          ..color = TClubColors.redPrincipal.withOpacity(0.15)
           ..style = PaintingStyle.fill);
     // Borda com glow
     canvas.drawCircle(
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal
+          ..color = TClubColors.redPrincipal
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6));
@@ -1112,7 +1112,7 @@ class _SuccessRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.textoPrincipal.withOpacity(0.4)
+          ..color = TClubColors.textoPrincipal.withOpacity(0.4)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0);
 
@@ -1125,7 +1125,7 @@ class _SuccessRosaIcon extends CustomPainter {
     canvas.drawPath(
         check,
         Paint()
-          ..color = TabuColors.glow
+          ..color = TClubColors.glow
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4
           ..strokeCap = StrokeCap.round
@@ -1135,7 +1135,7 @@ class _SuccessRosaIcon extends CustomPainter {
     canvas.drawPath(
         check,
         Paint()
-          ..color = TabuColors.textoPrincipal
+          ..color = TClubColors.textoPrincipal
           ..style = PaintingStyle.stroke
           ..strokeWidth = 3
           ..strokeCap = StrokeCap.round
@@ -1185,7 +1185,7 @@ class _FundoEscuroPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // Base escura
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
 
     // Halo rosa superior animado
     final neonRadius = size.width * (0.85 + progress * 0.18);
@@ -1195,8 +1195,8 @@ class _FundoEscuroPainter extends CustomPainter {
       Paint()
         ..shader = RadialGradient(
           colors: [
-            TabuColors.rosaPrincipal.withOpacity(0.18 - progress * 0.05),
-            TabuColors.rosaDeep.withOpacity(0.06),
+            TClubColors.redPrincipal.withOpacity(0.18 - progress * 0.05),
+            TClubColors.redDeep.withOpacity(0.06),
             Colors.transparent,
           ],
           stops: const [0.0, 0.45, 1.0],
@@ -1213,7 +1213,7 @@ class _FundoEscuroPainter extends CustomPainter {
       sombraRadius,
       Paint()
         ..shader = RadialGradient(
-          colors: [TabuColors.bgAlt.withOpacity(0.9), Colors.transparent],
+          colors: [TClubColors.bgAlt.withOpacity(0.9), Colors.transparent],
         ).createShader(Rect.fromCircle(
           center: Offset(size.width * 1.1, size.height * 0.85),
           radius: sombraRadius,
@@ -1228,7 +1228,7 @@ class _FundoEscuroPainter extends CustomPainter {
           center: const Alignment(0.0, -0.2),
           radius: 0.65,
           colors: [
-            TabuColors.rosaDeep.withOpacity(0.10 + progress * 0.04),
+            TClubColors.redDeep.withOpacity(0.10 + progress * 0.04),
             Colors.transparent,
           ],
         ).createShader(Rect.fromLTWH(0, 0, size.width, size.height)),
@@ -1238,3 +1238,4 @@ class _FundoEscuroPainter extends CustomPainter {
   @override
   bool shouldRepaint(_FundoEscuroPainter old) => old.progress != progress;
 }
+

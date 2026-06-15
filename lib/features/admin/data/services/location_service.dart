@@ -85,3 +85,4 @@ class LocationService {
     return '${km.round()} km';
   }
 }
+

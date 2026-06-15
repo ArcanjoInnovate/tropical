@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
-import 'package:tabuapp/features/admin/data/services/location_service.dart';
-import 'package:tabuapp/features/admin/data/services/party_service.dart';
-import 'package:tabuapp/features/party/presentation/pages/edit_party_screen.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/features/party/presentation/pages/create_party_screen.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
+import 'package:tclub/features/admin/data/services/location_service.dart';
+import 'package:tclub/features/admin/data/services/party_service.dart';
+import 'package:tclub/features/party/presentation/pages/edit_party_screen.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/features/party/presentation/pages/create_party_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'party_attendees_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -167,7 +167,7 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
         : (widget.userData['name'] as String? ?? '').toUpperCase();
 
     return Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: Stack(children: [
           Positioned.fill(child: CustomPaint(painter: _AdmBg())),
 
@@ -179,17 +179,17 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                   height: 3,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(colors: [
-                    TabuColors.rosaDeep,
-                    TabuColors.rosaPrincipal,
-                    TabuColors.rosaClaro,
-                    TabuColors.rosaPrincipal,
-                    TabuColors.rosaDeep,
+                    TClubColors.redDeep,
+                    TClubColors.redPrincipal,
+                    TClubColors.redClaro,
+                    TClubColors.redPrincipal,
+                    TClubColors.redDeep,
                   ])))),
 
           SafeArea(
               child: RefreshIndicator(
-            color: TabuColors.rosaPrincipal,
-            backgroundColor: TabuColors.bgAlt,
+            color: TClubColors.redPrincipal,
+            backgroundColor: TClubColors.bgAlt,
             onRefresh: _carregarFestas,
             child: CustomScrollView(
                 physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
@@ -201,12 +201,12 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                             ShaderMask(
                                 shaderCallback: (b) => const LinearGradient(
                                         colors: [
-                                          TabuColors.rosaPrincipal,
-                                          TabuColors.rosaClaro
+                                          TClubColors.redPrincipal,
+                                          TClubColors.redClaro
                                         ]).createShader(b),
                                 child: const Text('FESTAS',
                                     style: TextStyle(
-                                        fontFamily: TabuTypography.displayFont,
+                                        fontFamily: TClubTypography.displayFont,
                                         fontSize: 28,
                                         letterSpacing: 6,
                                         color: Colors.white))),
@@ -215,19 +215,19 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 3),
                                 decoration: BoxDecoration(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.15),
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.4),
                                         width: 0.7)),
                                 child: const Text('ADMIN',
                                     style: TextStyle(
-                                        fontFamily: TabuTypography.bodyFont,
+                                        fontFamily: TClubTypography.bodyFont,
                                         fontSize: 8,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 2,
-                                        color: TabuColors.rosaPrincipal))),
+                                        color: TClubColors.redPrincipal))),
                             const Spacer(),
                             CachedAvatar(
                                 uid: _uid,
@@ -244,7 +244,7 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                                 width: 5,
                                 height: 5,
                                 decoration: const BoxDecoration(
-                                    color: TabuColors.rosaPrincipal,
+                                    color: TClubColors.redPrincipal,
                                     shape: BoxShape.circle)),
                             const SizedBox(width: 8),
                             Text(
@@ -252,15 +252,15 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                                     ? 'CARREGANDO...'
                                     : '${_visibleFestas.length} FESTAS ATIVAS',
                                 style: const TextStyle(
-                                    fontFamily: TabuTypography.bodyFont,
+                                    fontFamily: TClubTypography.bodyFont,
                                     fontSize: 9,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 3,
-                                    color: TabuColors.rosaPrincipal)),
+                                    color: TClubColors.redPrincipal)),
                             const SizedBox(width: 12),
                             Expanded(
                                 child: Container(
-                                    height: 0.5, color: TabuColors.border)),
+                                    height: 0.5, color: TClubColors.border)),
                           ]))),
                   if (_loading)
                     const SliverToBoxAdapter(child: _FestaSkeleton())
@@ -275,28 +275,28 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                                   width: 56,
                                   height: 56,
                                   decoration: BoxDecoration(
-                                      color: TabuColors.bgCard,
+                                      color: TClubColors.bgCard,
                                       border: Border.all(
-                                          color: TabuColors.border,
+                                          color: TClubColors.border,
                                           width: 0.8)),
                                   child: const Icon(
                                       Icons.local_fire_department_outlined,
-                                      color: TabuColors.border,
+                                      color: TClubColors.border,
                                       size: 24)),
                               const SizedBox(height: 16),
                               const Text('NENHUMA FESTA CRIADA',
                                   style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 9,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 3,
-                                      color: TabuColors.subtle)),
+                                      color: TClubColors.subtle)),
                               const SizedBox(height: 8),
                               const Text('Toque em CRIAR FESTA para começar',
                                   style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
-                                      color: TabuColors.subtle)),
+                                      color: TClubColors.subtle)),
                             ])))
                   else
                     SliverPadding(
@@ -331,11 +331,11 @@ class _HomeScreenAdministrativeState extends State<HomeScreenAdministrative> {
                       height: 56,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFFFF6B6B), TabuColors.rosaPrincipal],
+                          colors: [Color(0xFFFF6B6B), TClubColors.redPrincipal],
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: TabuColors.glow.withOpacity(0.5),
+                            color: TClubColors.glow.withOpacity(0.5),
                             blurRadius: 20,
                             offset: const Offset(0, 6),
                           ),
@@ -389,8 +389,8 @@ class _FestaListTile extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             height: 120,
             decoration: BoxDecoration(
-                color: TabuColors.bgCard,
-                border: Border.all(color: TabuColors.borderMid, width: 0.8)),
+                color: TClubColors.bgCard,
+                border: Border.all(color: TClubColors.borderMid, width: 0.8)),
             child: Row(children: [
               SizedBox(
                   width: 100,
@@ -415,11 +415,11 @@ class _FestaListTile extends StatelessWidget {
                                   Container(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 6, vertical: 2),
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                       child: Text(_fd(festa.dataInicio),
                                           style: const TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 7,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 1.5,
@@ -430,10 +430,10 @@ class _FestaListTile extends StatelessWidget {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 6, vertical: 2),
                                         decoration: BoxDecoration(
-                                            color: TabuColors.rosaPrincipal
+                                            color: TClubColors.redPrincipal
                                                 .withOpacity(0.12),
                                             border: Border.all(
-                                                color: TabuColors.rosaPrincipal
+                                                color: TClubColors.redPrincipal
                                                     .withOpacity(0.4),
                                                 width: 0.7)),
                                         child: Row(
@@ -441,19 +441,19 @@ class _FestaListTile extends StatelessWidget {
                                             children: [
                                               const Icon(Icons.near_me_rounded,
                                                   color:
-                                                      TabuColors.rosaPrincipal,
+                                                      TClubColors.redPrincipal,
                                                   size: 8),
                                               const SizedBox(width: 3),
                                               Text(dist,
                                                   style: const TextStyle(
-                                                      fontFamily: TabuTypography
+                                                      fontFamily: TClubTypography
                                                           .bodyFont,
                                                       fontSize: 7,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       letterSpacing: 1,
-                                                      color: TabuColors
-                                                          .rosaPrincipal)),
+                                                      color: TClubColors
+                                                          .redPrincipal)),
                                             ])),
                                   ],
                                 ]),
@@ -462,14 +462,14 @@ class _FestaListTile extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
-                                        fontFamily: TabuTypography.displayFont,
+                                        fontFamily: TClubTypography.displayFont,
                                         fontSize: 15,
                                         letterSpacing: 1.5,
-                                        color: TabuColors.textoPrincipal)),
+                                        color: TClubColors.textoPrincipal)),
                                 const SizedBox(height: 3),
                                 Row(children: [
                                   const Icon(Icons.location_on_outlined,
-                                      color: TabuColors.subtle, size: 10),
+                                      color: TClubColors.subtle, size: 10),
                                   const SizedBox(width: 3),
                                   Expanded(
                                       child: Text(
@@ -480,9 +480,9 @@ class _FestaListTile extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
-                                              color: TabuColors.subtle))),
+                                              color: TClubColors.subtle))),
                                 ]),
                               ]),
                           Row(children: [
@@ -496,7 +496,7 @@ class _FestaListTile extends StatelessWidget {
                                 festa.commentCount),
                             const Spacer(),
                             const Icon(Icons.chevron_right_rounded,
-                                color: TabuColors.subtle, size: 16),
+                                color: TClubColors.subtle, size: 16),
                           ]),
                         ])),
               ),
@@ -536,13 +536,13 @@ class _Chip extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(icon, color: TabuColors.subtle, size: 11),
+        Icon(icon, color: TClubColors.subtle, size: 11),
         const SizedBox(width: 3),
         Text('$count',
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
-                color: TabuColors.subtle)),
+                color: TClubColors.subtle)),
       ]);
 }
 
@@ -582,10 +582,10 @@ class _FestaDetalheSheet extends StatelessWidget {
         minChildSize: 0.4,
         builder: (_, ctrl) => Container(
             decoration: const BoxDecoration(
-                color: TabuColors.bgAlt,
+                color: TClubColors.bgAlt,
                 border: Border(
                     top: BorderSide(
-                        color: TabuColors.rosaPrincipal, width: 1.5))),
+                        color: TClubColors.redPrincipal, width: 1.5))),
             child: ListView(controller: ctrl, children: [
               Container(
                   width: 36,
@@ -596,15 +596,15 @@ class _FestaDetalheSheet extends StatelessWidget {
                       width: 36,
                       height: 3,
                       decoration: BoxDecoration(
-                          color: TabuColors.border,
+                          color: TClubColors.border,
                           borderRadius: BorderRadius.circular(2)))),
               if (temBanner)
                 SizedBox(
                     height: 180,
                     child: CachedNetworkImage(imageUrl: CloudinaryHelper.bannerUrl(festa.bannerUrl!),
                         fit: BoxFit.cover, fadeInDuration: const Duration(milliseconds: 200),
-                        placeholder: (_, __) => Container(color: TabuColors.bgCard),
-                        errorWidget: (_, __, ___) => Container(color: TabuColors.bgCard))),
+                        placeholder: (_, __) => Container(color: TClubColors.bgCard),
+                        errorWidget: (_, __, ___) => Container(color: TClubColors.bgCard))),
               Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -612,17 +612,17 @@ class _FestaDetalheSheet extends StatelessWidget {
                       children: [
                         Text(festa.nome.toUpperCase(),
                             style: const TextStyle(
-                                fontFamily: TabuTypography.displayFont,
+                                fontFamily: TClubTypography.displayFont,
                                 fontSize: 24,
                                 letterSpacing: 3,
-                                color: TabuColors.textoPrincipal)),
+                                color: TClubColors.textoPrincipal)),
 
                         const SizedBox(height: 10),
 
                         // Localização + badge de distância
                         Row(children: [
                           const Icon(Icons.location_on_outlined,
-                              color: TabuColors.rosaPrincipal, size: 13),
+                              color: TClubColors.redPrincipal, size: 13),
                           const SizedBox(width: 5),
                           Expanded(
                               child: Text(
@@ -630,36 +630,36 @@ class _FestaDetalheSheet extends StatelessWidget {
                                       ? festa.local!
                                       : 'Local não confirmado',
                                   style: const TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 13,
-                                      color: TabuColors.rosaClaro))),
+                                      color: TClubColors.redClaro))),
                           if (dist != null) ...[
                             const SizedBox(width: 8),
                             Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.12),
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.5),
                                         width: 0.8)),
                                 child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       const Icon(Icons.near_me_rounded,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                           size: 11),
                                       const SizedBox(width: 4),
                                       Text(dist,
                                           style: const TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 1,
-                                              color: TabuColors.rosaPrincipal)),
+                                              color: TClubColors.redPrincipal)),
                                     ])),
                           ],
                         ]),
@@ -667,30 +667,30 @@ class _FestaDetalheSheet extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(children: [
                           const Icon(Icons.schedule_outlined,
-                              color: TabuColors.subtle, size: 13),
+                              color: TClubColors.subtle, size: 13),
                           const SizedBox(width: 5),
                           Text(
                               '${_fh(festa.dataInicio)} – ${_fh(festa.dataFim)}',
                               style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 12,
-                                  color: TabuColors.dim)),
+                                  color: TClubColors.dim)),
                         ]),
 
                         if (festa.descricao.isNotEmpty) ...[
                           const SizedBox(height: 16),
                           Text(festa.descricao,
                               style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 14,
-                                  color: TabuColors.dim,
+                                  color: TClubColors.dim,
                                   height: 1.6)),
                         ],
 
                         const SizedBox(height: 24),
                         Row(children: [
                           _StatBox('INTERESSADOS', festa.interessados,
-                              Icons.star_rounded, TabuColors.rosaClaro),
+                              Icons.star_rounded, TClubColors.redClaro),
                           const SizedBox(width: 10),
                           _StatBox(
                               'CONFIRMADOS',
@@ -702,7 +702,7 @@ class _FestaDetalheSheet extends StatelessWidget {
                               'COMENTÁRIOS',
                               festa.commentCount,
                               Icons.chat_bubble_rounded,
-                              TabuColors.rosaPrincipal),
+                              TClubColors.redPrincipal),
                         ]),
 
                         const SizedBox(height: 16),
@@ -735,9 +735,9 @@ class _FestaDetalheSheet extends StatelessWidget {
                             width: double.infinity,
                             height: 48,
                             decoration: BoxDecoration(
-                              color: TabuColors.bgCard,
+                              color: TClubColors.bgCard,
                               border: Border.all(
-                                color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                                color: TClubColors.redPrincipal.withOpacity(0.4),
                                 width: 0.8,
                               ),
                             ),
@@ -745,35 +745,35 @@ class _FestaDetalheSheet extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Icon(Icons.people_outline_rounded,
-                                    color: TabuColors.rosaPrincipal, size: 15),
+                                    color: TClubColors.redPrincipal, size: 15),
                                 const SizedBox(width: 8),
                                 const Text('VER PARTICIPANTES',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2.5,
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                     )),
                                 const SizedBox(width: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 6, vertical: 2),
                                   decoration: BoxDecoration(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.12),
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.3),
                                         width: 0.7),
                                   ),
                                   child: Text(
                                     '${festa.interessados + festa.confirmados}',
                                     style: const TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 9,
                                       fontWeight: FontWeight.w700,
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                     ),
                                   ),
                                 ),
@@ -816,26 +816,26 @@ class _FestaDetalheSheet extends StatelessWidget {
                               child: Container(
                                 height: 48,
                                 decoration: BoxDecoration(
-                                    color: TabuColors.bgCard,
+                                    color: TClubColors.bgCard,
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.5),
                                         width: 0.8)),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       const Icon(Icons.edit_rounded,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                           size: 15),
                                       const SizedBox(width: 8),
                                       const Text('EDITAR',
                                           style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 11,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
-                                              color: TabuColors.rosaPrincipal)),
+                                              color: TClubColors.redPrincipal)),
                                     ]),
                               ),
                             ),
@@ -850,22 +850,22 @@ class _FestaDetalheSheet extends StatelessWidget {
                                 final confirm = await showDialog<bool>(
                                   context: context,
                                   builder: (_) => AlertDialog(
-                                    backgroundColor: TabuColors.bgAlt,
+                                    backgroundColor: TClubColors.bgAlt,
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.zero),
                                     title: const Text('EXCLUIR FESTA',
                                         style: TextStyle(
                                             fontFamily:
-                                                TabuTypography.displayFont,
+                                                TClubTypography.displayFont,
                                             fontSize: 16,
                                             letterSpacing: 2,
-                                            color: TabuColors.textoPrincipal)),
+                                            color: TClubColors.textoPrincipal)),
                                     content: Text(
                                         'Tem certeza que deseja excluir "${festa.nome}"? Esta ação não pode ser desfeita.',
                                         style: const TextStyle(
-                                            fontFamily: TabuTypography.bodyFont,
+                                            fontFamily: TClubTypography.bodyFont,
                                             fontSize: 13,
-                                            color: TabuColors.dim,
+                                            color: TClubColors.dim,
                                             height: 1.5)),
                                     actions: [
                                       TextButton(
@@ -874,10 +874,10 @@ class _FestaDetalheSheet extends StatelessWidget {
                                         child: const Text('CANCELAR',
                                             style: TextStyle(
                                                 fontFamily:
-                                                    TabuTypography.bodyFont,
+                                                    TClubTypography.bodyFont,
                                                 fontSize: 10,
                                                 letterSpacing: 2,
-                                                color: TabuColors.subtle)),
+                                                color: TClubColors.subtle)),
                                       ),
                                       TextButton(
                                         onPressed: () =>
@@ -885,7 +885,7 @@ class _FestaDetalheSheet extends StatelessWidget {
                                         child: const Text('EXCLUIR',
                                             style: TextStyle(
                                                 fontFamily:
-                                                    TabuTypography.bodyFont,
+                                                    TClubTypography.bodyFont,
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.w700,
                                                 letterSpacing: 2,
@@ -917,7 +917,7 @@ class _FestaDetalheSheet extends StatelessWidget {
                                       const Text('EXCLUIR',
                                           style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 11,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
@@ -953,15 +953,15 @@ class _StatBox extends StatelessWidget {
             const SizedBox(height: 6),
             Text('$value',
                 style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 18,
                     color: color)),
             Text(label,
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 7,
                     letterSpacing: 1.5,
-                    color: TabuColors.subtle)),
+                    color: TClubColors.subtle)),
           ])));
 }
 
@@ -977,22 +977,22 @@ class _FestaSkeleton extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 12),
                   height: 120,
                   decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
+                      color: TClubColors.bgCard,
                       border:
-                          Border.all(color: TabuColors.border, width: 0.8))))));
+                          Border.all(color: TClubColors.border, width: 0.8))))));
 }
 
 class _AdmBg extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     canvas.drawCircle(
         Offset(size.width * 0.85, size.height * 0.08),
         size.width * 0.7,
         Paint()
           ..shader = RadialGradient(colors: [
-            TabuColors.rosaPrincipal.withOpacity(0.07),
+            TClubColors.redPrincipal.withOpacity(0.07),
             Colors.transparent,
           ]).createShader(Rect.fromCircle(
               center: Offset(size.width * 0.85, size.height * 0.08),
@@ -1083,7 +1083,7 @@ class _ConviteTile extends StatelessWidget {
                         color: _statusColor.withOpacity(0.4), width: 0.7)),
                 child: Text(_statusLabel,
                     style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 8,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2,
@@ -1091,7 +1091,7 @@ class _ConviteTile extends StatelessWidget {
             const Spacer(),
             Text(_formatTs(ts),
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     color: Colors.white24,
                     letterSpacing: 0.3)),
@@ -1102,7 +1102,7 @@ class _ConviteTile extends StatelessWidget {
           // ── Dados do solicitante ────────────────────────────────────────
           Text(name.toUpperCase(),
               style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -1113,7 +1113,7 @@ class _ConviteTile extends StatelessWidget {
             const SizedBox(width: 5),
             Text(email,
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     color: Colors.white38,
                     letterSpacing: 0.3)),
@@ -1134,7 +1134,7 @@ class _ConviteTile extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 11,
                         height: 1.5,
                         color: Colors.white54,
@@ -1151,7 +1151,7 @@ class _ConviteTile extends StatelessWidget {
               Expanded(
                   child: Text(motivoRej,
                       style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 10,
                           color: Color(0xFFE85D5D),
                           height: 1.5,
@@ -1167,7 +1167,7 @@ class _ConviteTile extends StatelessWidget {
               const SizedBox(width: 4),
               Text(protocolo,
                   style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 8,
                       color: Colors.white24,
                       letterSpacing: 1)),
@@ -1185,7 +1185,7 @@ class _ConviteTile extends StatelessWidget {
                       child: CircularProgressIndicator(
                           strokeWidth: 1.5,
                           valueColor: AlwaysStoppedAnimation(
-                              TabuColors.rosaPrincipal))))
+                              TClubColors.redPrincipal))))
             else
               Row(children: [
                 // APROVAR
@@ -1208,7 +1208,7 @@ class _ConviteTile extends StatelessWidget {
                                 SizedBox(width: 6),
                                 Text('APROVAR',
                                     style: TextStyle(
-                                        fontFamily: TabuTypography.bodyFont,
+                                        fontFamily: TClubTypography.bodyFont,
                                         fontSize: 9,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 2,
@@ -1236,7 +1236,7 @@ class _ConviteTile extends StatelessWidget {
                                 SizedBox(width: 6),
                                 Text('RECUSAR',
                                     style: TextStyle(
-                                        fontFamily: TabuTypography.bodyFont,
+                                        fontFamily: TClubTypography.bodyFont,
                                         fontSize: 9,
                                         letterSpacing: 2,
                                         color: Color(0xFFE85D5D))),
@@ -1249,3 +1249,4 @@ class _ConviteTile extends StatelessWidget {
     );
   }
 }
+

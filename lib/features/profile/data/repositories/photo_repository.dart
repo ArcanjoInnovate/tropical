@@ -39,3 +39,4 @@ class PhotosRepository implements IPhotoRepository {
     });
   }
 }
+

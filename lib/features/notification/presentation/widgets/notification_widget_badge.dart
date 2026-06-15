@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/notification/data/services/notification_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/notification/data/services/notification_service.dart';
  
 class NotificationBadge extends StatelessWidget {
   final String uid;
@@ -31,18 +31,18 @@ class NotificationBadge extends StatelessWidget {
                 constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 decoration: BoxDecoration(
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: TabuColors.bg, width: 1.5),
+                  border: Border.all(color: TClubColors.bg, width: 1.5),
                   boxShadow: [BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.5),
+                    color: TClubColors.glow.withOpacity(0.5),
                     blurRadius: 6,
                   )],
                 ),
                 child: Center(child: Text(
                   count > 99 ? '99+' : '$count',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8, fontWeight: FontWeight.w700,
                     color: Colors.white, letterSpacing: 0.5,
                   ),
@@ -54,3 +54,4 @@ class NotificationBadge extends StatelessWidget {
     );
   }
 }
+

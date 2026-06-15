@@ -14,9 +14,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/controller/auth_controller.dart';
-import 'package:tabuapp/core/widgets/main_navigation.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/controller/auth_controller.dart';
+import 'package:tclub/core/widgets/main_navigation.dart';
 
 class RegisterCreatingScreen extends StatefulWidget {
   final String   nome;
@@ -212,7 +212,7 @@ class _RegisterCreatingScreenState extends State<RegisterCreatingScreen>
     final size  = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         Positioned.fill(
           child: AnimatedBuilder(
@@ -258,7 +258,7 @@ extension _CreatingStepExt on _CreatingStep {
       case _CreatingStep.criandoConta:       return 'Criando sua conta...';
       case _CreatingStep.configurandoPerfil: return 'Configurando seu perfil...';
       case _CreatingStep.finalizando:        return 'Quase lá...';
-      case _CreatingStep.concluido:          return 'Bem-vindo ao TABU!';
+      case _CreatingStep.concluido:          return 'Bem-vindo ao TCLUB!';
     }
   }
 
@@ -314,25 +314,25 @@ class _LoadingView extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isDone ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                  color: isDone ? TClubColors.redPrincipal : TClubColors.borderMid,
                   width: isDone ? 2.5 : 1.5,
                 ),
                 boxShadow: isDone ? [
-                  BoxShadow(color: TabuColors.glow.withOpacity(0.5), blurRadius: 40, spreadRadius: 4),
+                  BoxShadow(color: TClubColors.glow.withOpacity(0.5), blurRadius: 40, spreadRadius: 4),
                 ] : [],
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
               ),
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 child: isDone
                     ? const Icon(Icons.check_rounded,
                         key: ValueKey('check'),
-                        color: TabuColors.rosaPrincipal, size: 44)
+                        color: TClubColors.redPrincipal, size: 44)
                     : const Padding(
                         key: ValueKey('logo'),
                         padding: EdgeInsets.all(28),
                         child: CircularProgressIndicator(
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                           strokeWidth: 2,
                         ),
                       ),
@@ -360,7 +360,7 @@ class _LoadingView extends StatelessWidget {
             textAlign: TextAlign.center,
             style: theme.textTheme.titleLarge?.copyWith(
               fontSize: 20, fontWeight: FontWeight.w700,
-              color: isDone ? TabuColors.rosaPrincipal : TabuColors.textoPrincipal,
+              color: isDone ? TClubColors.redPrincipal : TClubColors.textoPrincipal,
               letterSpacing: 0.5,
             ),
           ),
@@ -376,7 +376,7 @@ class _LoadingView extends StatelessWidget {
                   key: const ValueKey('done-sub'),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    fontSize: 14, color: TabuColors.dim, height: 1.6,
+                    fontSize: 14, color: TClubColors.dim, height: 1.6,
                   ),
                 )
               : Text(
@@ -386,7 +386,7 @@ class _LoadingView extends StatelessWidget {
                   key: const ValueKey('loading-sub'),
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    fontSize: 13, color: TabuColors.subtle, height: 1.6,
+                    fontSize: 13, color: TClubColors.subtle, height: 1.6,
                   ),
                 ),
         ),
@@ -419,9 +419,9 @@ class _LoadingView extends StatelessWidget {
   Widget _stepLabel(String text, bool done) => Text(
     text,
     style: TextStyle(
-      fontFamily: TabuTypography.bodyFont,
+      fontFamily: TClubTypography.bodyFont,
       fontSize: 8, letterSpacing: 1.5,
-      color: done ? TabuColors.rosaPrincipal : TabuColors.subtle,
+      color: done ? TClubColors.redPrincipal : TClubColors.subtle,
       fontWeight: done ? FontWeight.w700 : FontWeight.w400,
     ),
   );
@@ -448,12 +448,12 @@ class _StepProgressBar extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(2),
                   color: done
-                      ? TabuColors.rosaPrincipal
+                      ? TClubColors.redPrincipal
                       : active
-                          ? TabuColors.rosaPrincipal.withOpacity(0.5)
-                          : TabuColors.border,
+                          ? TClubColors.redPrincipal.withOpacity(0.5)
+                          : TClubColors.border,
                   boxShadow: done ? [
-                    BoxShadow(color: TabuColors.glow.withOpacity(0.6), blurRadius: 6),
+                    BoxShadow(color: TClubColors.glow.withOpacity(0.6), blurRadius: 6),
                   ] : [],
                 ),
               ),
@@ -484,7 +484,7 @@ class _ErrorView extends StatelessWidget {
             width: 80, height: 80,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: TabuColors.bgCard,
+              color: TClubColors.bgCard,
               border: Border.all(color: Colors.redAccent.withOpacity(0.4), width: 1.5),
             ),
             child: const Icon(Icons.error_outline_rounded, color: Colors.redAccent, size: 36),
@@ -496,7 +496,7 @@ class _ErrorView extends StatelessWidget {
             'Ops! Algo deu errado',
             textAlign: TextAlign.center,
             style: theme.textTheme.titleLarge?.copyWith(
-              fontSize: 20, fontWeight: FontWeight.w700, color: TabuColors.textoPrincipal,
+              fontSize: 20, fontWeight: FontWeight.w700, color: TClubColors.textoPrincipal,
             ),
           ),
 
@@ -506,7 +506,7 @@ class _ErrorView extends StatelessWidget {
             message,
             textAlign: TextAlign.center,
             style: theme.textTheme.bodySmall?.copyWith(
-              fontSize: 14, color: TabuColors.dim, height: 1.6,
+              fontSize: 14, color: TClubColors.dim, height: 1.6,
             ),
           ),
 
@@ -518,21 +518,21 @@ class _ErrorView extends StatelessWidget {
               width: double.infinity, height: 56,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                  colors: [TClubColors.redPrincipal, TClubColors.redClaro],
                   begin: Alignment.centerLeft, end: Alignment.centerRight,
                 ),
                 boxShadow: [
-                  BoxShadow(color: TabuColors.glow, blurRadius: 20, offset: Offset(0, 6)),
+                  BoxShadow(color: TClubColors.glow, blurRadius: 20, offset: Offset(0, 6)),
                 ],
               ),
               child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                const Icon(Icons.refresh_rounded, color: TabuColors.textoPrincipal, size: 18),
+                const Icon(Icons.refresh_rounded, color: TClubColors.textoPrincipal, size: 18),
                 const SizedBox(width: 10),
                 Text(
                   'TENTAR NOVAMENTE',
                   style: theme.textTheme.labelLarge?.copyWith(
                     fontSize: 13, letterSpacing: 3,
-                    fontWeight: FontWeight.w700, color: TabuColors.textoPrincipal,
+                    fontWeight: FontWeight.w700, color: TClubColors.textoPrincipal,
                   ),
                 ),
               ]),
@@ -553,15 +553,15 @@ class _CreatingBgPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = TabuColors.bg,
+      Paint()..color = TClubColors.bg,
     );
 
     final r = size.width * (0.7 + progress * 0.2);
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2), r,
       Paint()..shader = RadialGradient(colors: [
-        TabuColors.rosaPrincipal.withOpacity(0.12 + progress * 0.04),
-        TabuColors.rosaDeep.withOpacity(0.06),
+        TClubColors.redPrincipal.withOpacity(0.12 + progress * 0.04),
+        TClubColors.redDeep.withOpacity(0.06),
         Colors.transparent,
       ], stops: const [0.0, 0.4, 1.0]).createShader(
         Rect.fromCircle(center: Offset(size.width / 2, size.height / 2), radius: r),
@@ -572,7 +572,7 @@ class _CreatingBgPainter extends CustomPainter {
     canvas.drawCircle(
       Offset(size.width * 0.8, size.height * 0.85), r2,
       Paint()..shader = RadialGradient(colors: [
-        TabuColors.rosaDeep.withOpacity(0.10 + progress * 0.03),
+        TClubColors.redDeep.withOpacity(0.10 + progress * 0.03),
         Colors.transparent,
       ], stops: const [0.0, 1.0]).createShader(
         Rect.fromCircle(
@@ -580,7 +580,7 @@ class _CreatingBgPainter extends CustomPainter {
       ),
     );
 
-    final paint = Paint()..color = TabuColors.rosaPrincipal.withOpacity(0.08);
+    final paint = Paint()..color = TClubColors.redPrincipal.withOpacity(0.08);
     final rng = math.Random(42);
     for (int i = 0; i < 8; i++) {
       canvas.drawCircle(
@@ -594,3 +594,4 @@ class _CreatingBgPainter extends CustomPainter {
   @override
   bool shouldRepaint(_CreatingBgPainter old) => old.progress != progress;
 }
+

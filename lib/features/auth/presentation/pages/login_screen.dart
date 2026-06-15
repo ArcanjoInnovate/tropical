@@ -3,14 +3,15 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/data/services/auth_service.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/ban_page.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/suspension_page.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/warning_page.dart';
-import 'package:tabuapp/core/guards/auth_guard.dart';
-import 'package:tabuapp/features/auth/presentation/pages/acess_code_screen.dart';
-import 'package:tabuapp/features/auth/presentation/pages/register_screen.dart';
+import 'package:tclub/core/constants/app_constants.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/data/services/auth_service.dart';
+import 'package:tclub/features/penalty/presentation/pages/ban_page.dart';
+import 'package:tclub/features/penalty/presentation/pages/suspension_page.dart';
+import 'package:tclub/features/penalty/presentation/pages/warning_page.dart';
+import 'package:tclub/core/guards/auth_guard.dart';
+import 'package:tclub/features/auth/presentation/pages/acess_code_screen.dart';
+import 'package:tclub/features/auth/presentation/pages/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final bool showRegister;
@@ -287,7 +288,7 @@ class _LoginScreenState extends State<LoginScreen>
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('E-mail de redefinição enviado para $email',
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11, letterSpacing: 0.5, color: Colors.white)),
         backgroundColor: const Color(0xFF1A0030),
         behavior: SnackBarBehavior.floating,
@@ -317,7 +318,7 @@ class _LoginScreenState extends State<LoginScreen>
     final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor:          TabuColors.bg,
+      backgroundColor:          TClubColors.bg,
       resizeToAvoidBottomInset: true,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -336,11 +337,11 @@ class _LoginScreenState extends State<LoginScreen>
                   height: 3,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(colors: [
-                        TabuColors.rosaDeep,
-                        TabuColors.rosaPrincipal,
-                        TabuColors.rosaClaro,
-                        TabuColors.rosaPrincipal,
-                        TabuColors.rosaDeep,
+                        TClubColors.redDeep,
+                        TClubColors.redPrincipal,
+                        TClubColors.redClaro,
+                        TClubColors.redPrincipal,
+                        TClubColors.redDeep,
                       ])))),
           SafeArea(
             child: SingleChildScrollView(
@@ -355,13 +356,13 @@ class _LoginScreenState extends State<LoginScreen>
                     children: [
                       SizedBox(height: size.height * 0.07),
                       const _LogoSection(),
-                      SizedBox(height: size.height * 0.05),
+                      SizedBox(height: size.height * 0.025),
                       Text('Bem-vindo de volta',
                           style: theme.textTheme.bodyMedium?.copyWith(
                               fontStyle: FontStyle.italic,
                               letterSpacing: 2,
                               fontSize: 13,
-                              color: TabuColors.dim)),
+                              color: TClubColors.dim)),
                       const SizedBox(height: 36),
 
                       // E-mail
@@ -421,7 +422,7 @@ class _LoginScreenState extends State<LoginScreen>
                           onTap: _forgotPassword,
                           child: Text('Esqueceu a senha?',
                               style: theme.textTheme.bodySmall?.copyWith(
-                                  color:       TabuColors.rosaClaro,
+                                  color:       TClubColors.redClaro,
                                   fontStyle:   FontStyle.italic,
                                   letterSpacing: 1,
                                   fontSize:    11)),
@@ -450,7 +451,7 @@ class _LoginScreenState extends State<LoginScreen>
                                             width:  4,
                                             height: 4,
                                             decoration: const BoxDecoration(
-                                                color: TabuColors.rosaPrincipal,
+                                                color: TClubColors.redPrincipal,
                                                 shape: BoxShape.circle)),
                                         const SizedBox(width: 8),
                                         Flexible(
@@ -458,8 +459,8 @@ class _LoginScreenState extends State<LoginScreen>
                                               textAlign: TextAlign.center,
                                               style: theme.textTheme.bodySmall
                                                   ?.copyWith(
-                                                      color: TabuColors
-                                                          .rosaPrincipal,
+                                                      color: TClubColors
+                                                          .redPrincipal,
                                                       fontSize:    11,
                                                       letterSpacing: 1,
                                                       fontWeight:
@@ -470,7 +471,7 @@ class _LoginScreenState extends State<LoginScreen>
                                             width:  4,
                                             height: 4,
                                             decoration: const BoxDecoration(
-                                                color: TabuColors.rosaPrincipal,
+                                                color: TClubColors.redPrincipal,
                                                 shape: BoxShape.circle)),
                                       ],
                                     ),
@@ -480,8 +481,8 @@ class _LoginScreenState extends State<LoginScreen>
                                           textAlign: TextAlign.center,
                                           style: theme.textTheme.bodySmall
                                               ?.copyWith(
-                                                  color: TabuColors
-                                                      .rosaPrincipal
+                                                  color: TClubColors
+                                                      .redPrincipal
                                                       .withOpacity(0.55),
                                                   fontSize:    10,
                                                   letterSpacing: 0.5,
@@ -516,14 +517,14 @@ class _LoginScreenState extends State<LoginScreen>
                                         text: 'Criar uma conta',
                                         style: theme.textTheme.labelLarge
                                             ?.copyWith(
-                                                color: TabuColors
-                                                    .rosaPrincipal,
+                                                color: TClubColors
+                                                    .redPrincipal,
                                                 letterSpacing: 1,
                                                 fontSize: 12,
                                                 decoration: TextDecoration
                                                     .underline,
-                                                decorationColor: TabuColors
-                                                    .rosaPrincipal
+                                                decorationColor: TClubColors
+                                                    .redPrincipal
                                                     .withOpacity(0.5))),
                                   ]),
                             ),
@@ -545,12 +546,12 @@ class _LoginScreenState extends State<LoginScreen>
                               children: [
                                 Icon(Icons.arrow_back_ios,
                                     size:  10,
-                                    color: TabuColors.subtle),
+                                    color: TClubColors.subtle),
                                 const SizedBox(width: 6),
                                 Text('Voltar ao código de acesso',
                                     style: theme.textTheme.bodySmall
                                         ?.copyWith(
-                                            color:       TabuColors.subtle,
+                                            color:       TClubColors.subtle,
                                             fontSize:    11,
                                             letterSpacing: 1,
                                             fontStyle: FontStyle.italic)),
@@ -560,10 +561,10 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
 
                       const SizedBox(height: 48),
-                      Text('— TABU BAR & LOUNGE —',
+                      Text('— TCLUB BAR & LOUNGE —',
                           style: theme.textTheme.labelSmall?.copyWith(
                               letterSpacing: 4,
-                              color:    TabuColors.subtle,
+                              color:    TClubColors.subtle,
                               fontSize: 8)),
                       const SizedBox(height: 24),
                     ],
@@ -576,20 +577,20 @@ class _LoginScreenState extends State<LoginScreen>
           if (_isLoading)
             Positioned.fill(
               child: Container(
-                color: TabuColors.bg.withOpacity(0.7),
+                color: TClubColors.bg.withOpacity(0.7),
                 child: Center(
                   child: Container(
                     width:  52,
                     height: 52,
                     decoration: BoxDecoration(
-                        color:  TabuColors.bgCard,
+                        color:  TClubColors.bgCard,
                         border: Border.all(
-                            color: TabuColors.border, width: 0.8)),
+                            color: TClubColors.border, width: 0.8)),
                     child: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CircularProgressIndicator(
                             strokeWidth: 1.5,
-                            color: TabuColors.rosaPrincipal)),
+                            color: TClubColors.redPrincipal)),
                   ),
                 ),
               ),
@@ -602,42 +603,19 @@ class _LoginScreenState extends State<LoginScreen>
 
 // ── Logo ───────────────────────────────────────────────────────────────────────
 class _LogoSection extends StatelessWidget {
+  
+
   const _LogoSection();
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
+
     return Column(children: [
-      SizedBox(
-          width:  64,
-          height: 64,
-          child:  CustomPaint(painter: _RosaGlowIcon())),
-      const SizedBox(height: 20),
-      Text('TABU',
-          style: theme.textTheme.displayMedium?.copyWith(
-              fontSize:      60,
-              letterSpacing: 24,
-              fontWeight:    FontWeight.w400,
-              color:         TabuColors.textoPrincipal,
-              height:        1,
-              shadows: [Shadow(color: TabuColors.glow, blurRadius: 24)])),
-      const SizedBox(height: 6),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize:      MainAxisSize.min,
-          children: [
-            Container(
-                width: 20, height: 1.5, color: TabuColors.rosaPrincipal),
-            const SizedBox(width: 10),
-            Text('LOUNGE',
-                style: theme.textTheme.labelSmall?.copyWith(
-                    color:         TabuColors.rosaPrincipal,
-                    letterSpacing: 6,
-                    fontSize:      10,
-                    fontWeight:    FontWeight.w700)),
-            const SizedBox(width: 10),
-            Container(
-                width: 20, height: 1.5, color: TabuColors.rosaPrincipal),
-          ]),
+      SizedBox(height:5),
+      Image.asset('assets/logo.png', width: size.width * 0.5, height: size.height * 0.2, fit: BoxFit.contain),
+      
+      
     ]);
   }
 }
@@ -649,10 +627,10 @@ class _RosaGlowIcon extends CustomPainter {
     final cy = size.height / 2;
     canvas.drawCircle(Offset(cx, cy), cx,
         Paint()
-          ..color       = TabuColors.rosaPrincipal.withOpacity(0.3)
+          ..color       = TClubColors.redPrincipal.withOpacity(0.3)
           ..style       = PaintingStyle.stroke
           ..strokeWidth = 1.5);
-    final rosa = Paint()..color = TabuColors.rosaPrincipal;
+    final rosa = Paint()..color = TClubColors.redPrincipal;
     canvas.drawCircle(Offset(cx, cy + 3), 11, rosa);
     canvas.drawCircle(Offset(cx - 9, cy + 6), 8, rosa);
     canvas.drawCircle(Offset(cx + 9, cy + 6), 8, rosa);
@@ -664,7 +642,7 @@ class _RosaGlowIcon extends CustomPainter {
             const Radius.circular(3)),
         rosa);
     final glow = Paint()
-      ..color       = TabuColors.glow
+      ..color       = TClubColors.glow
       ..style       = PaintingStyle.stroke
       ..strokeWidth = 1.2
       ..maskFilter  = const MaskFilter.blur(BlurStyle.normal, 4);
@@ -707,17 +685,17 @@ class _TabuTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final Color  labelColor  = hasError || isFocused
-        ? TabuColors.rosaPrincipal : TabuColors.subtle;
+        ? TClubColors.redPrincipal : TClubColors.subtle;
     final Color  borderColor = hasError
-        ? TabuColors.rosaPrincipal.withOpacity(0.8)
-        : isFocused ? TabuColors.borderMid : TabuColors.border;
+        ? TClubColors.redPrincipal.withOpacity(0.8)
+        : isFocused ? TClubColors.borderMid : TClubColors.border;
     final double borderWidth = hasError || isFocused ? 1.5 : 0.8;
     final Color  bgColor     = hasError
         ? const Color(0x1FE85D8A)
-        : isFocused ? const Color(0x14E85D8A) : TabuColors.bgCard;
+        : isFocused ? const Color(0x14E85D8A) : TClubColors.bgCard;
     final shadows = isFocused || hasError
         ? [BoxShadow(
-            color:      TabuColors.glow
+            color:      TClubColors.glow
                 .withOpacity(hasError ? 0.18 : 0.25),
             blurRadius: 12,
             offset:     const Offset(0, 4))]
@@ -745,19 +723,19 @@ class _TabuTextField extends StatelessWidget {
           style: theme.textTheme.bodyLarge?.copyWith(
               fontSize:      14,
               letterSpacing: 0.3,
-              color:         TabuColors.textoPrincipal),
+              color:         TClubColors.textoPrincipal),
           decoration: InputDecoration(
               hintText:   hint,
               hintStyle:  theme.inputDecorationTheme.hintStyle,
               prefixIcon: Icon(prefixIcon,
                   color: isFocused || hasError
-                      ? TabuColors.rosaPrincipal : TabuColors.subtle,
+                      ? TClubColors.redPrincipal : TClubColors.subtle,
                   size: 18),
               suffixIcon: suffixIcon != null
                   ? GestureDetector(
                       onTap: onSuffixTap,
                       child: Icon(suffixIcon,
-                          color: TabuColors.subtle, size: 18))
+                          color: TClubColors.subtle, size: 18))
                   : null,
               border:         InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
@@ -812,22 +790,22 @@ class _LoginButtonState extends State<_LoginButton>
         decoration: BoxDecoration(
             gradient: _pressed
                 ? const LinearGradient(colors: [
-                    TabuColors.rosaDeep,
-                    TabuColors.rosaPrincipal,
+                    TClubColors.redDeep,
+                    TClubColors.redPrincipal,
                   ])
                 : const LinearGradient(
-                    colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                    colors: [TClubColors.redPrincipal, TClubColors.redClaro],
                     begin:  Alignment.centerLeft,
                     end:    Alignment.centerRight),
             boxShadow: _pressed
                 ? []
                 : [
                     BoxShadow(
-                        color:      TabuColors.glow,
+                        color:      TClubColors.glow,
                         blurRadius: 20,
                         offset:     const Offset(0, 6)),
                     BoxShadow(
-                        color:      TabuColors.rosaPrincipal.withOpacity(0.3),
+                        color:      TClubColors.redPrincipal.withOpacity(0.3),
                         blurRadius: 30,
                         offset:     const Offset(0, 10)),
                   ]),
@@ -851,7 +829,7 @@ class _LoginButtonState extends State<_LoginButton>
                       fontSize:      14,
                       letterSpacing: 7,
                       fontWeight:    FontWeight.w700,
-                      color:         TabuColors.textoPrincipal)),
+                      color:         TClubColors.textoPrincipal)),
         ]),
       ),
     );
@@ -891,15 +869,15 @@ class _FundoEscuroPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     final nr = size.width * (0.9 + progress * 0.15);
     canvas.drawCircle(
         Offset(size.width * 0.6, -size.height * 0.08),
         nr,
         Paint()
           ..shader = RadialGradient(colors: [
-            TabuColors.rosaPrincipal.withOpacity(0.20 - progress * 0.06),
-            TabuColors.rosaDeep.withOpacity(0.08),
+            TClubColors.redPrincipal.withOpacity(0.20 - progress * 0.06),
+            TClubColors.redDeep.withOpacity(0.08),
             Colors.transparent,
           ], stops: const [0.0, 0.45, 1.0]).createShader(Rect.fromCircle(
               center: Offset(size.width * 0.6, -size.height * 0.08),
@@ -910,7 +888,7 @@ class _FundoEscuroPainter extends CustomPainter {
         sr,
         Paint()
           ..shader = RadialGradient(colors: [
-            TabuColors.bgAlt.withOpacity(0.9),
+            TClubColors.bgAlt.withOpacity(0.9),
             Colors.transparent,
           ]).createShader(Rect.fromCircle(
               center: Offset(size.width * 1.05, size.height * 0.15),
@@ -922,7 +900,7 @@ class _FundoEscuroPainter extends CustomPainter {
               center: Alignment.center,
               radius: 0.7,
               colors: [
-                TabuColors.rosaDeep.withOpacity(0.10 + progress * 0.06),
+                TClubColors.redDeep.withOpacity(0.10 + progress * 0.06),
                 Colors.transparent,
               ]).createShader(
                   Rect.fromLTWH(0, 0, size.width, size.height)));
@@ -930,3 +908,4 @@ class _FundoEscuroPainter extends CustomPainter {
   @override
   bool shouldRepaint(_FundoEscuroPainter old) => old.progress != progress;
 }
+

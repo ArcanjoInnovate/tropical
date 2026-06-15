@@ -1,6 +1,6 @@
 // lib/services/services_app/watermark_service.dart
 //
-// Marca d'água TABU com 3 níveis de intensidade:
+// Marca d'água tclub com 3 níveis de intensidade:
 //   • MINIMAL  → feed (discreta, não atrapalha UX)
 //   • BALANCED → visualização full, perfil (meio-termo)
 //   • FULL     → download/compartilhamento (máxima proteção)
@@ -25,6 +25,7 @@ import 'dart:ui' as ui;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:tclub/core/constants/app_constants.dart';
 
 enum WatermarkLevel {
   /// Discreta - ideal para feed (diagonal sutil, sem barra)
@@ -129,7 +130,7 @@ class WatermarkService {
 
     _drawDiagonalWatermarks(
       canvas,
-      text:     'TABU · @${userName.toLowerCase()}',
+      text:     'TCLUB · @${userName.toLowerCase()}',
       w:        w,
       h:        h,
       fontSize: 13 * scale,
@@ -143,7 +144,7 @@ class WatermarkService {
       // No modo minimal, apenas uma micro-assinatura discreta no canto (mais visível)
       _drawText(
         canvas,
-        text:          'TABU',
+        text:          AppConstants.appName,
         xRight:        w - (8 * scale),
         y:             h - (12 * scale), // canto inferior direito
         fontSize:      8 * scale,
@@ -215,10 +216,9 @@ class WatermarkService {
 
     final textOpacity = level == WatermarkLevel.full ? 1.0 : 0.85; // era 0.95/0.75
 
-    // "TABU"
     _drawText(
       canvas,
-      text:          'TABU',
+      text:          AppConstants.appName,
       x:             padH + scale * 4,
       y:             textStartY,
       fontSize:      titleSize,
@@ -251,10 +251,9 @@ class WatermarkService {
       letterSpacing: nameSize * 0.05,
     );
 
-    // "tabu.app" à direita (mais visível)
     _drawText(
       canvas,
-      text:          'tabu.app',
+      text:          'tclub.app',
       xRight:        w - padH,
       y:             barTop + (barHeight / 2) - (nameSize * 0.7),
       fontSize:      nameSize * 0.85,
@@ -267,7 +266,7 @@ class WatermarkService {
     if (level == WatermarkLevel.full) {
       _drawText(
         canvas,
-        text:          'TABU',
+        text:          AppConstants.appName,
         xRight:        w - (8 * scale),
         y:             8 * scale,
         fontSize:      9 * scale,
@@ -358,3 +357,4 @@ class WatermarkService {
     canvas.drawParagraph(para, Offset(dx, y));
   }
 }
+

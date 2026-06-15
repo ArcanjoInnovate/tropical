@@ -10,8 +10,8 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/feed/data/services/cloudinary_cleanup_helper.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
+import 'package:tclub/features/feed/data/services/cloudinary_cleanup_helper.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
 
 class PartyService {
   PartyService._();
@@ -304,3 +304,4 @@ class PartyService {
     }
   }
 }
+

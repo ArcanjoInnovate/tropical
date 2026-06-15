@@ -12,7 +12,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/notification/data/models/notification_model.dart';
+import 'package:tclub/features/notification/data/models/notification_model.dart';
 
 class NotificationService {
   NotificationService._();
@@ -173,3 +173,4 @@ class NotificationService {
     await _badgeRef(uid).set(unreadCount);
   }
 }
+

@@ -7,7 +7,7 @@ abstract class AppConstants {
   AppConstants._();
 
   // ── Nome do app ──────────────────────────────────────────────────────────
-  static const String appName = 'TABU';
+  static const String appName = 'TCLUB';
 
   // ── Logo (asset) ─────────────────────────────────────────────────────────
   static const String logoAssetPath = 'assets/tabu_logo.png';
@@ -30,3 +30,4 @@ abstract class AppConstants {
   /// Logo para usar em AppBars (tamanho padrão menor).
   static Widget appBarLogo({Color? color}) => logo(height: 22, color: color);
 }
+

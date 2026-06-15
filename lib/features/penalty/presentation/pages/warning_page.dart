@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/penalty/data/services/penalty_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/penalty/data/services/penalty_service.dart';
 
 class WarningPage extends StatefulWidget {
   final Map<String, dynamic> penalidade;
@@ -95,7 +95,7 @@ class _WarningPageState extends State<WarningPage>
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: SafeArea(
           child: FadeTransition(
             opacity: _fade,
@@ -137,7 +137,7 @@ class _WarningPageState extends State<WarningPage>
                           SizedBox(width: 6),
                           Text('Notificação oficial',
                               style: TextStyle(
-                                fontFamily:  TabuTypography.bodyFont,
+                                fontFamily:  TClubTypography.bodyFont,
                                 fontSize:    11,
                                 fontWeight:  FontWeight.w500,
                                 color:       _amber800,
@@ -151,7 +151,7 @@ class _WarningPageState extends State<WarningPage>
                     Text(
                       _tituloTipo.toUpperCase(),
                       style: const TextStyle(
-                        fontFamily:    TabuTypography.displayFont,
+                        fontFamily:    TClubTypography.displayFont,
                         fontSize:      20,
                         letterSpacing: 2,
                         color:         _amber600,
@@ -164,9 +164,9 @@ class _WarningPageState extends State<WarningPage>
                       _subtitulo,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize:   13,
-                        color:      TabuColors.textoMuted,
+                        color:      TClubColors.textoMuted,
                         height:     1.6,
                       ),
                     ),
@@ -194,10 +194,10 @@ class _WarningPageState extends State<WarningPage>
                         Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            color:        TabuColors.bgCard,
+                            color:        TClubColors.bgCard,
                             borderRadius: BorderRadius.circular(12),
                             border:       Border.all(
-                                color: TabuColors.border, width: 0.5),
+                                color: TClubColors.border, width: 0.5),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +216,7 @@ class _WarningPageState extends State<WarningPage>
                                 )),
                               ]),
                               const SizedBox(height: 16),
-                              Divider(color: TabuColors.border,
+                              Divider(color: TClubColors.border,
                                   height: 1, thickness: 0.5),
                               const SizedBox(height: 16),
                               _Campo(
@@ -269,14 +269,14 @@ class _WarningPageState extends State<WarningPage>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Icon(Icons.keyboard_arrow_down,
-                                  color: TabuColors.textoMuted, size: 14),
+                                  color: TClubColors.textoMuted, size: 14),
                               SizedBox(width: 6),
                               Text(
                                 'Role até o fim para continuar',
                                 style: TextStyle(
-                                  fontFamily:    TabuTypography.bodyFont,
+                                  fontFamily:    TClubTypography.bodyFont,
                                   fontSize:      11,
-                                  color:         TabuColors.textoMuted,
+                                  color:         TClubColors.textoMuted,
                                   letterSpacing: 1,
                                 ),
                               ),
@@ -321,7 +321,7 @@ class _WarningPageState extends State<WarningPage>
                                   Text(
                                     'ESTOU CIENTE — CONTINUAR',
                                     style: TextStyle(
-                                      fontFamily:    TabuTypography.bodyFont,
+                                      fontFamily:    TClubTypography.bodyFont,
                                       fontSize:      12,
                                       fontWeight:    FontWeight.w500,
                                       letterSpacing: 2,
@@ -374,19 +374,19 @@ class _Campo extends StatelessWidget {
         children: [
           Text(label,
               style: const TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      9,
                 fontWeight:    FontWeight.w500,
                 letterSpacing: 2,
-                color:         TabuColors.textoMuted,
+                color:         TClubColors.textoMuted,
               )),
           const SizedBox(height: 4),
           Text(valor,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   13,
                 fontWeight: FontWeight.w500,
-                color:      corValor ?? TabuColors.textoPrincipal,
+                color:      corValor ?? TClubColors.textoPrincipal,
                 height:     multiline ? 1.6 : 1.3,
               )),
         ],
@@ -408,7 +408,7 @@ class _InfoRow extends StatelessWidget {
           Expanded(
             child: Text(corpo,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   12,
                   color:      Color(0xFF633806),
                   height:     1.6,
@@ -417,3 +417,4 @@ class _InfoRow extends StatelessWidget {
         ],
       );
 }
+

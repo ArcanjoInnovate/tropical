@@ -1,4 +1,4 @@
-// functions/src/migrate_all.js
+﻿// functions/src/migrate_all.js
 //
 // Uso — de dentro de D:\tabuapp\functions:
 //   node src/migrate_all.js
@@ -8,7 +8,7 @@ const serviceAccount = require("../service-account.json");
 
 admin.initializeApp({
   credential:  admin.credential.cert(serviceAccount),
-  databaseURL: "https://tabuapp-4325a-default-rtdb.firebaseio.com",
+  databaseURL: "https://tropical-64d1b-default-rtdb.firebaseio.com",
 });
 
 const db = admin.database();

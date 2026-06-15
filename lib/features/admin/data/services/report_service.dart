@@ -82,3 +82,4 @@ class ReportService {
   Future<Map<String, dynamic>?> fetchContentData(ReportModel report) =>
       _repo.fetchContentData(report);
 }
+

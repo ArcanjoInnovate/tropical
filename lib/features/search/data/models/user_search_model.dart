@@ -1,6 +1,6 @@
 // lib/features/search/data/models/user_search_model.dart
 
-import 'package:tabuapp/features/search/domain/entities/user_search.dart';
+import 'package:tclub/features/search/domain/entities/user_search.dart';
 
 
 /// Model que representa um usuário nos resultados de busca.
@@ -132,3 +132,4 @@ class UserSearchModel extends UserSearchEntity {
     );
   }
 }
+

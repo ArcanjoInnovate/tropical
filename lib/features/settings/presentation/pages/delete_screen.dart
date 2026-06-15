@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/settings/controller/delete_controller.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/settings/controller/delete_controller.dart';
 
 class ImprovedDeleteAccountSheet extends StatefulWidget {
   final String userName;
@@ -169,9 +169,9 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
             height: constraints.maxHeight * 0.85,
             margin: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: TabuColors.bgAlt,
+              color: TClubColors.bgAlt,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: TabuColors.border, width: 0.8),
+              border: Border.all(color: TClubColors.border, width: 0.8),
             ),
             child: SafeArea(
               child: AnimatedSwitcher(
@@ -268,7 +268,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
               'Seus dados foram removidos com sucesso.\nEsperamos te ver por aqui novamente um dia.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
                 fontSize: 14,
                 height: 1.6,
               ),
@@ -280,14 +280,14 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 borderRadius: BorderRadius.circular(32),
-                border: Border.all(color: TabuColors.border),
+                border: Border.all(color: TClubColors.border),
               ),
               child: const Text(
                 'Até logo 👋',
                 style: TextStyle(
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                   fontSize: 13,
                   letterSpacing: 0.3,
                 ),
@@ -305,14 +305,14 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
                   height: 14,
                   child: CircularProgressIndicator(
                     strokeWidth: 1.5,
-                    color: TabuColors.subtle.withOpacity(0.5),
+                    color: TClubColors.subtle.withOpacity(0.5),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Text(
                   'Redirecionando para o login...',
                   style: TextStyle(
-                    color: TabuColors.subtle.withOpacity(0.5),
+                    color: TClubColors.subtle.withOpacity(0.5),
                     fontSize: 12,
                   ),
                 ),
@@ -332,7 +332,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
       height: 4,
       margin: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
-        color: TabuColors.border.withOpacity(0.5),
+        color: TClubColors.border.withOpacity(0.5),
         borderRadius: BorderRadius.circular(2),
       ),
     );
@@ -364,7 +364,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
             child: Text(
               'EXCLUIR CONTA',
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 14,
                 letterSpacing: 2,
                 color: Color(0xFFE85D5D),
@@ -374,7 +374,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
           ),
           IconButton(
             onPressed: isLoading ? null : () => Navigator.pop(context),
-            icon: const Icon(Icons.close, color: TabuColors.subtle),
+            icon: const Icon(Icons.close, color: TClubColors.subtle),
           ),
         ],
       ),
@@ -408,16 +408,16 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
               height: 28,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: active ? const Color(0xFFE85D5D) : TabuColors.bgCard,
+                color: active ? const Color(0xFFE85D5D) : TClubColors.bgCard,
                 border: Border.all(
-                  color: active ? const Color(0xFFE85D5D) : TabuColors.border,
+                  color: active ? const Color(0xFFE85D5D) : TClubColors.border,
                 ),
               ),
               child: Center(
                 child: Text(
                   '${index + 1}',
                   style: TextStyle(
-                    color: active ? Colors.white : TabuColors.subtle,
+                    color: active ? Colors.white : TClubColors.subtle,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -430,7 +430,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
                 height: 2,
                 color: index < _currentStep
                     ? const Color(0xFFE85D5D)
-                    : TabuColors.border,
+                    : TClubColors.border,
               ),
           ],
         );
@@ -449,7 +449,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
         Text(
           'Você está prestes a excluir a conta de ${widget.userName}.',
           textAlign: TextAlign.center,
-          style: const TextStyle(color: TabuColors.subtle, fontSize: 14),
+          style: const TextStyle(color: TClubColors.subtle, fontSize: 14),
         ),
         const SizedBox(height: 24),
         ..._warnings.map((w) => _buildInfoItem(w, Icons.error_outline)),
@@ -493,7 +493,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
             child: Text(
               'Digite sua senha para confirmar a exclusão:',
               textAlign: TextAlign.center,
-              style: TextStyle(color: TabuColors.subtle, fontSize: 14),
+              style: TextStyle(color: TClubColors.subtle, fontSize: 14),
             ),
           ),
           const SizedBox(height: 20),
@@ -511,19 +511,19 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
               child: TextField(
                 controller: _controller.passwordController,
                 obscureText: obscure,
-                style: const TextStyle(color: TabuColors.dim, letterSpacing: 1.5),
+                style: const TextStyle(color: TClubColors.dim, letterSpacing: 1.5),
                 decoration: InputDecoration(
                   hintText: '••••••••',
-                  hintStyle: TextStyle(color: TabuColors.subtle.withOpacity(0.5)),
+                  hintStyle: TextStyle(color: TClubColors.subtle.withOpacity(0.5)),
                   filled: true,
-                  fillColor: TabuColors.bgCard,
-                  prefixIcon: const Icon(Icons.lock_outline, color: TabuColors.subtle, size: 20),
+                  fillColor: TClubColors.bgCard,
+                  prefixIcon: const Icon(Icons.lock_outline, color: TClubColors.subtle, size: 20),
                   suffixIcon: IconButton(
                     icon: Icon(
                       obscure
                           ? Icons.visibility_off_outlined
                           : Icons.visibility_outlined,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                       size: 20,
                     ),
                     onPressed: _controller.toggleObscure,
@@ -534,7 +534,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
                           ? const Color(0xFFE85D5D)
                           : canDelete
                               ? const Color(0xFF4CAF50)
-                              : TabuColors.border,
+                              : TClubColors.border,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -593,16 +593,16 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: TabuColors.border),
+        border: Border.all(color: TClubColors.border),
       ),
       child: Row(
         children: [
           Icon(icon, color: const Color(0xFFE85D5D), size: 18),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(text, style: const TextStyle(color: TabuColors.subtle, fontSize: 13)),
+            child: Text(text, style: const TextStyle(color: TClubColors.subtle, fontSize: 13)),
           ),
         ],
       ),
@@ -623,7 +623,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
           SizedBox(height: 8),
           Text(
             'Aguarde, isso pode levar alguns segundos',
-            style: TextStyle(color: TabuColors.subtle, fontSize: 12),
+            style: TextStyle(color: TClubColors.subtle, fontSize: 12),
           ),
         ],
       ),
@@ -645,13 +645,13 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
                 child: OutlinedButton(
                   onPressed: _previousStep,
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: TabuColors.border),
+                    side: const BorderSide(color: TClubColors.border),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('VOLTAR', style: TextStyle(color: TabuColors.subtle)),
+                  child: const Text('VOLTAR', style: TextStyle(color: TClubColors.subtle)),
                 ),
               ),
             if (_currentStep > 0) const SizedBox(width: 12),
@@ -663,7 +663,7 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
                     : (canDelete ? _handleDelete : null),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _currentStep == 2 && !canDelete
-                      ? TabuColors.bgCard
+                      ? TClubColors.bgCard
                       : const Color(0xFFE85D5D),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -685,3 +685,4 @@ class _ImprovedDeleteAccountSheetState extends State<ImprovedDeleteAccountSheet>
     });
   }
 }
+

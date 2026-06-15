@@ -5,11 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/app.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/widgets/inline_video_card.dart';
-import 'package:tabuapp/features/auth/controller/auth_controller.dart';
-import 'package:tabuapp/firebase_options.dart';
+import 'package:tclub/app.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/widgets/inline_video_card.dart';
+import 'package:tclub/features/auth/controller/auth_controller.dart';
+import 'package:tclub/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,3 +38,4 @@ void main() async {
     ),
   );
 }
+

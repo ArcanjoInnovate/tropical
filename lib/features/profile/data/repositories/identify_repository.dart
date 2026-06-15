@@ -3,7 +3,7 @@
 import 'dart:typed_data';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:tabuapp/features/profile/data/models/identify_model.dart';
+import 'package:tclub/features/profile/data/models/identify_model.dart';
 
 abstract class IIdentityRepository {
   Future<void> saveIdentity({
@@ -175,3 +175,4 @@ class IdentityRepositoryException implements Exception {
   @override
   String toString() => 'IdentityRepositoryException: $message';
 }
+

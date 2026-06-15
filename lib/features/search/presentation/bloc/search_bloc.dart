@@ -2,15 +2,15 @@
 
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_parties_by_proximity_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_parties_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_users_by_proximity_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_users_usecase.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_event.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_filters.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_pagination.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_state.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_parties_by_proximity_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_parties_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_users_by_proximity_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_users_usecase.dart';
+import 'package:tclub/features/search/presentation/bloc/search_event.dart';
+import 'package:tclub/features/search/presentation/bloc/search_filters.dart';
+import 'package:tclub/features/search/presentation/bloc/search_pagination.dart';
+import 'package:tclub/features/search/presentation/bloc/search_state.dart';
 
 /// BLoC que gerencia o estado da tela de busca.
 ///
@@ -434,3 +434,4 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     ));
   }
 }
+

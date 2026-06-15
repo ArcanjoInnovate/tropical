@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/features/chat/controller/chat_controller.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_presence_manager.dart';
-import 'package:tabuapp/features/user/moderation/moderation.dart';
-import '../../../../core/theme/tabu_theme.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/features/chat/controller/chat_controller.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_presence_manager.dart';
+import 'package:tclub/features/user/moderation/moderation.dart';
+import '../../../../core/theme/tclub_theme.dart';
 import '../../data/models/chat_model.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
 
 class ChatRoomScreen extends StatefulWidget {
   final String myUid;
@@ -238,37 +238,37 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         shape: const RoundedRectangleBorder(),
         title: Row(children: [
           Container(
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: TabuColors.errorPale,
-              border: Border.all(color: TabuColors.errorBorder, width: 0.8),
+              color: TClubColors.errorPale,
+              border: Border.all(color: TClubColors.errorBorder, width: 0.8),
             ),
             child: Icon(Icons.lock_outline_rounded,
-                color: TabuColors.error, size: 18),
+                color: TClubColors.error, size: 18),
           ),
           const SizedBox(width: 12),
           Text('Bloquear Usuário',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.5,
-                color: TabuColors.textoPrincipal,
+                color: TClubColors.textoPrincipal,
               )),
         ]),
         content: Text(
           'Você tem certeza que deseja bloquear este usuário? '
           'Ele não poderá mais interagir com você.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 13,
             height: 1.5,
-            color: TabuColors.textoSecundario,
+            color: TClubColors.textoSecundario,
           ),
         ),
         actions: [
@@ -276,8 +276,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             onPressed: () => Navigator.pop(context),
             child: Text('Cancelar',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
-                    color: TabuColors.textoMuted,
+                    fontFamily: TClubTypography.bodyFont,
+                    color: TClubColors.textoMuted,
                     fontWeight: FontWeight.w600)),
           ),
           TextButton(
@@ -287,8 +287,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             },
             child: Text('Bloquear',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
-                    color: TabuColors.error,
+                    fontFamily: TClubTypography.bodyFont,
+                    color: TClubColors.error,
                     fontWeight: FontWeight.w700)),
           ),
         ],
@@ -335,7 +335,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         Positioned(
           top: 0,
@@ -346,11 +346,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Colors.transparent,
-                TabuColors.rosaDeep,
-                TabuColors.rosaPrincipal,
-                TabuColors.rosaClaro,
-                TabuColors.rosaPrincipal,
-                TabuColors.rosaDeep,
+                TClubColors.redDeep,
+                TClubColors.redPrincipal,
+                TClubColors.redClaro,
+                TClubColors.redPrincipal,
+                TClubColors.redDeep,
                 Colors.transparent,
               ]),
             ),
@@ -395,15 +395,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
         height: 64,
         padding: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
-          color: TabuColors.bg,
+          color: TClubColors.bg,
           border: Border(
-            bottom: BorderSide(color: TabuColors.border, width: 0.5),
+            bottom: BorderSide(color: TClubColors.border, width: 0.5),
           ),
         ),
         child: Row(children: [
           IconButton(
             icon: const Icon(Icons.arrow_back_ios_new,
-                color: TabuColors.dim, size: 16),
+                color: TClubColors.dim, size: 16),
             onPressed: () => Navigator.pop(context),
           ),
           const SizedBox(width: 4),
@@ -439,7 +439,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
                         decoration: BoxDecoration(
                           color: const Color(0xFF22C55E),
                           shape: BoxShape.circle,
-                          border: Border.all(color: TabuColors.bg, width: 1.5),
+                          border: Border.all(color: TClubColors.bg, width: 1.5),
                           boxShadow: [
                             BoxShadow(
                               color: const Color(0xFF22C55E).withOpacity(0.4),
@@ -457,21 +457,21 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
                   children: [
                     Text(widget.otherName.toUpperCase(),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 2,
-                          color: TabuColors.textoPrincipal,
+                          color: TClubColors.textoPrincipal,
                         )),
                     const SizedBox(height: 2),
                     Text(
                       isOnline ? 'ONLINE AGORA' : _lastSeenText(status),
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         letterSpacing: 1.5,
                         color:
-                            isOnline ? const Color(0xFF22C55E) : TabuColors.subtle,
+                            isOnline ? const Color(0xFF22C55E) : TClubColors.subtle,
                       ),
                     ),
                   ],
@@ -487,10 +487,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
               height: 34,
               margin: const EdgeInsets.only(right: 8),
               decoration: BoxDecoration(
-                border: Border.all(color: TabuColors.border, width: 0.8),
+                border: Border.all(color: TClubColors.border, width: 0.8),
               ),
               child: const Icon(Icons.more_horiz,
-                  color: TabuColors.subtle, size: 15),
+                  color: TClubColors.subtle, size: 15),
             ),
           ),
         ]),
@@ -531,7 +531,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
                 width: 16,
                 height: 16,
                 child: CircularProgressIndicator(
-                    strokeWidth: 1.5, color: TabuColors.rosaPrincipal),
+                    strokeWidth: 1.5, color: TClubColors.redPrincipal),
               ),
             ),
           );
@@ -587,7 +587,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.transparent, TabuColors.border]),
+                  colors: [Colors.transparent, TClubColors.border]),
             ),
           ),
         ),
@@ -595,10 +595,10 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: Text(label,
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 8,
                 letterSpacing: 2.5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
         ),
         Expanded(
@@ -606,7 +606,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  colors: [TabuColors.border, Colors.transparent]),
+                  colors: [TClubColors.border, Colors.transparent]),
             ),
           ),
         ),
@@ -619,9 +619,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
       return Container(
         padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
         decoration: BoxDecoration(
-          color: TabuColors.bg,
+          color: TClubColors.bg,
           border: Border(
-            top: BorderSide(color: TabuColors.border, width: 0.5),
+            top: BorderSide(color: TClubColors.border, width: 0.5),
           ),
         ),
         child: Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
@@ -629,11 +629,11 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             child: Container(
               constraints: const BoxConstraints(maxHeight: 120),
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border: Border.all(
                   color: _hasText
-                      ? TabuColors.rosaPrincipal.withOpacity(0.5)
-                      : TabuColors.border,
+                      ? TClubColors.redPrincipal.withOpacity(0.5)
+                      : TClubColors.border,
                   width: 0.8,
                 ),
               ),
@@ -643,18 +643,18 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
                 enabled: !ctrl.isSending,
                 maxLines: null,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 14,
-                  color: TabuColors.textoPrincipal,
+                  color: TClubColors.textoPrincipal,
                   height: 1.4,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Mensagem...',
                   hintStyle: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
                     letterSpacing: 0.5,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                   border: InputBorder.none,
                   contentPadding:
@@ -674,22 +674,22 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
               decoration: BoxDecoration(
                 gradient: _hasText
                     ? const LinearGradient(
-                        colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                        colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       )
                     : null,
-                color: _hasText ? null : TabuColors.bgCard,
+                color: _hasText ? null : TClubColors.bgCard,
                 border: Border.all(
                   color: _hasText
-                      ? TabuColors.rosaPrincipal.withOpacity(0.3)
-                      : TabuColors.border,
+                      ? TClubColors.redPrincipal.withOpacity(0.3)
+                      : TClubColors.border,
                   width: 0.8,
                 ),
                 boxShadow: _hasText
                     ? [
                         BoxShadow(
-                          color: TabuColors.glow.withOpacity(0.3),
+                          color: TClubColors.glow.withOpacity(0.3),
                           blurRadius: 12,
                           offset: const Offset(0, 4),
                         ),
@@ -702,13 +702,13 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
                         width: 14,
                         height: 14,
                         child: CircularProgressIndicator(
-                            strokeWidth: 1.5, color: TabuColors.rosaPrincipal),
+                            strokeWidth: 1.5, color: TClubColors.redPrincipal),
                       ),
                     )
                   : Icon(
                       Icons.send_rounded,
                       size: 18,
-                      color: _hasText ? Colors.white : TabuColors.subtle,
+                      color: _hasText ? Colors.white : TClubColors.subtle,
                     ),
             ),
           ),
@@ -722,7 +722,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
           width: 24,
           height: 24,
           child: CircularProgressIndicator(
-              strokeWidth: 1.5, color: TabuColors.rosaPrincipal),
+              strokeWidth: 1.5, color: TClubColors.redPrincipal),
         ),
       );
 
@@ -732,28 +732,28 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
+              color: TClubColors.bgCard,
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.3), width: 0.8),
+                  color: TClubColors.redPrincipal.withOpacity(0.3), width: 0.8),
             ),
             child: const Icon(Icons.mark_chat_unread_outlined,
-                color: TabuColors.rosaPrincipal, size: 26),
+                color: TClubColors.redPrincipal, size: 26),
           ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: TabuColors.rosaPrincipal.withOpacity(0.08),
+              color: TClubColors.redPrincipal.withOpacity(0.08),
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.3), width: 0.7),
+                  color: TClubColors.redPrincipal.withOpacity(0.3), width: 0.7),
             ),
             child: const Text('CHAT AINDA NÃO ABERTO',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 8,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 2.5,
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                 )),
           ),
           const SizedBox(height: 14),
@@ -761,30 +761,30 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             'Seja o primeiro a dizer oi para\n${widget.otherName.toUpperCase()}',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12,
               letterSpacing: 0.3,
-              color: TabuColors.dim,
+              color: TClubColors.dim,
               height: 1.5,
             ),
           ),
           const SizedBox(height: 20),
           Icon(Icons.keyboard_arrow_down_rounded,
-              color: TabuColors.subtle, size: 20),
+              color: TClubColors.subtle, size: 20),
         ]),
       );
 
   Widget _buildError(String msg) => Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           const Icon(Icons.error_outline_rounded,
-              color: TabuColors.rosaPrincipal, size: 32),
+              color: TClubColors.redPrincipal, size: 32),
           const SizedBox(height: 12),
           Text(msg,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.dim,
+                color: TClubColors.dim,
               )),
           const SizedBox(height: 16),
           GestureDetector(
@@ -793,15 +793,15 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 border: Border.all(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                    color: TClubColors.redPrincipal.withOpacity(0.5),
                     width: 0.8),
               ),
               child: const Text('TENTAR NOVAMENTE',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     letterSpacing: 2.5,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                   )),
             ),
           ),
@@ -817,16 +817,16 @@ class _ChatRoomScreenState extends State<ChatRoomScreen>
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
+              color: TClubColors.bgCard,
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.4), width: 0.8),
+                  color: TClubColors.redPrincipal.withOpacity(0.4), width: 0.8),
               boxShadow: [
                 BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.15), blurRadius: 10),
+                    color: TClubColors.glow.withOpacity(0.15), blurRadius: 10),
               ],
             ),
             child: const Icon(Icons.keyboard_arrow_down_rounded,
-                color: TabuColors.rosaPrincipal, size: 20),
+                color: TClubColors.redPrincipal, size: 20),
           ),
         ),
       );
@@ -859,7 +859,7 @@ class _ChatOptionsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: TabuColors.bgAlt),
+      decoration: const BoxDecoration(color: TClubColors.bgAlt),
       child: SafeArea(
         top: false,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -868,7 +868,7 @@ class _ChatOptionsSheet extends StatelessWidget {
             height: 2,
             margin: const EdgeInsets.only(top: 14),
             decoration: BoxDecoration(
-              color: TabuColors.border,
+              color: TClubColors.border,
               borderRadius: BorderRadius.circular(1),
             ),
           ),
@@ -878,11 +878,11 @@ class _ChatOptionsSheet extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Colors.transparent,
-                TabuColors.rosaDeep,
-                TabuColors.rosaPrincipal,
-                TabuColors.rosaClaro,
-                TabuColors.rosaPrincipal,
-                TabuColors.rosaDeep,
+                TClubColors.redDeep,
+                TClubColors.redPrincipal,
+                TClubColors.redClaro,
+                TClubColors.redPrincipal,
+                TClubColors.redDeep,
                 Colors.transparent,
               ]),
             ),
@@ -894,20 +894,20 @@ class _ChatOptionsSheet extends StatelessWidget {
                 width: 28,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: TabuColors.bgCard,
-                  border: Border.all(color: TabuColors.border, width: 0.8),
+                  color: TClubColors.bgCard,
+                  border: Border.all(color: TClubColors.border, width: 0.8),
                 ),
                 child: const Icon(Icons.chat_bubble_outline_rounded,
-                    color: TabuColors.subtle, size: 13),
+                    color: TClubColors.subtle, size: 13),
               ),
               const SizedBox(width: 10),
               Text(otherName.toUpperCase(),
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   )),
             ]),
           ),
@@ -917,7 +917,7 @@ class _ChatOptionsSheet extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
                 Colors.transparent,
-                TabuColors.border,
+                TClubColors.border,
                 Colors.transparent,
               ]),
             ),
@@ -944,17 +944,17 @@ class _ChatOptionsSheet extends StatelessWidget {
               margin: const EdgeInsets.fromLTRB(20, 0, 20, 8),
               height: 44,
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
-                border: Border.all(color: TabuColors.border, width: 0.8),
+                color: TClubColors.bgCard,
+                border: Border.all(color: TClubColors.border, width: 0.8),
               ),
               child: const Center(
                 child: Text('CANCELAR',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2.5,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                     )),
               ),
             ),
@@ -987,18 +987,18 @@ class _OptionTile extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 2),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: TabuColors.errorPale,
-          border: Border.all(color: TabuColors.errorBorder, width: 0.7),
+          color: TClubColors.errorPale,
+          border: Border.all(color: TClubColors.errorBorder, width: 0.7),
         ),
         child: Row(children: [
           Container(
             width: 30,
             height: 30,
             decoration: BoxDecoration(
-              color: TabuColors.bg,
-              border: Border.all(color: TabuColors.errorBorder, width: 0.7),
+              color: TClubColors.bg,
+              border: Border.all(color: TClubColors.errorBorder, width: 0.7),
             ),
-            child: Icon(icon, color: TabuColors.error, size: 14),
+            child: Icon(icon, color: TClubColors.error, size: 14),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -1007,24 +1007,24 @@ class _OptionTile extends StatelessWidget {
               children: [
                 Text(label,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color: TabuColors.errorDeep,
+                      color: TClubColors.errorDeep,
                     )),
                 const SizedBox(height: 2),
                 Text(sublabel,
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       letterSpacing: 0.5,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                     )),
               ],
             ),
           ),
-          Icon(Icons.chevron_right_rounded, color: TabuColors.error, size: 16),
+          Icon(Icons.chevron_right_rounded, color: TClubColors.error, size: 16),
         ]),
       ),
     );
@@ -1086,22 +1086,22 @@ class _MessageBubble extends StatelessWidget {
                   // Mensagem do outro: bgCard (blush suave do tema)
                   gradient: isMine
                       ? const LinearGradient(
-                          colors: [TabuColors.rosaDeep, Color(0xFF8B1A4A)],
+                          colors: [TClubColors.redDeep, Color(0xFF8B1A4A)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         )
                       : null,
-                  color: isMine ? null : TabuColors.bgCard,
+                  color: isMine ? null : TClubColors.bgCard,
                   border: Border.all(
                     color: isMine
-                        ? TabuColors.rosaPrincipal.withOpacity(0.25)
-                        : TabuColors.border,
+                        ? TClubColors.redPrincipal.withOpacity(0.25)
+                        : TClubColors.border,
                     width: 0.6,
                   ),
                   boxShadow: isMine
                       ? [
                           BoxShadow(
-                            color: TabuColors.glow.withOpacity(0.12),
+                            color: TClubColors.glow.withOpacity(0.12),
                             blurRadius: 8,
                             offset: const Offset(0, 2),
                           ),
@@ -1116,13 +1116,13 @@ class _MessageBubble extends StatelessWidget {
                       child: Text(
                         message.text,
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 14,
                           height: 1.45,
                           // Minha msg: branco sobre fundo escuro
                           // Outra msg: textoPrincipal sobre bgCard claro
                           color:
-                              isMine ? Colors.white : TabuColors.textoPrincipal,
+                              isMine ? Colors.white : TClubColors.textoPrincipal,
                         ),
                       ),
                     ),
@@ -1131,12 +1131,12 @@ class _MessageBubble extends StatelessWidget {
                       Text(
                         _formatHour(message.timestamp),
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           letterSpacing: 0.5,
                           color: isMine
                               ? Colors.white.withOpacity(0.55)
-                              : TabuColors.subtle,
+                              : TClubColors.subtle,
                         ),
                       ),
                       if (isMine) ...[
@@ -1170,7 +1170,7 @@ class _MessageBubble extends StatelessWidget {
                     Text(
                       readAtMs != null ? _readAgoText(readAtMs) : 'visto',
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         letterSpacing: 0.5,
                         color: Color(0xFF60A5FA),
@@ -1178,14 +1178,14 @@ class _MessageBubble extends StatelessWidget {
                     ),
                   ] else ...[
                     Icon(Icons.done_rounded,
-                        size: 10, color: TabuColors.subtle),
+                        size: 10, color: TClubColors.subtle),
                     const SizedBox(width: 4),
                     Text('enviado',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           letterSpacing: 0.5,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         )),
                   ],
                 ],
@@ -1198,3 +1198,4 @@ class _MessageBubble extends StatelessWidget {
     );
   }
 }
+

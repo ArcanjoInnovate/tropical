@@ -21,3 +21,4 @@ class InterestsModel {
   InterestsModel copyWith({List<String>? interests}) =>
       InterestsModel(interests: interests ?? this.interests);
 }
+

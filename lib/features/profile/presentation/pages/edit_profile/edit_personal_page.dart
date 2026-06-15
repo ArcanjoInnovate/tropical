@@ -3,12 +3,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/controller/edit_personal_data_controller.dart';
-import 'package:tabuapp/features/profile/data/models/personal_data_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/personal_data_repository.dart';
-import 'package:tabuapp/features/profile/data/services/personal_data_service.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_shareds.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/controller/edit_personal_data_controller.dart';
+import 'package:tclub/features/profile/data/models/personal_data_model.dart';
+import 'package:tclub/features/profile/data/repositories/personal_data_repository.dart';
+import 'package:tclub/features/profile/data/services/personal_data_service.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_shareds.dart';
 
 class EditPersonalPage extends StatefulWidget {
   const EditPersonalPage({super.key, required this.userData});
@@ -100,7 +100,7 @@ class _PersonalEditsPageState extends State<EditPersonalPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(_controller.errorMessage ?? 'Erro ao salvar.'),
-          backgroundColor: TabuTheme.error,
+          backgroundColor: TClubTheme.error,
         ),
       );
       _controller.resetStatus();
@@ -277,9 +277,9 @@ class _PersonalEditsPageState extends State<EditPersonalPage> {
                         child: Text(
                           '${PersonalDataModel.calculateAge(_selectedBirthDate)} anos',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 12,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.5,
                           ),
@@ -321,3 +321,4 @@ class _PersonalEditsPageState extends State<EditPersonalPage> {
     );
   }
 }
+

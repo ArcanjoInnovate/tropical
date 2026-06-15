@@ -164,3 +164,4 @@ class PartyModel {
 }
 
 enum FestaPresenca { nenhuma, interessado, confirmado }
+

@@ -58,3 +58,4 @@ class ChatRequest {
     seen:        seen        ?? this.seen,
   );
 }
+

@@ -8,38 +8,38 @@
 //   • Deduplicação por _comentariosIds garante zero duplicatas.
 import 'dart:async';
 
-import 'package:tabuapp/core/widgets/full_screen_video.dart';
-import 'package:tabuapp/features/user/moderation/moderation.dart';
+import 'package:tclub/core/widgets/full_screen_video.dart';
+import 'package:tclub/features/user/moderation/moderation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/features/story/data/models/story_model.dart';
-import 'package:tabuapp/core/widgets/full_screen_image.dart';
-import 'package:tabuapp/core/widgets/inline_video_card.dart';
-import 'package:tabuapp/features/gallery/presentation/pages/create_gallery_screen.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
-import 'package:tabuapp/features/party/presentation/pages/edit_party_screen.dart';
-import 'package:tabuapp/features/post/presentation/pages/comments_screen.dart';
-import 'package:tabuapp/features/post/presentation/pages/create_post_screen.dart';
-import 'package:tabuapp/features/story/presentation/pages/create_story_screen.dart';
-import 'package:tabuapp/features/story/presentation/pages/story_viewer_screen.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
-import 'package:tabuapp/features/party/presentation/pages/create_party_screen.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/features/story/data/models/story_model.dart';
+import 'package:tclub/core/widgets/full_screen_image.dart';
+import 'package:tclub/core/widgets/inline_video_card.dart';
+import 'package:tclub/features/gallery/presentation/pages/create_gallery_screen.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
+import 'package:tclub/features/party/presentation/pages/edit_party_screen.dart';
+import 'package:tclub/features/post/presentation/pages/comments_screen.dart';
+import 'package:tclub/features/post/presentation/pages/create_post_screen.dart';
+import 'package:tclub/features/story/presentation/pages/create_story_screen.dart';
+import 'package:tclub/features/story/presentation/pages/story_viewer_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/features/party/presentation/pages/create_party_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/admin/data/services/location_service.dart';
-import 'package:tabuapp/features/post/data/services/post_service.dart';
-import 'package:tabuapp/features/story/data/services/story_service.dart';
-import 'package:tabuapp/core/services/follow_service.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/features/admin/data/services/party_service.dart';
-import 'package:tabuapp/core/services/user_profile_cache.dart';
+import 'package:tclub/features/admin/data/services/location_service.dart';
+import 'package:tclub/features/post/data/services/post_service.dart';
+import 'package:tclub/features/story/data/services/story_service.dart';
+import 'package:tclub/core/services/follow_service.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/features/admin/data/services/party_service.dart';
+import 'package:tclub/core/services/user_profile_cache.dart';
 import 'package:video_player/video_player.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -399,7 +399,7 @@ class _HomeScreen extends State<HomeScreen>
     context.watch<BlockProvider>().allBlockedIds;
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: GestureDetector(
         onTap: _closeMenu,
         behavior: HitTestBehavior.translucent,
@@ -413,19 +413,19 @@ class _HomeScreen extends State<HomeScreen>
               height: 3,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  TabuColors.rosaDeep,
-                  TabuColors.rosaPrincipal,
-                  TabuColors.rosaClaro,
-                  TabuColors.rosaPrincipal,
-                  TabuColors.rosaDeep,
+                  TClubColors.redDeep,
+                  TClubColors.redPrincipal,
+                  TClubColors.redClaro,
+                  TClubColors.redPrincipal,
+                  TClubColors.redDeep,
                 ]),
               ),
             ),
           ),
           SafeArea(
             child: RefreshIndicator(
-              color: TabuColors.rosaPrincipal,
-              backgroundColor: TabuColors.bgAlt,
+              color: TClubColors.redPrincipal,
+              backgroundColor: TClubColors.bgAlt,
               onRefresh: _carregarDados,
               child: CustomScrollView(
                 controller: _scrollController,
@@ -438,7 +438,7 @@ class _HomeScreen extends State<HomeScreen>
                   SliverToBoxAdapter(
                     child: Container(
                       height: 0.5,
-                      color: TabuColors.border,
+                      color: TClubColors.border,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                     ),
                   ),
@@ -472,7 +472,7 @@ class _HomeScreen extends State<HomeScreen>
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                              color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                              color: TClubColors.redPrincipal.withOpacity(0.5),
                               strokeWidth: 2,
                             ),
                           ),
@@ -510,12 +510,12 @@ class _HomeScreen extends State<HomeScreen>
       child: Row(children: [
         ShaderMask(
           shaderCallback: (b) => const LinearGradient(
-            colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+            colors: [TClubColors.redPrincipal, TClubColors.redClaro],
           ).createShader(b),
           child: const Text(
-            'TABU',
+            'TCLUB',
             style: TextStyle(
-              fontFamily: TabuTypography.displayFont,
+              fontFamily: TClubTypography.displayFont,
               fontSize: 28,
               letterSpacing: 6,
               color: Colors.white,
@@ -529,10 +529,10 @@ class _HomeScreen extends State<HomeScreen>
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
             decoration: BoxDecoration(
-              color: _menuOpen ? TabuColors.rosaPrincipal : TabuColors.bgCard,
+              color: _menuOpen ? TClubColors.redPrincipal : TClubColors.bgCard,
               border: Border.all(
                 color:
-                    _menuOpen ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                    _menuOpen ? TClubColors.redPrincipal : TClubColors.borderMid,
                 width: 0.8,
               ),
             ),
@@ -540,16 +540,16 @@ class _HomeScreen extends State<HomeScreen>
               AnimatedRotation(
                 turns: _menuOpen ? 0.125 : 0,
                 duration: const Duration(milliseconds: 260),
-                child: const Icon(Icons.add, color: TabuColors.dim, size: 16),
+                child: const Icon(Icons.add, color: TClubColors.dim, size: 16),
               ),
               const SizedBox(width: 8),
               const Text('CRIAR',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color: TabuColors.dim,
+                    color: TClubColors.dim,
                   )),
             ]),
           ),
@@ -559,8 +559,8 @@ class _HomeScreen extends State<HomeScreen>
           size: 36,
           radius: 8,
           avatarUrl: avatarUrl,
-          gradient: const [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
-          ringColor: TabuColors.borderMid,
+          gradient: const [TClubColors.redDeep, TClubColors.redPrincipal],
+          ringColor: TClubColors.borderMid,
         ),
       ]),
     );
@@ -578,8 +578,8 @@ class _HomeScreen extends State<HomeScreen>
             child: Container(
               width: 180,
               decoration: BoxDecoration(
-                color: TabuColors.bgAlt,
-                border: Border.all(color: TabuColors.borderMid, width: 0.8),
+                color: TClubColors.bgAlt,
+                border: Border.all(color: TClubColors.borderMid, width: 0.8),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),
@@ -587,7 +587,7 @@ class _HomeScreen extends State<HomeScreen>
                     offset: const Offset(0, 8),
                   ),
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.15),
+                    color: TClubColors.glow.withOpacity(0.15),
                     blurRadius: 16,
                   ),
                 ],
@@ -597,9 +597,9 @@ class _HomeScreen extends State<HomeScreen>
                   height: 2,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(colors: [
-                      TabuColors.rosaDeep,
-                      TabuColors.rosaPrincipal,
-                      TabuColors.rosaDeep,
+                      TClubColors.redDeep,
+                      TClubColors.redPrincipal,
+                      TClubColors.redDeep,
                     ]),
                   ),
                 ),
@@ -609,7 +609,7 @@ class _HomeScreen extends State<HomeScreen>
                   sublabel: 'Foto, vídeo ou texto',
                   onTap: _onCreatePost,
                 ),
-                Container(height: 0.5, color: TabuColors.border),
+                Container(height: 0.5, color: TClubColors.border),
                 _MenuOption(
                   icon: Icons.auto_awesome_rounded,
                   label: 'STORY',
@@ -617,7 +617,7 @@ class _HomeScreen extends State<HomeScreen>
                   onTap: _onCreateStory,
                   accent: true,
                 ),
-                Container(height: 0.5, color: TabuColors.border),
+                Container(height: 0.5, color: TClubColors.border),
                 _MenuOption(
                   icon: Icons.photo_library_outlined,
                   label: 'GALERIA',
@@ -625,7 +625,7 @@ class _HomeScreen extends State<HomeScreen>
                   onTap: _onCreateGallery,
                 ),
                 if (widget.isAdmin) ...[
-                  Container(height: 0.5, color: TabuColors.border),
+                  Container(height: 0.5, color: TClubColors.border),
                   _MenuOption(
                     icon: Icons.local_fire_department_rounded,
                     label: 'FESTA',
@@ -649,16 +649,16 @@ class _HomeScreen extends State<HomeScreen>
         margin: const EdgeInsets.fromLTRB(16, 4, 16, 0),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.8),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.8),
         ),
         child: Row(children: [
           _SquircleAvatar(
             size: 40,
             radius: 9,
             avatarUrl: avatarUrl,
-            gradient: const [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
-            ringColor: TabuColors.border,
+            gradient: const [TClubColors.redDeep, TClubColors.redPrincipal],
+            ringColor: TClubColors.border,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -666,15 +666,15 @@ class _HomeScreen extends State<HomeScreen>
               height: 38,
               padding: const EdgeInsets.symmetric(horizontal: 14),
               decoration: BoxDecoration(
-                color: TabuColors.bgAlt,
-                border: Border.all(color: TabuColors.border, width: 0.8),
+                color: TClubColors.bgAlt,
+                border: Border.all(color: TClubColors.border, width: 0.8),
               ),
               alignment: Alignment.centerLeft,
               child: const Text('O que está rolando?',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                     letterSpacing: 0.3,
                   )),
             ),
@@ -684,7 +684,7 @@ class _HomeScreen extends State<HomeScreen>
             onTap: _onCreateStory,
             child: const Icon(
               Icons.photo_camera_outlined,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               size: 20,
             ),
           ),
@@ -703,15 +703,15 @@ class _HomeScreen extends State<HomeScreen>
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
         child: Row(children: [
           const Icon(Icons.local_fire_department_rounded,
-              color: TabuColors.rosaPrincipal, size: 12),
+              color: TClubColors.redPrincipal, size: 12),
           const SizedBox(width: 8),
           const Text('FESTAS',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
               )),
           const SizedBox(width: 8),
           if (!_loadingFestas &&
@@ -720,27 +720,27 @@ class _HomeScreen extends State<HomeScreen>
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
               decoration: BoxDecoration(
-                color: TabuColors.rosaPrincipal.withOpacity(0.12),
+                color: TClubColors.redPrincipal.withOpacity(0.12),
                 border: Border.all(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                    color: TClubColors.redPrincipal.withOpacity(0.4),
                     width: 0.6),
               ),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.near_me_rounded,
-                    color: TabuColors.rosaPrincipal, size: 8),
+                    color: TClubColors.redPrincipal, size: 8),
                 const SizedBox(width: 4),
                 Text('${festasVisiveis.length} PRÓXIMAS',
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 7,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color: TabuColors.rosaPrincipal,
+                      color: TClubColors.redPrincipal,
                     )),
               ]),
             ),
           const SizedBox(width: 8),
-          Expanded(child: Container(height: 0.5, color: TabuColors.border)),
+          Expanded(child: Container(height: 0.5, color: TClubColors.border)),
         ]),
       ),
       const SizedBox(height: 12),
@@ -752,7 +752,7 @@ class _HomeScreen extends State<HomeScreen>
               width: 18,
               height: 18,
               child: CircularProgressIndicator(
-                color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                color: TClubColors.redPrincipal.withOpacity(0.5),
                 strokeWidth: 1.5,
               ),
             ),
@@ -778,7 +778,7 @@ class _HomeScreen extends State<HomeScreen>
           ),
         ),
       const SizedBox(height: 8),
-      Container(height: 0.5, color: TabuColors.border),
+      Container(height: 0.5, color: TClubColors.border),
     ]);
   }
 
@@ -795,19 +795,19 @@ class _HomeScreen extends State<HomeScreen>
             width: 5,
             height: 5,
             decoration: const BoxDecoration(
-                color: TabuColors.rosaPrincipal, shape: BoxShape.circle),
+                color: TClubColors.redPrincipal, shape: BoxShape.circle),
           ),
           const SizedBox(width: 8),
           const Text('STORIES',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
               )),
           const SizedBox(width: 12),
-          Expanded(child: Container(height: 0.5, color: TabuColors.border)),
+          Expanded(child: Container(height: 0.5, color: TClubColors.border)),
         ]),
       ),
       SizedBox(
@@ -864,22 +864,22 @@ class _HomeScreen extends State<HomeScreen>
       child: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.dynamic_feed_rounded,
-              color: TabuColors.border, size: 48),
+              color: TClubColors.border, size: 48),
           const SizedBox(height: 16),
           const Text('NENHUM POST AINDA',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
           const SizedBox(height: 8),
           const Text('Seja o primeiro a publicar!',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
         ]),
       ),
@@ -944,11 +944,11 @@ class _FestaCard extends StatelessWidget {
       child: Container(
         width: 240,
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.borderMid, width: 0.8),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.borderMid, width: 0.8),
           boxShadow: [
             BoxShadow(
-              color: TabuColors.glow.withOpacity(0.1),
+              color: TClubColors.glow.withOpacity(0.1),
               blurRadius: 14,
               offset: const Offset(0, 3),
             ),
@@ -986,20 +986,20 @@ class _FestaCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.65),
                   border: Border.all(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.6),
+                      color: TClubColors.redPrincipal.withOpacity(0.6),
                       width: 0.8),
                 ),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   const Icon(Icons.near_me_rounded,
-                      color: TabuColors.rosaPrincipal, size: 9),
+                      color: TClubColors.redPrincipal, size: 9),
                   const SizedBox(width: 4),
                   Text(dist,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                       )),
                 ]),
               ),
@@ -1016,7 +1016,7 @@ class _FestaCard extends StatelessWidget {
               ),
               child: Text('${_fh(festa.dataInicio)} – ${_fh(festa.dataFim)}',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8,
                     letterSpacing: 1,
                     color: Colors.white70,
@@ -1036,10 +1036,10 @@ class _FestaCard extends StatelessWidget {
                   Container(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     child: Text(_fd(festa.dataInicio),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 8,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 2,
@@ -1051,7 +1051,7 @@ class _FestaCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.displayFont,
+                        fontFamily: TClubTypography.displayFont,
                         fontSize: 16,
                         letterSpacing: 1.5,
                         color: Colors.white,
@@ -1064,8 +1064,8 @@ class _FestaCard extends StatelessWidget {
                           ? Icons.location_on_outlined
                           : Icons.location_off_outlined,
                       color: festa.hasLocal
-                          ? TabuColors.rosaClaro
-                          : TabuColors.subtle,
+                          ? TClubColors.redClaro
+                          : TClubColors.subtle,
                       size: 9,
                     ),
                     const SizedBox(width: 3),
@@ -1075,14 +1075,14 @@ class _FestaCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           fontStyle: festa.hasLocal
                               ? FontStyle.normal
                               : FontStyle.italic,
                           color: festa.hasLocal
-                              ? TabuColors.rosaClaro
-                              : TabuColors.subtle,
+                              ? TClubColors.redClaro
+                              : TClubColors.subtle,
                         ),
                       ),
                     ),
@@ -1142,7 +1142,7 @@ class _FB extends StatelessWidget {
         const SizedBox(width: 3),
         Text('$count $label',
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 8,
               letterSpacing: 0.3,
               color: Colors.white54,
@@ -1394,9 +1394,9 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
         padding: EdgeInsets.only(bottom: keyboardHeight),
         child: Container(
           decoration: const BoxDecoration(
-            color: TabuColors.bgAlt,
+            color: TClubColors.bgAlt,
             border: Border(
-              top: BorderSide(color: TabuColors.rosaPrincipal, width: 1.5),
+              top: BorderSide(color: TClubColors.redPrincipal, width: 1.5),
             ),
           ),
           child: Column(children: [
@@ -1405,7 +1405,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
               height: 3,
               margin: const EdgeInsets.only(top: 12),
               decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -1422,9 +1422,9 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                         fit: BoxFit.cover,
                         fadeInDuration: const Duration(milliseconds: 200),
                         placeholder: (_, __) => Container(
-                            height: 200, color: TabuColors.bgCard),
+                            height: 200, color: TClubColors.bgCard),
                         errorWidget: (_, __, ___) => Container(
-                            height: 200, color: TabuColors.bgCard),
+                            height: 200, color: TClubColors.bgCard),
                       ),
                     ),
                   Padding(
@@ -1436,10 +1436,10 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 4),
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                           child: Text(_fd(festa.dataInicio),
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 2,
@@ -1449,10 +1449,10 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                         const SizedBox(height: 10),
                         Text(festa.nome.toUpperCase(),
                             style: const TextStyle(
-                              fontFamily: TabuTypography.displayFont,
+                              fontFamily: TClubTypography.displayFont,
                               fontSize: 26,
                               letterSpacing: 3,
-                              color: TabuColors.dim,
+                              color: TClubColors.dim,
                             )),
                         const SizedBox(height: 10),
                         Row(children: [
@@ -1461,8 +1461,8 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                 ? Icons.location_on_outlined
                                 : Icons.location_off_outlined,
                             color: festa.hasLocal
-                                ? TabuColors.rosaPrincipal
-                                : TabuColors.subtle,
+                                ? TClubColors.redPrincipal
+                                : TClubColors.subtle,
                             size: 13,
                           ),
                           const SizedBox(width: 5),
@@ -1472,14 +1472,14 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                   ? festa.local!
                                   : 'Local não confirmado',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 13,
                                 fontStyle: festa.hasLocal
                                     ? FontStyle.normal
                                     : FontStyle.italic,
                                 color: festa.hasLocal
-                                    ? TabuColors.rosaClaro
-                                    : TabuColors.subtle,
+                                    ? TClubColors.redClaro
+                                    : TClubColors.subtle,
                               ),
                             ),
                           ),
@@ -1489,10 +1489,10 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 5),
                               decoration: BoxDecoration(
-                                color: TabuColors.rosaPrincipal
+                                color: TClubColors.redPrincipal
                                     .withOpacity(0.12),
                                 border: Border.all(
-                                  color: TabuColors.rosaPrincipal
+                                  color: TClubColors.redPrincipal
                                       .withOpacity(0.5),
                                   width: 0.8,
                                 ),
@@ -1501,16 +1501,16 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     const Icon(Icons.near_me_rounded,
-                                        color: TabuColors.rosaPrincipal,
+                                        color: TClubColors.redPrincipal,
                                         size: 11),
                                     const SizedBox(width: 5),
                                     Text(dist,
                                         style: const TextStyle(
-                                          fontFamily: TabuTypography.bodyFont,
+                                          fontFamily: TClubTypography.bodyFont,
                                           fontSize: 11,
                                           fontWeight: FontWeight.w700,
                                           letterSpacing: 1,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                         )),
                                   ]),
                             ),
@@ -1519,14 +1519,14 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                         const SizedBox(height: 6),
                         Row(children: [
                           const Icon(Icons.schedule_outlined,
-                              color: TabuColors.subtle, size: 13),
+                              color: TClubColors.subtle, size: 13),
                           const SizedBox(width: 5),
                           Text(
                               '${_fh(festa.dataInicio)} – ${_fh(festa.dataFim)}',
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 12,
-                                color: TabuColors.dim,
+                                color: TClubColors.dim,
                               )),
                         ]),
                         const SizedBox(height: 20),
@@ -1541,7 +1541,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                               ativo:
                                   _presenca == FestaPresenca.interessado,
                               loading: _loadingPres,
-                              color: TabuColors.rosaClaro,
+                              color: TClubColors.redClaro,
                               onTap: () => _togglePresenca(
                                   FestaPresenca.interessado),
                             ),
@@ -1562,29 +1562,29 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                           ),
                         ]),
                         const SizedBox(height: 20),
-                        Container(height: 0.5, color: TabuColors.border),
+                        Container(height: 0.5, color: TClubColors.border),
                         const SizedBox(height: 16),
 
                         // ── Descrição ──────────────────────────────────────
                         if (festa.descricao.isNotEmpty) ...[
                           const Text('SOBRE A NOITE',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 3,
-                                color: TabuColors.subtle,
+                                color: TClubColors.subtle,
                               )),
                           const SizedBox(height: 10),
                           Text(festa.descricao,
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 14,
-                                color: TabuColors.dim,
+                                color: TClubColors.dim,
                                 height: 1.6,
                               )),
                           const SizedBox(height: 16),
-                          Container(height: 0.5, color: TabuColors.border),
+                          Container(height: 0.5, color: TClubColors.border),
                           const SizedBox(height: 16),
                         ],
 
@@ -1621,9 +1621,9 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                 child: Container(
                                   height: 44,
                                   decoration: BoxDecoration(
-                                    color: TabuColors.bgCard,
+                                    color: TClubColors.bgCard,
                                     border: Border.all(
-                                      color: TabuColors.rosaPrincipal
+                                      color: TClubColors.redPrincipal
                                           .withOpacity(0.5),
                                       width: 0.8,
                                     ),
@@ -1633,17 +1633,17 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                           MainAxisAlignment.center,
                                       children: const [
                                         Icon(Icons.edit_rounded,
-                                            color: TabuColors.rosaPrincipal,
+                                            color: TClubColors.redPrincipal,
                                             size: 14),
                                         SizedBox(width: 7),
                                         Text('EDITAR',
                                             style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
-                                              color: TabuColors.rosaPrincipal,
+                                              color: TClubColors.redPrincipal,
                                             )),
                                       ]),
                                 ),
@@ -1679,7 +1679,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                                         Text('EXCLUIR',
                                             style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
@@ -1692,18 +1692,18 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                           ]),
                         ],
                         const SizedBox(height: 20),
-                        Container(height: 0.5, color: TabuColors.border),
+                        Container(height: 0.5, color: TClubColors.border),
                         const SizedBox(height: 16),
 
                         // ── Comentários ────────────────────────────────────
                         Row(children: [
                           const Text('COMENTÁRIOS',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 3,
-                                color: TabuColors.rosaPrincipal,
+                                color: TClubColors.redPrincipal,
                               )),
                           const SizedBox(width: 10),
                           // indicador "ao vivo"
@@ -1711,7 +1711,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                             width: 5,
                             height: 5,
                             decoration: const BoxDecoration(
-                              color: TabuColors.rosaPrincipal,
+                              color: TClubColors.redPrincipal,
                               shape: BoxShape.circle,
                             ),
                           ),
@@ -1723,7 +1723,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                               width: 16,
                               height: 16,
                               child: CircularProgressIndicator(
-                                color: TabuColors.rosaPrincipal,
+                                color: TClubColors.redPrincipal,
                                 strokeWidth: 1.5,
                               ),
                             ),
@@ -1733,9 +1733,9 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                             padding: EdgeInsets.symmetric(vertical: 12),
                             child: Text('Seja o primeiro a comentar',
                                 style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 11,
-                                  color: TabuColors.subtle,
+                                  color: TClubColors.subtle,
                                 )),
                           )
                         else
@@ -1751,9 +1751,9 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
             // ── Input de comentário ────────────────────────────────────────
             Container(
               decoration: const BoxDecoration(
-                color: TabuColors.bgAlt,
+                color: TClubColors.bgAlt,
                 border: Border(
-                    top: BorderSide(color: TabuColors.border, width: 0.5)),
+                    top: BorderSide(color: TClubColors.border, width: 0.5)),
               ),
               padding: EdgeInsets.fromLTRB(
                 16,
@@ -1775,27 +1775,27 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
+                      color: TClubColors.bgCard,
                       border: Border.all(
-                          color: TabuColors.border, width: 0.8),
+                          color: TClubColors.border, width: 0.8),
                     ),
                     child: TextField(
                       controller: _comCtrl,
                       focusNode: _comFocus,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 13,
-                        color: TabuColors.dim,
+                        color: TClubColors.dim,
                       ),
-                      cursorColor: TabuColors.rosaPrincipal,
+                      cursorColor: TClubColors.redPrincipal,
                       decoration: const InputDecoration(
                         hintText: 'Comentar...',
                         border: InputBorder.none,
                         isDense: true,
                         hintStyle: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         ),
                         contentPadding: EdgeInsets.symmetric(
                             horizontal: 12, vertical: 10),
@@ -1810,7 +1810,7 @@ class _FestaDetailSheetState extends State<_FestaDetailSheet> {
                   child: Container(
                     width: 36,
                     height: 36,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     child: _enviando
                         ? const Center(
                             child: SizedBox(
@@ -2015,7 +2015,7 @@ class _PostCardState extends State<_PostCard> {
   void _mostrarMenuPost(BuildContext context, bool isOwnPost) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -2024,7 +2024,7 @@ class _PostCardState extends State<_PostCard> {
             height: 3,
             margin: const EdgeInsets.only(top: 12, bottom: 16),
             decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2)),
           ),
           if (isOwnPost) ...[
@@ -2038,7 +2038,7 @@ class _PostCardState extends State<_PostCard> {
                 _confirmarDelete(context);
               },
             ),
-            Container(height: 0.5, color: TabuColors.border),
+            Container(height: 0.5, color: TClubColors.border),
           ],
           _PostMenuTile(
             icon: Icons.flag_outlined,
@@ -2065,7 +2065,7 @@ class _PostCardState extends State<_PostCard> {
   void _confirmarDelete(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (sheetCtx) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -2074,22 +2074,22 @@ class _PostCardState extends State<_PostCard> {
             height: 3,
             margin: const EdgeInsets.only(top: 12, bottom: 16),
             decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2)),
           ),
           const Text('EXCLUIR POST?',
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 14,
                 letterSpacing: 4,
-                color: TabuColors.dim,
+                color: TClubColors.dim,
               )),
           const SizedBox(height: 8),
           const Text('Esta ação não pode ser desfeita.',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
           const SizedBox(height: 20),
           Padding(
@@ -2101,18 +2101,18 @@ class _PostCardState extends State<_PostCard> {
                   child: Container(
                     height: 46,
                     decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
+                      color: TClubColors.bgCard,
                       border: Border.all(
-                          color: TabuColors.border, width: 0.8),
+                          color: TClubColors.border, width: 0.8),
                     ),
                     child: const Center(
                         child: Text('CANCELAR',
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 2.5,
-                              color: TabuColors.dim,
+                              color: TClubColors.dim,
                             ))),
                   ),
                 ),
@@ -2131,7 +2131,7 @@ class _PostCardState extends State<_PostCard> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            backgroundColor: TabuColors.bgAlt,
+                            backgroundColor: TClubColors.bgAlt,
                             margin: const EdgeInsets.fromLTRB(
                                 16, 0, 16, 24),
                             shape: const RoundedRectangleBorder(),
@@ -2143,10 +2143,10 @@ class _PostCardState extends State<_PostCard> {
                               Text(
                                 'Post excluído com sucesso',
                                 style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 13,
                                   letterSpacing: 0.3,
-                                  color: TabuColors.dim,
+                                  color: TClubColors.dim,
                                 ),
                               ),
                             ]),
@@ -2159,7 +2159,7 @@ class _PostCardState extends State<_PostCard> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            backgroundColor: TabuColors.bgAlt,
+                            backgroundColor: TClubColors.bgAlt,
                             margin: const EdgeInsets.fromLTRB(
                                 16, 0, 16, 24),
                             shape: const RoundedRectangleBorder(),
@@ -2171,10 +2171,10 @@ class _PostCardState extends State<_PostCard> {
                               Text(
                                 'Erro ao excluir. Tente novamente.',
                                 style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 13,
                                   letterSpacing: 0.3,
-                                  color: TabuColors.dim,
+                                  color: TClubColors.dim,
                                 ),
                               ),
                             ]),
@@ -2189,7 +2189,7 @@ class _PostCardState extends State<_PostCard> {
                     child: const Center(
                         child: Text('EXCLUIR',
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 2.5,
@@ -2234,7 +2234,7 @@ class _PostCardState extends State<_PostCard> {
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 1),
       decoration: BoxDecoration(
         border: Border(
-            bottom: BorderSide(color: TabuColors.border, width: 0.5)),
+            bottom: BorderSide(color: TClubColors.border, width: 0.5)),
       ),
       child:
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -2274,11 +2274,11 @@ class _PostCardState extends State<_PostCard> {
                         onTap: _abrirPerfil,
                         child: Text(_liveUserName,
                             style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 13,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.5,
-                              color: TabuColors.dim,
+                              color: TClubColors.dim,
                             )),
                       ),
                       if (_isOwnPost) ...[
@@ -2287,20 +2287,20 @@ class _PostCardState extends State<_PostCard> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(
-                            color: TabuColors.rosaPrincipal
+                            color: TClubColors.redPrincipal
                                 .withOpacity(0.15),
                             border: Border.all(
-                                color: TabuColors.rosaPrincipal
+                                color: TClubColors.redPrincipal
                                     .withOpacity(0.5),
                                 width: 0.8),
                           ),
                           child: const Text('VOCÊ',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 7,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 1.5,
-                                color: TabuColors.rosaPrincipal,
+                                color: TClubColors.redPrincipal,
                               )),
                         ),
                       ],
@@ -2312,7 +2312,7 @@ class _PostCardState extends State<_PostCard> {
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.4),
                             border: Border.all(
-                                color: TabuColors.rosaPrincipal
+                                color: TClubColors.redPrincipal
                                     .withOpacity(0.4),
                                 width: 0.8),
                           ),
@@ -2320,16 +2320,16 @@ class _PostCardState extends State<_PostCard> {
                               mainAxisSize: MainAxisSize.min,
                               children: const [
                                 Icon(Icons.videocam_rounded,
-                                    color: TabuColors.rosaPrincipal,
+                                    color: TClubColors.redPrincipal,
                                     size: 9),
                                 SizedBox(width: 3),
                                 Text('VÍDEO',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 7,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1.5,
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                     )),
                               ]),
                         ),
@@ -2339,17 +2339,17 @@ class _PostCardState extends State<_PostCard> {
                     Row(children: [
                       Text(_formatTime(post.createdAt),
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             letterSpacing: 0.5,
-                            color: TabuColors.subtle,
+                            color: TClubColors.subtle,
                           )),
                       const SizedBox(width: 6),
                       Container(
                         width: 3,
                         height: 3,
                         decoration: const BoxDecoration(
-                            color: TabuColors.subtle,
+                            color: TClubColors.subtle,
                             shape: BoxShape.circle),
                       ),
                       const SizedBox(width: 6),
@@ -2361,7 +2361,7 @@ class _PostCardState extends State<_PostCard> {
             GestureDetector(
               onTap: () => _mostrarMenuPost(context, _isOwnPost),
               child: const Icon(Icons.more_horiz,
-                  color: TabuColors.subtle, size: 18),
+                  color: TClubColors.subtle, size: 18),
             ),
           ]),
         ),
@@ -2369,11 +2369,11 @@ class _PostCardState extends State<_PostCard> {
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: Text(post.titulo,
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0.3,
-                color: TabuColors.dim,
+                color: TClubColors.dim,
                 height: 1.4,
               )),
         ),
@@ -2383,10 +2383,10 @@ class _PostCardState extends State<_PostCard> {
             padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
             child: Text(post.descricao!,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 14,
                   letterSpacing: 0.2,
-                  color: TabuColors.dim,
+                  color: TClubColors.dim,
                   height: 1.5,
                 )),
           ),
@@ -2395,7 +2395,7 @@ class _PostCardState extends State<_PostCard> {
           const SizedBox(height: 10),
         Container(
           height: 0.5,
-          color: TabuColors.border,
+          color: TClubColors.border,
           margin: const EdgeInsets.symmetric(horizontal: 16),
         ),
         Padding(
@@ -2408,14 +2408,14 @@ class _PostCardState extends State<_PostCard> {
                   : Icons.favorite_border_rounded,
               label: '$_likes',
               color: _liked
-                  ? TabuColors.rosaPrincipal
-                  : TabuColors.subtle,
+                  ? TClubColors.redPrincipal
+                  : TClubColors.subtle,
               onTap: _toggleLike,
             ),
             _ActionBtn(
               icon: Icons.chat_bubble_outline_rounded,
               label: _commentCount > 0 ? '$_commentCount' : 'COMENTAR',
-              color: TabuColors.subtle,
+              color: TClubColors.subtle,
               onTap: _abrirComentarios,
             ),
           ]),
@@ -2437,8 +2437,8 @@ class _PostCardState extends State<_PostCard> {
             end: Alignment.bottomRight,
           ),
           border: Border(
-            top: BorderSide(color: TabuColors.border, width: 0.5),
-            bottom: BorderSide(color: TabuColors.border, width: 0.5),
+            top: BorderSide(color: TClubColors.border, width: 0.5),
+            bottom: BorderSide(color: TClubColors.border, width: 0.5),
           ),
         ),
         child: Center(
@@ -2483,10 +2483,10 @@ class _PostCardState extends State<_PostCard> {
           height: 340,
           margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             border: Border(
-              top: BorderSide(color: TabuColors.border, width: 0.5),
-              bottom: BorderSide(color: TabuColors.border, width: 0.5),
+              top: BorderSide(color: TClubColors.border, width: 0.5),
+              bottom: BorderSide(color: TClubColors.border, width: 0.5),
             ),
           ),
           child: Stack(fit: StackFit.expand, children: [
@@ -2505,7 +2505,7 @@ class _PostCardState extends State<_PostCard> {
                 ),
                 child: const Center(
                     child: Icon(Icons.broken_image_outlined,
-                        color: TabuColors.subtle, size: 36)),
+                        color: TClubColors.subtle, size: 36)),
               ),
             ),
             Positioned(
@@ -2528,7 +2528,7 @@ class _PostCardState extends State<_PostCard> {
                       SizedBox(width: 3),
                       Text('TELA CHEIA',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 7,
                             letterSpacing: 1.5,
                             color: Colors.white54,
@@ -2611,7 +2611,7 @@ class _SeekBarState extends State<_SeekBar> {
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                colors: [TClubColors.redDeep, TClubColors.redPrincipal],
               ),
             ),
           ),
@@ -2647,10 +2647,10 @@ class _PB extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           height: 50,
           decoration: BoxDecoration(
-            color: ativo ? color.withOpacity(0.15) : TabuColors.bgCard,
+            color: ativo ? color.withOpacity(0.15) : TClubColors.bgCard,
             border: Border.all(
               color:
-                  ativo ? color.withOpacity(0.6) : TabuColors.border,
+                  ativo ? color.withOpacity(0.6) : TClubColors.border,
               width: ativo ? 1.2 : 0.8,
             ),
           ),
@@ -2665,7 +2665,7 @@ class _PB extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(icon,
-                        color: ativo ? color : TabuColors.subtle,
+                        color: ativo ? color : TClubColors.subtle,
                         size: 14),
                     const SizedBox(width: 6),
                     Column(
@@ -2674,20 +2674,20 @@ class _PB extends StatelessWidget {
                       children: [
                         Text(label,
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.5,
-                              color: ativo ? color : TabuColors.subtle,
+                              color: ativo ? color : TClubColors.subtle,
                             )),
                         if (count > 0)
                           Text('$count',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 color: ativo
                                     ? color.withOpacity(0.7)
-                                    : TabuColors.border,
+                                    : TClubColors.border,
                               )),
                       ],
                     ),
@@ -2726,26 +2726,26 @@ class _CT extends StatelessWidget {
                   Row(children: [
                     Text(name.toUpperCase(),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
-                          color: TabuColors.dim,
+                          color: TClubColors.dim,
                         )),
                     const SizedBox(width: 8),
                     Text(tempo,
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         )),
                   ]),
                   const SizedBox(height: 3),
                   Text(texto,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 13,
-                        color: TabuColors.dim,
+                        color: TClubColors.dim,
                         height: 1.4,
                       )),
                 ])),
@@ -2778,18 +2778,18 @@ class _MenuOption extends StatelessWidget {
               height: 34,
               decoration: BoxDecoration(
                 color: accent
-                    ? TabuColors.rosaPrincipal.withOpacity(0.15)
-                    : TabuColors.bgCard,
+                    ? TClubColors.redPrincipal.withOpacity(0.15)
+                    : TClubColors.bgCard,
                 border: Border.all(
                   color: accent
-                      ? TabuColors.rosaPrincipal
-                      : TabuColors.border,
+                      ? TClubColors.redPrincipal
+                      : TClubColors.border,
                   width: 0.8,
                 ),
               ),
               child: Icon(icon,
                   color:
-                      accent ? TabuColors.rosaPrincipal : TabuColors.dim,
+                      accent ? TClubColors.redPrincipal : TClubColors.dim,
                   size: 16),
             ),
             const SizedBox(width: 12),
@@ -2798,20 +2798,20 @@ class _MenuOption extends StatelessWidget {
                 children: [
                   Text(label,
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 12,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2,
                         color: accent
-                            ? TabuColors.rosaPrincipal
-                            : TabuColors.dim,
+                            ? TClubColors.redPrincipal
+                            : TClubColors.dim,
                       )),
                   Text(sublabel,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         letterSpacing: 0.5,
-                        color: TabuColors.subtle,
+                        color: TClubColors.subtle,
                       )),
                 ]),
           ]),
@@ -2841,9 +2841,9 @@ class _SquircleAvatar extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           gradient: hasNewStory
               ? const LinearGradient(colors: [
-                  TabuColors.rosaDeep,
-                  TabuColors.rosaPrincipal,
-                  TabuColors.rosaClaro,
+                  TClubColors.redDeep,
+                  TClubColors.redPrincipal,
+                  TClubColors.redClaro,
                 ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight)
@@ -2851,7 +2851,7 @@ class _SquircleAvatar extends StatelessWidget {
           boxShadow: hasNewStory
               ? [
                   BoxShadow(
-                      color: TabuColors.glow,
+                      color: TClubColors.glow,
                       blurRadius: 10,
                       spreadRadius: 1)
                 ]
@@ -2879,7 +2879,7 @@ class _SquircleAvatar extends StatelessWidget {
           ),
         ),
         child: const Icon(Icons.person_outline,
-            color: TabuColors.rosaPrincipal, size: 18),
+            color: TClubColors.redPrincipal, size: 18),
       );
 }
 
@@ -2954,16 +2954,16 @@ class _StoryBubble extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         gradient: const LinearGradient(
                           colors: [
-                            TabuColors.rosaDeep,
-                            TabuColors.rosaPrincipal,
-                            TabuColors.rosaClaro
+                            TClubColors.redDeep,
+                            TClubColors.redPrincipal,
+                            TClubColors.redClaro
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
                         boxShadow: [
                           BoxShadow(
-                              color: TabuColors.glow,
+                              color: TClubColors.glow,
                               blurRadius: 12,
                               spreadRadius: 1),
                         ],
@@ -2990,7 +2990,7 @@ class _StoryBubble extends StatelessWidget {
                       height: 68,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: TabuColors.border,
+                        color: TClubColors.border,
                       ),
                     ),
                   Container(
@@ -2999,7 +2999,7 @@ class _StoryBubble extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13),
                       border: Border.all(
-                          color: TabuColors.bg, width: 2.5),
+                          color: TClubColors.bg, width: 2.5),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.5),
@@ -3055,20 +3055,20 @@ class _StoryBubble extends StatelessWidget {
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                            color: TabuColors.bg, width: 1.5),
+                            color: TClubColors.bg, width: 1.5),
                         boxShadow: [
                           BoxShadow(
-                            color: TabuColors.glow.withOpacity(0.4),
+                            color: TClubColors.glow.withOpacity(0.4),
                             blurRadius: 8,
                             spreadRadius: 0.5,
                           ),
                         ],
                       ),
                       child: const Icon(Icons.add,
-                          color: TabuColors.dim, size: 12),
+                          color: TClubColors.dim, size: 12),
                     ),
                   ),
                 ),
@@ -3082,12 +3082,12 @@ class _StoryBubble extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9,
             fontWeight: FontWeight.w600,
             letterSpacing: 1.5,
             color:
-                hasNew ? TabuColors.rosaPrincipal : TabuColors.subtle,
+                hasNew ? TClubColors.redPrincipal : TClubColors.subtle,
           ),
         ),
       ]),
@@ -3111,7 +3111,7 @@ class _VisibilidadeChip extends StatelessWidget {
       default:
         icon = Icons.public_rounded;
     }
-    return Icon(icon, color: TabuColors.subtle, size: 10);
+    return Icon(icon, color: TClubColors.subtle, size: 10);
   }
 }
 
@@ -3130,7 +3130,7 @@ class _PostMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color =
-        danger ? const Color(0xFFE85D5D) : TabuColors.dim;
+        danger ? const Color(0xFFE85D5D) : TClubColors.dim;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -3153,7 +3153,7 @@ class _PostMenuTile extends StatelessWidget {
               children: [
                 Text(label,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2,
@@ -3161,10 +3161,10 @@ class _PostMenuTile extends StatelessWidget {
                     )),
                 Text(sublabel,
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10,
                       letterSpacing: 0.5,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                     )),
               ]),
         ]),
@@ -3197,7 +3197,7 @@ class _ActionBtn extends StatelessWidget {
                   const SizedBox(width: 5),
                   Text(label,
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1.5,
@@ -3221,7 +3221,7 @@ class _PostsSkeleton extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border(
                         bottom: BorderSide(
-                            color: TabuColors.border, width: 0.5)),
+                            color: TClubColors.border, width: 0.5)),
                   ),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -3291,7 +3291,7 @@ class _SkeletonBox extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: TabuColors.border.withOpacity(0.4),
+          color: TClubColors.border.withOpacity(0.4),
           borderRadius: BorderRadius.circular(radius),
         ),
       );
@@ -3301,13 +3301,13 @@ class _FeedBg extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     canvas.drawCircle(
       Offset(size.width * 0.85, size.height * 0.1),
       size.width * 0.7,
       Paint()
         ..shader = RadialGradient(colors: [
-          TabuColors.rosaPrincipal.withOpacity(0.07),
+          TClubColors.redPrincipal.withOpacity(0.07),
           Colors.transparent,
         ]).createShader(Rect.fromCircle(
           center: Offset(size.width * 0.85, size.height * 0.1),
@@ -3319,3 +3319,4 @@ class _FeedBg extends CustomPainter {
   @override
   bool shouldRepaint(_FeedBg _) => false;
 }
+

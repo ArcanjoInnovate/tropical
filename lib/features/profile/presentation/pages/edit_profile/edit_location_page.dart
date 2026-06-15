@@ -4,13 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/controller/edit_location_controller.dart';
-import 'package:tabuapp/features/profile/data/services/ibge_service.dart';
-import 'package:tabuapp/features/profile/data/models/location_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/location_repository.dart';
-import 'package:tabuapp/features/profile/data/services/location_service.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_shareds.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/controller/edit_location_controller.dart';
+import 'package:tclub/features/profile/data/services/ibge_service.dart';
+import 'package:tclub/features/profile/data/models/location_model.dart';
+import 'package:tclub/features/profile/data/repositories/location_repository.dart';
+import 'package:tclub/features/profile/data/services/location_service.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_shareds.dart';
 
 const _kEstados = [
   {'sigla': 'AC', 'nome': 'Acre'},
@@ -145,17 +145,17 @@ class _EditLocationPageState extends State<EditLocationPage> {
 
   void _snack(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: TabuColors.errorDeep,
+      backgroundColor: TClubColors.errorDeep,
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(),
       content: Text(
         msg.toUpperCase(),
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 11,
           fontWeight: FontWeight.w700,
           letterSpacing: 2,
-          color: TabuColors.errorLight,
+          color: TClubColors.errorLight,
         ),
       ),
     ));
@@ -207,9 +207,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
     final ok = _controller.stateOk;
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         border: Border.all(
-          color: ok ? TabuColors.rosaPrincipal : TabuColors.border,
+          color: ok ? TClubColors.redPrincipal : TClubColors.border,
           width: ok ? 1.5 : 0.8,
         ),
       ),
@@ -218,15 +218,15 @@ class _EditLocationPageState extends State<EditLocationPage> {
         isExpanded: true,
         icon: const Icon(
           Icons.keyboard_arrow_down_rounded,
-          color: TabuColors.subtle,
+          color: TClubColors.subtle,
           size: 20,
         ),
-        dropdownColor: TabuColors.bgAlt,
+        dropdownColor: TClubColors.bgAlt,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 15,
           fontWeight: FontWeight.w500,
-          color: TabuColors.textoPrincipal,
+          color: TClubColors.textoPrincipal,
         ),
         decoration: const InputDecoration(
           border: InputBorder.none,
@@ -236,9 +236,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
         hint: const Text(
           'Selecione seu estado',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 13,
-            color: TabuColors.subtle,
+            color: TClubColors.subtle,
           ),
         ),
         onChanged: (val) {
@@ -258,17 +258,17 @@ class _EditLocationPageState extends State<EditLocationPage> {
                       height: 20,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.15),
-                        border: Border.all(color: TabuColors.border, width: 0.5),
+                        color: TClubColors.redPrincipal.withOpacity(0.15),
+                        border: Border.all(color: TClubColors.border, width: 0.5),
                       ),
                       child: Text(
                         e['sigla']!,
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           fontWeight: FontWeight.w800,
                           letterSpacing: 1,
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                         ),
                       ),
                     ),
@@ -276,9 +276,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
                     Text(
                       e['nome']!,
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 13,
-                        color: TabuColors.textoPrincipal,
+                        color: TClubColors.textoPrincipal,
                       ),
                     ),
                   ]),
@@ -292,19 +292,19 @@ class _EditLocationPageState extends State<EditLocationPage> {
     final status  = _controller.cityStatus;
     final enabled = _controller.stateOk && !_controller.loadingCidades;
     final borda   = status == LocationFieldStatus.ok
-        ? TabuColors.rosaPrincipal
+        ? TClubColors.redPrincipal
         : status == LocationFieldStatus.error
-            ? TabuColors.error
+            ? TClubColors.error
             : status == LocationFieldStatus.loading
-                ? TabuColors.rosaPrincipal.withOpacity(0.5)
-                : TabuColors.border;
+                ? TClubColors.redPrincipal.withOpacity(0.5)
+                : TClubColors.border;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             border: Border.all(color: borda, width: 1),
           ),
           child: Row(children: [
@@ -315,14 +315,14 @@ class _EditLocationPageState extends State<EditLocationPage> {
                 width: 14,
                 height: 14,
                 child: CircularProgressIndicator(
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                   strokeWidth: 1.5,
                 ),
               )
             else
               Icon(
                 Icons.location_city_outlined,
-                color: enabled ? TabuColors.subtle : TabuColors.border,
+                color: enabled ? TClubColors.subtle : TClubColors.border,
                 size: 18,
               ),
             const SizedBox(width: 8),
@@ -335,15 +335,15 @@ class _EditLocationPageState extends State<EditLocationPage> {
                       ? const SizedBox.shrink()
                       : const Icon(
                           Icons.keyboard_arrow_down_rounded,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           size: 20,
                         ),
-                  dropdownColor: TabuColors.bgAlt,
+                  dropdownColor: TClubColors.bgAlt,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: enabled ? TabuColors.textoPrincipal : TabuColors.subtle,
+                    color: enabled ? TClubColors.textoPrincipal : TClubColors.subtle,
                   ),
                   hint: Text(
                     _controller.loadingCidades
@@ -352,9 +352,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
                             ? 'Selecione sua cidade'
                             : 'Selecione o estado primeiro',
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 13,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                     ),
                   ),
                   onChanged: enabled
@@ -373,9 +373,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
                             child: Text(
                               c.nome,
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 13,
-                                color: TabuColors.textoPrincipal,
+                                color: TClubColors.textoPrincipal,
                               ),
                             ),
                           ))
@@ -401,19 +401,19 @@ class _EditLocationPageState extends State<EditLocationPage> {
     final status  = _controller.bairroStatus;
     final focused = _bairroFocus.hasFocus;
     final borda   = status == LocationFieldStatus.ok
-        ? TabuColors.rosaPrincipal
+        ? TClubColors.redPrincipal
         : status == LocationFieldStatus.error
-            ? TabuColors.error
+            ? TClubColors.error
             : status == LocationFieldStatus.loading
-                ? TabuColors.rosaPrincipal.withOpacity(0.5)
+                ? TClubColors.redPrincipal.withOpacity(0.5)
                 : focused
-                    ? TabuColors.rosaPrincipal
-                    : TabuColors.border;
+                    ? TClubColors.redPrincipal
+                    : TClubColors.border;
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(color: borda, width: 1),
         ),
         child: Row(children: [
@@ -424,14 +424,14 @@ class _EditLocationPageState extends State<EditLocationPage> {
               focusNode:  _bairroFocus,
               enabled:    _controller.cityOk,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 15,
                 fontWeight: FontWeight.w500,
                 color: _controller.cityOk
-                    ? TabuColors.textoPrincipal
-                    : TabuColors.subtle,
+                    ? TClubColors.textoPrincipal
+                    : TClubColors.subtle,
               ),
-              cursorColor: TabuColors.rosaPrincipal,
+              cursorColor: TClubColors.redPrincipal,
               textCapitalization: TextCapitalization.words,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
@@ -441,9 +441,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
                     ? 'Digite e selecione nas sugestões abaixo'
                     : 'Confirme a cidade primeiro',
                 hintStyle: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 14),
               ),
@@ -466,15 +466,15 @@ class _EditLocationPageState extends State<EditLocationPage> {
         Padding(
           padding: const EdgeInsets.only(top: 5, left: 2),
           child: Row(children: [
-            const Icon(Icons.touch_app_outlined, color: TabuColors.subtle, size: 11),
+            const Icon(Icons.touch_app_outlined, color: TClubColors.subtle, size: 11),
             const SizedBox(width: 4),
             const Text(
               'Selecione um bairro nas sugestões abaixo',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 letterSpacing: 0.6,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
           ]),
@@ -486,15 +486,15 @@ class _EditLocationPageState extends State<EditLocationPage> {
         Padding(
           padding: const EdgeInsets.only(top: 4, left: 2),
           child: Row(children: [
-            const Icon(Icons.my_location, color: TabuColors.subtle, size: 11),
+            const Icon(Icons.my_location, color: TClubColors.subtle, size: 11),
             const SizedBox(width: 4),
             Text(
               '${_controller.lat!.toStringAsFixed(6)}, ${_controller.lng!.toStringAsFixed(6)}',
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 letterSpacing: 0.6,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
           ]),
@@ -519,9 +519,9 @@ class _EditLocationPageState extends State<EditLocationPage> {
               child: Text(
                 'Buscando bairros...',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
               ),
             ),
@@ -544,10 +544,10 @@ class _EditLocationPageState extends State<EditLocationPage> {
                     vertical: 10,
                   ),
                   decoration: BoxDecoration(
-                    color: TabuColors.bgCard,
+                    color: TClubColors.bgCard,
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                      color: TClubColors.redPrincipal.withOpacity(0.5),
                       width: 1,
                     ),
                   ),
@@ -557,17 +557,17 @@ class _EditLocationPageState extends State<EditLocationPage> {
                       const Icon(
                         Icons.location_on_outlined,
                         size: 14,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                       ),
                       const SizedBox(width: 6),
                       Flexible(
                         child: Text(
                           s.nome,
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: TabuColors.textoPrincipal,
+                            color: TClubColors.textoPrincipal,
                           ),
                         ),
                       ),
@@ -592,7 +592,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
           width: 14,
           height: 14,
           child: CircularProgressIndicator(
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
             strokeWidth: 1.5,
           ),
         ),
@@ -603,7 +603,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
         padding: EdgeInsets.only(right: 10),
         child: Icon(
           Icons.check_circle_rounded,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
           size: 18,
         ),
       );
@@ -611,7 +611,7 @@ class _EditLocationPageState extends State<EditLocationPage> {
     if (status == LocationFieldStatus.error) {
       return Padding(
         padding: const EdgeInsets.only(right: 10),
-        child: Icon(Icons.cancel_rounded, color: TabuColors.error, size: 18),
+        child: Icon(Icons.cancel_rounded, color: TClubColors.error, size: 18),
       );
     }
     return const SizedBox(width: 10);
@@ -626,16 +626,16 @@ class _EditLocationPageState extends State<EditLocationPage> {
       return Padding(
         padding: const EdgeInsets.only(top: 5, left: 2),
         child: Row(children: [
-          Icon(Icons.info_outline, color: TabuColors.error, size: 11),
+          Icon(Icons.info_outline, color: TClubColors.error, size: 11),
           const SizedBox(width: 4),
           Expanded(
             child: Text(
               err,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 letterSpacing: 0.8,
-                color: TabuColors.error,
+                color: TClubColors.error,
               ),
             ),
           ),
@@ -648,17 +648,17 @@ class _EditLocationPageState extends State<EditLocationPage> {
         child: Row(children: [
           const Icon(
             Icons.check_circle_outline,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
             size: 11,
           ),
           const SizedBox(width: 4),
           Text(
             okText,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               letterSpacing: 0.8,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
             ),
           ),
         ]),
@@ -667,3 +667,4 @@ class _EditLocationPageState extends State<EditLocationPage> {
     return const SizedBox.shrink();
   }
 }
+

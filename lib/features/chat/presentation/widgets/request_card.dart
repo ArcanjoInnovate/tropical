@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/controller/chat_controller.dart';
-import 'package:tabuapp/features/chat/data/models/chat_request_model.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_list_screen.dart';
-import 'package:tabuapp/core/services/chat_request_service.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/controller/chat_controller.dart';
+import 'package:tclub/features/chat/data/models/chat_request_model.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_list_screen.dart';
+import 'package:tclub/core/services/chat_request_service.dart';
 
 class RequestCard extends StatefulWidget {
   final ChatRequest request;
@@ -108,17 +108,17 @@ class _RequestCardState extends State<RequestCard> {
       padding: const EdgeInsets.only(bottom: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(
             color: isNew
-                ? TabuColors.rosaPrincipal.withOpacity(0.35)
-                : TabuColors.border.withOpacity(0.6),
+                ? TClubColors.redPrincipal.withOpacity(0.35)
+                : TClubColors.border.withOpacity(0.6),
             width: isNew ? 0.9 : 0.6,
           ),
           boxShadow: isNew
               ? [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.08),
+                    color: TClubColors.glow.withOpacity(0.08),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   )
@@ -158,11 +158,11 @@ class _GradientTopLine extends StatelessWidget {
       height: 2,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          TabuColors.rosaDeep,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaClaro,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaDeep,
+          TClubColors.redDeep,
+          TClubColors.redPrincipal,
+          TClubColors.redClaro,
+          TClubColors.redPrincipal,
+          TClubColors.redDeep,
         ]),
       ),
     );
@@ -200,13 +200,13 @@ class _RequestCardBody extends StatelessWidget {
                   child: Text(
                     req.fromName.toUpperCase(),
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
                       color: isNew
-                          ? TabuColors.textoPrincipal
-                          : TabuColors.dim,
+                          ? TClubColors.textoPrincipal
+                          : TClubColors.dim,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -222,16 +222,16 @@ class _RequestCardBody extends StatelessWidget {
                 const Icon(
                   Icons.mark_chat_unread_outlined,
                   size: 10,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
                 const SizedBox(width: 5),
                 const Text(
                   'quer conversar com você',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     letterSpacing: 0.2,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
               ]),
@@ -239,10 +239,10 @@ class _RequestCardBody extends StatelessWidget {
               Text(
                 formatTime(req.createdAt),
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 9,
                   letterSpacing: 0.5,
-                  color: TabuColors.border,
+                  color: TClubColors.border,
                 ),
               ),
             ],
@@ -267,14 +267,14 @@ class _RequestAvatar extends StatelessWidget {
   Widget _fallback(String name) {
     final initial = name.isNotEmpty ? name[0].toUpperCase() : '?';
     return Container(
-      color: TabuColors.bgAlt,
+      color: TClubColors.bgAlt,
       child: Center(
         child: Text(
           initial,
           style: const TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 20,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
           ),
         ),
       ),
@@ -290,8 +290,8 @@ class _RequestAvatar extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: isNew
-                ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                : TabuColors.border,
+                ? TClubColors.redPrincipal.withOpacity(0.4)
+                : TClubColors.border,
             width: isNew ? 1.2 : 0.6,
           ),
         ),
@@ -313,12 +313,12 @@ class _RequestAvatar extends StatelessWidget {
             width: 10,
             height: 10,
             decoration: BoxDecoration(
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               shape: BoxShape.circle,
-              border: Border.all(color: TabuColors.bgCard, width: 1.5),
+              border: Border.all(color: TClubColors.bgCard, width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: TabuColors.glow.withOpacity(0.5),
+                  color: TClubColors.glow.withOpacity(0.5),
                   blurRadius: 6,
                 )
               ],
@@ -335,20 +335,20 @@ class _NewBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: TabuColors.rosaPrincipal.withOpacity(0.12),
+        color: TClubColors.redPrincipal.withOpacity(0.12),
         border: Border.all(
-          color: TabuColors.rosaPrincipal.withOpacity(0.4),
+          color: TClubColors.redPrincipal.withOpacity(0.4),
           width: 0.7,
         ),
       ),
       child: const Text(
         'NOVA',
         style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 7,
           fontWeight: FontWeight.w700,
           letterSpacing: 2,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
         ),
       ),
     );
@@ -365,7 +365,7 @@ class _CardDivider extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
           Colors.transparent,
-          TabuColors.border,
+          TClubColors.border,
           Colors.transparent,
         ]),
       ),
@@ -437,22 +437,22 @@ class _ActionButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: isPrimary
               ? const LinearGradient(
-                  colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                  colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 )
               : null,
-          color: isPrimary ? null : TabuColors.bgCard,
+          color: isPrimary ? null : TClubColors.bgCard,
           border: Border.all(
             color: isPrimary
-                ? TabuColors.rosaPrincipal.withOpacity(0.3)
-                : TabuColors.border.withOpacity(0.6),
+                ? TClubColors.redPrincipal.withOpacity(0.3)
+                : TClubColors.border.withOpacity(0.6),
             width: 0.7,
           ),
           boxShadow: isPrimary
               ? [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.25),
+                    color: TClubColors.glow.withOpacity(0.25),
                     blurRadius: 12,
                     offset: const Offset(0, 3),
                   )
@@ -466,19 +466,19 @@ class _ActionButton extends StatelessWidget {
                   height: 14,
                   child: CircularProgressIndicator(
                     strokeWidth: 1.5,
-                    color: isPrimary ? Colors.white : TabuColors.subtle,
+                    color: isPrimary ? Colors.white : TClubColors.subtle,
                   ),
                 )
               : Text(
                   label,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
                     color: isPrimary
-                        ? TabuColors.textoPrincipal
-                        : TabuColors.subtle,
+                        ? TClubColors.textoPrincipal
+                        : TClubColors.subtle,
                   ),
                 ),
         ),
@@ -486,3 +486,4 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
+

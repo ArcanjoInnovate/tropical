@@ -14,10 +14,10 @@ import 'dart:math';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/search/data/models/paginated_users_result.dart';
-import 'package:tabuapp/features/search/data/models/user_search_model.dart';
-import 'package:tabuapp/features/search/data/models/party_search_model.dart';
-import 'package:tabuapp/core/services/cache_service.dart';
+import 'package:tclub/features/search/data/models/paginated_users_result.dart';
+import 'package:tclub/features/search/data/models/user_search_model.dart';
+import 'package:tclub/features/search/data/models/party_search_model.dart';
+import 'package:tclub/core/services/cache_service.dart';
 
 class SearchRemoteDataSource {
   final FirebaseDatabase _database;
@@ -651,3 +651,4 @@ class SearchRemoteDataSource {
 
   static double _toRadians(double degrees) => degrees * pi / 180.0;
 }
+

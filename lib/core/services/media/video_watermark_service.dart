@@ -137,3 +137,4 @@ class VideoWatermarkService {
     return ((sizeKb / bitrateKbps) * 1000).round().clamp(1000, 60000);
   }
 }
+

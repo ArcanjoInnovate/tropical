@@ -10,15 +10,15 @@
 //   • _pauseAndStopCurrentVideo() garante que vídeo anterior para completamente
 //
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/user/moderation/moderation.dart';
+import 'package:tclub/features/user/moderation/moderation.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/features/story/data/models/story_model.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/features/story/data/models/story_model.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/features/story/data/services/story_service.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/features/story/data/services/story_service.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -489,7 +489,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
             const SizedBox(height: 16),
             const Text('DELETAR STORY',
                 style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 16,
                     letterSpacing: 4,
                     color: Colors.white)),
@@ -497,7 +497,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
             Text('Este story será removido permanentemente.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 12,
                     letterSpacing: 0.3,
                     height: 1.5,
@@ -516,7 +516,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
                           child: const Center(
                               child: Text('CANCELAR',
                                   style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2,
@@ -531,7 +531,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
                           child: const Center(
                               child: Text('DELETAR',
                                   style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2,
@@ -585,7 +585,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
         margin: const EdgeInsets.all(16),
         content: const Text('Story deletado com sucesso.',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.2,
@@ -601,7 +601,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
         margin: const EdgeInsets.all(16),
         content: const Text('Erro ao deletar story. Tente novamente.',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.2,
@@ -626,7 +626,7 @@ class _StoryViewerScreenState extends State<StoryViewerScreen>
         margin: const EdgeInsets.all(16),
         content: const Text('Você não pode denunciar seu próprio story.',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.2,
@@ -847,7 +847,7 @@ class _UserStoriesPage extends StatelessWidget {
                         Row(children: [
                           Text((isOwn ? 'Você' : story.userName).toUpperCase(),
                               style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 1.5,
@@ -864,30 +864,30 @@ class _UserStoriesPage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.black.withOpacity(0.5),
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.5),
                                         width: 0.7)),
                                 child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: const [
                                       Icon(Icons.videocam_rounded,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                           size: 9),
                                       SizedBox(width: 3),
                                       Text('VÍD',
                                           style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 7,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 1.2,
-                                              color: TabuColors.rosaPrincipal)),
+                                              color: TClubColors.redPrincipal)),
                                     ])),
                           ],
                         ]),
                         Text(_formatTime(story.createdAt),
                             style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 10,
                                 color: Colors.white.withOpacity(0.65),
                                 shadows: const [
@@ -903,7 +903,7 @@ class _UserStoriesPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4)),
                         child: const Text('■ PAUSADO',
                             style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 8,
                                 letterSpacing: 2,
                                 color: Colors.white60))),
@@ -945,7 +945,7 @@ class _UserStoriesPage extends StatelessWidget {
                     Row(children: [
                       Text(_fmtDur(videoCtrl?.value.position ?? Duration.zero),
                           style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10,
                               color: Colors.white60,
                               letterSpacing: 0.5)),
@@ -957,17 +957,17 @@ class _UserStoriesPage extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color: Colors.black.withOpacity(0.55),
                                 border: Border.all(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.4),
                                     width: 0.7)),
                             child:
                                 Row(mainAxisSize: MainAxisSize.min, children: [
                               const Icon(Icons.videocam_outlined,
-                                  color: TabuColors.rosaPrincipal, size: 9),
+                                  color: TClubColors.redPrincipal, size: 9),
                               const SizedBox(width: 3),
                               Text('${story.videoDuration}s',
                                   style: const TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 9,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1,
@@ -1041,14 +1041,14 @@ class _UserStoriesPage extends StatelessWidget {
                         color: Color(0xFFFF2D7A), size: 20),
                     title: const Text('Deletar story',
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                             letterSpacing: 0.3)),
                     subtitle: Text('Remover permanentemente',
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             color: Colors.white38)),
                     onTap: () {
@@ -1061,14 +1061,14 @@ class _UserStoriesPage extends StatelessWidget {
                         color: Color(0xFFFF2D7A), size: 20),
                     title: const Text('Denunciar story',
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: Colors.white,
                             letterSpacing: 0.3)),
                     subtitle: Text('Violar os Termos de Uso – Art. 18º',
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             color: Colors.white38)),
                     onTap: () {
@@ -1085,7 +1085,7 @@ class _UserStoriesPage extends StatelessWidget {
                       color: Colors.white38, size: 20),
                   title: const Text('Cancelar',
                       style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13,
                           color: Colors.white54,
                           letterSpacing: 0.3)),
@@ -1153,15 +1153,15 @@ class _StoryBackground extends StatelessWidget {
                 width: 44,
                 height: 44,
                 child: CircularProgressIndicator(
-                  color: TabuColors.rosaPrincipal,
-                  backgroundColor: TabuColors.rosaPrincipal.withOpacity(0.15),
+                  color: TClubColors.redPrincipal,
+                  backgroundColor: TClubColors.redPrincipal.withOpacity(0.15),
                   strokeWidth: 2.5,
                 ),
               ),
               const SizedBox(height: 12),
               const Text('CARREGANDO VÍDEO',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       letterSpacing: 2.5,
                       color: Colors.white54)),
@@ -1175,7 +1175,7 @@ class _StoryBackground extends StatelessWidget {
               const SizedBox(height: 10),
               const Text('ERRO AO CARREGAR VÍDEO',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       letterSpacing: 2,
                       color: Color(0xFFE85D5D))),
@@ -1271,16 +1271,16 @@ class _StoryBackground extends StatelessWidget {
     switch (style) {
       case 'rosa':
         return TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 28,
             fontWeight: FontWeight.w700,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
             letterSpacing: 0.5,
             height: 1.4,
-            shadows: [Shadow(color: TabuColors.glow, blurRadius: 20)]);
+            shadows: [Shadow(color: TClubColors.glow, blurRadius: 20)]);
       case 'display':
         return const TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 32,
             color: Colors.white,
             letterSpacing: 4,
@@ -1288,7 +1288,7 @@ class _StoryBackground extends StatelessWidget {
             shadows: [Shadow(color: Colors.black54, blurRadius: 8)]);
       default:
         return const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 26,
             fontWeight: FontWeight.w600,
             color: Colors.white,
@@ -1377,7 +1377,7 @@ class _VideoSeekBarReadOnly extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             gradient: const LinearGradient(
-                colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal]),
+                colors: [TClubColors.redDeep, TClubColors.redPrincipal]),
           ),
         ),
       ),
@@ -1424,7 +1424,7 @@ class _VisibilityBadge extends StatelessWidget {
           const SizedBox(width: 5),
           Text(label,
               style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 9,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
@@ -1432,3 +1432,4 @@ class _VisibilityBadge extends StatelessWidget {
         ]));
   }
 }
+

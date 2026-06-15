@@ -1,7 +1,7 @@
 // lib/widgets/user_name_text.dart
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/services/user_profile_cache.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_profile_cache.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
 
 class UserNameText extends StatefulWidget {
   final String uid;
@@ -52,3 +52,4 @@ class _UserNameTextState extends State<UserNameText> {
   @override
   Widget build(BuildContext context) => Text(_name.isNotEmpty ? _name : widget.fallback, style: widget.style);
 }
+

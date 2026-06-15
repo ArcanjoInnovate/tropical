@@ -1,8 +1,8 @@
 // lib/screens/admin/presentation/widgets/convite_tile.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
 import '../../data/models/invite_model.dart';
 
 class ConviteTile extends StatelessWidget {
@@ -19,10 +19,10 @@ class ConviteTile extends StatelessWidget {
 
   Color get _statusColor {
     switch (pedido.status) {
-      case 'pending':  return AdminColors.pending;
-      case 'approved': return AdminColors.actioned;
-      case 'rejected': return AdminColors.danger;
-      default:         return AdminColors.dismissed;
+      case 'pending':  return TClubColors.redClaro;
+      case 'approved': return Color(0xFF4CAF50);
+      case 'rejected': return TClubColors.error;
+      default:         return TClubColors.textoMuted;
     }
   }
 
@@ -49,9 +49,9 @@ class ConviteTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: pedido.isPending ? AdminColors.fill : Colors.transparent,
+        color: pedido.isPending ? TClubColors.bgAlt : Colors.transparent,
         border: const Border(bottom: BorderSide(
-          color: AdminColors.border, width: 0.5))),
+          color: TClubColors.border, width: 0.5))),
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,29 +93,29 @@ class ConviteTile extends StatelessWidget {
         border: Border.all(
           color: _statusColor.withOpacity(0.5), width: 0.7)),
       child: Text(_statusLabel, style: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      8, fontWeight: FontWeight.w700,
         letterSpacing: 2, color: _statusColor))),
     const Spacer(),
     Text(_formatTs(pedido.createdAt), style: const TextStyle(
-      fontFamily: TabuTypography.bodyFont,
-      fontSize: 9, color: AdminColors.inkGhost,
+      fontFamily: TClubTypography.bodyFont,
+      fontSize: 9, color: TClubColors.textoMuted,
       letterSpacing: 0.3)),
   ]);
 
   Widget _buildName() => Text(pedido.name.toUpperCase(),
     style: const TextStyle(
-      fontFamily:    TabuTypography.bodyFont,
+      fontFamily:    TClubTypography.bodyFont,
       fontSize:      14, fontWeight: FontWeight.w700,
-      color:         AdminColors.inkDeep, letterSpacing: 1));
+      color:         TClubColors.branco, letterSpacing: 1));
 
   Widget _buildEmail() => Row(children: [
     const Icon(Icons.email_outlined,
-      color: AdminColors.inkGhost, size: 11),
+      color: TClubColors.textoMuted, size: 11),
     const SizedBox(width: 5),
     Text(pedido.email, style: const TextStyle(
-      fontFamily: TabuTypography.bodyFont,
-      fontSize: 10, color: AdminColors.inkSubtle,
+      fontFamily: TClubTypography.bodyFont,
+      fontSize: 10, color: TClubColors.textoSecundario,
       letterSpacing: 0.3)),
   ]);
 
@@ -123,36 +123,36 @@ class ConviteTile extends StatelessWidget {
     width:   double.infinity,
     padding: const EdgeInsets.all(10),
     decoration: const BoxDecoration(
-      color: AdminColors.bgAlt,
+      color: TClubColors.bgAlt,
       border: Border(left: BorderSide(
-        color: AdminColors.borderStrong, width: 2))),
+        color: TClubColors.borderMid, width: 2))),
     child: Text(pedido.message, maxLines: 3,
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont,
+        fontFamily: TClubTypography.bodyFont,
         fontSize: 11, height: 1.5,
-        color: AdminColors.inkSubtle,
+        color: TClubColors.textoSecundario,
         letterSpacing: 0.2)));
 
   Widget _buildMotivoRejeicao() => Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       const Icon(Icons.block_rounded,
-        color: AdminColors.danger, size: 10),
+        color: TClubColors.error, size: 10),
       const SizedBox(width: 5),
       Expanded(child: Text(pedido.motivoRejeicao!, style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont,
-        fontSize: 10, color: AdminColors.danger,
+        fontFamily: TClubTypography.bodyFont,
+        fontSize: 10, color: TClubColors.error,
         height: 1.5, letterSpacing: 0.2))),
     ]);
 
   Widget _buildProtocolo() => Row(children: [
     const Icon(Icons.tag_rounded,
-      color: AdminColors.border, size: 10),
+      color: TClubColors.border, size: 10),
     const SizedBox(width: 4),
     Text(pedido.protocolo!, style: const TextStyle(
-      fontFamily: TabuTypography.bodyFont,
-      fontSize: 8, color: AdminColors.inkGhost,
+      fontFamily: TClubTypography.bodyFont,
+      fontSize: 8, color: TClubColors.textoMuted,
       letterSpacing: 1)),
   ]);
 
@@ -160,7 +160,7 @@ class ConviteTile extends StatelessWidget {
     child: SizedBox(width: 18, height: 18,
       child: CircularProgressIndicator(
         strokeWidth: 1.5,
-        valueColor: AlwaysStoppedAnimation(AdminColors.inkPrincipal))));
+        valueColor: AlwaysStoppedAnimation(TClubColors.redPrincipal))));
 
   Widget _buildActions() => Row(children: [
     Expanded(child: GestureDetector(
@@ -168,19 +168,19 @@ class ConviteTile extends StatelessWidget {
       child: Container(
         height: 40,
         decoration: BoxDecoration(
-          color: AdminColors.actioned.withOpacity(0.08),
+          color: Color(0xFF4CAF50).withOpacity(0.08),
           border: Border.all(
-            color: AdminColors.actioned.withOpacity(0.4), width: 0.8)),
+            color: Color(0xFF4CAF50).withOpacity(0.4), width: 0.8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Icon(Icons.check_rounded,
-              color: AdminColors.actioned, size: 13),
+              color: Color(0xFF4CAF50), size: 13),
             SizedBox(width: 6),
             Text('APROVAR', style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      9, fontWeight: FontWeight.w700,
-              letterSpacing: 2, color: AdminColors.actioned)),
+              letterSpacing: 2, color: Color(0xFF4CAF50))),
           ])))),
     const SizedBox(width: 8),
     Expanded(child: GestureDetector(
@@ -188,19 +188,19 @@ class ConviteTile extends StatelessWidget {
       child: Container(
         height: 40,
         decoration: BoxDecoration(
-          color: AdminColors.danger.withOpacity(0.06),
+          color: TClubColors.error.withOpacity(0.06),
           border: Border.all(
-            color: AdminColors.danger.withOpacity(0.35), width: 0.8)),
+            color: TClubColors.error.withOpacity(0.35), width: 0.8)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Icon(Icons.block_rounded,
-              color: AdminColors.danger, size: 13),
+              color: TClubColors.error, size: 13),
             SizedBox(width: 6),
             Text('RECUSAR', style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      9, fontWeight: FontWeight.w700,
-              letterSpacing: 2, color: AdminColors.danger)),
+              letterSpacing: 2, color: TClubColors.error)),
           ])))),
   ]);
 }

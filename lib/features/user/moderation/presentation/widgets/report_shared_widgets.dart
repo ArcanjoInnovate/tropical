@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 import '../../data/models/report_models.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -23,21 +23,21 @@ class ReportStepLabel extends StatelessWidget {
     Container(
       width: 22, height: 22,
       decoration: BoxDecoration(
-        color: TabuColors.rosaPrincipal.withOpacity(0.15),
+        color: TClubColors.redPrincipal.withOpacity(0.15),
         border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.5), width: 0.8)),
+            color: TClubColors.redPrincipal.withOpacity(0.5), width: 0.8)),
       child: Center(child: Text(step,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 8, fontWeight: FontWeight.w800,
-              letterSpacing: 0.5, color: TabuColors.rosaPrincipal)))),
+              letterSpacing: 0.5, color: TClubColors.redPrincipal)))),
     const SizedBox(width: 10),
     Flexible(child: Text(label, style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont,
+        fontFamily: TClubTypography.bodyFont,
         fontSize: 10, fontWeight: FontWeight.w700,
-        letterSpacing: 3, color: TabuColors.rosaPrincipal))),
+        letterSpacing: 3, color: TClubColors.redPrincipal))),
     const SizedBox(width: 12),
-    Expanded(child: Container(height: 0.5, color: TabuColors.border)),
+    Expanded(child: Container(height: 0.5, color: TClubColors.border)),
   ]);
 }
 
@@ -70,11 +70,11 @@ class ReportMotivoTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: selecionado
               ? const Color(0xFFE85D5D).withOpacity(0.07)
-              : TabuColors.bgCard,
+              : TClubColors.bgCard,
           border: Border.all(
             color: selecionado
                 ? const Color(0xFFE85D5D).withOpacity(0.55)
-                : TabuColors.border,
+                : TClubColors.border,
             width: selecionado ? 1.2 : 0.7)),
         child: Row(children: [
           // ── Radio ──────────────────────────────────────────────────────────
@@ -89,7 +89,7 @@ class ReportMotivoTile extends StatelessWidget {
               border: Border.all(
                 color: selecionado
                     ? const Color(0xFFE85D5D)
-                    : TabuColors.border,
+                    : TClubColors.border,
                 width: selecionado ? 0 : 1.5)),
             child: selecionado
                 ? const Icon(Icons.check_rounded, color: Colors.white, size: 11)
@@ -101,8 +101,8 @@ class ReportMotivoTile extends StatelessWidget {
             Icon(motivo.icone!,
                 size: 18,
                 color: selecionado
-                    ? TabuColors.rosaPrincipal
-                    : TabuColors.subtle),
+                    ? TClubColors.redPrincipal
+                    : TClubColors.subtle),
             const SizedBox(width: 10),
           ],
 
@@ -112,20 +112,20 @@ class ReportMotivoTile extends StatelessWidget {
             children: [
               Text(motivo.label,
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 12, fontWeight: FontWeight.w600,
                       letterSpacing: 0.3,
                       color: selecionado
-                          ? TabuColors.textoPrincipal
-                          : TabuColors.dim)),
+                          ? TClubColors.textoPrincipal
+                          : TClubColors.dim)),
               const SizedBox(height: 2),
               Text(motivo.artigo,
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9, letterSpacing: 0.8,
                       color: selecionado
                           ? const Color(0xFFE85D5D).withOpacity(0.75)
-                          : TabuColors.border)),
+                          : TClubColors.border)),
             ])),
 
           if (selecionado)
@@ -164,21 +164,21 @@ class ReportCheckConfirm extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: valor
-              ? TabuColors.rosaPrincipal.withOpacity(0.06)
-              : TabuColors.bgCard,
+              ? TClubColors.redPrincipal.withOpacity(0.06)
+              : TClubColors.bgCard,
           border: Border.all(
             color: valor
-                ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                : TabuColors.border,
+                ? TClubColors.redPrincipal.withOpacity(0.4)
+                : TClubColors.border,
             width: valor ? 1.0 : 0.7)),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           AnimatedContainer(
             duration: const Duration(milliseconds: 180),
             width: 18, height: 18,
             decoration: BoxDecoration(
-              color: valor ? TabuColors.rosaPrincipal : Colors.transparent,
+              color: valor ? TClubColors.redPrincipal : Colors.transparent,
               border: Border.all(
-                color: valor ? TabuColors.rosaPrincipal : TabuColors.border,
+                color: valor ? TClubColors.redPrincipal : TClubColors.border,
                 width: valor ? 0 : 1.5)),
             child: valor
                 ? const Icon(Icons.check_rounded, color: Colors.white, size: 12)
@@ -186,9 +186,9 @@ class ReportCheckConfirm extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(child: Text(texto,
               style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 11, letterSpacing: 0.3,
-                  color: valor ? TabuColors.dim : TabuColors.subtle,
+                  color: valor ? TClubColors.dim : TClubColors.subtle,
                   height: 1.5))),
         ]),
       ),
@@ -221,9 +221,9 @@ class ReportBotaoEnviar extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         height: 52,
         decoration: BoxDecoration(
-          color: ativo ? const Color(0xFFE85D5D) : TabuColors.bgCard,
+          color: ativo ? const Color(0xFFE85D5D) : TClubColors.bgCard,
           border: Border.all(
-            color: ativo ? const Color(0xFFE85D5D) : TabuColors.border,
+            color: ativo ? const Color(0xFFE85D5D) : TClubColors.border,
             width: 0.8),
           boxShadow: ativo ? [BoxShadow(
               color: const Color(0xFFE85D5D).withOpacity(0.3),
@@ -234,14 +234,14 @@ class ReportBotaoEnviar extends StatelessWidget {
                     color: Colors.white, strokeWidth: 1.5))
             : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(Icons.report_gmailerrorred_rounded,
-                    color: ativo ? Colors.white : TabuColors.subtle, size: 16),
+                    color: ativo ? Colors.white : TClubColors.subtle, size: 16),
                 const SizedBox(width: 10),
                 Text(label,
                     style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 12, fontWeight: FontWeight.w700,
                         letterSpacing: 3,
-                        color: ativo ? Colors.white : TabuColors.subtle)),
+                        color: ativo ? Colors.white : TClubColors.subtle)),
               ])),
       ),
     );
@@ -266,13 +266,13 @@ class ReportBotaoSecundario extends StatelessWidget {
     child: Container(
       width: double.infinity, height: 48,
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.border, width: 0.8)),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.border, width: 0.8)),
       child: Center(child: Text(label,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11, fontWeight: FontWeight.w700,
-              letterSpacing: 3, color: TabuColors.subtle)))));
+              letterSpacing: 3, color: TClubColors.subtle)))));
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -314,19 +314,19 @@ class ReportLegalBox extends StatelessWidget {
     margin: const EdgeInsets.symmetric(vertical: 12),
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
-      color: TabuColors.bgCard,
-      border: Border.all(color: TabuColors.border, width: 0.6)),
+      color: TClubColors.bgCard,
+      border: Border.all(color: TClubColors.border, width: 0.6)),
     child: Column(children: items.map((t) => Padding(
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Icon(Icons.check_circle_outline_rounded,
-            color: TabuColors.rosaPrincipal, size: 11),
+            color: TClubColors.redPrincipal, size: 11),
         const SizedBox(width: 8),
         Expanded(child: Text(t,
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10, letterSpacing: 0.3,
-                color: TabuColors.dim, height: 1.5))),
+                color: TClubColors.dim, height: 1.5))),
       ]))).toList()),
   );
 }
@@ -342,13 +342,13 @@ class ReportPrivacyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(
     crossAxisAlignment: CrossAxisAlignment.start, children: [
-    Icon(icon, color: TabuColors.rosaPrincipal, size: 12),
+    Icon(icon, color: TClubColors.redPrincipal, size: 12),
     const SizedBox(width: 8),
     Expanded(child: Text(texto,
         style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10, letterSpacing: 0.3,
-            color: TabuColors.dim, height: 1.5))),
+            color: TClubColors.dim, height: 1.5))),
   ]);
 }
 
@@ -370,20 +370,20 @@ class ReportProcessoItem extends StatelessWidget {
     Container(
       width: 18, height: 18,
       decoration: BoxDecoration(
-        color: TabuColors.rosaPrincipal.withOpacity(0.1),
+        color: TClubColors.redPrincipal.withOpacity(0.1),
         border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.35), width: 0.7)),
+            color: TClubColors.redPrincipal.withOpacity(0.35), width: 0.7)),
       child: Center(child: Text(numero,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 8, fontWeight: FontWeight.w800,
-              color: TabuColors.rosaPrincipal)))),
+              color: TClubColors.redPrincipal)))),
     const SizedBox(width: 10),
     Expanded(child: Text(texto,
         style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10, letterSpacing: 0.3,
-            color: TabuColors.dim, height: 1.5))),
+            color: TClubColors.dim, height: 1.5))),
   ]);
 }
 
@@ -398,9 +398,9 @@ class ReportLinhaRosa extends StatelessWidget {
     height: 1.5,
     margin: const EdgeInsets.only(top: 6),
     decoration: const BoxDecoration(gradient: LinearGradient(colors: [
-      Colors.transparent, TabuColors.rosaDeep,
-      TabuColors.rosaPrincipal, TabuColors.rosaClaro,
-      TabuColors.rosaPrincipal, TabuColors.rosaDeep, Colors.transparent,
+      Colors.transparent, TClubColors.redDeep,
+      TClubColors.redPrincipal, TClubColors.redClaro,
+      TClubColors.redPrincipal, TClubColors.redDeep, Colors.transparent,
     ])));
 }
 
@@ -414,7 +414,7 @@ class ReportDivider extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     height: 0.5,
     decoration: const BoxDecoration(gradient: LinearGradient(colors: [
-      Colors.transparent, TabuColors.border, Colors.transparent,
+      Colors.transparent, TClubColors.border, Colors.transparent,
     ])));
 }
 
@@ -441,13 +441,13 @@ class ReportCampoDescricao extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         border: Border.all(
           color: focusNode.hasFocus
               ? (descValida
-                  ? TabuColors.rosaPrincipal
+                  ? TClubColors.redPrincipal
                   : const Color(0xFFE85D5D))
-              : TabuColors.border,
+              : TClubColors.border,
           width: focusNode.hasFocus ? 1.5 : 0.8)),
       child: Column(children: [
         TextField(
@@ -456,15 +456,15 @@ class ReportCampoDescricao extends StatelessWidget {
           maxLines:   6,
           maxLength:  600,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
-              fontSize: 13, color: TabuColors.textoPrincipal, height: 1.5),
-          cursorColor: TabuColors.rosaPrincipal,
+              fontFamily: TClubTypography.bodyFont,
+              fontSize: 13, color: TClubColors.textoPrincipal, height: 1.5),
+          cursorColor: TClubColors.redPrincipal,
           decoration: InputDecoration(
             border: InputBorder.none, isDense: true,
             hintText: hintText,
             hintStyle: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
-                fontSize: 12, color: TabuColors.subtle, height: 1.5),
+                fontFamily: TClubTypography.bodyFont,
+                fontSize: 12, color: TClubColors.subtle, height: 1.5),
             contentPadding: const EdgeInsets.all(14),
             counterText: ''),
         ),
@@ -478,7 +478,7 @@ class ReportCampoDescricao extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: descValida
-                    ? [TabuColors.rosaDeep, TabuColors.rosaPrincipal]
+                    ? [TClubColors.redDeep, TClubColors.redPrincipal]
                     : [const Color(0xFF5D0A0A), const Color(0xFFE85D5D)])),
             ),
           ),
@@ -500,18 +500,18 @@ class ReportAvisoPrivacidade extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: TabuColors.rosaPrincipal.withOpacity(0.04),
+        color: TClubColors.redPrincipal.withOpacity(0.04),
         border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.2), width: 0.7)),
+            color: TClubColors.redPrincipal.withOpacity(0.2), width: 0.7)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Row(children: [
           Icon(Icons.shield_outlined,
-              color: TabuColors.rosaPrincipal, size: 13),
+              color: TClubColors.redPrincipal, size: 13),
           SizedBox(width: 8),
           Text('SUA PRIVACIDADE É PROTEGIDA', style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 9,
+              fontFamily: TClubTypography.bodyFont, fontSize: 9,
               fontWeight: FontWeight.w700, letterSpacing: 2,
-              color: TabuColors.rosaPrincipal)),
+              color: TClubColors.redPrincipal)),
         ]),
         const SizedBox(height: 10),
         ...itens.map((i) => Padding(
@@ -546,26 +546,26 @@ class ReportJaReportouView extends StatelessWidget {
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       const ReportIconBox(
           icon:  Icons.flag_rounded,
-          color: TabuColors.rosaPrincipal),
+          color: TClubColors.redPrincipal),
       const SizedBox(height: 20),
       Text(titulo, style: const TextStyle(
-          fontFamily: TabuTypography.displayFont,
+          fontFamily: TClubTypography.displayFont,
           fontSize: 18, letterSpacing: 3,
-          color: TabuColors.textoPrincipal)),
+          color: TClubColors.textoPrincipal)),
       const SizedBox(height: 12),
       Text(mensagem,
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12, letterSpacing: 0.3,
-              color: TabuColors.subtle, height: 1.7)),
+              color: TClubColors.subtle, height: 1.7)),
       const SizedBox(height: 8),
       Text(nota,
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9, letterSpacing: 1,
-              color: TabuColors.border)),
+              color: TClubColors.border)),
       const SizedBox(height: 32),
       ReportBotaoSecundario(label: 'VOLTAR', onTap: onVoltar),
     ]),
@@ -595,20 +595,20 @@ class ReportSucessoView extends StatelessWidget {
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       const ReportIconBox(
           icon:   Icons.check_rounded,
-          color:  TabuColors.rosaPrincipal,
+          color:  TClubColors.redPrincipal,
           filled: true),
       const SizedBox(height: 20),
       Text(titulo, style: const TextStyle(
-          fontFamily: TabuTypography.displayFont,
+          fontFamily: TClubTypography.displayFont,
           fontSize: 20, letterSpacing: 4,
-          color: TabuColors.textoPrincipal)),
+          color: TClubColors.textoPrincipal)),
       const SizedBox(height: 12),
       Text(mensagem,
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12, letterSpacing: 0.3,
-              color: TabuColors.subtle, height: 1.7)),
+              color: TClubColors.subtle, height: 1.7)),
       if (legalBoxItems != null) ...[
         const SizedBox(height: 12),
         ReportLegalBox(items: legalBoxItems!),
@@ -617,9 +617,10 @@ class ReportSucessoView extends StatelessWidget {
       Text(nota,
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9, letterSpacing: 0.8,
-              color: TabuColors.border)),
+              color: TClubColors.border)),
     ]),
   ));
 }
+

@@ -1,6 +1,6 @@
 // lib/core/theme/admin_theme.dart
 import 'package:flutter/material.dart';
-import 'tabu_theme.dart';
+import 'tclub_theme.dart';
 
 class AdminColors {
   AdminColors._();
@@ -56,7 +56,7 @@ class AdminTheme {
       error:     AdminColors.danger,
       onError:   Colors.white,
     ),
-    textTheme: TabuTypography.textTheme,
+    textTheme: TClubTypography.textTheme,
     appBarTheme: const AppBarTheme(
       backgroundColor:        AdminColors.bgCard,
       foregroundColor:        AdminColors.inkDeep,
@@ -71,13 +71,13 @@ class AdminTheme {
       indicatorColor:       AdminColors.inkPrincipal,
       dividerColor:         AdminColors.border,
       labelStyle: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      9,
         fontWeight:    FontWeight.w700,
         letterSpacing: 2,
       ),
       unselectedLabelStyle: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      9,
         fontWeight:    FontWeight.w700,
         letterSpacing: 2,
@@ -105,7 +105,7 @@ class AdminTheme {
         borderSide:   const BorderSide(color: AdminColors.inkPrincipal, width: 1.2),
       ),
       hintStyle: const TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         color:         AdminColors.inkGhost,
         fontSize:      12,
         letterSpacing: 0.5,
@@ -114,7 +114,7 @@ class AdminTheme {
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: AdminColors.inkDeep,
       contentTextStyle: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         color:         Colors.white,
         fontSize:      11,
         letterSpacing: 0.5,
@@ -132,3 +132,4 @@ class AdminTheme {
     ),
   );
 }
+

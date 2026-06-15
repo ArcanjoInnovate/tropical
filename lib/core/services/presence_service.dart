@@ -54,3 +54,4 @@ class PresenceService {
     _presenceRef = null;
   }
 }
+

@@ -158,3 +158,4 @@ class IbgeServiceException implements Exception {
   String toString() => 'IbgeServiceException: $message'
       '${statusCode != null ? ' (HTTP $statusCode)' : ''}';
 }
+

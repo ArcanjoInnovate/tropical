@@ -1,4 +1,4 @@
-// src/triggers/match_index_sync.ts
+﻿// src/triggers/match_index_sync.ts
 //
 // Mantém MatchIndex sincronizado com Matchs.
 //
@@ -40,7 +40,7 @@ const MATCHS_FIELDS = new Set([
 ]);
 
 export const syncMatchIndex = onValueWritten(
-  { ref: "Matchs/{uid}", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const { uid } = event.params;
     const db = getDatabase();
@@ -89,7 +89,7 @@ export const syncMatchIndex = onValueWritten(
 );
 
 export const removeMatchIndex = onValueDeleted(
-  { ref: "Matchs/{uid}", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const { uid } = event.params;
     await getDatabase().ref(`MatchIndex/${uid}`).remove();

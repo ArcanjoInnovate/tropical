@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/profile/data/services/avatar_service.dart';
+import 'package:tclub/features/profile/data/services/avatar_service.dart';
 
 enum AvatarSaveStatus { idle, loading, success, error }
 
@@ -121,3 +121,4 @@ class EditAvatarController extends ChangeNotifier {
     notifyListeners();
   }
 }
+

@@ -9,9 +9,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/register_screen.dart';
-import 'package:tabuapp/features/auth/presentation/pages/register_screen_step3.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/register_screen.dart';
+import 'package:tclub/features/auth/presentation/pages/register_screen_step3.dart';
 
 class RegisterStep2Screen extends StatefulWidget {
   final String nome;
@@ -184,7 +184,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
         : null;
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       resizeToAvoidBottomInset: true,
       body: Stack(children: [
         // ── Fundo animado ────────────────────────────────────────────────
@@ -198,7 +198,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
           height: 3,
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
-              TabuColors.rosaDeep, TabuColors.rosaPrincipal, TabuColors.rosaClaro, TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+              TClubColors.redDeep, TClubColors.redPrincipal, TClubColors.redClaro, TClubColors.redPrincipal, TClubColors.redDeep,
             ]),
           ),
         )),
@@ -214,8 +214,8 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                     onTap: () => Navigator.of(context).pop(),
                     child: Container(
                       width: 40, height: 40,
-                      decoration: BoxDecoration(color: TabuColors.bgCard, border: Border.all(color: TabuColors.border, width: 0.8)),
-                      child: const Icon(Icons.arrow_back_ios_new, color: TabuColors.textoPrincipal, size: 16),
+                      decoration: BoxDecoration(color: TClubColors.bgCard, border: Border.all(color: TClubColors.border, width: 0.8)),
+                      child: const Icon(Icons.arrow_back_ios_new, color: TClubColors.textoPrincipal, size: 16),
                     ),
                   ),
                   const Spacer(),
@@ -238,19 +238,19 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                         Container(
                           width: 56, height: 56,
                           decoration: BoxDecoration(
-                            color: TabuColors.bgCard,
-                            border: Border.all(color: TabuColors.borderMid, width: 0.8),
-                            boxShadow: [BoxShadow(color: TabuColors.glow.withOpacity(0.3), blurRadius: 20)],
+                            color: TClubColors.bgCard,
+                            border: Border.all(color: TClubColors.borderMid, width: 0.8),
+                            boxShadow: [BoxShadow(color: TClubColors.glow.withOpacity(0.3), blurRadius: 20)],
                           ),
-                          child: const Icon(Icons.cake_outlined, color: TabuColors.rosaPrincipal, size: 26),
+                          child: const Icon(Icons.cake_outlined, color: TClubColors.redPrincipal, size: 26),
                         ),
                         const SizedBox(height: 16),
                         Text('DATA DE NASCIMENTO', style: theme.textTheme.labelLarge?.copyWith(
-                          fontSize: 13, letterSpacing: 5, color: TabuColors.textoPrincipal, fontWeight: FontWeight.w700,
+                          fontSize: 13, letterSpacing: 5, color: TClubColors.textoPrincipal, fontWeight: FontWeight.w700,
                         )),
                         const SizedBox(height: 8),
                         Text('Você precisa ter 18 anos ou mais', style: theme.textTheme.bodySmall?.copyWith(
-                          fontSize: 12, color: TabuColors.dim, letterSpacing: 0.5,
+                          fontSize: 12, color: TClubColors.dim, letterSpacing: 0.5,
                         )),
                       ]),
                     ),
@@ -285,7 +285,7 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                                   key: ValueKey('ok-$idade'),
                                   icon: Icons.check_circle_outline_rounded,
                                   text: '$idade anos confirmados',
-                                  color: TabuColors.rosaPrincipal,
+                                  color: TClubColors.redPrincipal,
                                 )
                               : const SizedBox(key: ValueKey('empty')),
                     ),
@@ -296,26 +296,26 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: TabuColors.bgCard,
-                        border: Border.all(color: TabuColors.borderMid, width: 0.8),
+                        color: TClubColors.bgCard,
+                        border: Border.all(color: TClubColors.borderMid, width: 0.8),
                       ),
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Row(children: [
-                          const Icon(Icons.favorite_outline_rounded, color: TabuColors.rosaPrincipal, size: 16),
+                          const Icon(Icons.favorite_outline_rounded, color: TClubColors.redPrincipal, size: 16),
                           const SizedBox(width: 8),
                           Text('SISTEMA DE MATCH', style: theme.textTheme.labelSmall?.copyWith(
-                            fontSize: 9, letterSpacing: 3, color: TabuColors.rosaPrincipal, fontWeight: FontWeight.w700,
+                            fontSize: 9, letterSpacing: 3, color: TClubColors.redPrincipal, fontWeight: FontWeight.w700,
                           )),
                         ]),
                         const SizedBox(height: 10),
                         Text(
-                          'Ao criar uma conta no Tabu, você participará automaticamente do nosso sistema de match — onde outros membros podem encontrar e conectar com o seu perfil.',
-                          style: theme.textTheme.bodySmall?.copyWith(fontSize: 12, color: TabuColors.dim, height: 1.6),
+                          'Ao criar uma conta no TCLUB, você participará automaticamente do nosso sistema de match — onde outros membros podem encontrar e conectar com o seu perfil.',
+                          style: theme.textTheme.bodySmall?.copyWith(fontSize: 12, color: TClubColors.dim, height: 1.6),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Você pode ajustar sua visibilidade a qualquer momento nas configurações.',
-                          style: theme.textTheme.bodySmall?.copyWith(fontSize: 11, color: TabuColors.subtle, height: 1.5),
+                          style: theme.textTheme.bodySmall?.copyWith(fontSize: 11, color: TClubColors.subtle, height: 1.5),
                         ),
                       ]),
                     ),
@@ -330,9 +330,9 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                           duration: const Duration(milliseconds: 200),
                           width: 22, height: 22, margin: const EdgeInsets.only(top: 1),
                           decoration: BoxDecoration(
-                            color: _acceptedTerms ? TabuColors.rosaPrincipal : Colors.transparent,
-                            border: Border.all(color: _acceptedTerms ? TabuColors.rosaPrincipal : TabuColors.border, width: 1.5),
-                            boxShadow: _acceptedTerms ? [BoxShadow(color: TabuColors.glow.withOpacity(0.5), blurRadius: 10)] : [],
+                            color: _acceptedTerms ? TClubColors.redPrincipal : Colors.transparent,
+                            border: Border.all(color: _acceptedTerms ? TClubColors.redPrincipal : TClubColors.border, width: 1.5),
+                            boxShadow: _acceptedTerms ? [BoxShadow(color: TClubColors.glow.withOpacity(0.5), blurRadius: 10)] : [],
                           ),
                           child: _acceptedTerms ? const Icon(Icons.check, size: 14, color: Colors.white) : null,
                         ),
@@ -340,21 +340,21 @@ class _RegisterStep2ScreenState extends State<RegisterStep2Screen>
                         Expanded(
                           child: RichText(
                             text: TextSpan(
-                              style: theme.textTheme.bodySmall?.copyWith(fontSize: 12, letterSpacing: 0.3, color: TabuColors.dim, height: 1.6),
+                              style: theme.textTheme.bodySmall?.copyWith(fontSize: 12, letterSpacing: 0.3, color: TClubColors.dim, height: 1.6),
                               children: [
                                 const TextSpan(text: 'Li e aceito os '),
                                 TextSpan(text: 'Termos de Uso', style: TextStyle(
-                                  color: TabuColors.rosaClaro, fontWeight: FontWeight.w600,
+                                  color: TClubColors.redClaro, fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.underline,
-                                  decorationColor: TabuColors.rosaPrincipal.withOpacity(0.5),
+                                  decorationColor: TClubColors.redPrincipal.withOpacity(0.5),
                                 )),
                                 const TextSpan(text: ' e a '),
                                 TextSpan(text: 'Política de Privacidade', style: TextStyle(
-                                  color: TabuColors.rosaClaro, fontWeight: FontWeight.w600,
+                                  color: TClubColors.redClaro, fontWeight: FontWeight.w600,
                                   decoration: TextDecoration.underline,
-                                  decorationColor: TabuColors.rosaPrincipal.withOpacity(0.5),
+                                  decorationColor: TClubColors.redPrincipal.withOpacity(0.5),
                                 )),
-                                const TextSpan(text: ' do TABU Lounge, incluindo a participação no sistema de match.'),
+                                const TextSpan(text: ' do TCLUB Lounge, incluindo a participação no sistema de match.'),
                               ],
                             ),
                           ),
@@ -425,7 +425,7 @@ class _InlineBadge extends StatelessWidget {
           Icon(icon, color: color, size: 15),
           const SizedBox(width: 10),
           Text(text, style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 12, letterSpacing: 0.5, color: color,
           )),
         ]),
@@ -469,12 +469,12 @@ class _Step2ButtonState extends State<_Step2Button> with SingleTickerProviderSta
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: _pressed
-                ? [TabuColors.rosaDeep, TabuColors.rosaPrincipal]
-                : [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                ? [TClubColors.redDeep, TClubColors.redPrincipal]
+                : [TClubColors.redPrincipal, TClubColors.redClaro],
             begin: Alignment.centerLeft, end: Alignment.centerRight,
           ),
           boxShadow: !_pressed ? [
-            BoxShadow(color: TabuColors.glow, blurRadius: 20, offset: const Offset(0, 6)),
+            BoxShadow(color: TClubColors.glow, blurRadius: 20, offset: const Offset(0, 6)),
           ] : [],
         ),
         child: Stack(alignment: Alignment.center, children: [
@@ -487,13 +487,14 @@ class _Step2ButtonState extends State<_Step2Button> with SingleTickerProviderSta
           ),
           Row(mainAxisSize: MainAxisSize.min, children: [
             Text('PRÓXIMO', style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              fontSize: 14, letterSpacing: 5, fontWeight: FontWeight.w700, color: TabuColors.textoPrincipal,
+              fontSize: 14, letterSpacing: 5, fontWeight: FontWeight.w700, color: TClubColors.textoPrincipal,
             )),
             const SizedBox(width: 10),
-            const Icon(Icons.arrow_forward_rounded, color: TabuColors.textoPrincipal, size: 18),
+            const Icon(Icons.arrow_forward_rounded, color: TClubColors.textoPrincipal, size: 18),
           ]),
         ]),
       ),
     );
   }
 }
+

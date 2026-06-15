@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/widgets/inline_video_card.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/widgets/inline_video_card.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class FullscreenVideoScreen extends StatefulWidget {
@@ -366,7 +366,7 @@ void dispose() {
                       : Icons.volume_up_rounded,
                   onTap: _toggleMute,
                   color: _muted
-                      ? TabuColors.rosaPrincipal.withOpacity(0.8)
+                      ? TClubColors.redPrincipal.withOpacity(0.8)
                       : Colors.white70,
                 ),
               ],
@@ -395,11 +395,11 @@ void dispose() {
                 Text(
                   '@${widget.userName.toLowerCase()}',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.5,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -409,7 +409,7 @@ void dispose() {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.3,
@@ -426,7 +426,7 @@ void dispose() {
                       Text(
                         _fmt(_ctrl!.value.position),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11,
                           color: Colors.white70,
                           letterSpacing: 0.5,
@@ -436,7 +436,7 @@ void dispose() {
                       Text(
                         _fmt(_ctrl!.value.duration),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11,
                           color: Colors.white38,
                           letterSpacing: 0.5,
@@ -470,10 +470,10 @@ void dispose() {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.black.withOpacity(0.55),
-              border: Border.all(color: TabuColors.rosaPrincipal, width: 1.5),
+              border: Border.all(color: TClubColors.redPrincipal, width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: TabuColors.glow.withOpacity(0.4),
+                  color: TClubColors.glow.withOpacity(0.4),
                   blurRadius: 24,
                   spreadRadius: 2,
                 ),
@@ -499,8 +499,8 @@ void dispose() {
             width: 42,
             height: 42,
             child: CircularProgressIndicator(
-              color: TabuColors.rosaPrincipal,
-              backgroundColor: TabuColors.rosaPrincipal.withOpacity(0.15),
+              color: TClubColors.redPrincipal,
+              backgroundColor: TClubColors.redPrincipal.withOpacity(0.15),
               strokeWidth: 2,
             ),
           ),
@@ -508,7 +508,7 @@ void dispose() {
           const Text(
             'CARREGANDO',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               letterSpacing: 3,
               color: Colors.white54,
@@ -530,7 +530,7 @@ void dispose() {
           const Text(
             'ERRO AO CARREGAR VÍDEO',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               letterSpacing: 2.5,
               color: Color(0xFFE85D5D),
@@ -550,7 +550,7 @@ void dispose() {
               child: const Text(
                 'TENTAR NOVAMENTE',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
                   letterSpacing: 2,
                   color: Color(0xFFE85D5D),
@@ -645,7 +645,7 @@ class _FullscreenSeekBarState extends State<_FullscreenSeekBar> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(2),
                     gradient: const LinearGradient(
-                      colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                      colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                     ),
                   ),
                 ),
@@ -660,10 +660,10 @@ class _FullscreenSeekBarState extends State<_FullscreenSeekBar> {
                 height: _dragging ? 18 : 12,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                   boxShadow: [
                     BoxShadow(
-                      color: TabuColors.glow.withOpacity(0.6),
+                      color: TClubColors.glow.withOpacity(0.6),
                       blurRadius: _dragging ? 12 : 6,
                     ),
                   ],
@@ -709,3 +709,4 @@ class _IconBtn extends StatelessWidget {
     );
   }
 }
+

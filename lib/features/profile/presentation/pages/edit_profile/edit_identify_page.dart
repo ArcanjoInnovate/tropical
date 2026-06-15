@@ -6,14 +6,14 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/helpers/media_permission_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/controller/edit_identify_controller.dart';
-import 'package:tabuapp/features/profile/data/repositories/identify_repository.dart';
-import 'package:tabuapp/features/profile/data/services/identify_service.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_enums.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_shareds.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/helpers/media_permission_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/controller/edit_identify_controller.dart';
+import 'package:tclub/features/profile/data/repositories/identify_repository.dart';
+import 'package:tclub/features/profile/data/services/identify_service.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_enums.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_shareds.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class EditIdentifyPage extends StatefulWidget {
@@ -165,9 +165,9 @@ class _EditIdentifyPageState extends State<EditIdentifyPage> {
       content: Text(
         msg.toUpperCase(),
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 11, fontWeight: FontWeight.w700,
-          letterSpacing: 2, color: TabuColors.textoPrincipal,
+          letterSpacing: 2, color: TClubColors.textoPrincipal,
         ),
       ),
     ));
@@ -344,8 +344,8 @@ class _EditIdentifyPageState extends State<EditIdentifyPage> {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 28),
                     decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
-                      border: Border.all(color: TabuColors.border, width: 0.8),
+                      color: TClubColors.bgCard,
+                      border: Border.all(color: TClubColors.border, width: 0.8),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -355,18 +355,18 @@ class _EditIdentifyPageState extends State<EditIdentifyPage> {
                           height: 36,
                           child: CircularProgressIndicator(
                             strokeWidth: 2.5,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                           ),
                         ),
                         const SizedBox(height: 16),
                         const Text(
                           'SALVANDO...',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 3,
-                            color: TabuColors.textoPrincipal,
+                            color: TClubColors.textoPrincipal,
                           ),
                         ),
                         const SizedBox(height: 6),
@@ -375,9 +375,9 @@ class _EditIdentifyPageState extends State<EditIdentifyPage> {
                               ? 'Enviando foto do parceiro(a)'
                               : 'Aguarde um momento',
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
-                            color: TabuColors.subtle,
+                            color: TClubColors.subtle,
                             letterSpacing: 0.5,
                           ),
                         ),
@@ -410,30 +410,30 @@ class _BlocoFormulario extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               begin: Alignment.topCenter, end: Alignment.bottomCenter,
-              colors: [TabuColors.rosaPrincipal, TabuColors.rosaDeep],
+              colors: [TClubColors.redPrincipal, TClubColors.redDeep],
             ),
             borderRadius: BorderRadius.circular(2),
           ),
         ),
         const SizedBox(width: 8),
         Text(titulo, style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont, fontSize: 9,
+          fontFamily: TClubTypography.bodyFont, fontSize: 9,
           fontWeight: FontWeight.w800, letterSpacing: 3.5,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
         )),
       ]),
       const SizedBox(height: 12),
       Container(
         decoration: BoxDecoration(
-          color:  TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.8),
+          color:  TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.8),
         ),
         child: Column(
           children: campos.asMap().entries.map((e) {
             final ultimo = e.key == campos.length - 1;
             return Column(mainAxisSize: MainAxisSize.min, children: [
               e.value,
-              if (!ultimo) Container(height: 0.5, color: TabuColors.border),
+              if (!ultimo) Container(height: 0.5, color: TClubColors.border),
             ]);
           }).toList(),
         ),
@@ -462,34 +462,34 @@ class _CampoSelecao extends StatelessWidget {
     final tem = valor != null && valor!.isNotEmpty;
     return InkWell(
       onTap:          aoTocar,
-      splashColor:    TabuColors.rosaPrincipal.withOpacity(0.06),
-      highlightColor: TabuColors.rosaPrincipal.withOpacity(0.03),
+      splashColor:    TClubColors.redPrincipal.withOpacity(0.06),
+      highlightColor: TClubColors.redPrincipal.withOpacity(0.03),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(children: [
           Icon(icone, size: 16,
-              color: tem ? TabuColors.rosaPrincipal : TabuColors.subtle),
+              color: tem ? TClubColors.redPrincipal : TClubColors.subtle),
           const SizedBox(width: 12),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(rotulo, style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 9,
+                fontFamily: TClubTypography.bodyFont, fontSize: 9,
                 fontWeight: FontWeight.w700, letterSpacing: 2.5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
               const SizedBox(height: 2),
               Text(tem ? valor! : dica, style: TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 14,
+                fontFamily: TClubTypography.bodyFont, fontSize: 14,
                 fontWeight: tem ? FontWeight.w600 : FontWeight.w400,
-                color: tem ? TabuColors.textoPrincipal : TabuColors.subtle,
+                color: tem ? TClubColors.textoPrincipal : TClubColors.subtle,
               )),
             ],
           )),
           Icon(Icons.chevron_right_rounded, size: 18,
               color: tem
-                  ? TabuColors.rosaPrincipal.withOpacity(0.6)
-                  : TabuColors.subtle.withOpacity(0.5)),
+                  ? TClubColors.redPrincipal.withOpacity(0.6)
+                  : TClubColors.subtle.withOpacity(0.5)),
         ]),
       ),
     );
@@ -530,25 +530,25 @@ class _BlocoParceiro extends StatelessWidget {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: TabuColors.rosaPrincipal.withOpacity(0.07),
+          color: TClubColors.redPrincipal.withOpacity(0.07),
           border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.25),
+            color: TClubColors.redPrincipal.withOpacity(0.25),
             width: 0.8,
           ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Icon(Icons.info_outline_rounded,
-              color: TabuColors.rosaPrincipal.withOpacity(0.75), size: 14),
+              color: TClubColors.redPrincipal.withOpacity(0.75), size: 14),
           const SizedBox(width: 10),
           Expanded(
             child: RichText(
               text: TextSpan(
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   11,
                   height:     1.55,
-                  color:      TabuColors.dim,
+                  color:      TClubColors.dim,
                 ),
                 children: const [
                   TextSpan(text: 'A foto do(a) parceiro(a) '),
@@ -556,7 +556,7 @@ class _BlocoParceiro extends StatelessWidget {
                     text: 'aparecerá no card de match',
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color:      TabuColors.textoPrincipal,
+                      color:      TClubColors.textoPrincipal,
                     ),
                   ),
                   TextSpan(text: ' junto com a sua foto, identificando que vocês são um casal.'),
@@ -574,36 +574,36 @@ class _BlocoParceiro extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              TabuColors.rosaDeep.withOpacity(0.60),
-              TabuColors.rosaDeep.withOpacity(0.30),
+              TClubColors.redDeep.withOpacity(0.60),
+              TClubColors.redDeep.withOpacity(0.30),
             ],
             begin: Alignment.centerLeft, end: Alignment.centerRight,
           ),
-          border: Border.all(color: TabuColors.borderMid, width: 0.8),
+          border: Border.all(color: TClubColors.borderMid, width: 0.8),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
         ),
         child: Row(children: [
           const Icon(Icons.people_alt_outlined,
-              color: TabuColors.rosaPrincipal, size: 16),
+              color: TClubColors.redPrincipal, size: 16),
           const SizedBox(width: 10),
           const Expanded(child: Text('DADOS DO PARCEIRO(A)',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 11,
+              fontFamily: TClubTypography.bodyFont, fontSize: 11,
               fontWeight: FontWeight.w800, letterSpacing: 3,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
             ),
           )),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
-              color:  TabuColors.rosaPrincipal.withOpacity(0.15),
+              color:  TClubColors.redPrincipal.withOpacity(0.15),
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: TabuColors.border, width: 0.6),
+              border: Border.all(color: TClubColors.border, width: 0.6),
             ),
             child: const Text('OBRIGATÓRIO', style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 8,
+              fontFamily: TClubTypography.bodyFont, fontSize: 8,
               fontWeight: FontWeight.w700, letterSpacing: 2,
-              color: TabuColors.rosaClaro,
+              color: TClubColors.redClaro,
             )),
           ),
         ]),
@@ -611,11 +611,11 @@ class _BlocoParceiro extends StatelessWidget {
 
       Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border(
-            left:   BorderSide(color: TabuColors.borderMid, width: 0.8),
-            right:  BorderSide(color: TabuColors.borderMid, width: 0.8),
-            bottom: BorderSide(color: TabuColors.borderMid, width: 0.8),
+            left:   BorderSide(color: TClubColors.borderMid, width: 0.8),
+            right:  BorderSide(color: TClubColors.borderMid, width: 0.8),
+            bottom: BorderSide(color: TClubColors.borderMid, width: 0.8),
           ),
           borderRadius: const BorderRadius.vertical(bottom: Radius.circular(4)),
         ),
@@ -623,8 +623,8 @@ class _BlocoParceiro extends StatelessWidget {
 
           InkWell(
             onTap:          onPickAvatar,
-            splashColor:    TabuColors.rosaPrincipal.withOpacity(0.06),
-            highlightColor: TabuColors.rosaPrincipal.withOpacity(0.03),
+            splashColor:    TClubColors.redPrincipal.withOpacity(0.06),
+            highlightColor: TClubColors.redPrincipal.withOpacity(0.03),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               child: Row(children: [
@@ -632,12 +632,12 @@ class _BlocoParceiro extends StatelessWidget {
                   Container(
                     width: 52, height: 52,
                     decoration: BoxDecoration(
-                      color:  TabuColors.bg,
+                      color:  TClubColors.bg,
                       shape:  BoxShape.circle,
                       border: Border.all(
                         color: hasAvatar
-                            ? TabuColors.rosaPrincipal.withOpacity(0.5)
-                            : TabuColors.border,
+                            ? TClubColors.redPrincipal.withOpacity(0.5)
+                            : TClubColors.border,
                         width: hasAvatar ? 1.5 : 0.8,
                       ),
                     ),
@@ -662,7 +662,7 @@ class _BlocoParceiro extends StatelessWidget {
                         decoration: BoxDecoration(
                           color:  const Color(0xFFE05A5A),
                           shape:  BoxShape.circle,
-                          border: Border.all(color: TabuColors.bgCard, width: 1.5),
+                          border: Border.all(color: TClubColors.bgCard, width: 1.5),
                         ),
                         child: const Icon(Icons.priority_high_rounded,
                             size: 11, color: Colors.white),
@@ -675,9 +675,9 @@ class _BlocoParceiro extends StatelessWidget {
                   children: [
                     Row(children: [
                       const Text('FOTO', style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont, fontSize: 9,
+                        fontFamily: TClubTypography.bodyFont, fontSize: 9,
                         fontWeight: FontWeight.w700, letterSpacing: 2.5,
-                        color: TabuColors.subtle,
+                        color: TClubColors.subtle,
                       )),
                       const SizedBox(width: 6),
                       Container(
@@ -691,7 +691,7 @@ class _BlocoParceiro extends StatelessWidget {
                           ),
                         ),
                         child: const Text('OBRIGATÓRIA', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont, fontSize: 7,
+                          fontFamily: TClubTypography.bodyFont, fontSize: 7,
                           fontWeight: FontWeight.w800, letterSpacing: 1.5,
                           color: Color(0xFFE05A5A),
                         )),
@@ -701,23 +701,23 @@ class _BlocoParceiro extends StatelessWidget {
                     Text(
                       hasAvatar ? 'Toque para alterar a foto' : 'Adicionar foto do(a) parceiro(a)',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize:   14,
                         fontWeight: hasAvatar ? FontWeight.w600 : FontWeight.w400,
-                        color: hasAvatar ? TabuColors.textoPrincipal : TabuColors.subtle,
+                        color: hasAvatar ? TClubColors.textoPrincipal : TClubColors.subtle,
                       ),
                     ),
                   ],
                 )),
                 Icon(Icons.chevron_right_rounded, size: 18,
                     color: hasAvatar
-                        ? TabuColors.rosaPrincipal.withOpacity(0.6)
-                        : TabuColors.subtle.withOpacity(0.5)),
+                        ? TClubColors.redPrincipal.withOpacity(0.6)
+                        : TClubColors.subtle.withOpacity(0.5)),
               ]),
             ),
           ),
 
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
 
           // ── FIX 1: campo de nome com textInputAction.done
           // e onFieldSubmitted que remove o foco definitivamente
@@ -735,7 +735,7 @@ class _BlocoParceiro extends StatelessWidget {
                 (v?.trim().isEmpty ?? true) ? 'Nome obrigatório' : null,
           ),
 
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _CampoSelecao(
             rotulo:  'GÊNERO',
             icone:   Icons.person_outline,
@@ -743,7 +743,7 @@ class _BlocoParceiro extends StatelessWidget {
             dica:    'Selecione o gênero',
             aoTocar: onPickGender,
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _CampoSelecao(
             rotulo:  'ANIVERSÁRIO',
             icone:   Icons.cake_outlined,
@@ -751,7 +751,7 @@ class _BlocoParceiro extends StatelessWidget {
             dica:    'Selecione — maior de 18 anos',
             aoTocar: onPickBirthDate,
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _CampoSelecao(
             rotulo:  'ORIENTAÇÃO SEXUAL',
             icone:   Icons.favorite_border_rounded,
@@ -765,13 +765,13 @@ class _BlocoParceiro extends StatelessWidget {
       const SizedBox(height: 8),
       Row(children: [
         const Icon(Icons.lock_outline_rounded,
-            color: TabuColors.subtle, size: 12),
+            color: TClubColors.subtle, size: 12),
         const SizedBox(width: 6),
         Text(
           'Os dados pessoais do parceiro(a) são privados.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 10,
-            color: TabuColors.subtle.withOpacity(0.7), letterSpacing: 0.3,
+            fontFamily: TClubTypography.bodyFont, fontSize: 10,
+            color: TClubColors.subtle.withOpacity(0.7), letterSpacing: 0.3,
           ),
         ),
       ]),
@@ -795,9 +795,9 @@ class _AvatarSourceSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:        TabuColors.bg,
+        color:        TClubColors.bg,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        border: Border(top: BorderSide(color: TabuColors.borderMid, width: 0.8)),
+        border: Border(top: BorderSide(color: TClubColors.borderMid, width: 0.8)),
       ),
       child: SafeArea(
         top: false,
@@ -807,7 +807,7 @@ class _AvatarSourceSheet extends StatelessWidget {
             child: Container(
               width: 36, height: 3,
               decoration: BoxDecoration(
-                color:        TabuColors.borderMid,
+                color:        TClubColors.borderMid,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -817,7 +817,7 @@ class _AvatarSourceSheet extends StatelessWidget {
             label: 'Galeria',
             onTap: () => Navigator.pop(context, ImageSource.gallery),
           ),
-          Container(height: 0.5, color: TabuColors.borderMid),
+          Container(height: 0.5, color: TClubColors.borderMid),
           _SheetSourceOption(
             icon:  Icons.camera_alt_outlined,
             label: 'Câmera',
@@ -831,13 +831,13 @@ class _AvatarSourceSheet extends StatelessWidget {
               child: Container(
                 width: double.infinity, height: 50,
                 decoration: BoxDecoration(
-                  color:        TabuColors.bgCard,
+                  color:        TClubColors.bgCard,
                   borderRadius: BorderRadius.circular(12),
-                  border:       Border.all(color: TabuColors.borderMid, width: 0.7),
+                  border:       Border.all(color: TClubColors.borderMid, width: 0.7),
                 ),
                 child: Center(child: Text('Cancelar', style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont, fontSize: 15,
-                  fontWeight: FontWeight.w500, color: TabuColors.subtle,
+                  fontFamily: TClubTypography.bodyFont, fontSize: 15,
+                  fontWeight: FontWeight.w500, color: TClubColors.subtle,
                 ))),
               ),
             ),
@@ -868,19 +868,19 @@ class _SheetSourceOption extends StatelessWidget {
           Container(
             width: 38, height: 38,
             decoration: BoxDecoration(
-              color:        TabuColors.rosaPrincipal.withOpacity(0.10),
+              color:        TClubColors.redPrincipal.withOpacity(0.10),
               borderRadius: BorderRadius.circular(10),
               border:       Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                color: TClubColors.redPrincipal.withOpacity(0.25),
                 width: 0.7,
               ),
             ),
-            child: Icon(icon, color: TabuColors.rosaPrincipal, size: 18),
+            child: Icon(icon, color: TClubColors.redPrincipal, size: 18),
           ),
           const SizedBox(width: 16),
           Text(label, style: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 15,
-            fontWeight: FontWeight.w500, color: TabuColors.textoPrincipal,
+            fontFamily: TClubTypography.bodyFont, fontSize: 15,
+            fontWeight: FontWeight.w500, color: TClubColors.textoPrincipal,
           )),
         ]),
       ),
@@ -971,7 +971,7 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: TabuColors.bgAlt,
+        color: TClubColors.bgAlt,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: SafeArea(
@@ -980,7 +980,7 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
           Padding(
             padding: const EdgeInsets.only(top: 12, bottom: 4),
             child: Container(width: 36, height: 3,
-                decoration: BoxDecoration(color: TabuColors.borderMid,
+                decoration: BoxDecoration(color: TClubColors.borderMid,
                     borderRadius: BorderRadius.circular(2))),
           ),
           Padding(
@@ -990,45 +990,45 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     begin: Alignment.topCenter, end: Alignment.bottomCenter,
-                    colors: [TabuColors.rosaPrincipal, TabuColors.rosaDeep]),
+                    colors: [TClubColors.redPrincipal, TClubColors.redDeep]),
                   borderRadius: BorderRadius.circular(2))),
               const SizedBox(width: 8),
               const Text('ANIVERSÁRIO DO PARCEIRO(A)', style: TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 9,
+                fontFamily: TClubTypography.bodyFont, fontSize: 9,
                 fontWeight: FontWeight.w800, letterSpacing: 3,
-                color: TabuColors.rosaPrincipal)),
+                color: TClubColors.redPrincipal)),
             ]),
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           SizedBox(
             height: _alturaRoda,
             child: Stack(alignment: Alignment.center, children: [
               IgnorePointer(child: Container(height: _itemExtent,
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.07),
+                    color: TClubColors.redPrincipal.withOpacity(0.07),
                     border: Border.symmetric(horizontal: BorderSide(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.25), width: 0.8))))),
+                      color: TClubColors.redPrincipal.withOpacity(0.25), width: 0.8))))),
               Positioned(top: 0, left: 0, right: 0, height: 70,
                   child: IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(
                     gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter,
-                      colors: [TabuColors.bgAlt, TabuColors.bgAlt.withOpacity(0)]))))),
+                      colors: [TClubColors.bgAlt, TClubColors.bgAlt.withOpacity(0)]))))),
               Positioned(bottom: 0, left: 0, right: 0, height: 70,
                   child: IgnorePointer(child: DecoratedBox(decoration: BoxDecoration(
                     gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter,
-                      colors: [TabuColors.bgAlt, TabuColors.bgAlt.withOpacity(0)]))))),
+                      colors: [TClubColors.bgAlt, TClubColors.bgAlt.withOpacity(0)]))))),
               Row(children: [
                 Expanded(flex: 2, child: _buildRoda(controller: _ctrlDia, count: _maxDias,
                     labelOf: (i) => '${i+1}'.padLeft(2,'0'), onChanged: _onDiaChanged, label: 'DIA')),
-                Container(width: 0.5, height: _alturaRoda, color: TabuColors.border),
+                Container(width: 0.5, height: _alturaRoda, color: TClubColors.border),
                 Expanded(flex: 3, child: _buildRoda(controller: _ctrlMes, count: 12,
                     labelOf: (i) => _meses[i], onChanged: _onMesChanged, label: 'MÊS')),
-                Container(width: 0.5, height: _alturaRoda, color: TabuColors.border),
+                Container(width: 0.5, height: _alturaRoda, color: TClubColors.border),
                 Expanded(flex: 3, child: _buildRoda(controller: _ctrlAno, count: _anoMax - _anoMin + 1,
                     labelOf: (i) => '${_anoMin+i}', onChanged: _onAnoChanged, label: 'ANO')),
               ]),
             ]),
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
             child: GestureDetector(
@@ -1036,13 +1036,13 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
               child: Container(
                 width: double.infinity, height: 50,
                 decoration: BoxDecoration(
-                  color: TabuColors.rosaPrincipal,
-                  boxShadow: [BoxShadow(color: TabuColors.glow.withOpacity(0.35),
+                  color: TClubColors.redPrincipal,
+                  boxShadow: [BoxShadow(color: TClubColors.glow.withOpacity(0.35),
                       blurRadius: 16, offset: const Offset(0, 4))]),
                 child: const Center(child: Text('CONFIRMAR', style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont, fontSize: 13,
+                  fontFamily: TClubTypography.bodyFont, fontSize: 13,
                   fontWeight: FontWeight.w800, letterSpacing: 3,
-                  color: TabuColors.textoPrincipal))),
+                  color: TClubColors.textoPrincipal))),
               ),
             ),
           ),
@@ -1061,9 +1061,9 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
     return Column(children: [
       Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 4),
-        child: Text(label, style: TextStyle(fontFamily: TabuTypography.bodyFont,
+        child: Text(label, style: TextStyle(fontFamily: TClubTypography.bodyFont,
             fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 2.5,
-            color: TabuColors.rosaPrincipal.withOpacity(0.6))),
+            color: TClubColors.redPrincipal.withOpacity(0.6))),
       ),
       Expanded(
         child: ListWheelScrollView.useDelegate(
@@ -1077,10 +1077,10 @@ class _AniversarioSheetState extends State<_AniversarioSheet> {
               final isCenter = i == (controller.hasClients
                   ? controller.selectedItem : controller.initialItem);
               return Center(child: Text(labelOf(i), style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize:   isCenter ? 24 : 16,
                 fontWeight: isCenter ? FontWeight.w700 : FontWeight.w400,
-                color:      isCenter ? TabuColors.textoPrincipal : TabuColors.subtle,
+                color:      isCenter ? TClubColors.textoPrincipal : TClubColors.subtle,
               )));
             },
           ),
@@ -1134,7 +1134,7 @@ class _CampoTextoInternoEstado extends State<_CampoTextoInterno> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Icon(widget.icone, size: 16,
-            color: _focado ? TabuColors.rosaPrincipal : TabuColors.subtle),
+            color: _focado ? TClubColors.redPrincipal : TClubColors.subtle),
         const SizedBox(width: 12),
         Expanded(child: TextFormField(
           controller:         widget.controlador,
@@ -1145,11 +1145,11 @@ class _CampoTextoInternoEstado extends State<_CampoTextoInterno> {
           textInputAction:    widget.textInputAction,   // ← FIX 1
           onFieldSubmitted:   widget.onFieldSubmitted,  // ← FIX 1
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 14, fontWeight: FontWeight.w500,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           ),
-          cursorColor: TabuColors.rosaPrincipal,
+          cursorColor: TClubColors.redPrincipal,
           decoration: InputDecoration(
             labelText:     widget.rotulo,
             hintText:      widget.dica,
@@ -1160,16 +1160,16 @@ class _CampoTextoInternoEstado extends State<_CampoTextoInterno> {
             errorBorder:   InputBorder.none,
             filled:        false,
             labelStyle: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 9,
+              fontFamily: TClubTypography.bodyFont, fontSize: 9,
               fontWeight: FontWeight.w700, letterSpacing: 2.5,
-              color: _focado ? TabuColors.rosaPrincipal : TabuColors.subtle,
+              color: _focado ? TClubColors.redPrincipal : TClubColors.subtle,
             ),
             hintStyle: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
-              fontSize: 14, color: TabuColors.subtle,
+              fontFamily: TClubTypography.bodyFont,
+              fontSize: 14, color: TClubColors.subtle,
             ),
             errorStyle: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10, letterSpacing: 0.8,
               color: Color(0xFFE85D5D),
             ),
@@ -1180,3 +1180,4 @@ class _CampoTextoInternoEstado extends State<_CampoTextoInterno> {
     );
   }
 }
+

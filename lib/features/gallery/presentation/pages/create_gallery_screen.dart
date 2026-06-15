@@ -27,10 +27,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 
-import 'package:tabuapp/core/helpers/media_permission_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/post/data/services/cloudinary_service.dart';
-import 'package:tabuapp/core/services/media/videos_trim_service.dart';
+import 'package:tclub/core/helpers/media_permission_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/post/data/services/cloudinary_service.dart';
+import 'package:tclub/core/services/media/videos_trim_service.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  TELA PRINCIPAL
@@ -395,18 +395,18 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
 
   void _snack(String msg, {bool success = false}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: success ? TabuColors.rosaDeep : const Color(0xFF3D0A0A),
+      backgroundColor: success ? TClubColors.redDeep : const Color(0xFF3D0A0A),
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(),
       margin: const EdgeInsets.all(16),
       duration: const Duration(seconds: 3),
       content: Text(msg,
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           )),
     ));
   }
@@ -417,7 +417,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         // Linha de acento no topo
         Positioned(
@@ -426,8 +426,8 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
             height: 3,
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                TabuColors.rosaDeep, TabuColors.rosaPrincipal,
-                TabuColors.rosaClaro, TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+                TClubColors.redDeep, TClubColors.redPrincipal,
+                TClubColors.redClaro, TClubColors.redPrincipal, TClubColors.redDeep,
               ]),
             ),
           ),
@@ -435,7 +435,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
         SafeArea(
           child: Column(children: [
             _buildTopBar(),
-            Container(height: 0.5, color: TabuColors.border),
+            Container(height: 0.5, color: TClubColors.border),
             Expanded(
               child: GestureDetector(
                 onTap: () => FocusScope.of(context).unfocus(),
@@ -462,15 +462,15 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
     padding: const EdgeInsets.fromLTRB(4, 10, 16, 10),
     child: Row(children: [
       IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: TabuColors.dim, size: 18),
+        icon: const Icon(Icons.arrow_back_ios_new, color: TClubColors.dim, size: 18),
         onPressed: _busy ? null : () => Navigator.pop(context),
       ),
       const Expanded(
         child: Text('ADICIONAR À GALERIA',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: TabuTypography.displayFont,
-              fontSize: 16, letterSpacing: 4, color: TabuColors.branco,
+              fontFamily: TClubTypography.displayFont,
+              fontSize: 16, letterSpacing: 4, color: TClubColors.branco,
             )),
       ),
       const SizedBox(width: 48),
@@ -482,30 +482,30 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text('TIPO DE CONTEÚDO',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9, fontWeight: FontWeight.w700,
-            letterSpacing: 3, color: TabuColors.rosaPrincipal,
+            letterSpacing: 3, color: TClubColors.redPrincipal,
           )),
       const SizedBox(height: 10),
       Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.8),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.8),
         ),
         child: TabBar(
           controller: _tabCtrl,
-          indicatorColor: TabuColors.rosaPrincipal,
+          indicatorColor: TClubColors.redPrincipal,
           indicatorWeight: 2,
           indicatorSize: TabBarIndicatorSize.tab,
-          labelColor: TabuColors.rosaPrincipal,
-          unselectedLabelColor: TabuColors.subtle,
+          labelColor: TClubColors.redPrincipal,
+          unselectedLabelColor: TClubColors.subtle,
           dividerColor: Colors.transparent,
           labelStyle: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 2,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10, fontWeight: FontWeight.w600, letterSpacing: 2,
           ),
           tabs: const [
@@ -536,11 +536,11 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
         width: double.infinity,
         height: _foto != null ? 300 : 180,
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(
             color: _foto != null
-                ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                : TabuColors.border,
+                ? TClubColors.redPrincipal.withOpacity(0.4)
+                : TClubColors.border,
             width: _foto != null ? 1 : 0.8,
           ),
         ),
@@ -561,25 +561,25 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                   width: 56, height: 56,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TabuColors.rosaPrincipal.withOpacity(0.1),
+                    color: TClubColors.redPrincipal.withOpacity(0.1),
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.3), width: 1),
+                        color: TClubColors.redPrincipal.withOpacity(0.3), width: 1),
                   ),
                   child: const Icon(Icons.add_photo_alternate_outlined,
-                      color: TabuColors.rosaPrincipal, size: 26),
+                      color: TClubColors.redPrincipal, size: 26),
                 ),
                 const SizedBox(height: 12),
                 const Text('TOQUE PARA ADICIONAR FOTO',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10, fontWeight: FontWeight.w700,
-                      letterSpacing: 2.5, color: TabuColors.subtle,
+                      letterSpacing: 2.5, color: TClubColors.subtle,
                     )),
                 const SizedBox(height: 4),
                 const Text('câmera ou galeria',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
-                      fontSize: 11, color: TabuColors.subtle,
+                      fontFamily: TClubTypography.bodyFont,
+                      fontSize: 11, color: TClubColors.subtle,
                     )),
               ]),
       ),
@@ -596,11 +596,11 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
         width: double.infinity,
         height: _video != null ? 340 : 180,
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(
             color: _video != null
-                ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                : TabuColors.border,
+                ? TClubColors.redPrincipal.withOpacity(0.4)
+                : TClubColors.border,
             width: _video != null ? 1 : 0.8,
           ),
         ),
@@ -632,7 +632,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.black.withOpacity(0.55),
-                        border: Border.all(color: TabuColors.rosaPrincipal, width: 1.5),
+                        border: Border.all(color: TClubColors.redPrincipal, width: 1.5),
                       ),
                       child: const Icon(Icons.play_arrow_rounded,
                           color: Colors.white, size: 30),
@@ -657,12 +657,12 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.65),
                         border: Border.all(
-                            color: TabuColors.rosaPrincipal.withOpacity(0.5), width: 0.8),
+                            color: TClubColors.redPrincipal.withOpacity(0.5), width: 0.8),
                       ),
                       child: Text(
                         _fmtDuration(_videoDuration!.inSeconds),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 10, fontWeight: FontWeight.w700,
                           letterSpacing: 1, color: Colors.white,
                         ),
@@ -680,25 +680,25 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                   width: 56, height: 56,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TabuColors.rosaPrincipal.withOpacity(0.1),
+                    color: TClubColors.redPrincipal.withOpacity(0.1),
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.3), width: 1),
+                        color: TClubColors.redPrincipal.withOpacity(0.3), width: 1),
                   ),
                   child: const Icon(Icons.video_call_outlined,
-                      color: TabuColors.rosaPrincipal, size: 28),
+                      color: TClubColors.redPrincipal, size: 28),
                 ),
                 const SizedBox(height: 12),
                 const Text('TOQUE PARA ADICIONAR VÍDEO',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10, fontWeight: FontWeight.w700,
-                      letterSpacing: 2.5, color: TabuColors.subtle,
+                      letterSpacing: 2.5, color: TClubColors.subtle,
                     )),
                 const SizedBox(height: 4),
                 const Text('câmera ou galeria',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
-                      fontSize: 11, color: TabuColors.subtle,
+                      fontFamily: TClubTypography.bodyFont,
+                      fontSize: 11, color: TClubColors.subtle,
                     )),
               ]),
       ),
@@ -714,15 +714,15 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
     // Dica
     Row(children: [
       const Icon(Icons.info_outline_rounded,
-          size: 11, color: TabuColors.subtle),
+          size: 11, color: TClubColors.subtle),
       const SizedBox(width: 6),
       Flexible(
         child: Text(
           'Vídeos da galeria têm no máximo 10 segundos.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9, letterSpacing: 0.5,
-            color: TabuColors.subtle.withOpacity(0.7),
+            color: TClubColors.subtle.withOpacity(0.7),
           ),
         ),
       ),
@@ -737,12 +737,12 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: _capaPersonalizada
-            ? TabuColors.rosaPrincipal.withOpacity(0.12)
-            : TabuColors.bgCard,
+            ? TClubColors.redPrincipal.withOpacity(0.12)
+            : TClubColors.bgCard,
         border: Border.all(
           color: _capaPersonalizada
-              ? TabuColors.rosaPrincipal.withOpacity(0.6)
-              : TabuColors.border,
+              ? TClubColors.redPrincipal.withOpacity(0.6)
+              : TClubColors.border,
           width: _capaPersonalizada ? 1.2 : 0.8,
         ),
       ),
@@ -753,7 +753,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.5), width: 1),
+                  color: TClubColors.redPrincipal.withOpacity(0.5), width: 1),
             ),
             // FIX: BoxFit.cover garante que o thumbnail quadrado não distorça
             child: Image.memory(_coverBytes!, fit: BoxFit.cover),
@@ -762,7 +762,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
           _capaPersonalizada
               ? Icons.check_circle_rounded
               : Icons.photo_camera_outlined,
-          color: _capaPersonalizada ? TabuColors.rosaPrincipal : TabuColors.subtle,
+          color: _capaPersonalizada ? TClubColors.redPrincipal : TClubColors.subtle,
           size: 15,
         ),
         const SizedBox(width: 8),
@@ -770,9 +770,9 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
           Text(
             _capaPersonalizada ? 'CAPA PERSONALIZADA' : 'ESCOLHER CAPA',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 2,
-              color: _capaPersonalizada ? TabuColors.rosaPrincipal : TabuColors.subtle,
+              color: _capaPersonalizada ? TClubColors.redPrincipal : TClubColors.subtle,
             ),
           ),
           Text(
@@ -780,8 +780,8 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                 ? 'toque para trocar o frame'
                 : 'selecione um frame do vídeo',
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
-              fontSize: 9, letterSpacing: 0.5, color: TabuColors.subtle,
+              fontFamily: TClubTypography.bodyFont,
+              fontSize: 9, letterSpacing: 0.5, color: TClubColors.subtle,
             ),
           ),
         ]),
@@ -794,8 +794,8 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
     final can = _podePublicar;
     return Container(
       decoration: const BoxDecoration(
-        color: TabuColors.bgAlt,
-        border: Border(top: BorderSide(color: TabuColors.border, width: 0.5)),
+        color: TClubColors.bgAlt,
+        border: Border(top: BorderSide(color: TClubColors.border, width: 0.5)),
       ),
       padding: EdgeInsets.fromLTRB(
           20, 12, 20, MediaQuery.of(context).padding.bottom + 12),
@@ -807,14 +807,14 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
           decoration: BoxDecoration(
             color: _step == _Step.erro
                 ? const Color(0xFFE85D5D)
-                : can ? TabuColors.rosaPrincipal : TabuColors.bgCard,
+                : can ? TClubColors.redPrincipal : TClubColors.bgCard,
             border: Border.all(
-              color: can ? TabuColors.rosaPrincipal : TabuColors.border,
+              color: can ? TClubColors.redPrincipal : TClubColors.border,
               width: 0.8,
             ),
             boxShadow: can
                 ? [BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.35),
+                    color: TClubColors.glow.withOpacity(0.35),
                     blurRadius: 16, spreadRadius: 1)]
                 : null,
           ),
@@ -823,18 +823,18 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
                 ? const SizedBox(
                     width: 20, height: 20,
                     child: CircularProgressIndicator(
-                        color: TabuColors.branco, strokeWidth: 2))
+                        color: TClubColors.branco, strokeWidth: 2))
                 : Row(mainAxisSize: MainAxisSize.min, children: [
                     Icon(Icons.add_rounded,
-                        color: can ? TabuColors.branco : TabuColors.subtle,
+                        color: can ? TClubColors.branco : TClubColors.subtle,
                         size: 16),
                     const SizedBox(width: 10),
                     Text('ADICIONAR À GALERIA',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 12, fontWeight: FontWeight.w700,
                           letterSpacing: 2.5,
-                          color: can ? TabuColors.branco : TabuColors.subtle,
+                          color: can ? TClubColors.branco : TClubColors.subtle,
                         )),
                   ]),
           ),
@@ -862,14 +862,14 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
               child: Stack(alignment: Alignment.center, children: [
                 CircularProgressIndicator(
                   value: _uploadProgress > 0 ? _uploadProgress : null,
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                   backgroundColor: Colors.white.withOpacity(0.1),
                   strokeWidth: 3,
                 ),
                 if (_uploadProgress > 0)
                   Text('${(_uploadProgress * 100).toInt()}%',
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 12, fontWeight: FontWeight.w700,
                         color: Colors.white,
                       )),
@@ -878,7 +878,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
             const SizedBox(height: 16),
             Text(label,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 11, fontWeight: FontWeight.w700,
                   letterSpacing: 2.5, color: Colors.white,
                 )),
@@ -892,31 +892,31 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
   void _showFotoSheet() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           _sheetHandle(),
           const Text('SELECIONAR FOTO',
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
-                fontSize: 16, letterSpacing: 5, color: TabuColors.textoPrincipal,
+                fontFamily: TClubTypography.displayFont,
+                fontSize: 16, letterSpacing: 5, color: TClubColors.textoPrincipal,
               )),
           const SizedBox(height: 16),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
             icon: Icons.photo_camera_outlined,
             label: 'CÂMERA', sublabel: 'Tirar foto agora',
             onTap: () => _pickFoto(ImageSource.camera),
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
             icon: Icons.photo_library_outlined,
             label: 'GALERIA', sublabel: 'Escolher da galeria',
             onTap: () => _pickFoto(ImageSource.gallery),
           ),
           if (_foto != null) ...[
-            Container(height: 0.5, color: TabuColors.border),
+            Container(height: 0.5, color: TClubColors.border),
             _SheetTile(
               icon: Icons.delete_outline, label: 'REMOVER',
               sublabel: 'Continuar sem imagem', danger: true,
@@ -932,31 +932,31 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
   void _showVideoSheet() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           _sheetHandle(),
           const Text('SELECIONAR VÍDEO',
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
-                fontSize: 16, letterSpacing: 5, color: TabuColors.textoPrincipal,
+                fontFamily: TClubTypography.displayFont,
+                fontSize: 16, letterSpacing: 5, color: TClubColors.textoPrincipal,
               )),
           const SizedBox(height: 16),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
             icon: Icons.videocam_outlined,
             label: 'CÂMERA', sublabel: 'Gravar vídeo agora',
             onTap: () => _pickVideo(ImageSource.camera),
           ),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
             icon: Icons.video_library_outlined,
             label: 'GALERIA', sublabel: 'Escolher da galeria',
             onTap: () => _pickVideo(ImageSource.gallery),
           ),
           if (_video != null) ...[
-            Container(height: 0.5, color: TabuColors.border),
+            Container(height: 0.5, color: TClubColors.border),
             _SheetTile(
               icon: Icons.delete_outline, label: 'REMOVER',
               sublabel: 'Continuar sem vídeo', danger: true,
@@ -973,7 +973,7 @@ class _CreateGalleryItemScreenState extends State<CreateGalleryItemScreen>
     width: 36, height: 3,
     margin: const EdgeInsets.only(top: 12, bottom: 20),
     decoration: BoxDecoration(
-      color: TabuColors.border, borderRadius: BorderRadius.circular(2)),
+      color: TClubColors.border, borderRadius: BorderRadius.circular(2)),
   );
 
   String _fmtDuration(int seconds) {
@@ -1069,8 +1069,8 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
           shape: RoundedRectangleBorder(),
           content: Text('Não foi possível capturar o frame.',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
-                fontSize: 11, color: TabuColors.textoPrincipal, letterSpacing: 1,
+                fontFamily: TClubTypography.bodyFont,
+                fontSize: 11, color: TClubColors.textoPrincipal, letterSpacing: 1,
               )),
         ));
       }
@@ -1097,15 +1097,15 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.88,
       decoration: const BoxDecoration(
-        color: TabuColors.bgAlt,
-        border: Border(top: BorderSide(color: TabuColors.rosaPrincipal, width: 1.5)),
+        color: TClubColors.bgAlt,
+        border: Border(top: BorderSide(color: TClubColors.redPrincipal, width: 1.5)),
       ),
       child: Column(children: [
         Container(
           width: 36, height: 3,
           margin: const EdgeInsets.only(top: 12, bottom: 8),
           decoration: BoxDecoration(
-            color: TabuColors.border, borderRadius: BorderRadius.circular(2)),
+            color: TClubColors.border, borderRadius: BorderRadius.circular(2)),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
@@ -1114,14 +1114,14 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text('ESCOLHER CAPA',
                     style: TextStyle(
-                      fontFamily: TabuTypography.displayFont,
-                      fontSize: 16, letterSpacing: 4, color: TabuColors.textoPrincipal,
+                      fontFamily: TClubTypography.displayFont,
+                      fontSize: 16, letterSpacing: 4, color: TClubColors.textoPrincipal,
                     )),
                 SizedBox(height: 3),
                 Text('arraste o slider para selecionar o frame',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
-                      fontSize: 10, letterSpacing: 1, color: TabuColors.subtle,
+                      fontFamily: TClubTypography.bodyFont,
+                      fontSize: 10, letterSpacing: 1, color: TClubColors.subtle,
                     )),
               ]),
             ),
@@ -1130,15 +1130,15 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
               child: Container(
                 width: 32, height: 32,
                 decoration: BoxDecoration(
-                  color: TabuColors.bgCard,
-                  border: Border.all(color: TabuColors.border, width: 0.8),
+                  color: TClubColors.bgCard,
+                  border: Border.all(color: TClubColors.border, width: 0.8),
                 ),
-                child: const Icon(Icons.close, color: TabuColors.subtle, size: 16),
+                child: const Icon(Icons.close, color: TClubColors.subtle, size: 16),
               ),
             ),
           ]),
         ),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         Expanded(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -1186,7 +1186,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                               child: SizedBox(
                                 width: 24, height: 24,
                                 child: CircularProgressIndicator(
-                                    color: TabuColors.rosaPrincipal, strokeWidth: 2),
+                                    color: TClubColors.redPrincipal, strokeWidth: 2),
                               ),
                             ),
                           ),
@@ -1200,11 +1200,11 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.75),
                           border: Border.all(
-                              color: TabuColors.rosaPrincipal.withOpacity(0.6), width: 0.8),
+                              color: TClubColors.redPrincipal.withOpacity(0.6), width: 0.8),
                         ),
                         child: Text(_fmt(_posMs),
                             style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 13, fontWeight: FontWeight.w700,
                               letterSpacing: 1, color: Colors.white,
                             )),
@@ -1215,13 +1215,13 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                       top: 10, left: 10,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        color: TabuColors.rosaPrincipal.withOpacity(0.9),
+                        color: TClubColors.redPrincipal.withOpacity(0.9),
                         child: const Row(mainAxisSize: MainAxisSize.min, children: [
                           Icon(Icons.image_outlined, color: Colors.white, size: 10),
                           SizedBox(width: 4),
                           Text('CAPA',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 8, fontWeight: FontWeight.w700,
                                 letterSpacing: 2, color: Colors.white,
                               )),
@@ -1239,27 +1239,27 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                   Row(children: [
                     Text(_fmt(_posMs),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, fontWeight: FontWeight.w700,
-                          letterSpacing: 1, color: TabuColors.rosaPrincipal,
+                          letterSpacing: 1, color: TClubColors.redPrincipal,
                         )),
                     const Spacer(),
                     Text(_fmt(totalMs),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
-                          fontSize: 11, letterSpacing: 1, color: TabuColors.subtle,
+                          fontFamily: TClubTypography.bodyFont,
+                          fontSize: 11, letterSpacing: 1, color: TClubColors.subtle,
                         )),
                   ]),
                   const SizedBox(height: 10),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: TabuColors.rosaPrincipal,
-                      inactiveTrackColor: TabuColors.border,
-                      thumbColor: TabuColors.rosaPrincipal,
+                      activeTrackColor: TClubColors.redPrincipal,
+                      inactiveTrackColor: TClubColors.border,
+                      thumbColor: TClubColors.redPrincipal,
                       thumbShape: const RoundSliderThumbShape(
                           enabledThumbRadius: 8, elevation: 0),
                       overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
-                      overlayColor: TabuColors.rosaPrincipal.withOpacity(0.15),
+                      overlayColor: TClubColors.redPrincipal.withOpacity(0.15),
                       trackHeight: 3,
                     ),
                     child: Slider(
@@ -1277,8 +1277,8 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                   const SizedBox(height: 8),
                   const Text('← arraste para navegar pelo vídeo →',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
-                        fontSize: 9, letterSpacing: 1.5, color: TabuColors.subtle,
+                        fontFamily: TClubTypography.bodyFont,
+                        fontSize: 9, letterSpacing: 1.5, color: TClubColors.subtle,
                       )),
                 ]),
               ),
@@ -1290,8 +1290,8 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
         // Botão confirmar
         Container(
           decoration: const BoxDecoration(
-            color: TabuColors.bgAlt,
-            border: Border(top: BorderSide(color: TabuColors.border, width: 0.5)),
+            color: TClubColors.bgAlt,
+            border: Border(top: BorderSide(color: TClubColors.border, width: 0.5)),
           ),
           padding: EdgeInsets.fromLTRB(
               20, 12, 20, MediaQuery.of(context).padding.bottom + 12),
@@ -1301,10 +1301,10 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
               duration: const Duration(milliseconds: 200),
               width: double.infinity, height: 52,
               decoration: BoxDecoration(
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
                 boxShadow: [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.35),
+                    color: TClubColors.glow.withOpacity(0.35),
                     blurRadius: 16, spreadRadius: 1,
                   ),
                 ],
@@ -1320,7 +1320,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                         SizedBox(width: 10),
                         Text('USAR ESTE FRAME COMO CAPA',
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 12, fontWeight: FontWeight.w700,
                               letterSpacing: 2, color: Colors.white,
                             )),
@@ -1349,9 +1349,9 @@ class _MiniBtn extends StatelessWidget {
       width: 30, height: 30,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.65),
-        border: Border.all(color: TabuColors.borderMid, width: 0.8),
+        border: Border.all(color: TClubColors.borderMid, width: 0.8),
       ),
-      child: Icon(icon, color: TabuColors.branco, size: 15),
+      child: Icon(icon, color: TClubColors.branco, size: 15),
     ),
   );
 }
@@ -1372,7 +1372,7 @@ class _SheetTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = danger ? const Color(0xFFE85D5D) : TabuColors.textoPrincipal;
+    final color = danger ? const Color(0xFFE85D5D) : TClubColors.textoPrincipal;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -1390,14 +1390,14 @@ class _SheetTile extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(label,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13, fontWeight: FontWeight.w700,
                   letterSpacing: 2, color: color,
                 )),
             Text(sublabel,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
-                  fontSize: 10, letterSpacing: 0.5, color: TabuColors.subtle,
+                  fontFamily: TClubTypography.bodyFont,
+                  fontSize: 10, letterSpacing: 0.5, color: TClubColors.subtle,
                 )),
           ]),
         ]),
@@ -1443,7 +1443,7 @@ class _VideoProgressBarState extends State<_VideoProgressBar> {
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+              colors: [TClubColors.redDeep, TClubColors.redPrincipal],
             ),
           ),
         ),
@@ -1451,3 +1451,4 @@ class _VideoProgressBarState extends State<_VideoProgressBar> {
     );
   }
 }
+

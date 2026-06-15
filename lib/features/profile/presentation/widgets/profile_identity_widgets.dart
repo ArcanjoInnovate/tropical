@@ -3,8 +3,8 @@
 // Widgets reutilizados nas telas pública e própria.
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/data/models/profile_user_model.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/data/models/profile_user_model.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  ONLINE DOT
@@ -21,7 +21,7 @@ class OnlineDot extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: const Color(0xFF22C55E),
-        border: Border.all(color: TabuColors.bg, width: 1.5),
+        border: Border.all(color: TClubColors.bg, width: 1.5),
         boxShadow: const [
           BoxShadow(color: Color(0x5522C55E), blurRadius: 6, spreadRadius: 1),
         ],
@@ -47,7 +47,7 @@ class IdentityChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? TabuColors.rosaPrincipal;
+    final c = color ?? TClubColors.redPrincipal;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -63,7 +63,7 @@ class IdentityChip extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -158,7 +158,7 @@ class ProfileIdentityRow extends StatelessWidget {
         'swing' ||
         'poliamoroso' =>
           const Color(0xFF8B5CF6),
-        _ => TabuColors.rosaPrincipal,
+        _ => TClubColors.redPrincipal,
       };
 }
 
@@ -206,7 +206,7 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                   height: 14,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [TabuColors.rosaDeep, TabuColors.rosaClaro],
+                      colors: [TClubColors.redDeep, TClubColors.redClaro],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -216,11 +216,11 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                 const Text(
                   'INTERESSES',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -228,19 +228,19 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.10),
+                    color: TClubColors.redPrincipal.withOpacity(0.10),
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                        color: TClubColors.redPrincipal.withOpacity(0.25),
                         width: 0.6),
                   ),
                   child: Text(
                     '${widget.interests.length}',
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 8,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1,
-                      color: TabuColors.rosaPrincipal,
+                      color: TClubColors.redPrincipal,
                     ),
                   ),
                 ),
@@ -260,9 +260,9 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
+                      color: TClubColors.bgCard,
                       border:
-                          Border.all(color: TabuColors.border, width: 0.8),
+                          Border.all(color: TClubColors.border, width: 0.8),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -272,7 +272,7 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                               ? Icons.expand_less_rounded
                               : Icons.expand_more_rounded,
                           size: 11,
-                          color: TabuColors.dim,
+                          color: TClubColors.dim,
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -280,11 +280,11 @@ class _ProfileInterestsSectionState extends State<ProfileInterestsSection> {
                               ? 'VER MENOS'
                               : '+${widget.interests.length - widget.maxVisible}',
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 1,
-                            color: TabuColors.dim,
+                            color: TClubColors.dim,
                           ),
                         ),
                       ],
@@ -308,18 +308,18 @@ class _InterestTag extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         border: Border.all(
-            color: TabuColors.border.withOpacity(0.8), width: 0.7),
+            color: TClubColors.border.withOpacity(0.8), width: 0.7),
       ),
       child: Text(
         label,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 10,
           fontWeight: FontWeight.w500,
           letterSpacing: 0.4,
-          color: TabuColors.dim,
+          color: TClubColors.dim,
         ),
       ),
     );
@@ -370,7 +370,7 @@ class CouplePartnerCard extends StatelessWidget {
                 Text(
                   'EM CASAL COM',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 7,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2,
@@ -390,7 +390,7 @@ class CouplePartnerCard extends StatelessWidget {
                         partner.name?.toUpperCase() ?? '—',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
@@ -459,7 +459,7 @@ class _PartnerAvatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: accent.withOpacity(0.5), width: 1.5),
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
       ),
       child: ClipOval(
         child: hasAvatar
@@ -506,7 +506,7 @@ class _MiniChip extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
@@ -540,7 +540,7 @@ class ProfileStatCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = accent ? TabuColors.rosaPrincipal : TabuColors.textoPrincipal;
+    final color = accent ? TClubColors.redPrincipal : TClubColors.textoPrincipal;
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
@@ -549,17 +549,17 @@ class ProfileStatCell extends StatelessWidget {
           child: Column(children: [
             Icon(icon,
                 size: 13,
-                color: accent ? TabuColors.rosaPrincipal : TabuColors.subtle),
+                color: accent ? TClubColors.redPrincipal : TClubColors.subtle),
             const SizedBox(height: 6),
             Text(
               value,
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 22,
                 letterSpacing: 0.5,
                 color: color,
                 shadows: accent
-                    ? [Shadow(color: TabuColors.glow, blurRadius: 12)]
+                    ? [Shadow(color: TClubColors.glow, blurRadius: 12)]
                     : null,
               ),
             ),
@@ -568,13 +568,13 @@ class ProfileStatCell extends StatelessWidget {
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 7,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.8,
                 color: accent
-                    ? TabuColors.rosaPrincipal.withOpacity(0.7)
-                    : TabuColors.subtle,
+                    ? TClubColors.redPrincipal.withOpacity(0.7)
+                    : TClubColors.subtle,
               ),
             ),
           ]),
@@ -590,7 +590,7 @@ class ProfileStatCell extends StatelessWidget {
 class ProfileVertDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      Container(width: 0.5, color: TabuColors.border);
+      Container(width: 0.5, color: TClubColors.border);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -621,7 +621,7 @@ class VipBadge extends StatelessWidget {
           Text(
             'AMIGO VIP',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9,
               fontWeight: FontWeight.w700,
               letterSpacing: 2.5,
@@ -645,13 +645,13 @@ class MetricsBarSkeleton extends StatelessWidget {
     return Container(
       height: 84,
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         border: Border.all(
-            color: TabuColors.border.withOpacity(0.6), width: 0.8),
+            color: TClubColors.border.withOpacity(0.6), width: 0.8),
       ),
       child: Row(
         children: List.generate(7, (i) {
-          if (i.isOdd) return Container(width: 0.5, color: TabuColors.border);
+          if (i.isOdd) return Container(width: 0.5, color: TClubColors.border);
           return Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -673,7 +673,7 @@ class MetricsBarSkeleton extends StatelessWidget {
         width: w,
         height: h,
         decoration: BoxDecoration(
-          color: TabuColors.border.withOpacity(0.25),
+          color: TClubColors.border.withOpacity(0.25),
           borderRadius: BorderRadius.circular(3),
         ),
       );
@@ -693,10 +693,10 @@ class GridSkeleton extends StatelessWidget {
       sliver: SliverGrid(
         delegate: SliverChildBuilderDelegate(
           (_, i) => Container(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             child: Opacity(
               opacity: 1.0 - (i * 0.07).clamp(0.0, 0.55),
-              child: Container(color: TabuColors.border.withOpacity(0.12)),
+              child: Container(color: TClubColors.border.withOpacity(0.12)),
             ),
           ),
           childCount: 9,
@@ -728,7 +728,7 @@ class LoadMoreIndicator extends StatelessWidget {
             width: 18,
             height: 18,
             child: CircularProgressIndicator(
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               strokeWidth: 1.5,
             ),
           ),
@@ -763,21 +763,21 @@ class EmptyGridState extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
-                border: Border.all(color: TabuColors.border, width: 0.8),
-                color: TabuColors.bgCard,
+                border: Border.all(color: TClubColors.border, width: 0.8),
+                color: TClubColors.bgCard,
               ),
               child: const Icon(Icons.photo_library_outlined,
-                  color: TabuColors.border, size: 20),
+                  color: TClubColors.border, size: 20),
             ),
             const SizedBox(height: 16),
             Text(
               label.toUpperCase(),
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 4,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
             if (sublabel != null) ...[
@@ -786,9 +786,9 @@ class EmptyGridState extends StatelessWidget {
                 sublabel!,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 11,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
               ),
             ],
@@ -798,3 +798,4 @@ class EmptyGridState extends StatelessWidget {
     );
   }
 }
+

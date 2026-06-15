@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/notification/data/models/notification_model.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/features/notification/data/services/notification_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/notification/data/models/notification_model.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/features/notification/data/services/notification_service.dart';
 
 class NotificationsScreen extends StatefulWidget {
   final String myUid;
@@ -45,7 +45,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Future<void> _deleteAll() async {
     final confirm = await showModalBottomSheet<bool>(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -53,17 +53,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             width: 36, height: 3,
             margin: const EdgeInsets.only(top: 12, bottom: 20),
             decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2)),
           ),
           const Text('LIMPAR TUDO?', style: TextStyle(
-            fontFamily: TabuTypography.displayFont, fontSize: 14,
-            letterSpacing: 4, color: TabuColors.textoPrincipal,
+            fontFamily: TClubTypography.displayFont, fontSize: 14,
+            letterSpacing: 4, color: TClubColors.textoPrincipal,
           )),
           const SizedBox(height: 8),
           const Text('Remove todas as notificações permanentemente.',
-              style: TextStyle(fontFamily: TabuTypography.bodyFont,
-                  fontSize: 12, color: TabuColors.subtle)),
+              style: TextStyle(fontFamily: TClubTypography.bodyFont,
+                  fontSize: 12, color: TClubColors.subtle)),
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -71,19 +71,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               Expanded(child: GestureDetector(
                 onTap: () => Navigator.pop(context, false),
                 child: Container(height: 46,
-                  decoration: BoxDecoration(color: TabuColors.bgCard,
-                      border: Border.all(color: TabuColors.border, width: 0.8)),
+                  decoration: BoxDecoration(color: TClubColors.bgCard,
+                      border: Border.all(color: TClubColors.border, width: 0.8)),
                   child: const Center(child: Text('CANCELAR',
-                      style: TextStyle(fontFamily: TabuTypography.bodyFont,
+                      style: TextStyle(fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, fontWeight: FontWeight.w700,
-                          letterSpacing: 2.5, color: TabuColors.dim)))),
+                          letterSpacing: 2.5, color: TClubColors.dim)))),
               )),
               const SizedBox(width: 12),
               Expanded(child: GestureDetector(
                 onTap: () => Navigator.pop(context, true),
                 child: Container(height: 46, color: const Color(0xFFE85D5D),
                   child: const Center(child: Text('LIMPAR',
-                      style: TextStyle(fontFamily: TabuTypography.bodyFont,
+                      style: TextStyle(fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, fontWeight: FontWeight.w700,
                           letterSpacing: 2.5, color: Colors.white)))),
               )),
@@ -104,16 +104,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         // Linha neon no topo
         Positioned(top: 0, left: 0, right: 0,
           child: Container(height: 1.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                Colors.transparent, TabuColors.rosaDeep,
-                TabuColors.rosaPrincipal, TabuColors.rosaClaro,
-                TabuColors.rosaPrincipal, TabuColors.rosaDeep, Colors.transparent,
+                Colors.transparent, TClubColors.redDeep,
+                TClubColors.redPrincipal, TClubColors.redClaro,
+                TClubColors.redPrincipal, TClubColors.redDeep, Colors.transparent,
               ])))),
         SafeArea(child: Column(children: [
           // ── App Bar ────────────────────────────────────────────────────
@@ -122,13 +122,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: Row(children: [
               IconButton(
                 icon: const Icon(Icons.arrow_back_ios_new,
-                    color: TabuColors.dim, size: 16),
+                    color: TClubColors.dim, size: 16),
                 onPressed: () => Navigator.pop(context),
               ),
               const Text('NOTIFICAÇÕES', style: TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 11,
+                fontFamily: TClubTypography.bodyFont, fontSize: 11,
                 fontWeight: FontWeight.w700, letterSpacing: 3,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
               const Spacer(),
               if (_notifications.isNotEmpty)
@@ -138,12 +138,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: TabuColors.bgCard,
+                      color: TClubColors.bgCard,
                       border: Border.all(
                           color: const Color(0xFFE85D5D).withOpacity(0.4),
                           width: 0.8)),
                     child: const Text('LIMPAR', style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont, fontSize: 9,
+                      fontFamily: TClubTypography.bodyFont, fontSize: 9,
                       fontWeight: FontWeight.w700, letterSpacing: 2,
                       color: Color(0xFFE85D5D),
                     )),
@@ -153,25 +153,25 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
           Container(
               height: 0.5,
-              color: TabuColors.border,
+              color: TClubColors.border,
               margin: const EdgeInsets.only(top: 10)),
 
           // ── Conteúdo ───────────────────────────────────────────────────
           Expanded(child: _loading
               ? const Center(child: SizedBox(width: 20, height: 20,
                   child: CircularProgressIndicator(
-                      color: TabuColors.rosaPrincipal, strokeWidth: 1.5)))
+                      color: TClubColors.redPrincipal, strokeWidth: 1.5)))
               : _notifications.isEmpty
                   ? _buildVazio()
                   : RefreshIndicator(
-                      color: TabuColors.rosaPrincipal,
-                      backgroundColor: TabuColors.bgAlt,
+                      color: TClubColors.redPrincipal,
+                      backgroundColor: TClubColors.bgAlt,
                       onRefresh: _load,
                       child: ListView.separated(
                         padding: const EdgeInsets.only(bottom: 40),
                         itemCount: _notifications.length,
                         separatorBuilder: (_, __) => Container(
-                            height: 0.5, color: TabuColors.border),
+                            height: 0.5, color: TClubColors.border),
                         itemBuilder: (_, i) => _NotificationTile(
                           notification: _notifications[i],
                           onDelete: () => _delete(_notifications[i]),
@@ -186,19 +186,19 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget _buildVazio() {
     return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
       Container(width: 64, height: 64,
-        decoration: BoxDecoration(color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.border, width: 0.8)),
+        decoration: BoxDecoration(color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.border, width: 0.8)),
         child: const Icon(Icons.notifications_none_rounded,
-            color: TabuColors.border, size: 28)),
+            color: TClubColors.border, size: 28)),
       const SizedBox(height: 18),
       const Text('SEM NOTIFICAÇÕES', style: TextStyle(
-        fontFamily: TabuTypography.bodyFont, fontSize: 10,
-        fontWeight: FontWeight.w700, letterSpacing: 4, color: TabuColors.subtle,
+        fontFamily: TClubTypography.bodyFont, fontSize: 10,
+        fontWeight: FontWeight.w700, letterSpacing: 4, color: TClubColors.subtle,
       )),
       const SizedBox(height: 6),
       const Text('Suas notificações aparecerão aqui',
-          style: TextStyle(fontFamily: TabuTypography.bodyFont,
-              fontSize: 12, color: TabuColors.border)),
+          style: TextStyle(fontFamily: TClubTypography.bodyFont,
+              fontSize: 12, color: TClubColors.border)),
     ]));
   }
 }
@@ -221,7 +221,7 @@ class _NotificationTile extends StatelessWidget {
       case 'follow':
         return _TileConfig(
           icon: Icons.people_rounded,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
           badge: 'SEGUIDOR',
         );
       case 'like':
@@ -245,7 +245,7 @@ class _NotificationTile extends StatelessWidget {
       default:
         return _TileConfig(
           icon: Icons.notifications_rounded,
-          color: TabuColors.subtle,
+          color: TClubColors.subtle,
           badge: 'AVISO',
         );
     }
@@ -309,7 +309,7 @@ class _NotificationTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: cfg.color,
                   shape: BoxShape.circle,
-                  border: Border.all(color: TabuColors.bg, width: 1.5),
+                  border: Border.all(color: TClubColors.bg, width: 1.5),
                 ),
                 child: Icon(cfg.icon, color: Colors.white, size: 9),
               ),
@@ -333,7 +333,7 @@ class _NotificationTile extends StatelessWidget {
                         color: cfg.color.withOpacity(0.4), width: 0.6),
                   ),
                   child: Text(cfg.badge, style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont, fontSize: 7,
+                    fontFamily: TClubTypography.bodyFont, fontSize: 7,
                     fontWeight: FontWeight.w700, letterSpacing: 2,
                     color: cfg.color,
                   )),
@@ -350,7 +350,7 @@ class _NotificationTile extends StatelessWidget {
                           color: cfg.color.withOpacity(0.3), width: 0.6),
                     ),
                     child: Text('×${notification.count}', style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont, fontSize: 8,
+                      fontFamily: TClubTypography.bodyFont, fontSize: 8,
                       fontWeight: FontWeight.w700, letterSpacing: 1,
                       color: cfg.color.withOpacity(0.8),
                     )),
@@ -359,8 +359,8 @@ class _NotificationTile extends StatelessWidget {
                 const Spacer(),
                 Text(_formatTime(notification.createdAt),
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont, fontSize: 9,
-                      color: TabuColors.border,
+                      fontFamily: TClubTypography.bodyFont, fontSize: 9,
+                      color: TClubColors.border,
                     )),
                 // Bolinha de não lida
                 if (isUnread) ...[
@@ -376,8 +376,8 @@ class _NotificationTile extends StatelessWidget {
 
               // Corpo da notificação
               Text(notification.body, style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 13,
-                color: TabuColors.dim, height: 1.4,
+                fontFamily: TClubTypography.bodyFont, fontSize: 13,
+                color: TClubColors.dim, height: 1.4,
               )),
 
               // Avatares múltiplos (quando agrupado)
@@ -394,7 +394,7 @@ class _NotificationTile extends StatelessWidget {
                           width: 24, height: 24,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: TabuColors.bg, width: 1.5),
+                                color: TClubColors.bg, width: 1.5),
                             shape: BoxShape.circle,
                           ),
                           child: ClipOval(child: CachedAvatar(
@@ -414,12 +414,12 @@ class _NotificationTile extends StatelessWidget {
                             color: cfg.color,
                             shape: BoxShape.circle,
                             border: Border.all(
-                                color: TabuColors.bg, width: 1.5),
+                                color: TClubColors.bg, width: 1.5),
                           ),
                           child: Center(child: Text(
                             '+${notification.actorUids.length - 5}',
                             style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 7, fontWeight: FontWeight.w700,
                               color: Colors.white,
                             ),
@@ -444,3 +444,4 @@ class _TileConfig {
   const _TileConfig(
       {required this.icon, required this.color, required this.badge});
 }
+

@@ -1,7 +1,7 @@
 // lib/features/profile/data/repositories/interests_repository.dart
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/profile/data/models/interests_model.dart';
+import 'package:tclub/features/profile/data/models/interests_model.dart';
 
 abstract class IInterestsRepository {
   /// Persiste [InterestsModel] em Users/{uid} e sincroniza Matchs/{uid}.
@@ -48,3 +48,4 @@ class InterestsRepositoryException implements Exception {
   @override
   String toString() => 'InterestsRepositoryException: $message';
 }
+

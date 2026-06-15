@@ -1,4 +1,4 @@
-import 'package:tabuapp/features/search/presentation/bloc/search_filters.dart';
+import 'package:tclub/features/search/presentation/bloc/search_filters.dart';
 
 abstract class SearchEvent {
   const SearchEvent();
@@ -73,3 +73,4 @@ class SearchBlockedIdsUpdated extends SearchEvent {
   final Set<String> blockedIds;
   const SearchBlockedIdsUpdated(this.blockedIds);
 }
+

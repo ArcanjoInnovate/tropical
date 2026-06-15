@@ -1,5 +1,5 @@
-import 'package:tabuapp/features/search/domain/entities/user_search.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/domain/entities/user_search.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
 
 class FetchUsersByProximityParams {
   final String myUid;
@@ -55,3 +55,4 @@ class FetchUsersByProximityUseCase {
     );
   }
 }
+

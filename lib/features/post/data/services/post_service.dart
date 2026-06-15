@@ -31,9 +31,9 @@
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/feed/data/services/cloudinary_cleanup_helper.dart';
-import 'package:tabuapp/features/post/data/models/comment_model.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
+import 'package:tclub/features/feed/data/services/cloudinary_cleanup_helper.dart';
+import 'package:tclub/features/post/data/models/comment_model.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
 
 class PostService {
   PostService._();
@@ -618,3 +618,4 @@ class _ResolvedUser {
   final String? avatar;
   const _ResolvedUser({required this.exists, this.name, this.avatar});
 }
+

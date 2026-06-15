@@ -1,6 +1,6 @@
 // lib/services/services_app/search_service.dart
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/search/data/models/user_search.dart';
+import 'package:tclub/features/search/data/models/user_search.dart';
 
 class SearchService {
   SearchService._();
@@ -178,3 +178,4 @@ class SearchService {
     return scored.map((e) => e.key).toList();
   }
 }
+

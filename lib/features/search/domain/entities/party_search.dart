@@ -64,3 +64,4 @@ class PartySearchEntity {
     return parts.join(', ');
   }
 }
+

@@ -163,3 +163,4 @@ class ChatService {
     _lastTimestamp.clear();
   }
 }
+

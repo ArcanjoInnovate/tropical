@@ -1,10 +1,10 @@
 // lib/features/profile/controller/edit_interests_controller.dart
 
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/profile/data/models/interests_model.dart';
-import 'package:tabuapp/features/profile/data/services/interests_service.dart';
+import 'package:tclub/features/profile/data/models/interests_model.dart';
+import 'package:tclub/features/profile/data/services/interests_service.dart';
 
-export 'package:tabuapp/features/profile/data/services/interests_service.dart'
+export 'package:tclub/features/profile/data/services/interests_service.dart'
     show kMaxInterests;
 
 enum InterestsSaveStatus { idle, saving, success, error }
@@ -98,3 +98,4 @@ class EditInterestsController extends ChangeNotifier {
     }
   }
 }
+

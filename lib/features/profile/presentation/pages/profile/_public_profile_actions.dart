@@ -1,8 +1,8 @@
 // features/profile/presentation/pages/profile/_public_profile_actions.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/data/models/chat_request_model.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/data/models/chat_request_model.dart';
 
 class PublicProfileActions extends StatelessWidget {
   const PublicProfileActions({
@@ -69,12 +69,12 @@ class PublicProfileActions extends StatelessWidget {
                           ? 'conversa ativa'
                           : '',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 letterSpacing: 0.5,
                 color: isAccepted
-                    ? TabuColors.rosaPrincipal.withOpacity(0.70)
-                    : TabuColors.subtle,
+                    ? TClubColors.redPrincipal.withOpacity(0.70)
+                    : TClubColors.subtle,
               ),
             ),
           ),
@@ -119,22 +119,22 @@ class _FollowButton extends StatelessWidget {
           gradient: following
               ? null
               : const LinearGradient(
-                  colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                  colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
-          color: following ? TabuColors.bgCard : null,
+          color: following ? TClubColors.bgCard : null,
           border: Border.all(
             color: following
-                ? TabuColors.border
-                : TabuColors.rosaPrincipal.withOpacity(0.30),
+                ? TClubColors.border
+                : TClubColors.redPrincipal.withOpacity(0.30),
             width: 0.8,
           ),
           boxShadow: following
               ? null
               : [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.30),
+                    color: TClubColors.glow.withOpacity(0.30),
                     blurRadius: 16,
                     offset: const Offset(0, 4),
                   )
@@ -147,7 +147,7 @@ class _FollowButton extends StatelessWidget {
                   height: 14,
                   child: CircularProgressIndicator(
                     color:
-                        following ? TabuColors.subtle : Colors.white,
+                        following ? TClubColors.subtle : Colors.white,
                     strokeWidth: 1.5,
                   ),
                 )
@@ -156,18 +156,18 @@ class _FollowButton extends StatelessWidget {
                     following ? Icons.check_rounded : Icons.add_rounded,
                     size: 13,
                     color:
-                        following ? TabuColors.subtle : TabuColors.textoPrincipal,
+                        following ? TClubColors.subtle : TClubColors.textoPrincipal,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     following ? 'SEGUINDO' : 'SEGUIR',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 3,
                       color:
-                          following ? TabuColors.dim : TabuColors.branco,
+                          following ? TClubColors.dim : TClubColors.branco,
                     ),
                   ),
                 ]),
@@ -197,10 +197,10 @@ class _ChatButton extends StatelessWidget {
   final VoidCallback onTap;
 
   Color get _color {
-    if (isAccepted) return TabuColors.rosaPrincipal;
+    if (isAccepted) return TClubColors.redPrincipal;
     if (isPending && iReceived) return const Color(0xFF22C55E);
-    if (isPending && iSent) return TabuColors.subtle;
-    return TabuColors.rosaPrincipal;
+    if (isPending && iSent) return TClubColors.subtle;
+    return TClubColors.redPrincipal;
   }
 
   IconData get _icon {
@@ -229,9 +229,9 @@ class _ChatButton extends StatelessWidget {
         curve: Curves.easeOut,
         height: 50,
         decoration: BoxDecoration(
-          color: _active ? c.withOpacity(0.10) : TabuColors.bgCard,
+          color: _active ? c.withOpacity(0.10) : TClubColors.bgCard,
           border: Border.all(
-            color: _active ? c.withOpacity(0.45) : TabuColors.border,
+            color: _active ? c.withOpacity(0.45) : TClubColors.border,
             width: _active ? 1.0 : 0.8,
           ),
           boxShadow: _active
@@ -258,7 +258,7 @@ class _ChatButton extends StatelessWidget {
                   Text(
                     _label,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 3,
@@ -298,13 +298,13 @@ class _VipButton extends StatelessWidget {
         curve: Curves.easeOut,
         height: 46,
         decoration: BoxDecoration(
-          color: vip ? const Color(0xFF1A0A00) : TabuColors.bgCard,
+          color: vip ? const Color(0xFF1A0A00) : TClubColors.bgCard,
           border: Border.all(
             color: vip
                 ? gold.withOpacity(0.60)
                 : canAdd
-                    ? TabuColors.border
-                    : TabuColors.border.withOpacity(0.40),
+                    ? TClubColors.border
+                    : TClubColors.border.withOpacity(0.40),
             width: vip ? 1.0 : 0.8,
           ),
           boxShadow: vip
@@ -332,22 +332,22 @@ class _VipButton extends StatelessWidget {
                     color: vip
                         ? gold
                         : canAdd
-                            ? TabuColors.subtle
-                            : TabuColors.border,
+                            ? TClubColors.subtle
+                            : TClubColors.border,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     vip ? 'AMIGO VIP' : 'ADICIONAR COMO VIP',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2.5,
                       color: vip
                           ? gold
                           : canAdd
-                              ? TabuColors.subtle
-                              : TabuColors.border,
+                              ? TClubColors.subtle
+                              : TClubColors.border,
                     ),
                   ),
                   if (!canAdd) ...[
@@ -357,17 +357,17 @@ class _VipButton extends StatelessWidget {
                           horizontal: 5, vertical: 2),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: TabuColors.border.withOpacity(0.40),
+                          color: TClubColors.border.withOpacity(0.40),
                           width: 0.6,
                         ),
                       ),
                       child: const Text(
                         'SIGA PRIMEIRO',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 7,
                           letterSpacing: 1.5,
-                          color: TabuColors.border,
+                          color: TClubColors.border,
                         ),
                       ),
                     ),
@@ -378,3 +378,4 @@ class _VipButton extends StatelessWidget {
     );
   }
 }
+

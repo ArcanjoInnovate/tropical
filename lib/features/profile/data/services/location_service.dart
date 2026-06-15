@@ -1,7 +1,7 @@
 // lib/features/profile/data/services/location_service.dart
 
-import 'package:tabuapp/features/profile/data/models/location_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/location_repository.dart';
+import 'package:tclub/features/profile/data/models/location_model.dart';
+import 'package:tclub/features/profile/data/repositories/location_repository.dart';
 
 class LocationService {
   LocationService({required ILocationRepository repository})
@@ -133,3 +133,4 @@ class LocationStateMismatchException implements Exception {
   String toString() =>
       'LocationStateMismatchException: cidade pertence a $actualState';
 }
+

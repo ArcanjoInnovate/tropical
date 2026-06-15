@@ -11,10 +11,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
 
 class CachedAvatar extends StatefulWidget {
   final String  uid;
@@ -107,11 +107,11 @@ class _CachedAvatarState extends State<CachedAvatar> {
         borderRadius: BorderRadius.circular(widget.radius),
         gradient: widget.glowRing
             ? const LinearGradient(
-                colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                colors: [TClubColors.redDeep, TClubColors.redPrincipal, TClubColors.redClaro],
                 begin: Alignment.topLeft, end: Alignment.bottomRight)
-            : LinearGradient(colors: [TabuColors.borderMid, TabuColors.borderMid]),
+            : LinearGradient(colors: [TClubColors.borderMid, TClubColors.borderMid]),
         boxShadow: widget.glowRing
-            ? [BoxShadow(color: TabuColors.glow.withOpacity(0.5), blurRadius: 10, spreadRadius: 1)]
+            ? [BoxShadow(color: TClubColors.glow.withOpacity(0.5), blurRadius: 10, spreadRadius: 1)]
             : null),
       padding: EdgeInsets.all(padding),
       child: ClipRRect(
@@ -161,7 +161,8 @@ class _CachedAvatarState extends State<CachedAvatar> {
     child: Center(child: Text(
         widget.name.isNotEmpty ? widget.name.substring(0, 1).toUpperCase() : '?',
         style: TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: widget.size * 0.36,
             color: Colors.white))));
 }
+

@@ -48,3 +48,4 @@ class PermissionFailure extends Failure {
 class ValidationFailure extends Failure {
   const ValidationFailure([super.message = 'Dados inválidos']);
 }
+

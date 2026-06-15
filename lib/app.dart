@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/utils/notification_handler.dart';
-import 'package:tabuapp/core/guards/auth_guard.dart';
-import 'package:tabuapp/core/guards/maintenance_guard.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/utils/notification_handler.dart';
+import 'package:tclub/core/guards/auth_guard.dart';
+import 'package:tclub/core/guards/maintenance_guard.dart';
 
 class ImmersiveScaffold extends StatelessWidget {
   final Widget child;
@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('pt', 'BR'),
       ],
-      theme:     TabuTheme.main,
-      darkTheme: TabuTheme.main,
+      theme:     TClubTheme.main,
+      darkTheme: TClubTheme.main,
       themeMode: ThemeMode.light,
       builder: (context, child) => ImmersiveScaffold(child: child!),
       home: const NotificationAwareAuthGuard(),
@@ -119,3 +119,4 @@ class _NotificationAwareAuthGuardState
   @override
   Widget build(BuildContext context) => const MaintenanceGuard(child: AuthGuard());
 }
+

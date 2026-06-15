@@ -1,8 +1,8 @@
 // lib/screens/admin/presentation/widgets/user_admin_tile.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
 import '../../data/models/user_model.dart';
 
 class UserAdminTile extends StatelessWidget {
@@ -12,10 +12,10 @@ class UserAdminTile extends StatelessWidget {
   const UserAdminTile({super.key, required this.user, this.onTap});
 
   Color get _dotColor {
-    if (user.banido)   return AdminColors.danger;
-    if (user.suspenso) return AdminColors.warning;
-    if (user.online)   return AdminColors.actioned;
-    return AdminColors.border;
+    if (user.banido)   return TClubColors.error;
+    if (user.suspenso) return Color(0xFFFFA726);
+    if (user.online)   return Color(0xFF4CAF50);
+    return TClubColors.border;
   }
 
   @override
@@ -24,8 +24,8 @@ class UserAdminTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap:          onTap,
-        splashColor:    AdminColors.inkPrincipal.withOpacity(0.05),
-        highlightColor: AdminColors.inkPrincipal.withOpacity(0.03),
+        splashColor:    TClubColors.redPrincipal.withOpacity(0.05),
+        highlightColor: TClubColors.redPrincipal.withOpacity(0.03),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
           child: Row(children: [
@@ -36,7 +36,7 @@ class UserAdminTile extends StatelessWidget {
             if (onTap != null) ...[
               const SizedBox(width: 8),
               const Icon(Icons.chevron_right_rounded,
-                color: AdminColors.border, size: 16),
+                color: TClubColors.border, size: 16),
             ],
           ]),
         ),
@@ -54,20 +54,20 @@ class UserAdminTile extends StatelessWidget {
     children: [
       Text(user.name.toUpperCase(),
         style: const TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      12, fontWeight: FontWeight.w700,
-          letterSpacing: 1.5, color: AdminColors.inkDeep)),
+          letterSpacing: 1.5, color: TClubColors.branco)),
       if (user.email.isNotEmpty)
         Text(user.email,
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
-            fontSize: 9, color: AdminColors.inkSubtle,
+            fontFamily: TClubTypography.bodyFont,
+            fontSize: 9, color: TClubColors.textoSecundario,
             letterSpacing: 0.3)),
       if (user.city.isNotEmpty)
         Text('${user.city}, ${user.state}',
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
-            fontSize: 9, color: AdminColors.inkGhost,
+            fontFamily: TClubTypography.bodyFont,
+            fontSize: 9, color: TClubColors.textoMuted,
             letterSpacing: 0.3)),
     ],
   );
@@ -76,26 +76,26 @@ class UserAdminTile extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.end,
     children: [
       if (user.banido)
-        _badge('BANIDO', AdminColors.danger)
+        _badge('BANIDO', TClubColors.error)
       else if (user.suspenso)
-        _badge('SUSPENSO', AdminColors.warning),
+        _badge('SUSPENSO', Color(0xFFFFA726)),
       if (user.reportCount > 0)
-        _badge('${user.reportCount} reports', AdminColors.inkSubtle),
+        _badge('${user.reportCount} reports', TClubColors.textoSecundario),
       if (user.vipLists > 0)
         Row(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.star_rounded,
-            color: AdminColors.inkMid, size: 10),
+            color: TClubColors.textoSecundario, size: 10),
           const SizedBox(width: 3),
           Text('${user.vipLists} VIP',
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
-              fontSize: 9, color: AdminColors.inkMid,
+              fontFamily: TClubTypography.bodyFont,
+              fontSize: 9, color: TClubColors.textoSecundario,
               letterSpacing: 1)),
         ]),
       Text('${user.partys} festas',
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
-          fontSize: 9, color: AdminColors.inkGhost,
+          fontFamily: TClubTypography.bodyFont,
+          fontSize: 9, color: TClubColors.textoMuted,
           letterSpacing: 0.5)),
     ],
   );
@@ -107,7 +107,7 @@ class UserAdminTile extends StatelessWidget {
       border: Border.all(color: color.withOpacity(0.5), width: 0.6)),
     child: Text(label,
       style: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      7, fontWeight: FontWeight.w700,
         letterSpacing: 1.5, color: color)));
 }

@@ -3,9 +3,7 @@
 import * as admin from "firebase-admin";
 
 if (!admin.apps.length) {
-  admin.initializeApp({
-    databaseURL: "https://tabuapp-4325a-default-rtdb.firebaseio.com",
-  });
+  admin.initializeApp();
 }
 
 export * from "./triggers/notificacoes";

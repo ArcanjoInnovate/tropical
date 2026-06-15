@@ -2,7 +2,7 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
 
 class GalleryService {
   static final GalleryService instance = GalleryService._();
@@ -117,3 +117,4 @@ class GalleryService {
     return data.length;
   }
 }
+

@@ -2,9 +2,9 @@ import 'dart:math' as math;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/auth/presentation/pages/requests_code_screen.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/auth/presentation/pages/requests_code_screen.dart';
 
 // ─── Access Code Screen ───────────────────────────────────────────────────────
 class AccessCodeScreen extends StatefulWidget {
@@ -224,7 +224,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
     final theme = Theme.of(context);
     return Scaffold(
       resizeToAvoidBottomInset: true, // CORREÇÃO: true para redimensionar com teclado
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Stack(
@@ -248,9 +248,9 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [
                     Colors.transparent,
-                    TabuColors.rosaPrincipal,
-                    TabuColors.rosaClaro,
-                    TabuColors.rosaPrincipal,
+                    TClubColors.redPrincipal,
+                    TClubColors.redClaro,
+                    TClubColors.redPrincipal,
                     Colors.transparent,
                   ]),
                 ),
@@ -271,21 +271,21 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
             if (_isLoading)
               Positioned.fill(
                 child: Container(
-                  color: TabuColors.bg.withOpacity(0.7),
+                  color: TClubColors.bg.withOpacity(0.7),
                   child: Center(
                     child: Container(
                       width: 52,
                       height: 52,
                       decoration: BoxDecoration(
-                        color: TabuColors.bgCard,
+                        color: TClubColors.bgCard,
                         border:
-                            Border.all(color: TabuColors.border, width: 0.8),
+                            Border.all(color: TClubColors.border, width: 0.8),
                       ),
                       child: const Padding(
                         padding: EdgeInsets.all(15),
                         child: CircularProgressIndicator(
                           strokeWidth: 1.5,
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                         ),
                       ),
                     ),
@@ -325,7 +325,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                         style: theme.textTheme.labelSmall?.copyWith(
                           fontSize: 12,
                           letterSpacing: 5,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         ),
                       ),
                       const Spacer(),
@@ -355,7 +355,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                     style: theme.textTheme.headlineLarge?.copyWith(
                       fontSize: 20,
                       letterSpacing: 4,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -363,10 +363,10 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                   const SizedBox(height: 10),
 
                   Text(
-                    'Insira o código recebido para\nacessar o TABU Lounge.',
+                    'Insira o código recebido para\nacessar o Tclub Lounge.',
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                       fontSize: 12,
                       height: 1.7,
                       letterSpacing: 0.4,
@@ -416,12 +416,12 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                                     width: 4,
                                     height: 4,
                                     decoration: const BoxDecoration(
-                                        color: TabuColors.rosaPrincipal,
+                                        color: TClubColors.redPrincipal,
                                         shape: BoxShape.circle)),
                                 const SizedBox(width: 8),
                                 Text(_errorMsg,
                                     style: theme.textTheme.bodySmall?.copyWith(
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                       fontSize: 11,
                                       letterSpacing: 1,
                                     )),
@@ -430,7 +430,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                                     width: 4,
                                     height: 4,
                                     decoration: const BoxDecoration(
-                                        color: TabuColors.rosaPrincipal,
+                                        color: TClubColors.redPrincipal,
                                         shape: BoxShape.circle)),
                               ],
                             ),
@@ -473,19 +473,19 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                          width: 1, height: 12, color: TabuColors.border),
+                          width: 1, height: 12, color: TClubColors.border),
                       const SizedBox(width: 10),
                       Text(
                         'Código enviado via WhatsApp ou e-mail',
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           fontSize: 10,
                           letterSpacing: 0.5,
                         ),
                       ),
                       const SizedBox(width: 10),
                       Container(
-                          width: 1, height: 12, color: TabuColors.border),
+                          width: 1, height: 12, color: TClubColors.border),
                     ],
                   ),
 
@@ -503,7 +503,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                     child: Text(
                       'Solicitar convite',
                       style: theme.textTheme.bodySmall?.copyWith(
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                         fontSize: 11,
                         letterSpacing: 1,
                       ),
@@ -515,13 +515,13 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
                   Column(
                     children: [
                       Container(
-                          width: 24, height: 0.5, color: TabuColors.subtle),
+                          width: 24, height: 0.5, color: TClubColors.subtle),
                       const SizedBox(height: 8),
                       Text(
                         'TABU BAR & LOUNGE',
                         style: theme.textTheme.labelSmall?.copyWith(
                           letterSpacing: 5,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           fontSize: 7,
                         ),
                       ),
@@ -547,20 +547,20 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
       height: 54,
       decoration: BoxDecoration(
         color: _hasError
-            ? TabuColors.rosaPrincipal.withOpacity(0.15)
+            ? TClubColors.redPrincipal.withOpacity(0.15)
             : hasValue
                 ? const Color(0x22E85D8A)
                 : isFocused
                     ? const Color(0x14E85D8A)
-                    : TabuColors.bgCard,
+                    : TClubColors.bgCard,
         border: Border.all(
           color: _hasError
-              ? TabuColors.rosaPrincipal.withOpacity(0.8)
+              ? TClubColors.redPrincipal.withOpacity(0.8)
               : isFocused
-                  ? TabuColors.rosaPrincipal
+                  ? TClubColors.redPrincipal
                   : hasValue
-                      ? TabuColors.borderMid
-                      : TabuColors.border,
+                      ? TClubColors.borderMid
+                      : TClubColors.border,
           width: isFocused
               ? 1.5
               : _hasError
@@ -570,12 +570,12 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
         boxShadow: isFocused
             ? [
                 BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.3), blurRadius: 16)
+                    color: TClubColors.glow.withOpacity(0.3), blurRadius: 16)
               ]
             : hasValue && !_hasError
                 ? [
                     BoxShadow(
-                        color: TabuColors.glow.withOpacity(0.15),
+                        color: TClubColors.glow.withOpacity(0.15),
                         blurRadius: 8)
                   ]
                 : [],
@@ -606,10 +606,10 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
               fontWeight: FontWeight.w700,
               letterSpacing: 0,
               color: _hasError
-                  ? TabuColors.rosaPrincipal
+                  ? TClubColors.redPrincipal
                   : hasValue
-                      ? TabuColors.textoPrincipal
-                      : TabuColors.subtle,
+                      ? TClubColors.textoPrincipal
+                      : TClubColors.subtle,
             ),
             decoration: const InputDecoration(
               border: InputBorder.none,
@@ -662,7 +662,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
               style: theme.textTheme.headlineLarge?.copyWith(
                 fontSize: 19,
                 letterSpacing: 6,
-                color: TabuColors.textoPrincipal,
+                color: TClubColors.textoPrincipal,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -674,7 +674,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
               'Bem-vindo ao TABU Lounge.\nSua experiência exclusiva começa agora.',
               textAlign: TextAlign.center,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
                 fontSize: 12,
                 height: 1.8,
                 letterSpacing: 0.3,
@@ -704,7 +704,7 @@ class _AccessCodeScreenState extends State<AccessCodeScreen>
               'TABU BAR & LOUNGE',
               style: theme.textTheme.labelSmall?.copyWith(
                 letterSpacing: 5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
                 fontSize: 7,
               ),
             ),
@@ -777,29 +777,29 @@ class _ActionButtonState extends State<_ActionButton>
           gradient: widget.isPrimary && widget.enabled
               ? LinearGradient(
                   colors: _pressed
-                      ? [TabuColors.rosaDeep, TabuColors.rosaPrincipal]
-                      : [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                      ? [TClubColors.redDeep, TClubColors.redPrincipal]
+                      : [TClubColors.redPrincipal, TClubColors.redClaro],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 )
               : null,
           color: widget.isPrimary
-              ? (widget.enabled ? null : TabuColors.bgCard)
+              ? (widget.enabled ? null : TClubColors.bgCard)
               : const Color(0x08FFFFFF),
           border: Border.all(
             color: widget.isPrimary
-                ? (widget.enabled ? Colors.transparent : TabuColors.border)
+                ? (widget.enabled ? Colors.transparent : TClubColors.border)
                 : const Color(0x1AFFFFFF),
             width: 0.8,
           ),
           boxShadow: widget.isPrimary && widget.enabled && !_pressed
               ? [
                   BoxShadow(
-                      color: TabuColors.glow,
+                      color: TClubColors.glow,
                       blurRadius: 24,
                       offset: const Offset(0, 6)),
                   BoxShadow(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                      color: TClubColors.redPrincipal.withOpacity(0.25),
                       blurRadius: 32,
                       offset: const Offset(0, 12)),
                 ]
@@ -826,8 +826,8 @@ class _ActionButtonState extends State<_ActionButton>
                 letterSpacing: 5,
                 fontWeight: FontWeight.w700,
                 color: widget.isPrimary
-                    ? (widget.enabled ? TabuColors.textoPrincipal : TabuColors.subtle)
-                    : TabuColors.dim,
+                    ? (widget.enabled ? TClubColors.textoPrincipal : TClubColors.subtle)
+                    : TClubColors.dim,
               ),
             ),
           ],
@@ -848,19 +848,19 @@ class _LockRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.12)
+          ..color = TClubColors.redPrincipal.withOpacity(0.12)
           ..style = PaintingStyle.fill);
     canvas.drawCircle(
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.4)
+          ..color = TClubColors.redPrincipal.withOpacity(0.4)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4));
 
     final bodyPaint = Paint()
-      ..color = TabuColors.rosaPrincipal
+      ..color = TClubColors.redPrincipal
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2
       ..strokeCap = StrokeCap.round
@@ -879,13 +879,13 @@ class _LockRosaIcon extends CustomPainter {
         Offset(cx, cy + 7),
         3,
         Paint()
-          ..color = TabuColors.rosaPrincipal
+          ..color = TClubColors.redPrincipal
           ..style = PaintingStyle.fill);
 
     canvas.drawRRect(
         bodyRect,
         Paint()
-          ..color = TabuColors.glow
+          ..color = TClubColors.glow
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
@@ -906,13 +906,13 @@ class _SuccessRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal.withOpacity(0.15)
+          ..color = TClubColors.redPrincipal.withOpacity(0.15)
           ..style = PaintingStyle.fill);
     canvas.drawCircle(
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.rosaPrincipal
+          ..color = TClubColors.redPrincipal
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.5
           ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6));
@@ -920,7 +920,7 @@ class _SuccessRosaIcon extends CustomPainter {
         Offset(cx, cy),
         cx,
         Paint()
-          ..color = TabuColors.textoPrincipal.withOpacity(0.4)
+          ..color = TClubColors.textoPrincipal.withOpacity(0.4)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0);
 
@@ -932,7 +932,7 @@ class _SuccessRosaIcon extends CustomPainter {
     canvas.drawPath(
         check,
         Paint()
-          ..color = TabuColors.glow
+          ..color = TClubColors.glow
           ..style = PaintingStyle.stroke
           ..strokeWidth = 4
           ..strokeCap = StrokeCap.round
@@ -941,7 +941,7 @@ class _SuccessRosaIcon extends CustomPainter {
     canvas.drawPath(
         check,
         Paint()
-          ..color = TabuColors.textoPrincipal
+          ..color = TClubColors.textoPrincipal
           ..style = PaintingStyle.stroke
           ..strokeWidth = 3
           ..strokeCap = StrokeCap.round
@@ -990,7 +990,7 @@ class _FundoEscuroPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
 
     final neonRadius = size.width * (0.85 + progress * 0.18);
     canvas.drawCircle(
@@ -999,8 +999,8 @@ class _FundoEscuroPainter extends CustomPainter {
       Paint()
         ..shader = RadialGradient(
           colors: [
-            TabuColors.rosaPrincipal.withOpacity(0.18 - progress * 0.05),
-            TabuColors.rosaDeep.withOpacity(0.06),
+            TClubColors.redPrincipal.withOpacity(0.18 - progress * 0.05),
+            TClubColors.redDeep.withOpacity(0.06),
             Colors.transparent,
           ],
           stops: const [0.0, 0.45, 1.0],
@@ -1016,7 +1016,7 @@ class _FundoEscuroPainter extends CustomPainter {
       sombraRadius,
       Paint()
         ..shader = RadialGradient(
-          colors: [TabuColors.bgAlt.withOpacity(0.9), Colors.transparent],
+          colors: [TClubColors.bgAlt.withOpacity(0.9), Colors.transparent],
         ).createShader(Rect.fromCircle(
           center: Offset(size.width * 1.1, size.height * 0.85),
           radius: sombraRadius,
@@ -1030,7 +1030,7 @@ class _FundoEscuroPainter extends CustomPainter {
           center: const Alignment(0.0, -0.2),
           radius: 0.65,
           colors: [
-            TabuColors.rosaDeep.withOpacity(0.10 + progress * 0.04),
+            TClubColors.redDeep.withOpacity(0.10 + progress * 0.04),
             Colors.transparent,
           ],
         ).createShader(Rect.fromLTWH(0, 0, size.width, size.height)),
@@ -1040,3 +1040,4 @@ class _FundoEscuroPainter extends CustomPainter {
   @override
   bool shouldRepaint(_FundoEscuroPainter old) => old.progress != progress;
 }
+

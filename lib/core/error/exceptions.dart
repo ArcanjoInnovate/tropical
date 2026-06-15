@@ -53,3 +53,4 @@ class PermissionException implements Exception {
   @override
   String toString() => 'PermissionException: $message';
 }
+

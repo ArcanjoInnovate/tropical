@@ -2,8 +2,8 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/search/data/models/user_search.dart';
-import 'package:tabuapp/core/services/cache_service.dart';
+import 'package:tclub/features/search/data/models/user_search.dart';
+import 'package:tclub/core/services/cache_service.dart';
 
 class SearchServicePaginated {
   SearchServicePaginated._();
@@ -422,3 +422,4 @@ class PaginatedUsersResult {
   bool get isEmpty => users.isEmpty;
   bool get isNotEmpty => users.isNotEmpty;
 }
+

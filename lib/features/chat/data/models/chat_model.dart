@@ -235,3 +235,4 @@ class ChatMessage {
     if (readAt.isNotEmpty) 'read_at': readAt,
   };
 }
+

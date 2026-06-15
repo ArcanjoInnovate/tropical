@@ -5,17 +5,18 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/match/controller/match_controller.dart';
-import 'package:tabuapp/features/match/data/models/match_filter_model.dart';
-import 'package:tabuapp/features/match/data/models/match_profile_model.dart';
-import 'package:tabuapp/features/match/data/repositories/match_repository.dart';
-import 'package:tabuapp/features/match/data/services/like_me_service.dart';
-import 'package:tabuapp/features/match/data/services/match_service.dart';
-import 'package:tabuapp/features/match/presentation/pages/match_filter_page.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/features/match/data/services/match_filter_prefs.dart';
+import 'package:tclub/core/constants/app_constants.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/match/controller/match_controller.dart';
+import 'package:tclub/features/match/data/models/match_filter_model.dart';
+import 'package:tclub/features/match/data/models/match_profile_model.dart';
+import 'package:tclub/features/match/data/repositories/match_repository.dart';
+import 'package:tclub/features/match/data/services/like_me_service.dart';
+import 'package:tclub/features/match/data/services/match_service.dart';
+import 'package:tclub/features/match/presentation/pages/match_filter_page.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/features/match/data/services/match_filter_prefs.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -133,22 +134,22 @@ class _MatchProfilePageState extends State<MatchProfilePage>
       HapticFeedback.lightImpact();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          backgroundColor: TabuColors.bgCard,
+          backgroundColor: TClubColors.bgCard,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
             side: BorderSide(
-              color: TabuColors.border.withOpacity(0.6), width: 0.7)),
+              color: TClubColors.border.withOpacity(0.6), width: 0.7)),
           content: Row(children: [
             Icon(Icons.info_outline_rounded,
-                size: 14, color: TabuColors.textoMuted),
+                size: 14, color: TClubColors.textoMuted),
             const SizedBox(width: 10),
             Text('Este perfil não está disponível no momento',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     letterSpacing: 0.3,
-                    color: TabuColors.textoPrincipal,
+                    color: TClubColors.textoPrincipal,
                     fontWeight: FontWeight.w600)),
           ]),
           duration: const Duration(seconds: 3),
@@ -225,7 +226,7 @@ class _MatchProfilePageState extends State<MatchProfilePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: SafeArea(
         child: Column(children: [
           _buildTopBar(),
@@ -246,12 +247,12 @@ class _MatchProfilePageState extends State<MatchProfilePage>
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       child: Row(children: [
         Text(
-          'TABU',
+          AppConstants.appName,
           style: TextStyle(
-            fontFamily:    TabuTypography.displayFont,
+            fontFamily:    TClubTypography.displayFont,
             fontSize:      24,
             fontWeight:    FontWeight.w900,
-            color:         TabuColors.rosaPrincipal,
+            color:         TClubColors.redPrincipal,
             letterSpacing: 5,
           ),
         ),
@@ -310,23 +311,23 @@ class _MatchProfilePageState extends State<MatchProfilePage>
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: TabuColors.bg.withOpacity(0.92),
+              color: TClubColors.bg.withOpacity(0.92),
               borderRadius: const BorderRadius.vertical(top: Radius.circular(22)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.person_rounded,
-                    size: 15, color: TabuColors.rosaPrincipal),
+                    size: 15, color: TClubColors.redPrincipal),
                 const SizedBox(width: 6),
                 Text(
                   'Este é o seu perfil',
                   style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      12,
                     fontWeight:    FontWeight.w600,
                     letterSpacing: 0.4,
-                    color:         TabuColors.rosaPrincipal,
+                    color:         TClubColors.redPrincipal,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -335,10 +336,10 @@ class _MatchProfilePageState extends State<MatchProfilePage>
                   child: Text(
                     'Pular →',
                     style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      12,
                       fontWeight:    FontWeight.w700,
-                      color:         TabuColors.textoMuted,
+                      color:         TClubColors.textoMuted,
                       letterSpacing: 0.3,
                     ),
                   ),
@@ -357,7 +358,7 @@ class _MatchProfilePageState extends State<MatchProfilePage>
         SizedBox(
           width: 28, height: 28,
           child: CircularProgressIndicator(
-            color:       TabuColors.rosaPrincipal,
+            color:       TClubColors.redPrincipal,
             strokeWidth: 2,
           ),
         ),
@@ -365,9 +366,9 @@ class _MatchProfilePageState extends State<MatchProfilePage>
         Text(
           'Buscando perfis...',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   14,
-            color:      TabuColors.textoMuted,
+            color:      TClubColors.textoMuted,
           ),
         ),
       ]),
@@ -377,14 +378,14 @@ class _MatchProfilePageState extends State<MatchProfilePage>
   Widget _buildEmpty() {
     return Center(
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.explore_off_rounded, size: 60, color: TabuColors.border),
+        Icon(Icons.explore_off_rounded, size: 60, color: TClubColors.border),
         const SizedBox(height: 16),
         Text(
           'Sem perfis por agora',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   15,
-            color:      TabuColors.textoMuted,
+            color:      TClubColors.textoMuted,
           ),
         ),
         const SizedBox(height: 8),
@@ -393,9 +394,9 @@ class _MatchProfilePageState extends State<MatchProfilePage>
           child: Text(
             'Tente mudar os filtros',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize:   13,
-              color:      TabuColors.rosaPrincipal,
+              color:      TClubColors.redPrincipal,
             ),
           ),
         ),
@@ -406,14 +407,14 @@ class _MatchProfilePageState extends State<MatchProfilePage>
   Widget _buildError(String msg) {
     return Center(
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.wifi_off_rounded, size: 48, color: TabuColors.border),
+        Icon(Icons.wifi_off_rounded, size: 48, color: TClubColors.border),
         const SizedBox(height: 16),
         Text(
           'Algo deu errado',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   15,
-            color:      TabuColors.textoMuted,
+            color:      TClubColors.textoMuted,
           ),
         ),
         const SizedBox(height: 12),
@@ -422,16 +423,16 @@ class _MatchProfilePageState extends State<MatchProfilePage>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             decoration: BoxDecoration(
-              border: Border.all(color: TabuColors.rosaPrincipal, width: 0.8),
+              border: Border.all(color: TClubColors.redPrincipal, width: 0.8),
             ),
             child: Text(
               'TENTAR NOVAMENTE',
               style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      11,
                 fontWeight:    FontWeight.w700,
                 letterSpacing: 2,
-                color:         TabuColors.rosaPrincipal,
+                color:         TClubColors.redPrincipal,
               ),
             ),
           ),
@@ -445,13 +446,13 @@ class _MatchProfilePageState extends State<MatchProfilePage>
     final isBusy = _exitCtrl.isAnimating;
 
     final dislikeActive = const Color(0xFFE05A5A);
-    final likeActive    = TabuColors.rosaPrincipal;
+    final likeActive    = TClubColors.redPrincipal;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
-        color:  TabuColors.bg,
-        border: Border(top: BorderSide(color: TabuColors.borderMid, width: 0.6)),
+        color:  TClubColors.bg,
+        border: Border(top: BorderSide(color: TClubColors.borderMid, width: 0.6)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -460,15 +461,15 @@ class _MatchProfilePageState extends State<MatchProfilePage>
             icon:    Icons.close_rounded,
             color:   isMe ? dislikeActive.withOpacity(0.30) : dislikeActive,
             // fundo adaptado ao tema claro: rosa-pálido avermelhado
-            bgColor: TabuColors.errorPale,
+            bgColor: TClubColors.errorPale,
             size:    60,
             onTap:   isBusy ? () {} : _onDislike,
           ),
           _ActionBtn(
             icon:    Icons.favorite_rounded,
             color:   isMe ? likeActive.withOpacity(0.30) : likeActive,
-            // fundo adaptado ao tema claro: rosaPale do tema
-            bgColor: TabuColors.rosaPale,
+            // fundo adaptado ao tema claro: redPale do tema
+            bgColor: TClubColors.redPale,
             size:    60,
             onTap:   isBusy ? () {} : _onLike,
           ),
@@ -513,7 +514,7 @@ class _ProfileCardState extends State<_ProfileCard> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(22),
       child: Container(
-        color: TabuColors.bg,
+        color: TClubColors.bg,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final heroH = constraints.maxHeight;
@@ -596,7 +597,7 @@ class _ProfileCardState extends State<_ProfileCard> {
                         p.name,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          fontFamily:    TabuTypography.displayFont,
+                          fontFamily:    TClubTypography.displayFont,
                           fontSize:      34,
                           fontWeight:    FontWeight.w900,
                           color:         Colors.white,
@@ -619,7 +620,7 @@ class _ProfileCardState extends State<_ProfileCard> {
                         child: Text(
                           p.orientationLabel,
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize:   15,
                             fontWeight: FontWeight.w400,
                             color:      Colors.white.withOpacity(0.75),
@@ -639,7 +640,7 @@ class _ProfileCardState extends State<_ProfileCard> {
                 Text(
                   p.summaryLine,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   13,
                     fontWeight: FontWeight.w400,
                     color:      Colors.white.withOpacity(0.72),
@@ -660,12 +661,12 @@ class _ProfileCardState extends State<_ProfileCard> {
   }
 
   Widget _photoPlaceholder() => Container(
-    color: TabuColors.bgCard,
+    color: TClubColors.bgCard,
     child: Center(
       child: Icon(
         Icons.person_outline_rounded,
         size:  72,
-        color: TabuColors.border,
+        color: TClubColors.border,
       ),
     ),
   );
@@ -674,7 +675,7 @@ class _ProfileCardState extends State<_ProfileCard> {
     final hasBio = p.bio != null && p.bio!.isNotEmpty;
 
     return Container(
-      color: TabuColors.bg,
+      color: TClubColors.bg,
       padding: const EdgeInsets.fromLTRB(20, 24, 20, 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -709,10 +710,10 @@ class _ProfileCardState extends State<_ProfileCard> {
             Text(
               p.bio!,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   14,
                 height:     1.70,
-                color:      TabuColors.textoPrincipal.withOpacity(0.72),
+                color:      TClubColors.textoPrincipal.withOpacity(0.72),
               ),
             ),
           ],
@@ -763,9 +764,9 @@ class _MoreSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:        TabuColors.bg,
+        color:        TClubColors.bg,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-        border: Border(top: BorderSide(color: TabuColors.borderMid, width: 0.8)),
+        border: Border(top: BorderSide(color: TClubColors.borderMid, width: 0.8)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -775,7 +776,7 @@ class _MoreSheet extends StatelessWidget {
             child: Container(
               width: 36, height: 3,
               decoration: BoxDecoration(
-                color:        TabuColors.borderMid,
+                color:        TClubColors.borderMid,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -785,15 +786,15 @@ class _MoreSheet extends StatelessWidget {
             child: Text(
               profileName,
               style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      13,
                 fontWeight:    FontWeight.w500,
-                color:         TabuColors.textoMuted,
+                color:         TClubColors.textoMuted,
                 letterSpacing: 0.4,
               ),
             ),
           ),
-          Container(height: 0.6, color: TabuColors.borderMid),
+          Container(height: 0.6, color: TClubColors.borderMid),
           const SizedBox(height: 6),
           _SheetAction(
             icon:  Icons.flag_outlined,
@@ -816,18 +817,18 @@ class _MoreSheet extends StatelessWidget {
                 width:  double.infinity,
                 height: 52,
                 decoration: BoxDecoration(
-                  color:        TabuColors.bgCard,
+                  color:        TClubColors.bgCard,
                   borderRadius: BorderRadius.circular(14),
-                  border:       Border.all(color: TabuColors.borderMid, width: 0.7),
+                  border:       Border.all(color: TClubColors.borderMid, width: 0.7),
                 ),
                 child: Center(
                   child: Text(
                     'Cancelar',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   15,
                       fontWeight: FontWeight.w500,
-                      color:      TabuColors.textoMuted,
+                      color:      TClubColors.textoMuted,
                     ),
                   ),
                 ),
@@ -875,7 +876,7 @@ class _SheetAction extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize:   15,
               fontWeight: FontWeight.w500,
               color:      color,
@@ -900,7 +901,7 @@ class _SectionLabel extends StatelessWidget {
       Container(
         width: 3, height: 14,
         decoration: BoxDecoration(
-          color:        TabuColors.rosaPrincipal,
+          color:        TClubColors.redPrincipal,
           borderRadius: BorderRadius.circular(2),
         ),
       ),
@@ -908,11 +909,11 @@ class _SectionLabel extends StatelessWidget {
       Text(
         text,
         style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      11,
           fontWeight:    FontWeight.w800,
           letterSpacing: 2.5,
-          color:         TabuColors.rosaPrincipal,
+          color:         TClubColors.redPrincipal,
         ),
       ),
     ]);
@@ -922,7 +923,7 @@ class _SectionLabel extends StatelessWidget {
 class _SectionDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      Container(height: 0.6, color: TabuColors.borderMid.withOpacity(0.5));
+      Container(height: 0.6, color: TClubColors.borderMid.withOpacity(0.5));
 }
 
 class _InfoTile extends StatelessWidget {
@@ -934,15 +935,15 @@ class _InfoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (text.isEmpty) return const SizedBox.shrink();
     return Row(children: [
-      Icon(icon, size: 16, color: TabuColors.rosaPrincipal.withOpacity(0.8)),
+      Icon(icon, size: 16, color: TClubColors.redPrincipal.withOpacity(0.8)),
       const SizedBox(width: 10),
       Flexible(
         child: Text(
           text,
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   13,
-            color:      TabuColors.textoPrincipal.withOpacity(0.70),
+            color:      TClubColors.textoPrincipal.withOpacity(0.70),
             height:     1.4,
           ),
         ),
@@ -961,19 +962,19 @@ class _InfoChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color:        TabuColors.rosaPrincipal.withOpacity(0.08),
+        color:        TClubColors.redPrincipal.withOpacity(0.08),
         borderRadius: BorderRadius.circular(30),
         border:       Border.all(
-          color: TabuColors.rosaPrincipal.withOpacity(0.30), width: 0.8,
+          color: TClubColors.redPrincipal.withOpacity(0.30), width: 0.8,
         ),
       ),
       child: Text(
         label,
         style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      12,
           fontWeight:    FontWeight.w600,
-          color:         TabuColors.textoSecundario,
+          color:         TClubColors.textoSecundario,
           letterSpacing: 0.3,
         ),
       ),
@@ -994,20 +995,20 @@ class _InterestChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: TabuColors.borderMid,
+          color: TClubColors.borderMid,
           width: 0.8,
         ),
       ),
       child: Text(
         label,
         style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      12,
           fontWeight:    FontWeight.w500,
-          color:         TabuColors.textoPrincipal,
+          color:         TClubColors.textoPrincipal,
           letterSpacing: 0.2,
         ),
       ),
@@ -1029,9 +1030,9 @@ class _PartnerCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color:        TabuColors.bgCard,
+        color:        TClubColors.bgCard,
         borderRadius: BorderRadius.circular(16),
-        border:       Border.all(color: TabuColors.borderMid, width: 0.8),
+        border:       Border.all(color: TClubColors.borderMid, width: 0.8),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -1061,10 +1062,10 @@ class _PartnerCard extends StatelessWidget {
                   maxLines:  1,
                   overflow:  TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontFamily:    TabuTypography.displayFont,
+                    fontFamily:    TClubTypography.displayFont,
                     fontSize:      16,
                     fontWeight:    FontWeight.w800,
-                    color:         TabuColors.textoPrincipal,
+                    color:         TClubColors.textoPrincipal,
                     letterSpacing: 0.2,
                   ),
                 ),
@@ -1090,12 +1091,12 @@ class _PartnerCard extends StatelessWidget {
   }
 
   Widget _avatarPlaceholder() => Container(
-    color: TabuColors.bgCard,
+    color: TClubColors.bgCard,
     child: Center(
       child: Icon(
         Icons.person_outline_rounded,
         size:  28,
-        color: TabuColors.border,
+        color: TClubColors.border,
       ),
     ),
   );
@@ -1156,12 +1157,13 @@ class _TopIconBtn extends StatelessWidget {
       child: Container(
         width: 38, height: 38,
         decoration: BoxDecoration(
-          color:        TabuColors.bgCard,
+          color:        TClubColors.bgCard,
           borderRadius: BorderRadius.circular(11),
-          border:       Border.all(color: TabuColors.borderMid, width: 0.8),
+          border:       Border.all(color: TClubColors.borderMid, width: 0.8),
         ),
-        child: Icon(icon, color: TabuColors.textoSecundario, size: 19),
+        child: Icon(icon, color: TClubColors.textoSecundario, size: 19),
       ),
     );
   }
 }
+

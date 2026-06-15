@@ -1,7 +1,7 @@
 // lib/features/profile/data/services/identity_service.dart
 
-import 'package:tabuapp/features/profile/data/models/identify_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/identify_repository.dart';
+import 'package:tclub/features/profile/data/models/identify_model.dart';
+import 'package:tclub/features/profile/data/repositories/identify_repository.dart';
 
 class IdentityService {
   IdentityService({required IIdentityRepository repository})
@@ -82,3 +82,4 @@ class IdentityServiceException implements Exception {
   @override
   String toString() => 'IdentityServiceException: $message';
 }
+

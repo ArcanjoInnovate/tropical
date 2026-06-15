@@ -4,7 +4,7 @@
 //  Importe apenas este arquivo para usar qualquer parte da feature.
 //
 //  Exemplo:
-//    import 'package:tabuapp/features/user/moderation/moderation.dart';
+//    import 'package:tclub/features/user/moderation/moderation.dart';
 //
 //    // Abrir tela de denúncia de post:
 //    await ReportPage.push(context,
@@ -26,3 +26,4 @@ export 'controller/report_controller.dart';
 // ── Presentation ──────────────────────────────────────────────────────────────
 export 'presentation/pages/report_page.dart';
 export 'presentation/widgets/report_shared_widgets.dart';
+

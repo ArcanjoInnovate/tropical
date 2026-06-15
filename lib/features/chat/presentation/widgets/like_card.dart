@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/controller/chat_controller.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_list_screen.dart';
-import 'package:tabuapp/features/match/data/services/like_me_service.dart';
-import 'package:tabuapp/features/match/presentation/pages/matched_scree.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/controller/chat_controller.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_list_screen.dart';
+import 'package:tclub/features/match/data/services/like_me_service.dart';
+import 'package:tclub/features/match/presentation/pages/matched_scree.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
 
 class LikeCard extends StatefulWidget {
   final String likerUid;
@@ -100,14 +100,14 @@ class _LikeCardState extends State<LikeCard> {
   Widget _avatarFallback(String name) {
     final initial = name.isNotEmpty ? name[0].toUpperCase() : '?';
     return Container(
-      color: TabuColors.bgAlt,
+      color: TClubColors.bgAlt,
       child: Center(
         child: Text(
           initial,
           style: const TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 20,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
           ),
         ),
       ),
@@ -122,14 +122,14 @@ class _LikeCardState extends State<LikeCard> {
       padding: const EdgeInsets.only(bottom: 12),
       child: Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.35),
+            color: TClubColors.redPrincipal.withOpacity(0.35),
             width: 0.9,
           ),
           boxShadow: [
             BoxShadow(
-              color: TabuColors.glow.withOpacity(0.08),
+              color: TClubColors.glow.withOpacity(0.08),
               blurRadius: 16,
               offset: const Offset(0, 4),
             )
@@ -164,11 +164,11 @@ class _LikeCardTopLine extends StatelessWidget {
       height: 2,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          TabuColors.rosaDeep,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaClaro,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaDeep,
+          TClubColors.redDeep,
+          TClubColors.redPrincipal,
+          TClubColors.redClaro,
+          TClubColors.redPrincipal,
+          TClubColors.redDeep,
         ]),
       ),
     );
@@ -196,7 +196,7 @@ class _LikeCardBody extends StatelessWidget {
           height: 52,
           decoration: BoxDecoration(
             border: Border.all(
-              color: TabuColors.rosaPrincipal.withOpacity(0.4),
+              color: TClubColors.redPrincipal.withOpacity(0.4),
               width: 1.2,
             ),
           ),
@@ -218,11 +218,11 @@ class _LikeCardBody extends StatelessWidget {
               Text(
                 name.toUpperCase(),
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
-                  color: TabuColors.textoPrincipal,
+                  color: TClubColors.textoPrincipal,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -232,16 +232,16 @@ class _LikeCardBody extends StatelessWidget {
                 Icon(
                   Icons.favorite_rounded,
                   size: 10,
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                 ),
                 const SizedBox(width: 5),
                 const Text(
                   'curtiu você',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     letterSpacing: 0.2,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
               ]),
@@ -273,9 +273,9 @@ class _LikeCardActions extends StatelessWidget {
             child: Container(
               height: 40,
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border: Border.all(
-                  color: TabuColors.border.withOpacity(0.6),
+                  color: TClubColors.border.withOpacity(0.6),
                   width: 0.7,
                 ),
               ),
@@ -283,11 +283,11 @@ class _LikeCardActions extends StatelessWidget {
                 child: Text(
                   'RECUSAR',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
               ),
@@ -302,17 +302,17 @@ class _LikeCardActions extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                  colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                 ),
                 border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.3),
+                  color: TClubColors.redPrincipal.withOpacity(0.3),
                   width: 0.7,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.25),
+                    color: TClubColors.glow.withOpacity(0.25),
                     blurRadius: 12,
                     offset: const Offset(0, 3),
                   )
@@ -322,11 +322,11 @@ class _LikeCardActions extends StatelessWidget {
                 child: Text(
                   'CURTIR',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color: TabuColors.textoPrincipal,
+                    color: TClubColors.textoPrincipal,
                   ),
                 ),
               ),
@@ -348,9 +348,9 @@ class _LikeCardSkeleton extends StatelessWidget {
       child: Container(
         height: 80,
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
+          color: TClubColors.bgCard,
           border: Border.all(
-            color: TabuColors.border.withOpacity(0.6),
+            color: TClubColors.border.withOpacity(0.6),
             width: 0.6,
           ),
         ),
@@ -360,7 +360,7 @@ class _LikeCardSkeleton extends StatelessWidget {
             height: 16,
             child: CircularProgressIndicator(
               strokeWidth: 1.5,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
             ),
           ),
         ),
@@ -379,10 +379,11 @@ class _CardDivider extends StatelessWidget {
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
           Colors.transparent,
-          TabuColors.border,
+          TClubColors.border,
           Colors.transparent,
         ]),
       ),
     );
   }
 }
+

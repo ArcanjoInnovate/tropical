@@ -1,15 +1,15 @@
 // lib/features/search/di/search_injection.dart
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/search/data/datasources/search_remote_datasource.dart';
-import 'package:tabuapp/features/search/data/repositories/search_repository.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_parties_by_proximity_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_parties_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_users_by_proximity_usecase.dart';
-import 'package:tabuapp/features/search/domain/usercases/fetch_users_usecase.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_bloc.dart';
-import 'package:tabuapp/core/services/cache_service.dart';
+import 'package:tclub/features/search/data/datasources/search_remote_datasource.dart';
+import 'package:tclub/features/search/data/repositories/search_repository.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_parties_by_proximity_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_parties_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_users_by_proximity_usecase.dart';
+import 'package:tclub/features/search/domain/usercases/fetch_users_usecase.dart';
+import 'package:tclub/features/search/presentation/bloc/search_bloc.dart';
+import 'package:tclub/core/services/cache_service.dart';
 
 /// Injeção de dependências do módulo de busca.
 ///
@@ -84,3 +84,4 @@ class SearchInjection {
     _repository = null;
   }
 }
+

@@ -1,8 +1,8 @@
 // lib/features/profile/data/services/avatar_service.dart
 
 import 'dart:io';
-import 'package:tabuapp/features/profile/data/models/avatar_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/avatar_repository.dart';
+import 'package:tclub/features/profile/data/models/avatar_model.dart';
+import 'package:tclub/features/profile/data/repositories/avatar_repository.dart';
 
 class AvatarService {
   AvatarService({required IAvatarRepository repository})
@@ -72,3 +72,4 @@ class AvatarServiceException implements Exception {
   @override
   String toString() => 'AvatarServiceException: $message';
 }
+

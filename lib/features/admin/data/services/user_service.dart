@@ -54,3 +54,4 @@ class UserService {
 
   Future<UserModel?> fetchById(String uid) => _repo.fetchById(uid);
 }
+

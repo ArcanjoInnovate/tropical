@@ -2,11 +2,11 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/data/models/chat_model.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/features/chat/presentation/widgets/chat_tile.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/data/models/chat_model.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/features/chat/presentation/widgets/chat_tile.dart';
 
 class ChatTileList extends StatefulWidget {
   final List<String> chatIds;
@@ -189,7 +189,7 @@ class _ChatListLoading extends StatelessWidget {
         height: 20,
         child: CircularProgressIndicator(
           strokeWidth: 1.5,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
         ),
       ),
     );
@@ -209,12 +209,12 @@ class _ChatListEmpty extends StatelessWidget {
             width: 56,
             height: 56,
             decoration: BoxDecoration(
-              border: Border.all(color: TabuColors.border, width: 0.8),
-              color: TabuColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
+              color: TClubColors.bgCard,
             ),
             child: const Icon(
               Icons.chat_bubble_outline_rounded,
-              color: TabuColors.border,
+              color: TClubColors.border,
               size: 22,
             ),
           ),
@@ -222,21 +222,21 @@ class _ChatListEmpty extends StatelessWidget {
           const Text(
             'NENHUMA CONVERSA AINDA',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9,
               fontWeight: FontWeight.w700,
               letterSpacing: 3.5,
-              color: TabuColors.subtle,
+              color: TClubColors.subtle,
             ),
           ),
           const SizedBox(height: 6),
           const Text(
             'Visite perfis e envie mensagens',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12,
               letterSpacing: 0.3,
-              color: TabuColors.dim,
+              color: TClubColors.dim,
             ),
           ),
         ],
@@ -256,17 +256,17 @@ class _NoActiveChatsMessage extends StatelessWidget {
         Icon(
           Icons.chat_bubble_outline_rounded,
           size: 40,
-          color: TabuColors.border,
+          color: TClubColors.border,
         ),
         const SizedBox(height: 12),
         const Text(
           'NENHUMA CONVERSA ATIVA',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9,
             fontWeight: FontWeight.w700,
             letterSpacing: 3,
-            color: TabuColors.subtle,
+            color: TClubColors.subtle,
           ),
         ),
       ]),
@@ -285,16 +285,16 @@ class _SectionLabel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       child: Row(children: [
-        Icon(icon, size: 12, color: TabuColors.rosaPrincipal),
+        Icon(icon, size: 12, color: TClubColors.redPrincipal),
         const SizedBox(width: 8),
         Text(
           label,
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9,
             fontWeight: FontWeight.w700,
             letterSpacing: 3,
-            color: TabuColors.subtle,
+            color: TClubColors.subtle,
           ),
         ),
         const SizedBox(width: 8),
@@ -303,7 +303,7 @@ class _SectionLabel extends StatelessWidget {
             height: 0.5,
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
-                TabuColors.border.withOpacity(0.5),
+                TClubColors.border.withOpacity(0.5),
                 Colors.transparent,
               ]),
             ),
@@ -370,7 +370,7 @@ class _BlockedSectionHeader extends StatelessWidget {
               const Text(
                 'BLOQUEADOS',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 2.5,
@@ -391,7 +391,7 @@ class _BlockedSectionHeader extends StatelessWidget {
                 child: Text(
                   '$count',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFFDC2626),
@@ -414,3 +414,4 @@ class _BlockedSectionHeader extends StatelessWidget {
     );
   }
 }
+

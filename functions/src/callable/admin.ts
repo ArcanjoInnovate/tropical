@@ -1,4 +1,4 @@
-// src/admin.ts
+﻿// src/admin.ts
 
 import { onCall, HttpsError, onRequest } from "firebase-functions/v2/https";
 import { onValueCreated, onValueWritten } from "firebase-functions/v2/database";
@@ -519,7 +519,7 @@ export const deleteAccount = onCall({ region: "us-central1" }, async (request) =
 
 // ── Festas ────────────────────────────────────────────────────────────────────
 export const notificarNovaFesta = onValueCreated(
-  { ref: "Festas/{festaId}", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Festas/{festaId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const { festaId } = event.params;
     const festa = event.data.val() as { creator_uid?: string; creatorId?: string; user_uid?: string; name?: string; nome?: string; status?: string; data_inicio?: number; dataInicio?: number } | null;
@@ -554,7 +554,7 @@ export const notificarNovaFesta = onValueCreated(
 );
 
 export const inscreverEmTopicosAoSalvarToken = onValueWritten(
-  { ref: "Users/{uid}/fcmToken", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Users/{uid}/fcmToken", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const { uid } = event.params;
     const token = event.data.after.val() as string | null;

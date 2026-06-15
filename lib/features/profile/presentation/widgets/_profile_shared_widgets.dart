@@ -1,7 +1,7 @@
 // features/profile/presentation/pages/profile/_profile_shared_widgets.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  LOCATION ROW — separador visual com linhas laterais em gradiente
@@ -21,7 +21,7 @@ class ProfileLocationRow extends StatelessWidget {
             height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.transparent, TabuColors.border],
+                colors: [Colors.transparent, TClubColors.border],
               ),
             ),
           ),
@@ -31,18 +31,18 @@ class ProfileLocationRow extends StatelessWidget {
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             const Icon(
               Icons.location_on_outlined,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               size: 9,
             ),
             const SizedBox(width: 5),
             Text(
               location.toUpperCase(),
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 2.5,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
               ),
             ),
           ]),
@@ -52,7 +52,7 @@ class ProfileLocationRow extends StatelessWidget {
             height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [TabuColors.border, Colors.transparent],
+                colors: [TClubColors.border, Colors.transparent],
               ),
             ),
           ),
@@ -61,3 +61,4 @@ class ProfileLocationRow extends StatelessWidget {
     );
   }
 }
+

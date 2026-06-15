@@ -26,7 +26,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.tabu.app"
+    namespace "com.tropical.app"
     compileSdk 36
     ndkVersion "28.2.13676358"
 
@@ -39,7 +39,7 @@ android {
     kotlinOptions { jvmTarget = '17' }
 
     defaultConfig {
-        applicationId "com.tabu.app"
+        applicationId "com.tropical.app"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
@@ -87,7 +87,6 @@ android {
             shrinkResources false
         }
         debug {
-            applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
             minifyEnabled false
         }

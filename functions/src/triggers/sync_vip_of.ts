@@ -1,4 +1,4 @@
-// src/sync_vip_of.ts
+﻿// src/sync_vip_of.ts
 //
 // NÍVEL 2.4 — CF que mantém o nó invertido vip_of/{uid}.
 // Quando alguém me adiciona como VIP friend, a CF grava em MEU nó vip_of.
@@ -12,7 +12,7 @@ import { onValueWritten } from "firebase-functions/v2/database";
 import { getDatabase }    from "firebase-admin/database";
 
 export const syncVipOf = onValueWritten(
-  { ref: "Users/{uid}/vip_friends/{friendUid}", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Users/{uid}/vip_friends/{friendUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const { uid, friendUid } = event.params;
     const db = getDatabase();

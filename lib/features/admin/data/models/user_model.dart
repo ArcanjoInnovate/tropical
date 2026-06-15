@@ -64,3 +64,4 @@ class UserModel {
     if (avatar != null) 'avatar': avatar,    // ← NOVO
   };
 }
+

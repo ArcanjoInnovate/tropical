@@ -25,3 +25,4 @@ class UserSearchResult {
     this.longitude,
   });
 }
+

@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/core/services/presence_service.dart';
+import 'package:tclub/core/services/presence_service.dart';
 
 // ── Exceções tipadas ───────────────────────────────────────────────────────────
 
@@ -344,3 +344,4 @@ class AuthService {
         return e;
       }).toList();
 }
+

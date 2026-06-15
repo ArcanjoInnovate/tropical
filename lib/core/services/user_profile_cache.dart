@@ -47,3 +47,4 @@ class UserProfileCache {
     _inflight.remove(uid);
   }
 }
+

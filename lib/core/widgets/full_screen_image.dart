@@ -1,8 +1,8 @@
 // lib/screens/screens_home/home_screen/home/full_screen_image.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -159,7 +159,7 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                 const Center(
                   child: SizedBox(width: 22, height: 22,
                     child: CircularProgressIndicator(
-                        color: TabuColors.rosaPrincipal, strokeWidth: 1.5)),
+                        color: TClubColors.redPrincipal, strokeWidth: 1.5)),
                 ),
 
               // ── Erro ─────────────────────────────────────────────────
@@ -167,11 +167,11 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                 Center(
                   child: Column(mainAxisSize: MainAxisSize.min, children: const [
                     Icon(Icons.broken_image_outlined,
-                        color: TabuColors.subtle, size: 48),
+                        color: TClubColors.subtle, size: 48),
                     SizedBox(height: 12),
                     Text('Não foi possível carregar a imagem',
-                        style: TextStyle(fontFamily: TabuTypography.bodyFont,
-                            fontSize: 13, color: TabuColors.subtle)),
+                        style: TextStyle(fontFamily: TClubTypography.bodyFont,
+                            fontSize: 13, color: TClubColors.subtle)),
                   ]),
                 ),
 
@@ -208,11 +208,11 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(colors: [
                           Colors.transparent,
-                          TabuColors.rosaDeep,
-                          TabuColors.rosaPrincipal,
-                          TabuColors.rosaClaro,
-                          TabuColors.rosaPrincipal,
-                          TabuColors.rosaDeep,
+                          TClubColors.redDeep,
+                          TClubColors.redPrincipal,
+                          TClubColors.redClaro,
+                          TClubColors.redPrincipal,
+                          TClubColors.redDeep,
                           Colors.transparent,
                         ]),
                       ),
@@ -269,7 +269,7 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
-                                    fontFamily: TabuTypography.bodyFont,
+                                    fontFamily: TClubTypography.bodyFont,
                                     fontSize: 11,
                                     fontWeight: FontWeight.w700,
                                     letterSpacing: 2,
@@ -284,7 +284,7 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontFamily: TabuTypography.bodyFont,
+                                    fontFamily: TClubTypography.bodyFont,
                                     fontSize: 12,
                                     color: Colors.white.withOpacity(0.65),
                                   ),
@@ -312,7 +312,7 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                                   color: Colors.white54, size: 10),
                               SizedBox(width: 4),
                               Text('FOTO', style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 8,
                                   letterSpacing: 1.5,
                                   color: Colors.white54)),
@@ -351,7 +351,7 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
                               SizedBox(width: 6),
                               Text('Toque duplo para zoom',
                                   style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 10,
                                       letterSpacing: 1,
                                       color: Colors.white38)),
@@ -370,3 +370,4 @@ class _FullscreenImageScreenState extends State<FullscreenImageScreen>
     );
   }
 }
+

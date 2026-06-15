@@ -12,7 +12,7 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/chat/data/models/chat_request_model.dart';
+import 'package:tclub/features/chat/data/models/chat_request_model.dart';
 
 class ChatRequestService {
   static final ChatRequestService _i = ChatRequestService._();
@@ -172,3 +172,4 @@ class ChatRequestService {
     } catch (_) {}
   }
 }
+

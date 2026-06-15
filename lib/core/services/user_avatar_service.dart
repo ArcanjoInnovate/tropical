@@ -38,3 +38,4 @@ class UserAvatarService {
   /// Invalida o cache completo.
   void clear() => _cache.clear();
 }
+

@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/penalty/data/services/penalty_service.dart';
-import 'package:tabuapp/features/penalty/presentation/widgets/contest_sheet.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/penalty/data/services/penalty_service.dart';
+import 'package:tclub/features/penalty/presentation/widgets/contest_sheet.dart';
 
 class BanPage extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -31,9 +31,9 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
   bool _confirmandoLogout = false;
   bool _carregando        = false;
 
-  static const _cor      = TabuColors.errorDeep;
-  static const _corFundo = TabuColors.errorPale;
-  static const _corBorda = TabuColors.errorBorder;
+  static const _cor      = TClubColors.errorDeep;
+  static const _corFundo = TClubColors.errorPale;
+  static const _corBorda = TClubColors.errorBorder;
 
   @override
   void initState() {
@@ -117,7 +117,7 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: SafeArea(
           child: FadeTransition(
             opacity: _fade,
@@ -142,7 +142,7 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
 
                   Text('CONTA BANIDA',
                       style: TextStyle(
-                        fontFamily:    TabuTypography.displayFont,
+                        fontFamily:    TClubTypography.displayFont,
                         fontSize:      26,
                         letterSpacing: 4,
                         color:         _cor,
@@ -150,12 +150,12 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                   const SizedBox(height: 8),
 
                   const Text(
-                    'Seu acesso ao Tabu foi encerrado permanentemente.',
+                    'Seu acesso ao TCLUB foi encerrado permanentemente.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   13,
-                      color:      TabuColors.textoMuted,
+                      color:      TClubColors.textoMuted,
                       height:     1.6,
                     ),
                   ),
@@ -171,7 +171,7 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                     child: const Text(
                       'BANIMENTO PERMANENTE · SEM REVERSÃO AUTOMÁTICA',
                       style: TextStyle(
-                        fontFamily:    TabuTypography.bodyFont,
+                        fontFamily:    TClubTypography.bodyFont,
                         fontSize:      9,
                         fontWeight:    FontWeight.w700,
                         letterSpacing: 1.5,
@@ -184,8 +184,8 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color:  TabuColors.bgCard,
-                      border: Border.all(color: TabuColors.border, width: 0.8),
+                      color:  TClubColors.bgCard,
+                      border: Border.all(color: TClubColors.border, width: 0.8),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,14 +199,14 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                         ]),
                         const SizedBox(height: 16),
                         const Divider(
-                            color: TabuColors.border, height: 1, thickness: 0.8),
+                            color: TClubColors.border, height: 1, thickness: 0.8),
                         const SizedBox(height: 16),
                         _Campo(label: 'ARTIGO VIOLADO', valor: artigo),
                         const SizedBox(height: 16),
                         _Campo(label: 'MOTIVO', valor: motivo, multiline: true),
                         const SizedBox(height: 16),
                         const Divider(
-                            color: TabuColors.border, height: 1, thickness: 0.8),
+                            color: TClubColors.border, height: 1, thickness: 0.8),
                         const SizedBox(height: 16),
                         Container(
                           padding: const EdgeInsets.all(14),
@@ -223,9 +223,9 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                                 'Este banimento foi aplicado pela equipe de '
                                 'moderação após análise criteriosa e é definitivo.',
                                 style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize:   12,
-                                  color:      TabuColors.textoPrincipal,
+                                  color:      TClubColors.textoPrincipal,
                                   height:     1.6,
                                 ),
                               )),
@@ -251,15 +251,15 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                       icon: const Icon(Icons.mail_outline, size: 17),
                       label: const Text('CONTESTAR BANIMENTO',
                           style: TextStyle(
-                            fontFamily:    TabuTypography.bodyFont,
+                            fontFamily:    TClubTypography.bodyFont,
                             fontSize:      12,
                             fontWeight:    FontWeight.w700,
                             letterSpacing: 2,
                           )),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: TabuColors.textoMuted,
+                        foregroundColor: TClubColors.textoMuted,
                         side: const BorderSide(
-                            color: TabuColors.border, width: 0.8),
+                            color: TClubColors.border, width: 0.8),
                         shape: const RoundedRectangleBorder(),
                       ),
                     ),
@@ -276,30 +276,30 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                         onPressed: _carregando ? null : _logout,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: _confirmandoLogout
-                              ? TabuColors.error : TabuColors.bgCard,
+                              ? TClubColors.error : TClubColors.bgCard,
                           foregroundColor: _confirmandoLogout
-                              ? TabuColors.textoSobreRosa : TabuColors.textoMuted,
+                              ? TClubColors.textoSobreRed : TClubColors.textoMuted,
                           disabledBackgroundColor:
-                              TabuColors.error.withOpacity(0.5),
+                              TClubColors.error.withOpacity(0.5),
                           elevation:   0,
                           shadowColor: Colors.transparent,
                           shape: const RoundedRectangleBorder(
                             side: BorderSide(
-                                color: TabuColors.border, width: 0.8),
+                                color: TClubColors.border, width: 0.8),
                           ),
                         ),
                         child: _carregando
                             ? const SizedBox(
                                 width: 18, height: 18,
                                 child: CircularProgressIndicator(
-                                    color: TabuColors.textoSobreRosa,
+                                    color: TClubColors.textoSobreRed,
                                     strokeWidth: 1.5))
                             : Text(
                                 _confirmandoLogout
                                     ? 'CONFIRMAR — SAIR DA CONTA'
                                     : 'SAIR DA CONTA',
                                 style: const TextStyle(
-                                  fontFamily:    TabuTypography.bodyFont,
+                                  fontFamily:    TClubTypography.bodyFont,
                                   fontSize:      13,
                                   fontWeight:    FontWeight.w800,
                                   letterSpacing: 2,
@@ -311,9 +311,9 @@ class _BanPageState extends State<BanPage> with SingleTickerProviderStateMixin {
                   const SizedBox(height: 10),
                   Text('Protocolo $proto · guarde para referência',
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize:   10,
-                        color:      TabuColors.textoMuted,
+                        color:      TClubColors.textoMuted,
                       )),
                   const SizedBox(height: 16),
                 ]),
@@ -344,19 +344,19 @@ class _Campo extends StatelessWidget {
         children: [
           Text(label,
               style: const TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      9,
                 fontWeight:    FontWeight.w700,
                 letterSpacing: 2,
-                color:         TabuColors.textoMuted,
+                color:         TClubColors.textoMuted,
               )),
           const SizedBox(height: 4),
           Text(valor,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   13,
                 fontWeight: FontWeight.w500,
-                color:      corValor ?? TabuColors.textoPrincipal,
+                color:      corValor ?? TClubColors.textoPrincipal,
                 height:     multiline ? 1.6 : 1.3,
               )),
         ],
@@ -374,3 +374,4 @@ String _formatarData(dynamic ms) {
       '${dt.hour.toString().padLeft(2, '0')}:'
       '${dt.minute.toString().padLeft(2, '0')}';
 }
+

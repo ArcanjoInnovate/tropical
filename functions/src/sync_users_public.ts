@@ -1,4 +1,4 @@
-// functions/src/sync_users_public.ts
+﻿// functions/src/sync_users_public.ts
 //
 // Cloud Function: syncUsersPublic
 //
@@ -28,7 +28,7 @@ import { onValueWritten } from "firebase-functions/v2/database";
 import { getDatabase }    from "firebase-admin/database";
 
 const REGION   = "us-central1";
-const INSTANCE = "tabuapp-4325a-default-rtdb";
+const INSTANCE = "tropical-64d1b-default-rtdb";
 
 // Campos permitidos em UsersPublic — whitelist explícita
 const PUBLIC_FIELDS = [

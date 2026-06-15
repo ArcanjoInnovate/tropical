@@ -4,34 +4,34 @@ import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/feed/presentation/screens/feed_administrative_screen.dart';
-import 'package:tabuapp/features/feed/presentation/screens/feed_screen.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/own_profile_screen.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/feed/presentation/screens/feed_administrative_screen.dart';
+import 'package:tclub/features/feed/presentation/screens/feed_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/own_profile_screen.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
 
 // ── Telas compartilhadas ───────────────────────────────────────────────────
-import 'package:tabuapp/features/search/presentation/screens/search_screen.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_list_screen.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/own_profile_screen.dart';
+import 'package:tclub/features/search/presentation/screens/search_screen.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_list_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/own_profile_screen.dart';
 
-class TabuShell extends StatefulWidget {
+class TclubShell extends StatefulWidget {
   final Map<String, dynamic> userData;
   final bool isAdmin;
 
-  const TabuShell({
+  const TclubShell({
     super.key,
     required this.userData,
     this.isAdmin = false,
   });
 
   @override
-  State<TabuShell> createState() => _TabuShellState();
+  State<TclubShell> createState() => _TclubShellState();
 }
 
-class _TabuShellState extends State<TabuShell> {
+class _TclubShellState extends State<TclubShell> {
   int _currentIndex = 0;
 
   String get _myUid => FirebaseAuth.instance.currentUser?.uid ?? '';
@@ -88,10 +88,10 @@ class _TabuShellState extends State<TabuShell> {
         ),
       ],
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         extendBody: true,
         body: IndexedStack(index: _currentIndex, children: _screens),
-        bottomNavigationBar: _TabuNavBar(
+        bottomNavigationBar: _TclubNavBar(
           currentIndex: _currentIndex,
           isAdmin: widget.isAdmin,
           myUid: _myUid,
@@ -105,8 +105,8 @@ class _TabuShellState extends State<TabuShell> {
 // ════════════════════════════════════════════════════════════════════════════
 //  BOTTOM NAV BAR
 // ════════════════════════════════════════════════════════════════════════════
-class _TabuNavBar extends StatelessWidget {
-  const _TabuNavBar({
+class _TclubNavBar extends StatelessWidget {
+  const _TclubNavBar({
     required this.currentIndex,
     required this.isAdmin,
     required this.myUid,
@@ -163,9 +163,9 @@ class _TabuNavBar extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-        color: TabuColors.nav,
+        color: TClubColors.nav,
         border:
-            Border(top: BorderSide(color: TabuColors.borderMid, width: 0.8)),
+            Border(top: BorderSide(color: TClubColors.borderMid, width: 0.8)),
       ),
       child: SafeArea(
         top: false,
@@ -249,7 +249,7 @@ class _NavButton extends StatelessWidget {
               child: Icon(
                 isActive ? item.activeIcon : item.icon,
                 key: ValueKey(isActive),
-                color: isActive ? TabuColors.rosaPrincipal : TabuColors.subtle,
+                color: isActive ? TClubColors.redPrincipal : TClubColors.subtle,
                 size: 24,
               ),
             ),
@@ -262,18 +262,18 @@ class _NavButton extends StatelessWidget {
                   constraints:
                       const BoxConstraints(minWidth: 16, minHeight: 16),
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: TabuColors.bg, width: 1.5),
+                    border: Border.all(color: TClubColors.bg, width: 1.5),
                   ),
                   child: Text(
                     badge > 99 ? '99+' : '$badge',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       fontWeight: FontWeight.w700,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                       height: 1.4,
                     ),
                   ),
@@ -284,11 +284,11 @@ class _NavButton extends StatelessWidget {
           Text(
             item.label,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
-              color: isActive ? TabuColors.rosaPrincipal : TabuColors.subtle,
+              color: isActive ? TClubColors.redPrincipal : TClubColors.subtle,
             ),
           ),
           const SizedBox(height: 2),
@@ -298,7 +298,7 @@ class _NavButton extends StatelessWidget {
             height: 2,
             width: isActive ? 24 : 0,
             decoration: BoxDecoration(
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               borderRadius: BorderRadius.circular(1),
             ),
           ),
@@ -307,3 +307,4 @@ class _NavButton extends StatelessWidget {
     );
   }
 }
+

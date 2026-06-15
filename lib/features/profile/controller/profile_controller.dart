@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../data/models/profile_user_model.dart';
 import '../data/services/profile_service.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
-import 'package:tabuapp/features/story/data/models/story_model.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
-import 'package:tabuapp/features/post/data/services/post_service.dart';
-import 'package:tabuapp/features/story/data/services/story_service.dart';
-import 'package:tabuapp/features/gallery/data/services/gallery_service.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
-import 'package:tabuapp/features/admin/data/services/adm_service.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
+import 'package:tclub/features/story/data/models/story_model.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/features/post/data/services/post_service.dart';
+import 'package:tclub/features/story/data/services/story_service.dart';
+import 'package:tclub/features/gallery/data/services/gallery_service.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
+import 'package:tclub/features/admin/data/services/adm_service.dart';
 
 const int _kPageSize = 15;
 
@@ -325,3 +325,4 @@ class ProfileController extends ChangeNotifier {
     super.dispose();
   }
 }
+

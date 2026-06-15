@@ -2,10 +2,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/features/profile/data/services/cached_perfil_service.dart';
+import 'package:tclub/features/profile/data/services/cached_perfil_service.dart';
 
 class MediaPreloadService {
   MediaPreloadService._();
@@ -225,3 +225,4 @@ class MediaPreloadService {
   bool isVideoReady(String videoId) => _preloadedVideos.contains(videoId);
   bool isImageReady(String url) => _preloadedImages.contains(url);
 }
+

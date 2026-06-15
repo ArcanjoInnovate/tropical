@@ -3,8 +3,8 @@
 // Avatar com anel de story, indicador online e anel VIP.
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
 
 class ProfileAvatarSection extends StatelessWidget {
   const ProfileAvatarSection({
@@ -52,7 +52,7 @@ class ProfileAvatarSection extends StatelessWidget {
           height: hasStories ? 116 : 112,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: TabuColors.bg,
+            color: TClubColors.bg,
           ),
         ),
 
@@ -77,7 +77,7 @@ class ProfileAvatarSection extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: const Color(0xFF22C55E),
-                border: Border.all(color: TabuColors.bg, width: 2),
+                border: Border.all(color: TClubColors.bg, width: 2),
                 boxShadow: const [
                   BoxShadow(
                     color: Color(0x5022C55E),
@@ -102,15 +102,15 @@ class ProfileAvatarSection extends StatelessWidget {
                 color: hasUnviewedStory
                     ? (isVip
                         ? const Color(0xFFD4AF37)
-                        : TabuColors.rosaPrincipal)
+                        : TClubColors.redPrincipal)
                     : const Color(0xFF3A3A4A),
-                border: Border.all(color: TabuColors.bg, width: 2),
+                border: Border.all(color: TClubColors.bg, width: 2),
                 boxShadow: hasUnviewedStory
                     ? [
                         BoxShadow(
                           color: (isVip
                                   ? const Color(0xFFD4AF37)
-                                  : TabuColors.glow)
+                                  : TClubColors.glow)
                               .withOpacity(0.5),
                           blurRadius: 8,
                         )
@@ -188,9 +188,9 @@ class _StoryRing extends StatelessWidget {
             : pink
                 ? const LinearGradient(
                     colors: [
-                      TabuColors.rosaDeep,
-                      TabuColors.rosaPrincipal,
-                      TabuColors.rosaClaro,
+                      TClubColors.redDeep,
+                      TClubColors.redPrincipal,
+                      TClubColors.redClaro,
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -202,7 +202,7 @@ class _StoryRing extends StatelessWidget {
                 BoxShadow(
                   color: (isVip
                           ? const Color(0xFFD4AF37)
-                          : TabuColors.glow)
+                          : TClubColors.glow)
                       .withOpacity(0.45),
                   blurRadius: 18,
                   spreadRadius: 2,
@@ -224,11 +224,11 @@ class _StaticRing extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: SweepGradient(colors: [
-          TabuColors.rosaDeep.withOpacity(0.0),
-          TabuColors.rosaPrincipal.withOpacity(0.50),
-          TabuColors.rosaClaro.withOpacity(0.20),
-          TabuColors.rosaPrincipal.withOpacity(0.50),
-          TabuColors.rosaDeep.withOpacity(0.0),
+          TClubColors.redDeep.withOpacity(0.0),
+          TClubColors.redPrincipal.withOpacity(0.50),
+          TClubColors.redClaro.withOpacity(0.20),
+          TClubColors.redPrincipal.withOpacity(0.50),
+          TClubColors.redDeep.withOpacity(0.0),
         ]),
       ),
     );
@@ -253,7 +253,7 @@ class StoryPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = hasUnviewed
-        ? (isVip ? const Color(0xFFD4AF37) : TabuColors.rosaPrincipal)
+        ? (isVip ? const Color(0xFFD4AF37) : TClubColors.redPrincipal)
         : const Color(0xFF3A3A4A);
 
     return GestureDetector(
@@ -264,8 +264,8 @@ class StoryPill extends StatelessWidget {
           color: hasUnviewed
               ? (isVip
                   ? const Color(0xFF1A0A00)
-                  : TabuColors.rosaPrincipal.withOpacity(0.12))
-              : TabuColors.bgCard,
+                  : TClubColors.redPrincipal.withOpacity(0.12))
+              : TClubColors.bgCard,
           border: Border.all(
             color: hasUnviewed ? color.withOpacity(0.6) : color,
             width: 0.8,
@@ -283,7 +283,7 @@ class StoryPill extends StatelessWidget {
           Text(
             hasUnviewed ? 'VER STORY' : 'STORY VISTO',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 8,
               fontWeight: FontWeight.w700,
               letterSpacing: 2,
@@ -321,24 +321,24 @@ class ProfileTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.border, width: 0.8),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.border, width: 0.8),
       ),
       child: TabBar(
         controller: controller,
-        indicatorColor: TabuColors.rosaPrincipal,
+        indicatorColor: TClubColors.redPrincipal,
         indicatorWeight: 2,
-        labelColor: TabuColors.rosaPrincipal,
-        unselectedLabelColor: TabuColors.subtle,
+        labelColor: TClubColors.redPrincipal,
+        unselectedLabelColor: TClubColors.subtle,
         dividerColor: Colors.transparent,
         labelStyle: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 2.5,
         ),
         unselectedLabelStyle: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 10,
           fontWeight: FontWeight.w600,
           letterSpacing: 2.5,
@@ -387,7 +387,7 @@ class GalleryOnlyTabBar extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         // ── linha superior ─────────────────────────────────────────────────
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
 
         // ── ícone + contagem ────────────────────────────────────────────────
         Padding(
@@ -397,7 +397,7 @@ class GalleryOnlyTabBar extends StatelessWidget {
             children: [
               const Icon(
                 Icons.grid_on_rounded,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
                 size: 16,
               ),
               if (count != null) ...[
@@ -407,18 +407,18 @@ class GalleryOnlyTabBar extends StatelessWidget {
                   height: 4,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TabuColors.border,
+                    color: TClubColors.border,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '$count',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                   ),
                 ),
               ],
@@ -432,9 +432,9 @@ class GalleryOnlyTabBar extends StatelessWidget {
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Colors.transparent,
-              TabuColors.rosaDeep,
-              TabuColors.rosaPrincipal,
-              TabuColors.rosaDeep,
+              TClubColors.redDeep,
+              TClubColors.redPrincipal,
+              TClubColors.redDeep,
               Colors.transparent,
             ]),
           ),
@@ -443,3 +443,4 @@ class GalleryOnlyTabBar extends StatelessWidget {
     );
   }
 }
+

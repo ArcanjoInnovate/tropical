@@ -1,7 +1,7 @@
 // lib/features/profile/data/services/personal_data_service.dart
 
-import 'package:tabuapp/features/profile/data/models/personal_data_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/personal_data_repository.dart';
+import 'package:tclub/features/profile/data/models/personal_data_model.dart';
+import 'package:tclub/features/profile/data/repositories/personal_data_repository.dart';
 
 /// Camada de serviço — orquestra a operação de salvamento e trata erros
 /// antes de expor o resultado para o controller.
@@ -62,3 +62,4 @@ class PersonalDataServiceException implements Exception {
   @override
   String toString() => 'PersonalDataServiceException: $message';
 }
+

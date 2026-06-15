@@ -1,7 +1,7 @@
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/search/domain/entities/user_search.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_filters.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_pagination.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/entities/user_search.dart';
+import 'package:tclub/features/search/presentation/bloc/search_filters.dart';
+import 'package:tclub/features/search/presentation/bloc/search_pagination.dart';
 
 /// Estado único do SearchBloc.
 ///
@@ -117,3 +117,4 @@ class SearchState {
     );
   }
 }
+

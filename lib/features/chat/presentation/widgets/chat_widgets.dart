@@ -6,10 +6,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/data/models/chat_model.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/data/models/chat_model.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 //  GradientTopLine — linha decorativa rosa no topo das telas
@@ -23,9 +23,9 @@ class GradientTopLine extends StatelessWidget {
       height: 1.5,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          Colors.transparent, TabuColors.rosaDeep,
-          TabuColors.rosaPrincipal, TabuColors.rosaClaro,
-          TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+          Colors.transparent, TClubColors.redDeep,
+          TClubColors.redPrincipal, TClubColors.redClaro,
+          TClubColors.redPrincipal, TClubColors.redDeep,
           Colors.transparent,
         ]),
       ),
@@ -63,13 +63,13 @@ class ChatTabBtn extends StatelessWidget {
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(label, style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      10,
                     fontWeight:    FontWeight.w700,
                     letterSpacing: 2.5,
                     color: isActive
-                        ? TabuColors.rosaPrincipal
-                        : TabuColors.subtle)),
+                        ? TClubColors.redPrincipal
+                        : TClubColors.subtle)),
                 if (badgeStream != null)
                   StreamBuilder<int>(
                     stream: badgeStream,
@@ -81,13 +81,13 @@ class ChatTabBtn extends StatelessWidget {
                         child: Container(
                           width: 16, height: 16,
                           decoration: BoxDecoration(
-                            color:  TabuColors.rosaPrincipal,
+                            color:  TClubColors.redPrincipal,
                             shape:  BoxShape.circle,
                             border: Border.all(
-                                color: TabuColors.bg, width: 1.5)),
+                                color: TClubColors.bg, width: 1.5)),
                           child: Center(child: Text('$n',
                               style: const TextStyle(
-                                  fontFamily:  TabuTypography.bodyFont,
+                                  fontFamily:  TClubTypography.bodyFont,
                                   fontSize:    8,
                                   fontWeight:  FontWeight.w700,
                                   color:       Colors.white)))));
@@ -98,7 +98,7 @@ class ChatTabBtn extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 height:   1.5,
                 width:    isActive ? 32 : 0,
-                color:    TabuColors.rosaPrincipal),
+                color:    TClubColors.redPrincipal),
             ]),
         ),
       ),
@@ -127,15 +127,15 @@ class UnreadBadgeTotal extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
           decoration: BoxDecoration(
-            color:  TabuColors.rosaPrincipal.withOpacity(0.15),
+            color:  TClubColors.redPrincipal.withOpacity(0.15),
             border: Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.4), width: 0.8)),
+                color: TClubColors.redPrincipal.withOpacity(0.4), width: 0.8)),
           child: Text('$total', style: const TextStyle(
-              fontFamily:  TabuTypography.bodyFont,
+              fontFamily:  TClubTypography.bodyFont,
               fontSize:    10,
               fontWeight:  FontWeight.w700,
               letterSpacing: 1,
-              color:       TabuColors.rosaPrincipal)));
+              color:       TClubColors.redPrincipal)));
       });
   }
 }
@@ -162,7 +162,7 @@ class BlockedBanner extends StatelessWidget {
         const SizedBox(width: 10),
         Expanded(child: Text('Esta conversa foi bloqueada.',
             style: TextStyle(
-              fontFamily:  TabuTypography.bodyFont,
+              fontFamily:  TClubTypography.bodyFont,
               fontSize:    11,
               letterSpacing: 0.4,
               color:       const Color(0xFFDC2626).withOpacity(0.9),
@@ -189,20 +189,20 @@ class ChatSectionLabel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       child: Row(children: [
-        Icon(icon, size: 12, color: TabuColors.rosaPrincipal),
+        Icon(icon, size: 12, color: TClubColors.redPrincipal),
         const SizedBox(width: 8),
         Text(label, style: const TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      9,
             fontWeight:    FontWeight.w700,
             letterSpacing: 3,
-            color:         TabuColors.subtle)),
+            color:         TClubColors.subtle)),
         const SizedBox(width: 8),
         Expanded(child: Container(
           height: 0.5,
           decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
-              TabuColors.border.withOpacity(0.5),
+              TClubColors.border.withOpacity(0.5),
               Colors.transparent,
             ])))),
       ]),
@@ -253,7 +253,7 @@ class BlockedSectionHeader extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(child: Row(children: [
             const Text('BLOQUEADOS', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      10,
                 fontWeight:    FontWeight.w700,
                 letterSpacing: 2.5,
@@ -266,7 +266,7 @@ class BlockedSectionHeader extends StatelessWidget {
                 border: Border.all(
                     color: const Color(0xFFDC2626).withOpacity(0.4), width: 0.7)),
               child: Text('$count', style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   9,
                   fontWeight: FontWeight.w700,
                   color:      Color(0xFFDC2626)))),
@@ -332,8 +332,8 @@ class ChatTile extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap:          onTap,
-              splashColor:    TabuColors.rosaPrincipal.withOpacity(0.05),
-              highlightColor: TabuColors.bgCard.withOpacity(0.5),
+              splashColor:    TClubColors.redPrincipal.withOpacity(0.05),
+              highlightColor: TClubColors.bgCard.withOpacity(0.5),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: Row(children: [
@@ -351,7 +351,7 @@ class ChatTile extends StatelessWidget {
                             isOnline
                                 ? const Text('online agora',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize:   9,
                                       letterSpacing: 0.5,
                                       color:      Color(0xFF22C55E)))
@@ -360,12 +360,12 @@ class ChatTile extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(_formatTime(chat.metadata.lastTimestamp),
                             style: TextStyle(
-                              fontFamily:    TabuTypography.bodyFont,
+                              fontFamily:    TClubTypography.bodyFont,
                               fontSize:      9,
                               letterSpacing: 1,
                               color: unread > 0
-                                  ? TabuColors.rosaPrincipal
-                                  : TabuColors.subtle)),
+                                  ? TClubColors.redPrincipal
+                                  : TClubColors.subtle)),
                       ]),
                       const SizedBox(height: 6),
                       Row(children: [
@@ -384,7 +384,7 @@ class ChatTile extends StatelessWidget {
                                   size:  13,
                                   color: recipientRead
                                       ? const Color(0xFF60A5FA)
-                                      : TabuColors.subtle);
+                                      : TClubColors.subtle);
                               })),
                         Expanded(child: Text(
                           chat.metadata.lastMessage.isEmpty
@@ -393,14 +393,14 @@ class ChatTile extends StatelessWidget {
                           maxLines:  1,
                           overflow:  TextOverflow.ellipsis,
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize:   12,
                             letterSpacing: 0.2,
                             color: chat.metadata.lastMessage.isEmpty
-                                ? TabuColors.border
+                                ? TClubColors.border
                                 : unread > 0
-                                    ? TabuColors.dim
-                                    : TabuColors.subtle,
+                                    ? TClubColors.dim
+                                    : TClubColors.subtle,
                             fontWeight: unread > 0
                                 ? FontWeight.w600
                                 : FontWeight.normal,
@@ -413,17 +413,17 @@ class ChatTile extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
-                              color:  TabuColors.rosaPrincipal.withOpacity(0.15),
+                              color:  TClubColors.redPrincipal.withOpacity(0.15),
                               border: Border.all(
-                                  color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                                  color: TClubColors.redPrincipal.withOpacity(0.4),
                                   width: 0.8)),
                             child: Text(unread > 99 ? '99+' : '$unread',
                                 style: const TextStyle(
-                                  fontFamily:    TabuTypography.bodyFont,
+                                  fontFamily:    TClubTypography.bodyFont,
                                   fontSize:      10,
                                   fontWeight:    FontWeight.w700,
                                   letterSpacing: 0.5,
-                                  color:         TabuColors.rosaPrincipal))),
+                                  color:         TClubColors.redPrincipal))),
                         ],
                       ]),
                     ])),
@@ -446,17 +446,17 @@ class ChatTile extends StatelessWidget {
                 decoration: BoxDecoration(
                   color:  const Color(0xFF22C55E),
                   shape:  BoxShape.circle,
-                  border: Border.all(color: TabuColors.bg, width: 2),
+                  border: Border.all(color: TClubColors.bg, width: 2),
                   boxShadow: [BoxShadow(
                       color:      const Color(0xFF22C55E).withOpacity(0.5),
                       blurRadius: 8, spreadRadius: 1)]))
             : Container(
                 width: 10, height: 10,
                 decoration: BoxDecoration(
-                  color:  TabuColors.bgCard,
+                  color:  TClubColors.bgCard,
                   shape:  BoxShape.circle,
                   border: Border.all(
-                      color: TabuColors.border.withOpacity(0.5), width: 1.5)))),
+                      color: TClubColors.border.withOpacity(0.5), width: 1.5)))),
     ]);
   }
 
@@ -480,7 +480,7 @@ class ChatTile extends StatelessWidget {
                       decoration: BoxDecoration(
                         color:  const Color(0xFFDC2626),
                         shape:  BoxShape.circle,
-                        border: Border.all(color: TabuColors.bg, width: 2)),
+                        border: Border.all(color: TClubColors.bg, width: 2)),
                       child: const Icon(Icons.lock_rounded,
                           size: 8, color: Colors.white))),
                 ]),
@@ -493,10 +493,10 @@ class ChatTile extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(_formatTime(chat.metadata.lastTimestamp),
                           style: const TextStyle(
-                              fontFamily:    TabuTypography.bodyFont,
+                              fontFamily:    TClubTypography.bodyFont,
                               fontSize:      9,
                               letterSpacing: 1,
-                              color:         TabuColors.subtle)),
+                              color:         TClubColors.subtle)),
                       const SizedBox(width: 6),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
@@ -505,7 +505,7 @@ class ChatTile extends StatelessWidget {
                           border: Border.all(
                               color: const Color(0xFFDC2626).withOpacity(0.4), width: 0.7)),
                         child: const Text('BLOQUEADO', style: TextStyle(
-                            fontFamily:    TabuTypography.bodyFont,
+                            fontFamily:    TClubTypography.bodyFont,
                             fontSize:      7,
                             fontWeight:    FontWeight.w700,
                             letterSpacing: 1.5,
@@ -513,10 +513,10 @@ class ChatTile extends StatelessWidget {
                     ]),
                     const SizedBox(height: 4),
                     const Text('Conversa bloqueada', style: TextStyle(
-                        fontFamily:  TabuTypography.bodyFont,
+                        fontFamily:  TClubTypography.bodyFont,
                         fontSize:    11,
                         letterSpacing: 0.2,
-                        color:       TabuColors.subtle,
+                        color:       TClubColors.subtle,
                         fontStyle:   FontStyle.italic)),
                   ])),
               ]),
@@ -534,7 +534,7 @@ class ChatTile extends StatelessWidget {
       height: 0.5,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-            colors: [TabuColors.border, Colors.transparent]))));
+            colors: [TClubColors.border, Colors.transparent]))));
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -564,10 +564,10 @@ class LastSeenText extends StatelessWidget {
       builder:     (_, snap) => Text(
         _format(snap.data ?? 0),
         style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      9,
           letterSpacing: 0.5,
-          color:         TabuColors.subtle.withOpacity(0.7))));
+          color:         TClubColors.subtle.withOpacity(0.7))));
   }
 }
 
@@ -587,11 +587,11 @@ class _OtherUserName extends StatelessWidget {
         final name = snap.data?.snapshot.value as String? ?? '...';
         return Text(name.toUpperCase(),
           style: TextStyle(
-            fontFamily:  TabuTypography.bodyFont,
+            fontFamily:  TClubTypography.bodyFont,
             fontSize:    13,
             fontWeight:  bold ? FontWeight.w700 : FontWeight.w500,
             letterSpacing: 1.5,
-            color:       TabuColors.textoPrincipal),
+            color:       TClubColors.textoPrincipal),
           maxLines: 1,
           overflow: TextOverflow.ellipsis);
       });
@@ -652,19 +652,19 @@ class MessageBubble extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: isMine
                       ? const LinearGradient(
-                          colors: [TabuColors.rosaDeep, Color(0xFF8B1A4A)],
+                          colors: [TClubColors.redDeep, Color(0xFF8B1A4A)],
                           begin:  Alignment.topLeft,
                           end:    Alignment.bottomRight)
                       : null,
-                  color:  isMine ? null : TabuColors.bgCard,
+                  color:  isMine ? null : TClubColors.bgCard,
                   border: Border.all(
                     color: isMine
-                        ? TabuColors.rosaPrincipal.withOpacity(0.25)
-                        : TabuColors.border.withOpacity(0.6),
+                        ? TClubColors.redPrincipal.withOpacity(0.25)
+                        : TClubColors.border.withOpacity(0.6),
                     width: 0.6),
                   boxShadow: isMine
                       ? [BoxShadow(
-                          color:      TabuColors.glow.withOpacity(0.15),
+                          color:      TClubColors.glow.withOpacity(0.15),
                           blurRadius: 10,
                           offset:     const Offset(0, 3))]
                       : null),
@@ -675,22 +675,22 @@ class MessageBubble extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(message.text,
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize:   14,
                             height:     1.45,
                             color: isMine
                                 ? Colors.white
-                                : TabuColors.textoPrincipal.withOpacity(0.92)))),
+                                : TClubColors.textoPrincipal.withOpacity(0.92)))),
                     const SizedBox(height: 4),
                     Row(mainAxisSize: MainAxisSize.min, children: [
                       Text(_formatHour(message.timestamp),
                           style: TextStyle(
-                            fontFamily:    TabuTypography.bodyFont,
+                            fontFamily:    TClubTypography.bodyFont,
                             fontSize:      9,
                             letterSpacing: 0.5,
                             color: isMine
                                 ? Colors.white.withOpacity(0.55)
-                                : TabuColors.subtle)),
+                                : TClubColors.subtle)),
                       if (isMine) ...[
                         const SizedBox(width: 4),
                         Icon(
@@ -721,19 +721,19 @@ class MessageBubble extends StatelessWidget {
                     Text(
                       readAtMs != null ? _readAgoText(readAtMs) : 'visto',
                       style: const TextStyle(
-                          fontFamily:    TabuTypography.bodyFont,
+                          fontFamily:    TClubTypography.bodyFont,
                           fontSize:      9,
                           letterSpacing: 0.5,
                           color:         Color(0xFF60A5FA))),
                   ] else ...[
                     Icon(Icons.done_rounded,
-                        size: 10, color: TabuColors.subtle.withOpacity(0.6)),
+                        size: 10, color: TClubColors.subtle.withOpacity(0.6)),
                     const SizedBox(width: 4),
                     Text('enviado', style: TextStyle(
-                        fontFamily:    TabuTypography.bodyFont,
+                        fontFamily:    TClubTypography.bodyFont,
                         fontSize:      9,
                         letterSpacing: 0.5,
-                        color:         TabuColors.subtle.withOpacity(0.6))),
+                        color:         TClubColors.subtle.withOpacity(0.6))),
                   ],
                 ],
               ),
@@ -774,18 +774,19 @@ class DateSeparator extends StatelessWidget {
         Expanded(child: Container(height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.transparent, TabuColors.border])))),
+                  colors: [Colors.transparent, TClubColors.border])))),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child:   Text(_label(), style: const TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      8,
               letterSpacing: 2.5,
-              color:         TabuColors.subtle))),
+              color:         TClubColors.subtle))),
         Expanded(child: Container(height: 0.5,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  colors: [TabuColors.border, Colors.transparent])))),
+                  colors: [TClubColors.border, Colors.transparent])))),
       ]));
   }
 }
+

@@ -255,3 +255,4 @@ class MatchProfileModel {
     distanceKm:        km,
   );
 }
+

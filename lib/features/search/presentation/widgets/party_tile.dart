@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
@@ -160,3 +160,4 @@ class _CountChip extends StatelessWidget {
     );
   }
 }
+

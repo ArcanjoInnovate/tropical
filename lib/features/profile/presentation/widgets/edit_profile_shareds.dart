@@ -1,6 +1,6 @@
 // lib/screens/screens_home/perfil_screen/edit_perfil/edit_perfil_shared.dart
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 //  PAGE SCAFFOLD  (header padrão + background de todas as sub-telas)
@@ -24,19 +24,19 @@ class EditPageScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         const Positioned.fill(child: _BgPaint()),
         Positioned(top: 0, left: 0, right: 0, child: Container(
           height: 3,
           decoration: const BoxDecoration(gradient: LinearGradient(colors: [
-            TabuColors.rosaDeep, TabuColors.rosaPrincipal,
-            TabuColors.rosaClaro, TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+            TClubColors.redDeep, TClubColors.redPrincipal,
+            TClubColors.redClaro, TClubColors.redPrincipal, TClubColors.redDeep,
           ])),
         )),
         SafeArea(child: Column(children: [
           _EditHeader(title: title, onSave: onSave, busy: busy, saveLabel: saveLabel),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           Expanded(child: child),
         ])),
       ]),
@@ -64,14 +64,14 @@ class _EditHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(4, 12, 16, 12),
       child: Row(children: [
         IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: TabuColors.dim, size: 18),
+          icon: const Icon(Icons.arrow_back_ios_new, color: TClubColors.dim, size: 18),
           onPressed: () => Navigator.pop(context),
         ),
         Expanded(child: Text(title,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            fontFamily: TabuTypography.displayFont,
-            fontSize: 16, letterSpacing: 4, color: TabuColors.textoPrincipal,
+            fontFamily: TClubTypography.displayFont,
+            fontSize: 16, letterSpacing: 4, color: TClubColors.textoPrincipal,
           ))),
         if (onSave != null)
           GestureDetector(
@@ -79,14 +79,14 @@ class _EditHeader extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color:  busy ? TabuColors.bgCard : TabuColors.rosaPrincipal,
-                border: Border.all(color: TabuColors.rosaPrincipal, width: 0.8),
+                color:  busy ? TClubColors.bgCard : TClubColors.redPrincipal,
+                border: Border.all(color: TClubColors.redPrincipal, width: 0.8),
               ),
               child: Text(busy ? '...' : saveLabel,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 11, fontWeight: FontWeight.w700, letterSpacing: 2.5,
-                  color: busy ? TabuColors.subtle : TabuColors.textoPrincipal,
+                  color: busy ? TClubColors.subtle : TClubColors.textoPrincipal,
                 )),
             ),
           )
@@ -107,13 +107,13 @@ class SectionLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Row(children: [
     Container(width: 5, height: 5, decoration: const BoxDecoration(
-        color: TabuColors.rosaPrincipal, shape: BoxShape.circle)),
+        color: TClubColors.redPrincipal, shape: BoxShape.circle)),
     const SizedBox(width: 8),
     Text(label, style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont, fontSize: 9,
-        fontWeight: FontWeight.w700, letterSpacing: 3, color: TabuColors.rosaPrincipal)),
+        fontFamily: TClubTypography.bodyFont, fontSize: 9,
+        fontWeight: FontWeight.w700, letterSpacing: 3, color: TClubColors.redPrincipal)),
     const SizedBox(width: 12),
-    Expanded(child: Container(height: 0.5, color: TabuColors.border)),
+    Expanded(child: Container(height: 0.5, color: TClubColors.border)),
   ]);
 }
 
@@ -171,12 +171,12 @@ class _TabuFieldState extends State<TabuField> {
     children: [
       Row(children: [
         Icon(widget.icon, size: 14,
-            color: _focused ? TabuColors.rosaPrincipal : TabuColors.subtle),
+            color: _focused ? TClubColors.redPrincipal : TClubColors.subtle),
         const SizedBox(width: 6),
         Text(widget.label, style: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 9,
+            fontFamily: TClubTypography.bodyFont, fontSize: 9,
             fontWeight: FontWeight.w700, letterSpacing: 2.5,
-            color: _focused ? TabuColors.rosaPrincipal : TabuColors.subtle)),
+            color: _focused ? TClubColors.redPrincipal : TClubColors.subtle)),
       ]),
       const SizedBox(height: 6),
       TextFormField(
@@ -185,23 +185,23 @@ class _TabuFieldState extends State<TabuField> {
         textCapitalization: widget.textCapitalization,
         keyboardType: widget.keyboardType, textInputAction: widget.textInputAction,
         validator: widget.validator, onEditingComplete: widget.onEditingComplete,
-        style: const TextStyle(fontFamily: TabuTypography.bodyFont,
+        style: const TextStyle(fontFamily: TClubTypography.bodyFont,
             fontSize: 15, fontWeight: FontWeight.w500, letterSpacing: 0.5,
-            color: TabuColors.textoPrincipal),
+            color: TClubColors.textoPrincipal),
         decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: const TextStyle(fontFamily: TabuTypography.bodyFont,
-              fontSize: 13, color: TabuColors.subtle),
-          counterStyle: const TextStyle(fontFamily: TabuTypography.bodyFont,
-              fontSize: 9, color: TabuColors.subtle),
-          filled: true, fillColor: TabuColors.bgCard,
+          hintStyle: const TextStyle(fontFamily: TClubTypography.bodyFont,
+              fontSize: 13, color: TClubColors.subtle),
+          counterStyle: const TextStyle(fontFamily: TClubTypography.bodyFont,
+              fontSize: 9, color: TClubColors.subtle),
+          filled: true, fillColor: TClubColors.bgCard,
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          border:             _border(TabuColors.border),
-          enabledBorder:      _border(TabuColors.border),
-          focusedBorder:      _border(TabuColors.rosaPrincipal, width: 1.5),
+          border:             _border(TClubColors.border),
+          enabledBorder:      _border(TClubColors.border),
+          focusedBorder:      _border(TClubColors.redPrincipal, width: 1.5),
           errorBorder:        _border(const Color(0xFFE85D5D)),
           focusedErrorBorder: _border(const Color(0xFFE85D5D), width: 1.5),
-          errorStyle: const TextStyle(fontFamily: TabuTypography.bodyFont,
+          errorStyle: const TextStyle(fontFamily: TClubTypography.bodyFont,
               fontSize: 10, letterSpacing: 1, color: Color(0xFFE85D5D)),
         ),
       ),
@@ -236,11 +236,11 @@ class SelectionTile extends StatelessWidget {
     final has = value != null && value!.isNotEmpty;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(children: [
-        Icon(icon, size: 14, color: has ? TabuColors.rosaPrincipal : TabuColors.subtle),
+        Icon(icon, size: 14, color: has ? TClubColors.redPrincipal : TClubColors.subtle),
         const SizedBox(width: 6),
-        Text(label, style: TextStyle(fontFamily: TabuTypography.bodyFont,
+        Text(label, style: TextStyle(fontFamily: TClubTypography.bodyFont,
             fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 2.5,
-            color: has ? TabuColors.rosaPrincipal : TabuColors.subtle)),
+            color: has ? TClubColors.redPrincipal : TClubColors.subtle)),
       ]),
       const SizedBox(height: 6),
       GestureDetector(
@@ -249,18 +249,18 @@ class SelectionTile extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             border: Border.all(
-                color: has ? TabuColors.rosaPrincipal : TabuColors.border,
+                color: has ? TClubColors.redPrincipal : TClubColors.border,
                 width: has ? 1.5 : 0.8),
           ),
           child: Row(children: [
             Expanded(child: Text(has ? value! : hint,
-              style: TextStyle(fontFamily: TabuTypography.bodyFont,
+              style: TextStyle(fontFamily: TClubTypography.bodyFont,
                   fontSize: has ? 15 : 13, fontWeight: has ? FontWeight.w500 : FontWeight.w400,
-                  color: has ? TabuColors.textoPrincipal : TabuColors.subtle))),
+                  color: has ? TClubColors.textoPrincipal : TClubColors.subtle))),
             Icon(Icons.keyboard_arrow_down_rounded,
-                color: has ? TabuColors.rosaPrincipal : TabuColors.subtle, size: 20),
+                color: has ? TClubColors.redPrincipal : TClubColors.subtle, size: 20),
           ]),
         ),
       ),
@@ -294,29 +294,29 @@ class OptionsSheet<T> extends StatelessWidget {
       builder: (_, ctrl) => Column(children: [
         Padding(padding: const EdgeInsets.symmetric(vertical: 12),
           child: Container(width: 36, height: 3,
-            decoration: BoxDecoration(color: TabuColors.border, borderRadius: BorderRadius.circular(2)))),
+            decoration: BoxDecoration(color: TClubColors.border, borderRadius: BorderRadius.circular(2)))),
         Padding(padding: const EdgeInsets.fromLTRB(24, 4, 24, 14),
           child: Align(alignment: Alignment.centerLeft, child: SectionLabel(label: title))),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         Expanded(child: ListView.separated(
           controller: ctrl,
           itemCount: options.length,
-          separatorBuilder: (_, __) => Container(height: 0.5, color: TabuColors.border),
+          separatorBuilder: (_, __) => Container(height: 0.5, color: TClubColors.border),
           itemBuilder: (_, i) {
             final opt      = options[i];
             final isActive = opt == current;
             return InkWell(
               onTap: () => onSelect(opt),
               child: Container(
-                color:   isActive ? TabuColors.rosaPrincipal.withOpacity(0.08) : Colors.transparent,
+                color:   isActive ? TClubColors.redPrincipal.withOpacity(0.08) : Colors.transparent,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Row(children: [
                   Expanded(child: Text(label(opt), style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont, fontSize: 14,
+                    fontFamily: TClubTypography.bodyFont, fontSize: 14,
                     fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
-                    color: isActive ? TabuColors.rosaPrincipal : TabuColors.textoPrincipal))),
+                    color: isActive ? TClubColors.redPrincipal : TClubColors.textoPrincipal))),
                   if (isActive)
-                    const Icon(Icons.check_rounded, color: TabuColors.rosaPrincipal, size: 18),
+                    const Icon(Icons.check_rounded, color: TClubColors.redPrincipal, size: 18),
                 ]),
               ),
             );
@@ -335,7 +335,7 @@ class OptionsSheet<T> extends StatelessWidget {
   }) {
     return showModalBottomSheet<T>(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
@@ -358,14 +358,14 @@ class InfoBox extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
     decoration: BoxDecoration(
-      color: TabuColors.rosaPrincipal.withOpacity(0.06),
-      border: Border.all(color: TabuColors.border, width: 0.8)),
+      color: TClubColors.redPrincipal.withOpacity(0.06),
+      border: Border.all(color: TClubColors.border, width: 0.8)),
     child: Row(children: [
-      const Icon(Icons.info_outline, color: TabuColors.subtle, size: 14),
+      const Icon(Icons.info_outline, color: TClubColors.subtle, size: 14),
       const SizedBox(width: 8),
       Expanded(child: Text(text, style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont, fontSize: 11,
-          letterSpacing: 0.5, color: TabuColors.subtle))),
+          fontFamily: TClubTypography.bodyFont, fontSize: 11,
+          letterSpacing: 0.5, color: TClubColors.subtle))),
     ]),
   );
 }
@@ -392,23 +392,23 @@ class SaveButton extends StatelessWidget {
       child: Container(
         width: double.infinity, height: 52,
         decoration: BoxDecoration(
-          color:  busy ? TabuColors.bgCard : TabuColors.rosaPrincipal,
-          border: Border.all(color: busy ? TabuColors.border : TabuColors.rosaPrincipal, width: 0.8)),
+          color:  busy ? TClubColors.bgCard : TClubColors.redPrincipal,
+          border: Border.all(color: busy ? TClubColors.border : TClubColors.redPrincipal, width: 0.8)),
         child: Stack(alignment: Alignment.center, children: [
           if (uploading)
             Positioned.fill(child: FractionallySizedBox(
               alignment: Alignment.centerLeft, widthFactor: progress,
-              child: Container(color: TabuColors.rosaPrincipal.withOpacity(0.25)))),
+              child: Container(color: TClubColors.redPrincipal.withOpacity(0.25)))),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             if (busy)
               const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(
-                  color: TabuColors.rosaPrincipal, strokeWidth: 1.5))
+                  color: TClubColors.redPrincipal, strokeWidth: 1.5))
             else
-              const Icon(Icons.check, color: TabuColors.textoPrincipal, size: 16),
+              const Icon(Icons.check, color: TClubColors.textoPrincipal, size: 16),
             const SizedBox(width: 10),
-            Text(label, style: TextStyle(fontFamily: TabuTypography.bodyFont,
+            Text(label, style: TextStyle(fontFamily: TClubTypography.bodyFont,
                 fontSize: 12, fontWeight: FontWeight.w700, letterSpacing: 3,
-                color: busy ? TabuColors.subtle : TabuColors.textoPrincipal)),
+                color: busy ? TClubColors.subtle : TClubColors.textoPrincipal)),
           ]),
         ]),
       ),
@@ -429,11 +429,11 @@ class _BgPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     canvas.drawCircle(
       Offset(size.width * 0.9, size.height * 0.08), size.width * 0.6,
       Paint()..shader = RadialGradient(colors: [
-        TabuColors.rosaPrincipal.withOpacity(0.07), Colors.transparent,
+        TClubColors.redPrincipal.withOpacity(0.07), Colors.transparent,
       ]).createShader(Rect.fromCircle(
           center: Offset(size.width * 0.9, size.height * 0.08),
           radius: size.width * 0.6)));
@@ -441,3 +441,4 @@ class _BgPainter extends CustomPainter {
   @override
   bool shouldRepaint(_BgPainter _) => false;
 }
+

@@ -2,24 +2,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/helpers/media_permission_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/controller/edit_avatar_controller.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_identify_page.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_interests_page.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_location_page.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_personal_page.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_photos_page.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_enums.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/helpers/media_permission_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/controller/edit_avatar_controller.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_identify_page.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_interests_page.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_location_page.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_personal_page.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_photos_page.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_enums.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:tabuapp/features/profile/data/repositories/avatar_repository.dart';
-import 'package:tabuapp/features/profile/data/services/avatar_service.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/services/user_profile_cache.dart';
+import 'package:tclub/features/profile/data/repositories/avatar_repository.dart';
+import 'package:tclub/features/profile/data/services/avatar_service.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_profile_cache.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class EditProfileHub extends StatefulWidget {
@@ -294,20 +294,20 @@ class _HubEditarPerfilEstado extends State<EditProfileHub> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         const Positioned.fill(child: _FundoDecorado()),
         Positioned(top: 0, left: 0, right: 0, child: Container(height: 3,
           decoration: const BoxDecoration(gradient: LinearGradient(colors: [
-            TabuColors.rosaDeep, TabuColors.rosaPrincipal, TabuColors.rosaClaro,
-            TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+            TClubColors.redDeep, TClubColors.redPrincipal, TClubColors.redClaro,
+            TClubColors.redPrincipal, TClubColors.redDeep,
           ])))),
         SafeArea(child: Column(children: [
           _CabecalhoHub(aoVoltar: () {
             UserDataNotifier.instance.update(_dados);
             Navigator.pop(context, _dados);
           }),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           Expanded(child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 24),
             children: [
@@ -379,11 +379,11 @@ class _CabecalhoHub extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(4, 12, 16, 12),
     child: Row(children: [
-      IconButton(icon: const Icon(Icons.arrow_back_ios_new, color: TabuColors.dim, size: 18),
+      IconButton(icon: const Icon(Icons.arrow_back_ios_new, color: TClubColors.dim, size: 18),
           onPressed: aoVoltar),
       const Expanded(child: Text('EDITAR PERFIL', textAlign: TextAlign.center,
-        style: TextStyle(fontFamily: TabuTypography.displayFont,
-            fontSize: 16, letterSpacing: 4, color: TabuColors.textoPrincipal))),
+        style: TextStyle(fontFamily: TClubTypography.displayFont,
+            fontSize: 16, letterSpacing: 4, color: TClubColors.textoPrincipal))),
       const SizedBox(width: 48),
     ]),
   );
@@ -403,8 +403,8 @@ class _CartaoPerfil extends StatelessWidget {
   final double       progressoEnvio;
   final VoidCallback aoTocar;
 
-  Widget _semFoto() => Container(color: TabuColors.bgAlt,
-      child: const Icon(Icons.person_outline, color: TabuColors.rosaPrincipal, size: 36));
+  Widget _semFoto() => Container(color: TClubColors.bgAlt,
+      child: const Icon(Icons.person_outline, color: TClubColors.redPrincipal, size: 36));
 
   @override
   Widget build(BuildContext context) {
@@ -414,12 +414,12 @@ class _CartaoPerfil extends StatelessWidget {
         Stack(alignment: Alignment.center, children: [
           Container(width: 100, height: 100,
             decoration: BoxDecoration(shape: BoxShape.circle,
-              boxShadow: [BoxShadow(color: TabuColors.glow, blurRadius: 24, spreadRadius: 2)],
-              gradient: const LinearGradient(colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+              boxShadow: [BoxShadow(color: TClubColors.glow, blurRadius: 24, spreadRadius: 2)],
+              gradient: const LinearGradient(colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                   begin: Alignment.topLeft, end: Alignment.bottomRight))),
           Container(width: 92, height: 92,
             decoration: BoxDecoration(shape: BoxShape.circle,
-                border: Border.all(color: TabuColors.bg, width: 3)),
+                border: Border.all(color: TClubColors.bg, width: 3)),
             child: ClipOval(child: arquivoImagem != null
                 ? Image.file(arquivoImagem!, fit: BoxFit.cover)
                 : urlAvatar.isNotEmpty
@@ -431,28 +431,28 @@ class _CartaoPerfil extends StatelessWidget {
           Positioned.fill(child: ClipOval(child: Container(
               color: Colors.black.withOpacity(0.35),
               child: const Center(child: Icon(Icons.photo_camera,
-                  color: TabuColors.textoPrincipal, size: 24))))),
+                  color: TClubColors.textoPrincipal, size: 24))))),
           if (enviando)
             SizedBox(width: 100, height: 100,
               child: CircularProgressIndicator(value: progressoEnvio, strokeWidth: 3,
-                  color: TabuColors.rosaPrincipal, backgroundColor: TabuColors.border)),
+                  color: TClubColors.redPrincipal, backgroundColor: TClubColors.border)),
           if (!enviando)
             Positioned(bottom: 0, right: 0,
               child: Container(width: 28, height: 28,
-                decoration: BoxDecoration(color: TabuColors.rosaPrincipal,
+                decoration: BoxDecoration(color: TClubColors.redPrincipal,
                     shape: BoxShape.circle,
-                    border: Border.all(color: TabuColors.bg, width: 2)),
-                child: const Icon(Icons.edit, color: TabuColors.textoPrincipal, size: 12))),
+                    border: Border.all(color: TClubColors.bg, width: 2)),
+                child: const Icon(Icons.edit, color: TClubColors.textoPrincipal, size: 12))),
         ]),
         const SizedBox(height: 12),
         Text(nome.isNotEmpty ? nome : 'Seu nome',
-          style: const TextStyle(fontFamily: TabuTypography.displayFont,
+          style: const TextStyle(fontFamily: TClubTypography.displayFont,
               fontSize: 20, fontWeight: FontWeight.w700,
-              color: TabuColors.textoPrincipal, letterSpacing: 0.5)),
+              color: TClubColors.textoPrincipal, letterSpacing: 0.5)),
         const SizedBox(height: 4),
         Text(enviando ? 'Enviando foto...' : 'Toque para alterar a foto',
-          style: TextStyle(fontFamily: TabuTypography.bodyFont, fontSize: 11,
-              color: enviando ? TabuColors.rosaPrincipal : TabuColors.subtle,
+          style: TextStyle(fontFamily: TClubTypography.bodyFont, fontSize: 11,
+              color: enviando ? TClubColors.redPrincipal : TClubColors.subtle,
               letterSpacing: 1)),
       ]),
     );
@@ -466,9 +466,9 @@ class _RotuloGrupo extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(20, 0, 20, 8),
-    child: Text(titulo, style: const TextStyle(fontFamily: TabuTypography.bodyFont,
+    child: Text(titulo, style: const TextStyle(fontFamily: TClubTypography.bodyFont,
         fontSize: 9, fontWeight: FontWeight.w700, letterSpacing: 3,
-        color: TabuColors.subtle)),
+        color: TClubColors.subtle)),
   );
 }
 
@@ -480,13 +480,13 @@ class _GrupoConfiguracoes extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.8)),
+      decoration: BoxDecoration(color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.8)),
       child: Column(children: linhas.asMap().entries.map((entrada) {
         final ultimo = entrada.key == linhas.length - 1;
         return Column(mainAxisSize: MainAxisSize.min, children: [
           entrada.value,
-          if (!ultimo) Container(height: 0.5, color: TabuColors.border),
+          if (!ultimo) Container(height: 0.5, color: TClubColors.border),
         ]);
       }).toList()),
     );
@@ -512,30 +512,30 @@ class _LinhaConfiguracao extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap:          aoTocar,
-      splashColor:    TabuColors.rosaPrincipal.withOpacity(0.06),
-      highlightColor: TabuColors.rosaPrincipal.withOpacity(0.04),
+      splashColor:    TClubColors.redPrincipal.withOpacity(0.06),
+      highlightColor: TClubColors.redPrincipal.withOpacity(0.04),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(children: [
           Container(width: 34, height: 34,
             decoration: BoxDecoration(
-              color: TabuColors.rosaPrincipal.withOpacity(0.10),
+              color: TClubColors.redPrincipal.withOpacity(0.10),
               borderRadius: BorderRadius.circular(9),
-              border: Border.all(color: TabuColors.border, width: 0.6)),
-            child: Icon(icone, color: TabuColors.rosaPrincipal, size: 16)),
+              border: Border.all(color: TClubColors.border, width: 0.6)),
+            child: Icon(icone, color: TClubColors.redPrincipal, size: 16)),
           const SizedBox(width: 14),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(titulo, style: const TextStyle(fontFamily: TabuTypography.bodyFont,
-                fontSize: 14, fontWeight: FontWeight.w600, color: TabuColors.textoPrincipal)),
+            Text(titulo, style: const TextStyle(fontFamily: TClubTypography.bodyFont,
+                fontSize: 14, fontWeight: FontWeight.w600, color: TClubColors.textoPrincipal)),
             if (subtitulo.isNotEmpty) ...[
               const SizedBox(height: 2),
-              Text(subtitulo, style: const TextStyle(fontFamily: TabuTypography.bodyFont,
-                  fontSize: 12, color: TabuColors.subtle),
+              Text(subtitulo, style: const TextStyle(fontFamily: TClubTypography.bodyFont,
+                  fontSize: 12, color: TClubColors.subtle),
                   maxLines: 1, overflow: TextOverflow.ellipsis),
             ],
           ])),
           if (exibirSeta) const Icon(Icons.chevron_right_rounded,
-              color: TabuColors.dim, size: 20),
+              color: TClubColors.dim, size: 20),
         ]),
       ),
     );
@@ -552,10 +552,10 @@ class _PintorFundo extends CustomPainter {
   @override
   void paint(Canvas canvas, Size tamanho) {
     canvas.drawRect(Rect.fromLTWH(0, 0, tamanho.width, tamanho.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     canvas.drawCircle(Offset(tamanho.width * 0.9, tamanho.height * 0.08), tamanho.width * 0.6,
       Paint()..shader = RadialGradient(colors: [
-        TabuColors.rosaPrincipal.withOpacity(0.07), Colors.transparent,
+        TClubColors.redPrincipal.withOpacity(0.07), Colors.transparent,
       ]).createShader(Rect.fromCircle(
           center: Offset(tamanho.width * 0.9, tamanho.height * 0.08),
           radius: tamanho.width * 0.6)));
@@ -563,3 +563,4 @@ class _PintorFundo extends CustomPainter {
   @override
   bool shouldRepaint(_PintorFundo _) => false;
 }
+

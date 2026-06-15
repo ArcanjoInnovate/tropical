@@ -3,7 +3,7 @@
 //   • Removido: import 'package:firebase_storage/firebase_storage.dart'
 //   • Adicionado: import cloudinary_service.dart
 //   • Método _publicar: uploads reescritos para CloudinaryService
-//   • Paleta de cores migrada para padrão de match_profile_page (TabuTheme claro)
+//   • Paleta de cores migrada para padrão de match_profile_page (TClubTheme claro)
 //   • _gravarVideoCamera: usa ImagePicker com ImageSource.camera (sem CameraX)
 //   • FIX: _videoProcessProgress e _videoProcessStep movidos para dentro da classe
 //   • FIX: _gravarVideoCamera só reseta/exibe overlay APÓS picker retornar arquivo
@@ -20,12 +20,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:tabuapp/features/story/data/models/story_model.dart';
-import 'package:tabuapp/features/post/data/services/cloudinary_service.dart';
+import 'package:tclub/features/story/data/models/story_model.dart';
+import 'package:tclub/features/post/data/services/cloudinary_service.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/story/data/services/story_service.dart';
-import 'package:tabuapp/core/services/media/videos_trim_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/story/data/services/story_service.dart';
+import 'package:tclub/core/services/media/videos_trim_service.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  CRIAR STORY SCREEN
@@ -668,12 +668,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
 
   void _snack(String msg, {bool success = false}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: success ? TabuColors.bgCard : TabuColors.errorPale,
+      backgroundColor: success ? TClubColors.bgCard : TClubColors.errorPale,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.zero,
         side: BorderSide(
-          color: success ? TabuColors.borderMid : TabuColors.error.withOpacity(0.5),
+          color: success ? TClubColors.borderMid : TClubColors.error.withOpacity(0.5),
           width: 0.7,
         ),
       ),
@@ -683,18 +683,18 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         Icon(
           success ? Icons.check_circle_outline_rounded : Icons.error_outline_rounded,
           size: 14,
-          color: success ? TabuColors.rosaPrincipal : TabuColors.error,
+          color: success ? TClubColors.redPrincipal : TClubColors.error,
         ),
         const SizedBox(width: 10),
         Flexible(
           child: Text(
             msg,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12,
               fontWeight: FontWeight.w600,
               letterSpacing: 0.3,
-              color: success ? TabuColors.textoPrincipal : TabuColors.errorDeep,
+              color: success ? TClubColors.textoPrincipal : TClubColors.errorDeep,
             ),
           ),
         ),
@@ -774,7 +774,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: Stack(
           children: [
             FadeTransition(
@@ -797,18 +797,18 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
   Widget _buildVideoProcessOverlay() {
     return Positioned.fill(
       child: Container(
-        color: TabuColors.bg.withOpacity(0.94),
+        color: TClubColors.bg.withOpacity(0.94),
         child: Center(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 32),
             padding: const EdgeInsets.all(28),
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.borderMid, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.borderMid, width: 0.8),
               borderRadius: BorderRadius.circular(16),
               boxShadow: [
                 BoxShadow(
-                  color: TabuColors.glow,
+                  color: TClubColors.glow,
                   blurRadius: 24,
                   offset: const Offset(0, 8),
                 ),
@@ -825,12 +825,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     children: [
                       CircularProgressIndicator(
                         value: _videoProcessProgress,
-                        color: TabuColors.rosaPrincipal,
-                        backgroundColor: TabuColors.rosaPale,
+                        color: TClubColors.redPrincipal,
+                        backgroundColor: TClubColors.redPale,
                         strokeWidth: 3,
                       ),
                       Icon(Icons.video_library_outlined,
-                          color: TabuColors.rosaPrincipal, size: 36),
+                          color: TClubColors.redPrincipal, size: 36),
                     ],
                   ),
                 ),
@@ -838,10 +838,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Text(
                   'PROCESSANDO VÍDEO',
                   style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 18,
                     letterSpacing: 5,
-                    color: TabuColors.textoPrincipal,
+                    color: TClubColors.textoPrincipal,
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -849,10 +849,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   _videoProcessStep,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
                     letterSpacing: 0.3,
-                    color: TabuColors.textoMuted,
+                    color: TClubColors.textoMuted,
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -860,8 +860,8 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   borderRadius: BorderRadius.circular(2),
                   child: LinearProgressIndicator(
                     value: _videoProcessProgress,
-                    backgroundColor: TabuColors.rosaPale,
-                    color: TabuColors.rosaPrincipal,
+                    backgroundColor: TClubColors.redPale,
+                    color: TClubColors.redPrincipal,
                     minHeight: 4,
                   ),
                 ),
@@ -869,10 +869,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Text(
                   '${(_videoProcessProgress * 100).toInt()}%',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     letterSpacing: 2,
                   ),
                 ),
@@ -880,25 +880,25 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.07),
-                    border: Border.all(color: TabuColors.borderMid, width: 0.8),
+                    color: TClubColors.redPrincipal.withOpacity(0.07),
+                    border: Border.all(color: TClubColors.borderMid, width: 0.8),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.auto_awesome_rounded,
-                          size: 15, color: TabuColors.rosaPrincipal),
+                          size: 15, color: TClubColors.redPrincipal),
                       const SizedBox(width: 10),
                       Flexible(
                         child: Text(
                           'Preparando seu vídeo para o story...',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
                             letterSpacing: 0.3,
-                            color: TabuColors.textoSecundario,
+                            color: TClubColors.textoSecundario,
                           ),
                         ),
                       ),
@@ -919,10 +919,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
   Widget _buildPermissaoGate() {
     return Stack(children: [
       Positioned.fill(child: Container(
-        color: TabuColors.bg,
+        color: TClubColors.bg,
         child: CustomPaint(
           painter: _ParticlePainter(
-            color: TabuColors.rosaPrincipal, seed: 7, count: 40,
+            color: TClubColors.redPrincipal, seed: 7, count: 40,
           ),
         ),
       )),
@@ -932,7 +932,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
             center: Alignment.center,
             radius: 0.8,
             colors: [
-              TabuColors.glow.withOpacity(0.5),
+              TClubColors.glow.withOpacity(0.5),
               Colors.transparent,
             ],
           ),
@@ -958,9 +958,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
               width: 110, height: 110,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: TabuColors.border, width: 1),
+                border: Border.all(color: TClubColors.border, width: 1),
                 gradient: RadialGradient(colors: [
-                  TabuColors.glow.withOpacity(0.4),
+                  TClubColors.glow.withOpacity(0.4),
                   Colors.transparent,
                 ]),
               ),
@@ -969,12 +969,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
               width: 80, height: 80,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TabuColors.rosaPale,
-                border: Border.all(color: TabuColors.rosaPrincipal.withOpacity(0.5), width: 1.5),
-                boxShadow: TabuGlow.rosaPrincipal(blur: 20),
+                color: TClubColors.redPale,
+                border: Border.all(color: TClubColors.redPrincipal.withOpacity(0.5), width: 1.5),
+                boxShadow: TClubGlow.redPrincipal(blur: 20),
               ),
               child: Icon(Icons.photo_camera_outlined,
-                  color: TabuColors.rosaPrincipal, size: 34),
+                  color: TClubColors.redPrincipal, size: 34),
             ),
           ]),
         ),
@@ -982,24 +982,24 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         Text(
           'ACESSO NECESSÁRIO',
           style: TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 22,
             letterSpacing: 5,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           ),
         ),
         const SizedBox(height: 12),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(
-            'Para criar stories incríveis, o Tabu precisa acessar sua câmera e galeria.',
+            'Para criar stories incríveis, o Tclub precisa acessar sua câmera e galeria.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 13,
               letterSpacing: 0.3,
               height: 1.6,
-              color: TabuColors.textoMuted,
+              color: TClubColors.textoMuted,
             ),
           ),
         ),
@@ -1035,9 +1035,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
               'Você bloqueou permanentemente. Vá em Configurações para habilitar.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
-                color: TabuColors.textoMuted,
+                color: TClubColors.textoMuted,
               ),
             ),
           ),
@@ -1056,32 +1056,32 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
       height: 56,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+          colors: [TClubColors.redDeep, TClubColors.redPrincipal],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
-        border: Border.all(color: TabuColors.rosaPrincipal, width: 1),
-        boxShadow: TabuGlow.rosaPrincipal(blur: 24, spread: 2),
+        border: Border.all(color: TClubColors.redPrincipal, width: 1),
+        boxShadow: TClubGlow.redPrincipal(blur: 24, spread: 2),
       ),
       child: Center(
         child: _solicitando
             ? const SizedBox(
                 width: 22, height: 22,
                 child: CircularProgressIndicator(
-                  color: TabuColors.branco, strokeWidth: 2,
+                  color: TClubColors.branco, strokeWidth: 2,
                 ),
               )
             : Row(mainAxisSize: MainAxisSize.min, children: const [
-                Icon(Icons.lock_open_rounded, color: TabuColors.branco, size: 18),
+                Icon(Icons.lock_open_rounded, color: TClubColors.branco, size: 18),
                 SizedBox(width: 10),
                 Text(
                   'PERMITIR ACESSO',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: TabuColors.branco,
+                    color: TClubColors.branco,
                   ),
                 ),
               ]),
@@ -1095,20 +1095,20 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
       width: double.infinity,
       height: 56,
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.borderMid, width: 1),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.borderMid, width: 1),
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Icon(Icons.settings_outlined, color: TabuColors.rosaPrincipal, size: 18),
+        Icon(Icons.settings_outlined, color: TClubColors.redPrincipal, size: 18),
         const SizedBox(width: 10),
         Text(
           'ABRIR CONFIGURAÇÕES',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 13,
             fontWeight: FontWeight.w700,
             letterSpacing: 2.5,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
           ),
         ),
       ]),
@@ -1171,12 +1171,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         );
       }
       return Container(
-        color: TabuColors.bg,
+        color: TClubColors.bg,
         child: Center(
           child: SizedBox(
             width: 32, height: 32,
             child: CircularProgressIndicator(
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               strokeWidth: 1.5,
             ),
           ),
@@ -1198,7 +1198,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         ),
       );
     }
-    return Container(color: TabuColors.bg);
+    return Container(color: TClubColors.bg);
   }
 
   Widget _buildTopBarCaptura() {
@@ -1261,7 +1261,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                           end: Alignment.bottomRight,
                         ),
                         border: Border.all(
-                          color: sel ? TabuColors.rosaPrincipal : TabuColors.border,
+                          color: sel ? TClubColors.redPrincipal : TClubColors.border,
                           width: sel ? 2 : 0.8,
                         ),
                       ),
@@ -1275,9 +1275,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
               constraints: const BoxConstraints(minHeight: 56),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border: Border.all(
-                  color: _textFocus.hasFocus ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                  color: _textFocus.hasFocus ? TClubColors.redPrincipal : TClubColors.borderMid,
                   width: _textFocus.hasFocus ? 1.5 : 0.8,
                 ),
               ),
@@ -1291,24 +1291,24 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 onChanged: (_) => setState(() {}),
                 style: TextStyle(
                   fontFamily: _estiloTexto == _TextStyle.display
-                      ? TabuTypography.displayFont
-                      : TabuTypography.bodyFont,
+                      ? TClubTypography.displayFont
+                      : TClubTypography.bodyFont,
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: _estiloTexto == _TextStyle.branco
-                      ? TabuColors.textoPrincipal
+                      ? TClubColors.textoPrincipal
                       : _estiloTexto == _TextStyle.rosa
-                          ? TabuColors.rosaPrincipal
-                          : TabuColors.rosaDeep,
+                          ? TClubColors.redPrincipal
+                          : TClubColors.redDeep,
                   letterSpacing: _estiloTexto == _TextStyle.display ? 3 : 0.5,
                   height: 1.4,
                 ),
                 decoration: InputDecoration(
                   hintText: 'O que está rolando?',
                   hintStyle: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 20,
-                    color: TabuColors.textoMuted,
+                    color: TClubColors.textoMuted,
                     fontWeight: FontWeight.w400,
                   ),
                   border: InputBorder.none,
@@ -1329,9 +1329,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     margin: const EdgeInsets.only(right: 10),
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: sel ? TabuColors.rosaPale : TabuColors.bgCard,
+                      color: sel ? TClubColors.redPale : TClubColors.bgCard,
                       border: Border.all(
-                        color: sel ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                        color: sel ? TClubColors.redPrincipal : TClubColors.borderMid,
                         width: sel ? 1.2 : 0.5,
                       ),
                     ),
@@ -1339,12 +1339,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                       s.label,
                       style: TextStyle(
                         fontFamily: s == _TextStyle.display
-                            ? TabuTypography.displayFont
-                            : TabuTypography.bodyFont,
+                            ? TClubTypography.displayFont
+                            : TClubTypography.bodyFont,
                         fontSize: s == _TextStyle.display ? 10 : 9,
                         fontWeight: FontWeight.w700,
                         letterSpacing: s == _TextStyle.display ? 2 : 1.5,
-                        color: sel ? TabuColors.rosaPrincipal : TabuColors.textoMuted,
+                        color: sel ? TClubColors.redPrincipal : TClubColors.textoMuted,
                       ),
                     ),
                   ),
@@ -1375,16 +1375,16 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   )
                 : Column(key: const ValueKey('ph'), children: [
                     Icon(Icons.emoji_emotions_outlined,
-                        color: TabuColors.border, size: 60),
+                        color: TClubColors.border, size: 60),
                     const SizedBox(height: 10),
                     Text(
                       'ESCOLHA UM EMOJI',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2.5,
-                        color: TabuColors.textoMuted,
+                        color: TClubColors.textoMuted,
                       ),
                     ),
                   ]),
@@ -1393,8 +1393,8 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.borderMid, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.borderMid, width: 0.8),
             ),
             child: GridView.builder(
               shrinkWrap: true,
@@ -1417,9 +1417,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 140),
                     decoration: BoxDecoration(
-                      color: sel ? TabuColors.rosaPale : TabuColors.bg,
+                      color: sel ? TClubColors.redPale : TClubColors.bg,
                       border: Border.all(
-                        color: sel ? TabuColors.rosaPrincipal : TabuColors.border,
+                        color: sel ? TClubColors.redPrincipal : TClubColors.border,
                         width: sel ? 1.5 : 0.5,
                       ),
                       borderRadius: BorderRadius.circular(6),
@@ -1456,9 +1456,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 margin: const EdgeInsets.symmetric(horizontal: 3),
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 7),
                 decoration: BoxDecoration(
-                  color: sel ? TabuColors.rosaPale : TabuColors.bg.withOpacity(0.85),
+                  color: sel ? TClubColors.redPale : TClubColors.bg.withOpacity(0.85),
                   border: Border.all(
-                    color: sel ? TabuColors.rosaPrincipal : TabuColors.border,
+                    color: sel ? TClubColors.redPrincipal : TClubColors.border,
                     width: sel ? 1.2 : 0.5,
                   ),
                 ),
@@ -1468,18 +1468,18 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     Icon(
                       m.icon,
                       size: 14,
-                      color: sel ? TabuColors.rosaPrincipal : TabuColors.textoMuted,
+                      color: sel ? TClubColors.redPrincipal : TClubColors.textoMuted,
                     ),
                     const SizedBox(height: 3),
                     Text(
                       m.label,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 8,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1,
-                        color: sel ? TabuColors.rosaPrincipal : TabuColors.textoMuted,
+                        color: sel ? TClubColors.redPrincipal : TClubColors.textoMuted,
                       ),
                     ),
                   ],
@@ -1504,12 +1504,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
             width: double.infinity,
             height: 52,
             decoration: BoxDecoration(
-              color: ok ? TabuColors.rosaPrincipal : TabuColors.bgCard,
+              color: ok ? TClubColors.redPrincipal : TClubColors.bgCard,
               border: Border.all(
-                color: ok ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                color: ok ? TClubColors.redPrincipal : TClubColors.borderMid,
                 width: 0.8,
               ),
-              boxShadow: ok ? TabuGlow.rosaPrincipal(blur: 20) : null,
+              boxShadow: ok ? TClubGlow.redPrincipal(blur: 20) : null,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1517,17 +1517,17 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Text(
                   'CONTINUAR',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: ok ? TabuColors.branco : TabuColors.textoMuted,
+                    color: ok ? TClubColors.branco : TClubColors.textoMuted,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: ok ? TabuColors.branco : TabuColors.textoMuted,
+                  color: ok ? TClubColors.branco : TClubColors.textoMuted,
                   size: 13,
                 ),
               ],
@@ -1547,12 +1547,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
             width: double.infinity,
             height: 52,
             decoration: BoxDecoration(
-              color: ok ? TabuColors.rosaPrincipal : TabuColors.bgCard,
+              color: ok ? TClubColors.redPrincipal : TClubColors.bgCard,
               border: Border.all(
-                color: ok ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                color: ok ? TClubColors.redPrincipal : TClubColors.borderMid,
                 width: 0.8,
               ),
-              boxShadow: ok ? TabuGlow.rosaPrincipal(blur: 20) : null,
+              boxShadow: ok ? TClubGlow.redPrincipal(blur: 20) : null,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -1564,11 +1564,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Text(
                   'USAR EMOJI',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: ok ? TabuColors.branco : TabuColors.textoMuted,
+                    color: ok ? TClubColors.branco : TClubColors.textoMuted,
                   ),
                 ),
               ],
@@ -1600,7 +1600,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                          color: TClubColors.redPrincipal.withOpacity(0.5),
                           width: 2,
                         ),
                       ),
@@ -1610,8 +1610,8 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     width: 74, height: 74,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: TabuColors.branco,
-                      boxShadow: TabuGlow.rosaPrincipal(blur: 16, spread: 2),
+                      color: TClubColors.branco,
+                      boxShadow: TClubGlow.redPrincipal(blur: 16, spread: 2),
                     ),
                   ),
                   Container(
@@ -1619,7 +1619,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.3),
+                        color: TClubColors.redPrincipal.withOpacity(0.3),
                         width: 2,
                       ),
                     ),
@@ -1661,7 +1661,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                            color: TClubColors.redPrincipal.withOpacity(0.5),
                             width: 2,
                           ),
                         ),
@@ -1671,12 +1671,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                       width: 74, height: 74,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: TabuColors.branco,
-                        boxShadow: TabuGlow.branco(blur: 16),
+                        color: TClubColors.branco,
+                        boxShadow: TClubGlow.branco(blur: 16),
                       ),
                     ),
                     Icon(Icons.videocam_rounded,
-                        color: TabuColors.rosaPrincipal, size: 32),
+                        color: TClubColors.redPrincipal, size: 32),
                   ]),
                 ),
               ),
@@ -1690,11 +1690,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
           Text(
             'Toque para abrir câmera · máx $_maxVideoSeconds seg',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.5,
-              color: TabuColors.textoMuted,
+              color: TClubColors.textoMuted,
             ),
           ),
         ],
@@ -1756,14 +1756,14 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: _estiloTexto == _TextStyle.display
-                            ? TabuTypography.displayFont
-                            : TabuTypography.bodyFont,
+                            ? TClubTypography.displayFont
+                            : TClubTypography.bodyFont,
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
                         color: _estiloTexto == _TextStyle.branco
                             ? Colors.white
                             : _estiloTexto == _TextStyle.rosa
-                                ? TabuColors.rosaClaro
+                                ? TClubColors.redClaro
                                 : Colors.black,
                         letterSpacing: _estiloTexto == _TextStyle.display ? 3 : 0.5,
                         height: 1.35,
@@ -1870,11 +1870,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     width: 60, height: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: TabuColors.bg.withOpacity(0.85),
-                      border: Border.all(color: TabuColors.rosaPrincipal, width: 1.5),
+                      color: TClubColors.bg.withOpacity(0.85),
+                      border: Border.all(color: TClubColors.redPrincipal, width: 1.5),
                     ),
                     child: Icon(Icons.play_arrow_rounded,
-                        color: TabuColors.rosaPrincipal, size: 32),
+                        color: TClubColors.redPrincipal, size: 32),
                   ),
                 ),
                 Positioned(
@@ -1925,21 +1925,21 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: TabuColors.bg.withOpacity(0.88),
-        border: Border.all(color: TabuColors.borderMid, width: 0.8),
+        color: TClubColors.bg.withOpacity(0.88),
+        border: Border.all(color: TClubColors.borderMid, width: 0.8),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.videocam_outlined, size: 11, color: TabuColors.rosaPrincipal),
+        Icon(Icons.videocam_outlined, size: 11, color: TClubColors.redPrincipal),
         const SizedBox(width: 4),
         Text(
           '${_videoDuration!.inSeconds}s',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           ),
         ),
       ]),
@@ -1954,7 +1954,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
     };
     return Positioned.fill(
       child: Container(
-        color: TabuColors.bg.withOpacity(0.80),
+        color: TClubColors.bg.withOpacity(0.80),
         child: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             SizedBox(
@@ -1964,18 +1964,18 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   value: _publishStep == _PublishStep.uploadingMedia
                       ? _uploadProgress
                       : null,
-                  color: TabuColors.rosaPrincipal,
-                  backgroundColor: TabuColors.rosaPale,
+                  color: TClubColors.redPrincipal,
+                  backgroundColor: TClubColors.redPale,
                   strokeWidth: 3,
                 ),
                 if (_publishStep == _PublishStep.uploadingMedia)
                   Text(
                     '${(_uploadProgress * 100).toInt()}%',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                     ),
                   ),
               ]),
@@ -1984,11 +1984,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
             Text(
               label,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2.5,
-                color: TabuColors.textoSecundario,
+                color: TClubColors.textoSecundario,
               ),
             ),
           ]),
@@ -2030,14 +2030,14 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
           decoration: BoxDecoration(
             color: ov.isEmoji
                 ? Colors.transparent
-                : TabuColors.bg.withOpacity(isAtivo ? 0.90 : 0.75),
+                : TClubColors.bg.withOpacity(isAtivo ? 0.90 : 0.75),
             borderRadius: BorderRadius.circular(6),
             border: isAtivo
-                ? Border.all(color: TabuColors.rosaPrincipal, width: 1.8)
+                ? Border.all(color: TClubColors.redPrincipal, width: 1.8)
                 : (ov.isEmoji
                     ? null
-                    : Border.all(color: TabuColors.borderMid, width: 0.8)),
-            boxShadow: isAtivo ? TabuGlow.rosaSubtle() : null,
+                    : Border.all(color: TClubColors.borderMid, width: 0.8)),
+            boxShadow: isAtivo ? TClubGlow.redSubtle() : null,
           ),
           child: Stack(clipBehavior: Clip.none, children: [
             ov.isEmoji
@@ -2051,10 +2051,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 : Text(
                     ov.conteudo,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: TabuColors.textoPrincipal,
+                      color: TClubColors.textoPrincipal,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -2067,11 +2067,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                     width: 24, height: 24,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: TabuColors.error,
-                      border: Border.all(color: TabuColors.branco, width: 2),
-                      boxShadow: TabuGlow.error(blur: 4),
+                      color: TClubColors.error,
+                      border: Border.all(color: TClubColors.branco, width: 2),
+                      boxShadow: TClubGlow.error(blur: 4),
                     ),
-                    child: Icon(Icons.close, color: TabuColors.branco, size: 13),
+                    child: Icon(Icons.close, color: TClubColors.branco, size: 13),
                   ),
                 ),
               ),
@@ -2133,9 +2133,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         child: Text(
           'Toque em Aa ou 😊 para adicionar elementos',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 11,
-            color: TabuColors.textoMuted,
+            color: TClubColors.textoMuted,
             letterSpacing: 1,
           ),
         ),
@@ -2152,10 +2152,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
           margin: const EdgeInsets.symmetric(horizontal: 28),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.borderMid, width: 0.8),
+            color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.borderMid, width: 0.8),
             borderRadius: BorderRadius.circular(12),
-            boxShadow: TabuGlow.card(),
+            boxShadow: TClubGlow.card(),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -2171,9 +2171,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                       margin: const EdgeInsets.only(right: 8),
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: sel ? TabuColors.rosaPale : TabuColors.bg,
+                        color: sel ? TClubColors.redPale : TClubColors.bg,
                         border: Border.all(
-                          color: sel ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+                          color: sel ? TClubColors.redPrincipal : TClubColors.borderMid,
                           width: sel ? 1.2 : 0.5,
                         ),
                       ),
@@ -2181,12 +2181,12 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                         s.label,
                         style: TextStyle(
                           fontFamily: s == _TextStyle.display
-                              ? TabuTypography.displayFont
-                              : TabuTypography.bodyFont,
+                              ? TClubTypography.displayFont
+                              : TClubTypography.bodyFont,
                           fontSize: 8,
                           fontWeight: FontWeight.w700,
                           letterSpacing: s == _TextStyle.display ? 2 : 1.5,
-                          color: sel ? TabuColors.rosaPrincipal : TabuColors.textoMuted,
+                          color: sel ? TClubColors.redPrincipal : TClubColors.textoMuted,
                         ),
                       ),
                     ),
@@ -2204,23 +2204,23 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 onChanged: (_) => setState(() {}),
                 style: TextStyle(
                   fontFamily: _estiloTexto == _TextStyle.display
-                      ? TabuTypography.displayFont
-                      : TabuTypography.bodyFont,
+                      ? TClubTypography.displayFont
+                      : TClubTypography.bodyFont,
                   fontSize: 18,
                   color: _estiloTexto == _TextStyle.branco
-                      ? TabuColors.textoPrincipal
+                      ? TClubColors.textoPrincipal
                       : _estiloTexto == _TextStyle.rosa
-                          ? TabuColors.rosaPrincipal
-                          : TabuColors.rosaDeep,
+                          ? TClubColors.redPrincipal
+                          : TClubColors.redDeep,
                   fontWeight: FontWeight.w700,
                   letterSpacing: _estiloTexto == _TextStyle.display ? 2 : 0.3,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Digite aqui...',
                   hintStyle: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 16,
-                    color: TabuColors.textoMuted,
+                    color: TClubColors.textoMuted,
                   ),
                   border: InputBorder.none,
                   counterText: '',
@@ -2236,23 +2236,23 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   height: 44,
                   decoration: BoxDecoration(
                     color: _textCtrl.text.trim().isNotEmpty
-                        ? TabuColors.rosaPrincipal
-                        : TabuColors.rosaPale,
-                    border: Border.all(color: TabuColors.rosaPrincipal, width: 0.8),
+                        ? TClubColors.redPrincipal
+                        : TClubColors.redPale,
+                    border: Border.all(color: TClubColors.redPrincipal, width: 0.8),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Icon(Icons.add_rounded, color: TabuColors.branco, size: 16),
+                      Icon(Icons.add_rounded, color: TClubColors.branco, size: 16),
                       SizedBox(width: 6),
                       Text(
                         'ADICIONAR AO STORY',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 2.5,
-                          color: TabuColors.branco,
+                          color: TClubColors.branco,
                         ),
                       ),
                     ],
@@ -2272,10 +2272,10 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
         margin: const EdgeInsets.symmetric(horizontal: 28),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.borderMid, width: 0.8),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.borderMid, width: 0.8),
           borderRadius: BorderRadius.circular(12),
-          boxShadow: TabuGlow.card(),
+          boxShadow: TClubGlow.card(),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -2286,16 +2286,16 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 Text(
                   'TOQUE PARA ADICIONAR',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2,
-                    color: TabuColors.textoMuted,
+                    color: TClubColors.textoMuted,
                   ),
                 ),
                 GestureDetector(
                   onTap: () => setState(() => _toolEmojiOpen = false),
-                  child: Icon(Icons.close, color: TabuColors.textoMuted, size: 16),
+                  child: Icon(Icons.close, color: TClubColors.textoMuted, size: 16),
                 ),
               ],
             ),
@@ -2314,9 +2314,9 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 onTap: () => _adicionarEmojiOverlay(_emojis[i]),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: TabuColors.bg,
+                    color: TClubColors.bg,
                     borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: TabuColors.border, width: 0.5),
+                    border: Border.all(color: TClubColors.border, width: 0.5),
                   ),
                   child: Center(
                     child: Text(_emojis[i], style: const TextStyle(fontSize: 28)),
@@ -2381,17 +2381,17 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                 duration: const Duration(milliseconds: 200),
                 height: 52, width: 52,
                 decoration: BoxDecoration(
-                  color: _publicando ? TabuColors.bgCard.withOpacity(0.5) : TabuColors.bgCard,
+                  color: _publicando ? TClubColors.bgCard.withOpacity(0.5) : TClubColors.bgCard,
                   border: Border.all(
-                    color: _publicando ? TabuColors.border : TabuColors.borderMid,
+                    color: _publicando ? TClubColors.border : TClubColors.borderMid,
                     width: 0.8,
                   ),
                 ),
                 child: Icon(
                   Icons.refresh_rounded,
                   color: _publicando
-                      ? TabuColors.textoMuted.withOpacity(0.4)
-                      : TabuColors.textoMuted,
+                      ? TClubColors.textoMuted.withOpacity(0.4)
+                      : TClubColors.textoMuted,
                   size: 20,
                 ),
               ),
@@ -2405,25 +2405,25 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                   height: 52,
                   decoration: BoxDecoration(
                     color: _publishStep == _PublishStep.erro
-                        ? TabuColors.error
-                        : TabuColors.rosaPrincipal,
+                        ? TClubColors.error
+                        : TClubColors.redPrincipal,
                     border: Border.all(
                         color: _publishStep == _PublishStep.erro
-                            ? TabuColors.error
-                            : TabuColors.rosaPrincipal,
+                            ? TClubColors.error
+                            : TClubColors.redPrincipal,
                         width: 1),
                     boxShadow: _publicando
                         ? null
                         : (_publishStep == _PublishStep.erro
-                            ? TabuGlow.error(blur: 20, spread: 2)
-                            : TabuGlow.rosaPrincipal(blur: 20, spread: 2)),
+                            ? TClubGlow.error(blur: 20, spread: 2)
+                            : TClubGlow.redPrincipal(blur: 20, spread: 2)),
                   ),
                   child: Center(
                     child: _publicando
                         ? const SizedBox(
                             width: 20, height: 20,
                             child: CircularProgressIndicator(
-                              color: TabuColors.branco, strokeWidth: 2,
+                              color: TClubColors.branco, strokeWidth: 2,
                             ),
                           )
                         : _publishStep == _PublishStep.erro
@@ -2431,16 +2431,16 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Icon(Icons.error_outline_rounded,
-                                      color: TabuColors.branco, size: 14),
+                                      color: TClubColors.branco, size: 14),
                                   SizedBox(width: 5),
                                   Text(
                                     'TENTAR NOVAMENTE',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2,
-                                      color: TabuColors.branco,
+                                      color: TClubColors.branco,
                                     ),
                                   ),
                                 ],
@@ -2449,16 +2449,16 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Icon(Icons.auto_awesome_rounded,
-                                      color: TabuColors.branco, size: 14),
+                                      color: TClubColors.branco, size: 14),
                                   SizedBox(width: 5),
                                   Text(
                                     'PUBLICAR STORY',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2.5,
-                                      color: TabuColors.branco,
+                                      color: TClubColors.branco,
                                     ),
                                   ),
                                 ],
@@ -2475,17 +2475,17 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
               child: Container(
                 height: 52, width: 52,
                 decoration: BoxDecoration(
-                  color: _publicando ? TabuColors.bgCard.withOpacity(0.5) : TabuColors.bgCard,
+                  color: _publicando ? TClubColors.bgCard.withOpacity(0.5) : TClubColors.bgCard,
                   border: Border.all(
-                    color: _publicando ? TabuColors.border : TabuColors.borderMid,
+                    color: _publicando ? TClubColors.border : TClubColors.borderMid,
                     width: 0.8,
                   ),
                 ),
                 child: Icon(
                   Icons.send_rounded,
                   color: _publicando
-                      ? TabuColors.textoMuted.withOpacity(0.4)
-                      : TabuColors.textoMuted,
+                      ? TClubColors.textoMuted.withOpacity(0.4)
+                      : TClubColors.textoMuted,
                   size: 20,
                 ),
               ),
@@ -2502,11 +2502,11 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
       height: 2,
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [
-          TabuColors.rosaDeep,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaClaro,
-          TabuColors.rosaPrincipal,
-          TabuColors.rosaDeep,
+          TClubColors.redDeep,
+          TClubColors.redPrincipal,
+          TClubColors.redClaro,
+          TClubColors.redPrincipal,
+          TClubColors.redDeep,
         ]),
       ),
     ),
@@ -2515,16 +2515,16 @@ class _CreateStoryScreenState extends State<CreateStoryScreen>
   Widget _storyLabel() => Container(
     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
     decoration: BoxDecoration(
-      color: TabuColors.bgCard,
-      border: Border.all(color: TabuColors.borderMid, width: 0.8),
+      color: TClubColors.bgCard,
+      border: Border.all(color: TClubColors.borderMid, width: 0.8),
     ),
     child: Text(
       'STORY',
       style: TextStyle(
-        fontFamily: TabuTypography.displayFont,
+        fontFamily: TClubTypography.displayFont,
         fontSize: 14,
         letterSpacing: 5,
-        color: TabuColors.rosaPrincipal,
+        color: TClubColors.redPrincipal,
       ),
     ),
   );
@@ -2542,12 +2542,12 @@ class _CameraActionBtn extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: 52, height: 52,
     decoration: BoxDecoration(
-      color: TabuColors.bgCard,
+      color: TClubColors.bgCard,
       borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: TabuColors.borderMid, width: 0.8),
-      boxShadow: TabuGlow.card(),
+      border: Border.all(color: TClubColors.borderMid, width: 0.8),
+      boxShadow: TClubGlow.card(),
     ),
-    child: Icon(icon, color: TabuColors.textoSecundario, size: 22),
+    child: Icon(icon, color: TClubColors.textoSecundario, size: 22),
   );
 }
 
@@ -2572,14 +2572,14 @@ class _StoryVideoProgressBarState extends State<_StoryVideoProgressBar> {
     final pct   = total > 0 ? (pos / total).clamp(0.0, 1.0) : 0.0;
     return Container(
       height: 3,
-      color: TabuColors.border,
+      color: TClubColors.border,
       child: FractionallySizedBox(
         widthFactor: pct,
         alignment: Alignment.centerLeft,
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+              colors: [TClubColors.redDeep, TClubColors.redPrincipal],
             ),
           ),
         ),
@@ -2602,9 +2602,9 @@ class _PermissaoCard extends StatelessWidget {
 
   Color get _cor => switch (status) {
     _PermissaoStatus.concedido         => const Color(0xFF4CAF50),
-    _PermissaoStatus.negadoPermanente  => TabuColors.error,
-    _PermissaoStatus.verificando       => TabuColors.border,
-    _PermissaoStatus.pendente          => TabuColors.textoMuted,
+    _PermissaoStatus.negadoPermanente  => TClubColors.error,
+    _PermissaoStatus.verificando       => TClubColors.border,
+    _PermissaoStatus.pendente          => TClubColors.textoMuted,
   };
 
   IconData get _ic => switch (status) {
@@ -2628,7 +2628,7 @@ class _PermissaoCard extends StatelessWidget {
       duration: const Duration(milliseconds: 300),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: ok ? const Color(0xFF4CAF50).withOpacity(0.07) : TabuColors.bgCard,
+        color: ok ? const Color(0xFF4CAF50).withOpacity(0.07) : TClubColors.bgCard,
         border: Border.all(
           color: _cor.withOpacity(ok ? 0.4 : 0.2),
           width: ok ? 1 : 0.7,
@@ -2651,21 +2651,21 @@ class _PermissaoCard extends StatelessWidget {
               Text(
                 titulo,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 2,
-                  color: TabuColors.textoPrincipal,
+                  color: TClubColors.textoPrincipal,
                 ),
               ),
               const SizedBox(height: 3),
               Text(
                 descricao,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
                   letterSpacing: 0.3,
-                  color: TabuColors.textoMuted,
+                  color: TClubColors.textoMuted,
                 ),
               ),
             ],
@@ -2678,7 +2678,7 @@ class _PermissaoCard extends StatelessWidget {
           Text(
             _lb,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 8,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.5,
@@ -2715,12 +2715,12 @@ class _VisibBtn extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         decoration: BoxDecoration(
           color: active
-              ? (isVip ? const Color(0xFFFFF8E1) : TabuColors.rosaPale)
-              : TabuColors.bgCard,
+              ? (isVip ? const Color(0xFFFFF8E1) : TClubColors.redPale)
+              : TClubColors.bgCard,
           border: Border.all(
             color: active
-                ? (isVip ? const Color(0xFFD4AF37) : TabuColors.rosaPrincipal)
-                : TabuColors.borderMid,
+                ? (isVip ? const Color(0xFFD4AF37) : TClubColors.redPrincipal)
+                : TClubColors.borderMid,
             width: active ? 1 : 0.6,
           ),
         ),
@@ -2729,8 +2729,8 @@ class _VisibBtn extends StatelessWidget {
             icon,
             size: 11,
             color: active
-                ? (isVip ? const Color(0xFFD4AF37) : TabuColors.rosaPrincipal)
-                : TabuColors.textoMuted,
+                ? (isVip ? const Color(0xFFD4AF37) : TClubColors.redPrincipal)
+                : TClubColors.textoMuted,
           ),
           const SizedBox(width: 4),
           Flexible(
@@ -2738,13 +2738,13 @@ class _VisibBtn extends StatelessWidget {
               label,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.2,
                 color: active
-                    ? (isVip ? const Color(0xFFD4AF37) : TabuColors.rosaPrincipal)
-                    : TabuColors.textoMuted,
+                    ? (isVip ? const Color(0xFFD4AF37) : TClubColors.redPrincipal)
+                    : TClubColors.textoMuted,
               ),
             ),
           ),
@@ -2788,16 +2788,16 @@ class _IconBtn extends StatelessWidget {
       width: 40, height: 40,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: active ? TabuColors.rosaPale : TabuColors.bgCard,
+        color: active ? TClubColors.redPale : TClubColors.bgCard,
         border: Border.all(
-          color: active ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+          color: active ? TClubColors.redPrincipal : TClubColors.borderMid,
           width: active ? 1.2 : 0.8,
         ),
-        boxShadow: active ? TabuGlow.rosaSubtle() : TabuGlow.card(blur: 6),
+        boxShadow: active ? TClubGlow.redSubtle() : TClubGlow.card(blur: 6),
       ),
       child: Icon(
         icon,
-        color: active ? TabuColors.rosaPrincipal : TabuColors.textoSecundario,
+        color: active ? TClubColors.redPrincipal : TClubColors.textoSecundario,
         size: 18,
       ),
     ),
@@ -2823,28 +2823,28 @@ class _ToolBtn extends StatelessWidget {
       duration: const Duration(milliseconds: 160),
       width: 42, height: 42,
       decoration: BoxDecoration(
-        color: active ? TabuColors.rosaPale : TabuColors.bgCard,
+        color: active ? TClubColors.redPale : TClubColors.bgCard,
         border: Border.all(
-          color: active ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+          color: active ? TClubColors.redPrincipal : TClubColors.borderMid,
           width: active ? 1.5 : 0.8,
         ),
-        boxShadow: active ? TabuGlow.rosaPrincipal(blur: 10) : TabuGlow.card(blur: 6),
+        boxShadow: active ? TClubGlow.redPrincipal(blur: 10) : TClubGlow.card(blur: 6),
       ),
       child: label != null
           ? Center(
               child: Text(
                 label!,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: active ? TabuColors.rosaPrincipal : TabuColors.textoSecundario,
+                  color: active ? TClubColors.redPrincipal : TClubColors.textoSecundario,
                 ),
               ),
             )
           : Icon(
               icon,
-              color: active ? TabuColors.rosaPrincipal : TabuColors.textoSecundario,
+              color: active ? TClubColors.redPrincipal : TClubColors.textoSecundario,
               size: 20,
             ),
     ),
@@ -2873,3 +2873,4 @@ class _ParticlePainter extends CustomPainter {
   @override
   bool shouldRepaint(_ParticlePainter o) => false;
 }
+

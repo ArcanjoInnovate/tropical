@@ -13,8 +13,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 
@@ -279,8 +279,8 @@ class _MatchScreenState extends State<MatchScreen>
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
                   colors: [
-                    TabuColors.rosaPrincipal.withOpacity(0.18),
-                    TabuColors.rosaDeep.withOpacity(0.06),
+                    TClubColors.redPrincipal.withOpacity(0.18),
+                    TClubColors.redDeep.withOpacity(0.06),
                     Colors.transparent,
                   ],
                   stops: const [0, 0.5, 1],
@@ -307,7 +307,7 @@ class _MatchScreenState extends State<MatchScreen>
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(opacity),
+                        color: TClubColors.redPrincipal.withOpacity(opacity),
                         width: 1.5),
                   ),
                 ),
@@ -378,17 +378,17 @@ class _MatchScreenState extends State<MatchScreen>
                             height: 52,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: TabuColors.rosaPrincipal,
+                              color: TClubColors.redPrincipal,
                               border: Border.all(
                                   color: const Color(0xFF080810),
                                   width: 3),
                               boxShadow: [
                                 BoxShadow(
-                                  color: TabuColors.glow.withOpacity(0.9),
+                                  color: TClubColors.glow.withOpacity(0.9),
                                   blurRadius: 28,
                                   spreadRadius: 4),
                                 BoxShadow(
-                                  color: TabuColors.rosaPrincipal
+                                  color: TClubColors.redPrincipal
                                       .withOpacity(0.5),
                                   blurRadius: 50,
                                   spreadRadius: 10),
@@ -428,15 +428,15 @@ class _MatchScreenState extends State<MatchScreen>
                       shaderCallback: (bounds) =>
                           const LinearGradient(colors: [
                             Color(0xFFFFCCDD),
-                            TabuColors.rosaClaro,
-                            TabuColors.rosaPrincipal,
-                            TabuColors.rosaClaro,
+                            TClubColors.redClaro,
+                            TClubColors.redPrincipal,
+                            TClubColors.redClaro,
                             Color(0xFFFFCCDD),
                           ]).createShader(bounds),
                       child: const Text(
                         'DEU MATCH!',
                         style: TextStyle(
-                          fontFamily: TabuTypography.displayFont,
+                          fontFamily: TClubTypography.displayFont,
                           fontSize: 40,
                           fontWeight: FontWeight.w900,
                           letterSpacing: 7,
@@ -465,7 +465,7 @@ class _MatchScreenState extends State<MatchScreen>
                   RichText(
                     text: TextSpan(
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 4,
@@ -482,7 +482,7 @@ class _MatchScreenState extends State<MatchScreen>
                         const TextSpan(
                           text: '  ♥  ',
                           style: TextStyle(
-                              color: TabuColors.rosaPrincipal),
+                              color: TClubColors.redPrincipal),
                         ),
                         TextSpan(
                           text: widget.otherName
@@ -501,7 +501,7 @@ class _MatchScreenState extends State<MatchScreen>
                   Text(
                     'Vocês se curtiram mutuamente',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 13,
                       letterSpacing: 0.5,
                       color: Colors.white.withOpacity(0.4),
@@ -535,18 +535,18 @@ class _MatchScreenState extends State<MatchScreen>
                         decoration: BoxDecoration(
                           gradient: const LinearGradient(
                             colors: [
-                              TabuColors.rosaDeep,
-                              TabuColors.rosaPrincipal,
-                              TabuColors.rosaClaro,
+                              TClubColors.redDeep,
+                              TClubColors.redPrincipal,
+                              TClubColors.redClaro,
                             ],
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: TabuColors.glow.withOpacity(0.55),
+                              color: TClubColors.glow.withOpacity(0.55),
                               blurRadius: 28,
                               offset: const Offset(0, 10)),
                             BoxShadow(
-                              color: TabuColors.rosaPrincipal
+                              color: TClubColors.redPrincipal
                                   .withOpacity(0.35),
                               blurRadius: 50,
                               offset: const Offset(0, 6)),
@@ -564,7 +564,7 @@ class _MatchScreenState extends State<MatchScreen>
                             const Text(
                               'ENVIAR MENSAGEM',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 3,
@@ -588,7 +588,7 @@ class _MatchScreenState extends State<MatchScreen>
                         child: Text(
                           'CONTINUAR NAVEGANDO',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 3.5,
@@ -628,15 +628,15 @@ class _Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-            color: TabuColors.rosaPrincipal.withOpacity(0.65),
+            color: TClubColors.redPrincipal.withOpacity(0.65),
             width: 2.5),
         boxShadow: [
           BoxShadow(
-            color: TabuColors.glow.withOpacity(0.45),
+            color: TClubColors.glow.withOpacity(0.45),
             blurRadius: 24,
             spreadRadius: 2),
           BoxShadow(
-            color: TabuColors.rosaPrincipal.withOpacity(0.25),
+            color: TClubColors.redPrincipal.withOpacity(0.25),
             blurRadius: 50,
             spreadRadius: 8),
         ],
@@ -663,10 +663,10 @@ class _Avatar extends StatelessWidget {
         child: Text(
           initial,
           style: const TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 36,
             fontWeight: FontWeight.w700,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
           ),
         ),
       ),
@@ -687,7 +687,7 @@ class _DecorLine extends StatelessWidget {
           width: 32, height: 0.8,
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
-              Colors.transparent, TabuColors.rosaPrincipal,
+              Colors.transparent, TClubColors.redPrincipal,
             ])),
         ),
         const SizedBox(width: 8),
@@ -695,7 +695,7 @@ class _DecorLine extends StatelessWidget {
           width: 5, height: 5,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
           ),
         ),
         const SizedBox(width: 8),
@@ -703,7 +703,7 @@ class _DecorLine extends StatelessWidget {
           width: 32, height: 0.8,
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
-              TabuColors.rosaPrincipal, Colors.transparent,
+              TClubColors.redPrincipal, Colors.transparent,
             ])),
         ),
       ],
@@ -753,9 +753,9 @@ class _Particle {
   );
 
   static Color _randomColor(Random rng) => [
-    TabuColors.rosaPrincipal,
-    TabuColors.rosaClaro,
-    TabuColors.rosaDeep,
+    TClubColors.redPrincipal,
+    TClubColors.redClaro,
+    TClubColors.redDeep,
     const Color(0xFFFFD6E8),
     const Color(0xFFFF99BB),
     Colors.white,
@@ -828,3 +828,4 @@ class _ParticlePainter extends CustomPainter {
   @override
   bool shouldRepaint(_ParticlePainter old) => true;
 }
+

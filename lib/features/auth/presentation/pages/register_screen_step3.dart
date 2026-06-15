@@ -11,10 +11,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tabuapp/core/helpers/media_permission_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/register_creating_page.dart';
-import 'package:tabuapp/features/auth/presentation/pages/register_screen.dart';
+import 'package:tclub/core/helpers/media_permission_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/register_creating_page.dart';
+import 'package:tclub/features/auth/presentation/pages/register_screen.dart';
 
 class RegisterStep3Screen extends StatefulWidget {
   final String nome;
@@ -96,7 +96,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
     HapticFeedback.lightImpact();
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -108,7 +108,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
               width: 40, height: 4,
               margin: const EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -170,7 +170,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
     final hasPhoto = _imageFile != null;
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       resizeToAvoidBottomInset: false,
       body: Stack(children: [
         // ── Fundo animado ──────────────────────────────────────────────────
@@ -187,7 +187,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
             height: 3,
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                TabuColors.rosaDeep, TabuColors.rosaPrincipal, TabuColors.rosaClaro, TabuColors.rosaPrincipal, TabuColors.rosaDeep,
+                TClubColors.redDeep, TClubColors.redPrincipal, TClubColors.redClaro, TClubColors.redPrincipal, TClubColors.redDeep,
               ]),
             ),
           ),
@@ -205,10 +205,10 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                     child: Container(
                       width: 40, height: 40,
                       decoration: BoxDecoration(
-                        color: TabuColors.bgCard,
-                        border: Border.all(color: TabuColors.border, width: 0.8),
+                        color: TClubColors.bgCard,
+                        border: Border.all(color: TClubColors.border, width: 0.8),
                       ),
-                      child: const Icon(Icons.arrow_back_ios_new, color: TabuColors.textoPrincipal, size: 16),
+                      child: const Icon(Icons.arrow_back_ios_new, color: TClubColors.textoPrincipal, size: 16),
                     ),
                   ),
                   const Spacer(),
@@ -231,7 +231,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                       Text(
                         'SUA FOTO',
                         style: theme.textTheme.labelSmall?.copyWith(
-                          fontSize: 10, letterSpacing: 5, color: TabuColors.rosaPrincipal, fontWeight: FontWeight.w700,
+                          fontSize: 10, letterSpacing: 5, color: TClubColors.redPrincipal, fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -240,7 +240,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                         textAlign: TextAlign.center,
                         style: theme.textTheme.displaySmall?.copyWith(
                           fontSize: 28, fontWeight: FontWeight.w700,
-                          color: TabuColors.textoPrincipal, height: 1.2,
+                          color: TClubColors.textoPrincipal, height: 1.2,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -248,7 +248,7 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                         'Escolha uma foto que represente você.\nObrigatória para participar do sistema de match.',
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodySmall?.copyWith(
-                          fontSize: 13, color: TabuColors.dim, height: 1.6,
+                          fontSize: 13, color: TClubColors.dim, height: 1.6,
                         ),
                       ),
 
@@ -281,12 +281,12 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                                 key: const ValueKey('change'),
                                 onTap: _showImagePicker,
                                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                                  const Icon(Icons.edit_outlined, color: TabuColors.rosaPrincipal, size: 14),
+                                  const Icon(Icons.edit_outlined, color: TClubColors.redPrincipal, size: 14),
                                   const SizedBox(width: 6),
                                   Text(
                                     'TROCAR FOTO',
                                     style: theme.textTheme.labelSmall?.copyWith(
-                                      fontSize: 11, letterSpacing: 3, color: TabuColors.rosaPrincipal,
+                                      fontSize: 11, letterSpacing: 3, color: TClubColors.redPrincipal,
                                     ),
                                   ),
                                 ]),
@@ -295,12 +295,12 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                                 key: const ValueKey('add'),
                                 onTap: _showImagePicker,
                                 child: Row(mainAxisSize: MainAxisSize.min, children: [
-                                  const Icon(Icons.add_a_photo_outlined, color: TabuColors.rosaPrincipal, size: 14),
+                                  const Icon(Icons.add_a_photo_outlined, color: TClubColors.redPrincipal, size: 14),
                                   const SizedBox(width: 6),
                                   Text(
                                     'ADICIONAR FOTO',
                                     style: theme.textTheme.labelSmall?.copyWith(
-                                      fontSize: 11, letterSpacing: 3, color: TabuColors.rosaPrincipal,
+                                      fontSize: 11, letterSpacing: 3, color: TClubColors.redPrincipal,
                                     ),
                                   ),
                                 ]),
@@ -313,17 +313,17 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen>
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: TabuColors.bgCard,
-                          border: Border.all(color: TabuColors.border, width: 0.8),
+                          color: TClubColors.bgCard,
+                          border: Border.all(color: TClubColors.border, width: 0.8),
                         ),
                         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          const Icon(Icons.tips_and_updates_outlined, color: TabuColors.rosaPrincipal, size: 16),
+                          const Icon(Icons.tips_and_updates_outlined, color: TClubColors.redPrincipal, size: 16),
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               'Perfis com foto recebem até 3× mais matches. Use uma foto nítida e de rosto para melhores resultados.',
                               style: theme.textTheme.bodySmall?.copyWith(
-                                fontSize: 12, color: TabuColors.dim, height: 1.6,
+                                fontSize: 12, color: TClubColors.dim, height: 1.6,
                               ),
                             ),
                           ),
@@ -392,37 +392,37 @@ class _AvatarWidget extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: hasPhoto ? TabuColors.rosaPrincipal : TabuColors.borderMid,
+          color: hasPhoto ? TClubColors.redPrincipal : TClubColors.borderMid,
           width: hasPhoto ? 2.5 : 1.5,
         ),
         boxShadow: hasPhoto ? [
-          BoxShadow(color: TabuColors.glow.withOpacity(0.4), blurRadius: 30, spreadRadius: 2),
+          BoxShadow(color: TClubColors.glow.withOpacity(0.4), blurRadius: 30, spreadRadius: 2),
         ] : [],
       ),
       child: ClipOval(
         child: isLoading
             ? Container(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 child: const Center(
-                  child: CircularProgressIndicator(color: TabuColors.rosaPrincipal, strokeWidth: 2),
+                  child: CircularProgressIndicator(color: TClubColors.redPrincipal, strokeWidth: 2),
                 ),
               )
             : hasPhoto
                 ? Image.file(imageFile!, fit: BoxFit.cover)
                 : Container(
-                    color: TabuColors.bgCard,
+                    color: TClubColors.bgCard,
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Text(
                         initials,
                         style: const TextStyle(
-                          fontFamily: TabuTypography.displayFont,
+                          fontFamily: TClubTypography.displayFont,
                           fontSize: 48,
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Icon(Icons.add_a_photo_outlined, color: TabuColors.subtle, size: 18),
+                      const Icon(Icons.add_a_photo_outlined, color: TClubColors.subtle, size: 18),
                     ]),
                   ),
       ),
@@ -440,7 +440,7 @@ class _PickerOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? TabuColors.textoPrincipal;
+    final c = color ?? TClubColors.textoPrincipal;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -451,7 +451,7 @@ class _PickerOption extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 13,
               letterSpacing: 2,
               color: c,
@@ -500,12 +500,12 @@ class _Step3ButtonState extends State<_Step3Button> with SingleTickerProviderSta
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: _pressed
-                ? [TabuColors.rosaDeep, TabuColors.rosaPrincipal]
-                : [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                ? [TClubColors.redDeep, TClubColors.redPrincipal]
+                : [TClubColors.redPrincipal, TClubColors.redClaro],
             begin: Alignment.centerLeft, end: Alignment.centerRight,
           ),
           boxShadow: !_pressed ? [
-            BoxShadow(color: TabuColors.glow, blurRadius: 20, offset: const Offset(0, 6)),
+            BoxShadow(color: TClubColors.glow, blurRadius: 20, offset: const Offset(0, 6)),
           ] : [],
         ),
         child: Stack(alignment: Alignment.center, children: [
@@ -520,14 +520,15 @@ class _Step3ButtonState extends State<_Step3Button> with SingleTickerProviderSta
             Text(
               widget.hasPhoto ? 'CONTINUAR COM FOTO' : 'CONTINUAR',
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                fontSize: 13, letterSpacing: 4, fontWeight: FontWeight.w700, color: TabuColors.textoPrincipal,
+                fontSize: 13, letterSpacing: 4, fontWeight: FontWeight.w700, color: TClubColors.textoPrincipal,
               ),
             ),
             const SizedBox(width: 10),
-            const Icon(Icons.arrow_forward_rounded, color: TabuColors.textoPrincipal, size: 18),
+            const Icon(Icons.arrow_forward_rounded, color: TClubColors.textoPrincipal, size: 18),
           ]),
         ]),
       ),
     );
   }
 }
+

@@ -227,3 +227,4 @@ class StoryView {
     fullyWatched: map['fully_watched'] as bool? ?? false,
   );
 }
+

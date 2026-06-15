@@ -4,7 +4,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tabuapp/features/settings/data/services/delete_service.dart';
+import 'package:tclub/features/settings/data/services/delete_service.dart';
 
 // ─── Estados da exclusão ────────────────────────────────────────────────────
 enum DeleteStep { idle, loading, success, error }
@@ -153,3 +153,4 @@ class DeleteController extends GetxController {
     }
   }
 } 
+

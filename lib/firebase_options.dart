@@ -41,54 +41,54 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC_vMJShl-PRxieiFuaP87Tc1gBffVUyZk',
-    appId: '1:962739787299:web:ed9b397e103afb14824396',
-    messagingSenderId: '962739787299',
-    projectId: 'tabuapp-4325a',
-    authDomain: 'tabuapp-4325a.firebaseapp.com',
-    databaseURL: 'https://tabuapp-4325a-default-rtdb.firebaseio.com',
-    storageBucket: 'tabuapp-4325a.firebasestorage.app',
-    measurementId: 'G-YTR8ZF2NMX',
+    apiKey: 'AIzaSyAMINWgupdAzhdW60Q8PFGVe3T82CGtFwY',
+    appId: '1:871350869965:web:430de0710920abd7a66e84',
+    messagingSenderId: '871350869965',
+    projectId: 'tropical-64d1b',
+    authDomain: 'tropical-64d1b.firebaseapp.com',
+    databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
+    storageBucket: 'tropical-64d1b.firebasestorage.app',
+    measurementId: 'G-7LGV1JL99L',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD8WTqOuCCqMcxc0d0nRNQFr-p8ynrwuUY',
-    appId: '1:962739787299:android:07559ed97ecde912824396',
-    messagingSenderId: '962739787299',
-    projectId: 'tabuapp-4325a',
-    databaseURL: 'https://tabuapp-4325a-default-rtdb.firebaseio.com',
-    storageBucket: 'tabuapp-4325a.firebasestorage.app',
+    apiKey: 'AIzaSyAJ1OWLtzzEYx3z9MStOMxHmM3YCgRw_N0',
+    appId: '1:871350869965:android:422d724e338b8c88a66e84',
+    messagingSenderId: '871350869965',
+    projectId: 'tropical-64d1b',
+    databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
+    storageBucket: 'tropical-64d1b.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDa00Dh6ruuFi3ZGKvTygaui7JxFonFMIg',
-    appId: '1:962739787299:ios:8028440fe1dac993824396',
-    messagingSenderId: '962739787299',
-    projectId: 'tabuapp-4325a',
-    databaseURL: 'https://tabuapp-4325a-default-rtdb.firebaseio.com',
-    storageBucket: 'tabuapp-4325a.firebasestorage.app',
-    iosBundleId: 'com.tabu.app',
+    apiKey: 'AIzaSyCYLeQrizv-doMJENJiTh2fq3WgWtAaczg',
+    appId: '1:871350869965:ios:dc8f4a95624336bfa66e84',
+    messagingSenderId: '871350869965',
+    projectId: 'tropical-64d1b',
+    databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
+    storageBucket: 'tropical-64d1b.firebasestorage.app',
+    iosBundleId: 'com.tropical.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDa00Dh6ruuFi3ZGKvTygaui7JxFonFMIg',
-    appId: '1:962739787299:ios:c4e4f065fe11a06f824396',
-    messagingSenderId: '962739787299',
-    projectId: 'tabuapp-4325a',
-    databaseURL: 'https://tabuapp-4325a-default-rtdb.firebaseio.com',
-    storageBucket: 'tabuapp-4325a.firebasestorage.app',
-    iosBundleId: 'com.tabu.app',
+    apiKey: 'AIzaSyCYLeQrizv-doMJENJiTh2fq3WgWtAaczg',
+    appId: '1:871350869965:ios:dc8f4a95624336bfa66e84',
+    messagingSenderId: '871350869965',
+    projectId: 'tropical-64d1b',
+    databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
+    storageBucket: 'tropical-64d1b.firebasestorage.app',
+    iosBundleId: 'com.tropical.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyC_vMJShl-PRxieiFuaP87Tc1gBffVUyZk',
-    appId: '1:962739787299:web:f4eea65a065499b6824396',
-    messagingSenderId: '962739787299',
-    projectId: 'tabuapp-4325a',
-    authDomain: 'tabuapp-4325a.firebaseapp.com',
-    databaseURL: 'https://tabuapp-4325a-default-rtdb.firebaseio.com',
-    storageBucket: 'tabuapp-4325a.firebasestorage.app',
-    measurementId: 'G-KSS71E0LT3',
+    apiKey: 'AIzaSyAMINWgupdAzhdW60Q8PFGVe3T82CGtFwY',
+    appId: '1:871350869965:web:fe6d6ea5b9681c27a66e84',
+    messagingSenderId: '871350869965',
+    projectId: 'tropical-64d1b',
+    authDomain: 'tropical-64d1b.firebaseapp.com',
+    databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
+    storageBucket: 'tropical-64d1b.firebasestorage.app',
+    measurementId: 'G-5JNF48WCTG',
   );
-
 }
+

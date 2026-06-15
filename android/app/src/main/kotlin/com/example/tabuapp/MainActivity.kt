@@ -1,4 +1,4 @@
-package com.tabu.app
+package com.tropical.app
 
 import android.os.Bundle
 import android.view.WindowManager

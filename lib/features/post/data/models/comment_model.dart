@@ -95,3 +95,4 @@ class CommentModel {
         userDeleted: userDeleted ?? this.userDeleted,
       );
 }
+

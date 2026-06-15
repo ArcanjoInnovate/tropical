@@ -4,37 +4,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/admin/controller/admin_panel_controller.dart';
-import 'package:tabuapp/features/admin/data/repositories/invite_repository.dart';
-import 'package:tabuapp/features/admin/data/repositories/report_repository.dart';
-import 'package:tabuapp/features/admin/data/repositories/stats_repository.dart';
-import 'package:tabuapp/features/admin/data/repositories/user_repository.dart';
-import 'package:tabuapp/features/admin/data/services/invite_service.dart';
-import 'package:tabuapp/features/admin/data/services/report_service.dart';
-import 'package:tabuapp/features/admin/data/services/user_service.dart';
-import 'package:tabuapp/features/admin/presentation/pages/admin_panel_page.dart';
-import 'package:tabuapp/features/auth/data/services/auth_service.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/feed/presentation/screens/galery_feed_screen.dart';
-import 'package:tabuapp/features/profile/controller/profile_controller.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/media_grid_tile.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/profile_avatar_section.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/profile_identity_widgets.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
-import 'package:tabuapp/core/widgets/full_screen_image.dart';
-import 'package:tabuapp/core/widgets/full_screen_video.dart';
-import 'package:tabuapp/features/gallery/presentation/pages/create_gallery_screen.dart';
-import 'package:tabuapp/features/story/presentation/pages/story_viewer_screen.dart';
-import 'package:tabuapp/features/profile/presentation/pages/edit_profile/edit_profile_hub.dart';
-import 'package:tabuapp/features/gallery/data/services/gallery_service.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
-import 'package:tabuapp/features/admin/data/services/adm_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/admin/controller/admin_panel_controller.dart';
+import 'package:tclub/features/admin/data/repositories/invite_repository.dart';
+import 'package:tclub/features/admin/data/repositories/report_repository.dart';
+import 'package:tclub/features/admin/data/repositories/stats_repository.dart';
+import 'package:tclub/features/admin/data/repositories/user_repository.dart';
+import 'package:tclub/features/admin/data/services/invite_service.dart';
+import 'package:tclub/features/admin/data/services/report_service.dart';
+import 'package:tclub/features/admin/data/services/user_service.dart';
+import 'package:tclub/features/admin/presentation/pages/admin_panel_page.dart';
+import 'package:tclub/features/auth/data/services/auth_service.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/feed/presentation/screens/galery_feed_screen.dart';
+import 'package:tclub/features/profile/controller/profile_controller.dart';
+import 'package:tclub/features/profile/presentation/widgets/media_grid_tile.dart';
+import 'package:tclub/features/profile/presentation/widgets/profile_avatar_section.dart';
+import 'package:tclub/features/profile/presentation/widgets/profile_identity_widgets.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/core/widgets/full_screen_image.dart';
+import 'package:tclub/core/widgets/full_screen_video.dart';
+import 'package:tclub/features/gallery/presentation/pages/create_gallery_screen.dart';
+import 'package:tclub/features/story/presentation/pages/story_viewer_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/edit_profile/edit_profile_hub.dart';
+import 'package:tclub/features/gallery/data/services/gallery_service.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
+import 'package:tclub/features/admin/data/services/adm_service.dart';
 import 'public_profile_screen.dart' show PublicProfileScreen;
 import '_profile_painters.dart';
 import '../../../data/models/profile_user_model.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/perfil_screen_widgets.dart';
+import 'package:tclub/features/profile/presentation/widgets/perfil_screen_widgets.dart';
 
 class OwnProfileScreen extends StatefulWidget {
   const OwnProfileScreen({super.key, required this.userData});
@@ -163,23 +163,23 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: TabuColors.bgAlt,
+        backgroundColor: TClubColors.bgAlt,
         title: const Text('EXCLUIR DA GALERIA?',
             style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 14,
                 letterSpacing: 4,
-                color: TabuColors.textoPrincipal)),
+                color: TClubColors.textoPrincipal)),
         content: const Text('Esta ação não pode ser desfeita.',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.subtle)),
+                color: TClubColors.subtle)),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, false),
               child: const Text('CANCELAR',
-                  style: TextStyle(color: TabuColors.dim))),
+                  style: TextStyle(color: TClubColors.dim))),
           TextButton(
               onPressed: () => Navigator.pop(context, true),
               child: const Text('EXCLUIR',
@@ -283,18 +283,18 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
 
   void _snack(String msg, {bool success = false}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: success ? TabuColors.rosaDeep : const Color(0xFF3D0A0A),
+      backgroundColor: success ? TClubColors.redDeep : const Color(0xFF3D0A0A),
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(),
       margin: const EdgeInsets.all(16),
       duration: const Duration(seconds: 3),
       content: Text(msg,
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 12,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color: TabuColors.branco,
+            color: TClubColors.branco,
           )),
     ));
   }
@@ -353,7 +353,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         final temStory = _ctrl.stories.isNotEmpty;
 
         return Scaffold(
-          backgroundColor: TabuColors.bg,
+          backgroundColor: TClubColors.bg,
           body: Stack(children: [
             Positioned.fill(
               child:
@@ -361,8 +361,8 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             ),
             SafeArea(
               child: RefreshIndicator(
-                color: TabuColors.rosaPrincipal,
-                backgroundColor: TabuColors.bgAlt,
+                color: TClubColors.redPrincipal,
+                backgroundColor: TClubColors.bgAlt,
                 onRefresh: _ctrl.refresh,
                 child: CustomScrollView(
                   controller: _scrollController,
@@ -420,22 +420,22 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
             decoration: BoxDecoration(
-              color: TabuColors.rosaDeep.withOpacity(0.15),
+              color: TClubColors.redDeep.withOpacity(0.15),
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.30),
+                  color: TClubColors.redPrincipal.withOpacity(0.30),
                   width: 0.8),
             ),
             child: const Row(mainAxisSize: MainAxisSize.min, children: [
               Icon(Icons.shield_rounded,
-                  color: TabuColors.rosaPrincipal, size: 13),
+                  color: TClubColors.redPrincipal, size: 13),
               SizedBox(width: 6),
               Text('ADMIN',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2,
-                      color: TabuColors.rosaPrincipal)),
+                      color: TClubColors.redPrincipal)),
             ]),
           ),
         )
@@ -448,11 +448,11 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
           width: 38,
           height: 38,
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.border, width: 0.8),
+            color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.border, width: 0.8),
           ),
           child: const Icon(Icons.settings_outlined,
-              color: TabuColors.subtle, size: 18),
+              color: TClubColors.subtle, size: 18),
         ),
       ),
     ]);
@@ -480,12 +480,12 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
           name,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 28,
             letterSpacing: 6,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
             fontWeight: FontWeight.w400,
-            shadows: [Shadow(color: TabuColors.glow, blurRadius: 20)],
+            shadows: [Shadow(color: TClubColors.glow, blurRadius: 20)],
           ),
         ),
       ),
@@ -494,12 +494,12 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
           decoration: BoxDecoration(
-            color: TabuColors.rosaDeep.withOpacity(0.25),
+            color: TClubColors.redDeep.withOpacity(0.25),
             border: Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.50), width: 0.8),
+                color: TClubColors.redPrincipal.withOpacity(0.50), width: 0.8),
           ),
           child: const Icon(Icons.shield_rounded,
-              color: TabuColors.rosaPrincipal, size: 10),
+              color: TClubColors.redPrincipal, size: 10),
         ),
       ],
     ]);
@@ -516,7 +516,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
       padding: const EdgeInsets.only(top: 6),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Icon(Icons.location_on_outlined,
-            color: TabuColors.rosaPrincipal, size: 11),
+            color: TClubColors.redPrincipal, size: 11),
         const SizedBox(width: 4),
         Flexible(
           child: Text(
@@ -524,11 +524,11 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11,
               fontWeight: FontWeight.w500,
               letterSpacing: 1,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
             ),
           ),
         ),
@@ -543,10 +543,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
       bio,
       textAlign: TextAlign.center,
       style: TextStyle(
-        fontFamily: TabuTypography.bodyFont,
+        fontFamily: TClubTypography.bodyFont,
         fontSize: 13,
         letterSpacing: 0.3,
-        color: TabuColors.dim.withOpacity(0.85),
+        color: TClubColors.dim.withOpacity(0.85),
         height: 1.65,
         fontStyle: FontStyle.italic,
       ),
@@ -603,21 +603,21 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
           width: double.infinity,
           height: 48,
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.borderMid, width: 0.8),
+            color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.borderMid, width: 0.8),
           ),
           child:
               const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Icon(Icons.edit_outlined,
-                color: TabuColors.rosaPrincipal, size: 15),
+                color: TClubColors.redPrincipal, size: 15),
             SizedBox(width: 10),
             Text('EDITAR PERFIL',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
-                    color: TabuColors.rosaPrincipal)),
+                    color: TClubColors.redPrincipal)),
           ]),
         ),
       ),
@@ -629,31 +629,31 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             width: double.infinity,
             height: 48,
             decoration: BoxDecoration(
-              color: TabuColors.rosaDeep.withOpacity(0.15),
+              color: TClubColors.redDeep.withOpacity(0.15),
               border: Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.50),
+                  color: TClubColors.redPrincipal.withOpacity(0.50),
                   width: 0.8),
               boxShadow: [
                 BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.15), blurRadius: 12)
+                    color: TClubColors.glow.withOpacity(0.15), blurRadius: 12)
               ],
             ),
             child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.shield_rounded,
-                      color: TabuColors.rosaPrincipal, size: 15),
+                      color: TClubColors.redPrincipal, size: 15),
                   SizedBox(width: 10),
                   Text('PAINEL PROFISSIONAL',
                       style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 3,
-                          color: TabuColors.rosaPrincipal)),
+                          color: TClubColors.redPrincipal)),
                   SizedBox(width: 10),
                   Icon(Icons.arrow_forward_ios_rounded,
-                      color: TabuColors.rosaPrincipal, size: 10),
+                      color: TClubColors.redPrincipal, size: 10),
                 ]),
           ),
         ),
@@ -670,7 +670,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         onTap: () => _openMetricSheet(
           title: 'SEGUIDORES',
           icon: Icons.people_outline_rounded,
-          color: TabuColors.rosaClaro,
+          color: TClubColors.redClaro,
           uids: _ctrl.followers,
           emptyLabel: 'Nenhum seguidor ainda',
         ),
@@ -752,7 +752,7 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
       padding: const EdgeInsets.only(bottom: 80),
       child: FloatingActionButton(
         onPressed: _addToGallery,
-        backgroundColor: TabuColors.rosaPrincipal,
+        backgroundColor: TClubColors.redPrincipal,
         elevation: 8,
         heroTag: 'gallery_fab',
         child: const Icon(Icons.add, color: Colors.white, size: 28),
@@ -771,12 +771,12 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             width: 72,
             height: 72,
             decoration: BoxDecoration(
-              border: Border.all(color: TabuColors.border, width: 0.8),
-              color: TabuColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
+              color: TClubColors.bgCard,
             ),
             child: Stack(alignment: Alignment.center, children: [
               const Icon(Icons.photo_library_outlined,
-                  color: TabuColors.border, size: 28),
+                  color: TClubColors.border, size: 28),
               Positioned(
                 bottom: 0,
                 right: 0,
@@ -785,10 +785,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
                   height: 26,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     boxShadow: [
                       BoxShadow(
-                        color: TabuColors.glow.withOpacity(0.45),
+                        color: TClubColors.glow.withOpacity(0.45),
                         blurRadius: 10,
                         spreadRadius: 1,
                       )
@@ -803,20 +803,20 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         const SizedBox(height: 20),
         const Text('SUA GALERIA PESSOAL',
             style: TextStyle(
-              fontFamily: TabuTypography.displayFont,
+              fontFamily: TClubTypography.displayFont,
               fontSize: 16,
               letterSpacing: 5,
-              color: TabuColors.textoPrincipal,
+              color: TClubColors.textoPrincipal,
             )),
         const SizedBox(height: 12),
         const Text(
           'Guarde fotos e vídeos que aparecem apenas no seu perfil.',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 12,
             letterSpacing: 0.3,
-            color: TabuColors.subtle,
+            color: TClubColors.subtle,
             height: 1.6,
           ),
         ),
@@ -824,9 +824,9 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: TabuColors.rosaPrincipal.withOpacity(0.08),
+            color: TClubColors.redPrincipal.withOpacity(0.08),
             border: Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.25), width: 0.8),
+                color: TClubColors.redPrincipal.withOpacity(0.25), width: 0.8),
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Container(
@@ -834,10 +834,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
               height: 28,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
                 boxShadow: [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.35),
+                    color: TClubColors.glow.withOpacity(0.35),
                     blurRadius: 8,
                   )
                 ],
@@ -848,10 +848,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             const Text(
               'Toque no   +   para adicionar',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 letterSpacing: 0.5,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
               ),
             ),
           ]),
@@ -871,21 +871,21 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             width: 72,
             height: 72,
             decoration: BoxDecoration(
-              border: Border.all(color: TabuColors.border, width: 0.8),
-              color: TabuColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
+              color: TClubColors.bgCard,
             ),
             child: Stack(alignment: Alignment.center, children: [
               const Icon(Icons.add_photo_alternate_outlined,
-                  color: TabuColors.border, size: 28),
+                  color: TClubColors.border, size: 28),
               Container(
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     boxShadow: [
                       BoxShadow(
-                        color: TabuColors.glow.withOpacity(0.40),
+                        color: TClubColors.glow.withOpacity(0.40),
                         blurRadius: 12,
                         spreadRadius: 1,
                       )
@@ -898,19 +898,19 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
         const SizedBox(height: 20),
         const Text('GALERIA VAZIA',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 4,
-              color: TabuColors.subtle,
+              color: TClubColors.subtle,
             )),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           decoration: BoxDecoration(
-            color: TabuColors.rosaPrincipal.withOpacity(0.08),
+            color: TClubColors.redPrincipal.withOpacity(0.08),
             border: Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.25), width: 0.8),
+                color: TClubColors.redPrincipal.withOpacity(0.25), width: 0.8),
           ),
           child: Row(mainAxisSize: MainAxisSize.min, children: [
             Container(
@@ -918,10 +918,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
               height: 28,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
                 boxShadow: [
                   BoxShadow(
-                    color: TabuColors.glow.withOpacity(0.35),
+                    color: TClubColors.glow.withOpacity(0.35),
                     blurRadius: 8,
                   )
                 ],
@@ -932,10 +932,10 @@ class _OwnProfileScreenState extends State<OwnProfileScreen>
             const Text(
               'Toque no   +   para adicionar',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 letterSpacing: 0.5,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
               ),
             ),
           ]),
@@ -969,7 +969,7 @@ class _DeletableGalleryTile extends StatelessWidget {
         HapticFeedback.heavyImpact();
         showModalBottomSheet(
           context: context,
-          backgroundColor: TabuColors.bgAlt,
+          backgroundColor: TClubColors.bgAlt,
           shape: const RoundedRectangleBorder(),
           builder: (_) => SafeArea(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -978,7 +978,7 @@ class _DeletableGalleryTile extends StatelessWidget {
                 height: 3,
                 margin: const EdgeInsets.only(top: 12, bottom: 20),
                 decoration: BoxDecoration(
-                    color: TabuColors.border,
+                    color: TClubColors.border,
                     borderRadius: BorderRadius.circular(2))),
             PDSMenuTile(
               icon: Icons.delete_outline_rounded,
@@ -999,3 +999,4 @@ class _DeletableGalleryTile extends StatelessWidget {
     );
   }
 }
+

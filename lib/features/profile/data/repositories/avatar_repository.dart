@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:tabuapp/features/profile/data/models/avatar_model.dart';
+import 'package:tclub/features/profile/data/models/avatar_model.dart';
 
 abstract class IAvatarRepository {
   /// Faz upload de [imageFile] para o Storage, persiste a URL em
@@ -134,3 +134,4 @@ class AvatarRepositoryException implements Exception {
   @override
   String toString() => 'AvatarRepositoryException: $message';
 }
+

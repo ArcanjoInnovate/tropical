@@ -1,7 +1,7 @@
 // lib/features/search/presentation/widgets/proximity_controls.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 /// Widget de controles de busca por proximidade.
 ///
@@ -55,8 +55,8 @@ class ProximityControls extends StatelessWidget {
             Expanded(
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: isActive ? TabuColors.rosaPrincipal : TabuColors.rosaDeep,
-                  foregroundColor: TabuColors.branco,
+                  backgroundColor: isActive ? TClubColors.redPrincipal : TClubColors.redDeep,
+                  foregroundColor: TClubColors.branco,
                 ),
                 onPressed: isLocating
                     ? null
@@ -71,7 +71,7 @@ class ProximityControls extends StatelessWidget {
                       )
                     : Icon(isActive ? Icons.gps_off : Icons.my_location),
                 label: Text(
-                  style: const TextStyle(fontWeight: FontWeight.w600, color: TabuColors.branco),
+                  style: const TextStyle(fontWeight: FontWeight.w600, color: TClubColors.branco),
                   isLocating
                       ? 'Obtendo localização...'
                       : isActive
@@ -122,3 +122,4 @@ class ProximityControls extends StatelessWidget {
     );
   }
 }
+

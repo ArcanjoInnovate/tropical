@@ -1,7 +1,7 @@
 // features/profile/presentation/pages/profile/_profile_painters.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 class AtmospherePainter extends CustomPainter {
   const AtmospherePainter({required this.gradient});
@@ -12,7 +12,7 @@ class AtmospherePainter extends CustomPainter {
     // background
     canvas.drawRect(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Paint()..color = TabuColors.bg,
+      Paint()..color = TClubColors.bg,
     );
 
     // radial blob top centre
@@ -39,7 +39,7 @@ class AtmospherePainter extends CustomPainter {
       size.width * 0.42,
       Paint()
         ..shader = RadialGradient(colors: [
-          TabuColors.rosaPrincipal.withOpacity(0.07),
+          TClubColors.redPrincipal.withOpacity(0.07),
           Colors.transparent,
         ]).createShader(Rect.fromCircle(
             center: Offset(size.width * 0.90, size.height * 0.07),
@@ -67,3 +67,4 @@ class AtmospherePainter extends CustomPainter {
   @override
   bool shouldRepaint(AtmospherePainter old) => false;
 }
+

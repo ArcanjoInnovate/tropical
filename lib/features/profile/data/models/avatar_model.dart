@@ -14,3 +14,4 @@ class AvatarModel {
   factory AvatarModel.fromMap(Map<String, dynamic> map) =>
       AvatarModel(url: map['avatar'] as String? ?? '');
 }
+

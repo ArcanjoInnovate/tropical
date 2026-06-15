@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/ban_page.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/suspension_page.dart';
-import 'package:tabuapp/features/penalty/presentation/pages/warning_page.dart';
-import 'package:tabuapp/core/widgets/main_navigation.dart';
+import 'package:tclub/core/constants/app_constants.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/penalty/presentation/pages/ban_page.dart';
+import 'package:tclub/features/penalty/presentation/pages/suspension_page.dart';
+import 'package:tclub/features/penalty/presentation/pages/warning_page.dart';
+import 'package:tclub/core/widgets/main_navigation.dart';
 
 class AuthGuard extends StatefulWidget {
   const AuthGuard({super.key});
@@ -293,16 +294,16 @@ class _LoadingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           ShaderMask(
             shaderCallback: (b) => const LinearGradient(
-              colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+              colors: [TClubColors.redPrincipal, TClubColors.redClaro],
             ).createShader(b),
-            child: const Text('TABU',
+            child: const Text(AppConstants.appName,
                 style: TextStyle(
-                  fontFamily:    TabuTypography.displayFont,
+                  fontFamily:    TClubTypography.displayFont,
                   fontSize:      36,
                   letterSpacing: 10,
                   color:         Colors.white,
@@ -313,7 +314,7 @@ class _LoadingScreen extends StatelessWidget {
             width:  18,
             height: 18,
             child: CircularProgressIndicator(
-              color:       TabuColors.rosaPrincipal,
+              color:       TClubColors.redPrincipal,
               strokeWidth: 1.5,
             ),
           ),
@@ -322,3 +323,4 @@ class _LoadingScreen extends StatelessWidget {
     );
   }
 }
+

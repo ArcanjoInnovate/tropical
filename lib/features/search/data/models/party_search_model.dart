@@ -1,6 +1,6 @@
 // lib/features/search/data/models/party_search_model.dart
 
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
 
 
 /// Model que representa uma festa nos resultados de busca.
@@ -209,3 +209,4 @@ class PartySearchModel extends PartySearchEntity {
     );
   }
 }
+

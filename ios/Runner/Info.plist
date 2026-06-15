@@ -10,7 +10,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 
 	<key>CFBundleDisplayName</key>
-	<string>Tabuapp</string>
+	<string>TCLUB</string>
 
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
@@ -22,7 +22,7 @@
 	<string>6.0</string>
 
 	<key>CFBundleName</key>
-	<string>tabuapp</string>
+	<string>TCLUB</string>
 
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>

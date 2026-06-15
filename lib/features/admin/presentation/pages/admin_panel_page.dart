@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
-import 'package:tabuapp/features/admin/controller/admin_panel_controller.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
+import 'package:tclub/features/admin/controller/admin_panel_controller.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
 import '../../data/models/report_model.dart';
 import '../widgets/report_tile.dart';
 import '../widgets/user_admin_tile.dart';
@@ -103,50 +103,50 @@ class _AdminPanelPageState extends State<AdminPanelPage>
   void _confirmarDelete(ReportModel report) {
     showModalBottomSheet(
       context:         context,
-      backgroundColor: AdminColors.bgCard,
+      backgroundColor: TClubColors.bgCard,
       shape:           const RoundedRectangleBorder(),
       builder: (_) => SafeArea(top: false, child: Padding(
         padding: const EdgeInsets.fromLTRB(24, 20, 24, 24),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(width: 36, height: 3,
             decoration: BoxDecoration(
-              color: AdminColors.border,
+              color: TClubColors.border,
               borderRadius: BorderRadius.circular(2))),
           const SizedBox(height: 20),
           Container(width: 52, height: 52,
             decoration: BoxDecoration(
-              color: AdminColors.danger.withOpacity(0.10)),
+              color: TClubColors.error.withOpacity(0.10)),
             child: const Icon(Icons.delete_outline_rounded,
-              color: AdminColors.danger, size: 24)),
+              color: TClubColors.error, size: 24)),
           const SizedBox(height: 14),
           Text('REMOVER ${report.tipo.toUpperCase()}?',
             style: const TextStyle(
-              fontFamily: TabuTypography.displayFont,
+              fontFamily: TClubTypography.displayFont,
               fontSize: 14, letterSpacing: 4,
-              color: AdminColors.inkDeep)),
+              color: TClubColors.branco)),
           const SizedBox(height: 8),
           const Text(
             'O conteúdo será excluído permanentemente. '
             'Esta ação não pode ser desfeita.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11, height: 1.6,
-              color: AdminColors.inkSubtle)),
+              color: TClubColors.textoSecundario)),
           const SizedBox(height: 24),
           Row(children: [
             Expanded(child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(height: 46,
                 decoration: BoxDecoration(
-                  color:  AdminColors.fill,
-                  border: Border.all(color: AdminColors.border)),
+                  color:  TClubColors.bgAlt,
+                  border: Border.all(color: TClubColors.border)),
                 child: const Center(child: Text('CANCELAR',
                   style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      10, fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color:         AdminColors.inkSubtle)))))),
+                    color:         TClubColors.textoSecundario)))))),
             const SizedBox(width: 12),
             Expanded(child: GestureDetector(
               onTap: () {
@@ -156,10 +156,10 @@ class _AdminPanelPageState extends State<AdminPanelPage>
                     .deleteReportContent(report);
               },
               child: Container(height: 46,
-                decoration: const BoxDecoration(color: AdminColors.danger),
+                decoration: const BoxDecoration(color: TClubColors.error),
                 child: const Center(child: Text('REMOVER',
                   style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      10, fontWeight: FontWeight.w700,
                     letterSpacing: 2.5, color: Colors.white)))))),
           ]),
@@ -174,11 +174,11 @@ class _AdminPanelPageState extends State<AdminPanelPage>
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: AdminTheme.main,
+      data: TClubTheme.main,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.dark,
+        value: SystemUiOverlayStyle.light,
         child: Scaffold(
-          backgroundColor: AdminColors.bg,
+          backgroundColor: TClubColors.bg,
           body: Column(children: [
             _buildHeader(),
             _buildStats(),
@@ -203,9 +203,9 @@ class _AdminPanelPageState extends State<AdminPanelPage>
 
     return Container(
       decoration: BoxDecoration(
-        color: AdminColors.bgCard,
+        color: TClubColors.bgCard,
         border: Border(bottom: BorderSide(
-          color: AdminColors.borderStrong, width: 0.8))),
+          color: TClubColors.borderMid, width: 0.8))),
       child: SafeArea(bottom: false, child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
         child: Row(children: [
@@ -213,7 +213,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>
             onTap: () => Navigator.pop(context),
             child: const SizedBox(width: 35, height: 35,
               child: Icon(Icons.arrow_back_ios_new_rounded,
-                color: AdminColors.inkPrincipal, size: 18))),
+                color: TClubColors.redPrincipal, size: 18))),
           const SizedBox(width: 8),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,42 +221,42 @@ class _AdminPanelPageState extends State<AdminPanelPage>
               Row(children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                  color: AdminColors.inkPrincipal,
+                  color: TClubColors.redPrincipal,
                   child: const Text('ADMIN',
                     style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      7, fontWeight: FontWeight.w700,
                       letterSpacing: 1.5, color: Colors.white))),
                 const SizedBox(width: 10),
                 const Text('PAINEL PROFISSIONAL',
                   style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 12, letterSpacing: 1,
-                    color: AdminColors.inkDeep)),
+                    color: TClubColors.branco)),
               ]),
               const SizedBox(height: 3),
-              const Text('Tabu · Acesso Restrito',
+              const Text('Tclub · Acesso Restrito',
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10, letterSpacing: 1,
-                  color: AdminColors.inkSubtle)),
+                  color: TClubColors.textoSecundario)),
             ],
           )),
           if (pendingReports > 0)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color:  AdminColors.fill,
-                border: Border.all(color: AdminColors.borderStrong)),
+                color:  TClubColors.bgAlt,
+                border: Border.all(color: TClubColors.borderMid)),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.flag_rounded,
-                  color: AdminColors.pending, size: 12),
+                  color: TClubColors.redClaro, size: 12),
                 const SizedBox(width: 5),
                 Text('$pendingReports',
                   style: const TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      11, fontWeight: FontWeight.w700,
-                    color:         AdminColors.pending)),
+                    color:         TClubColors.redClaro)),
               ])),
         ]),
       )),
@@ -270,13 +270,13 @@ class _AdminPanelPageState extends State<AdminPanelPage>
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 14, 0, 14),
       decoration: BoxDecoration(
-        color:  AdminColors.bgAlt,
+        color:  TClubColors.bgAlt,
         border: Border(bottom: BorderSide(
-          color: AdminColors.border, width: 0.5))),
+          color: TClubColors.border, width: 0.5))),
       child: ctrl.loadingStats
           ? const Center(child: SizedBox(width: 20, height: 20,
               child: CircularProgressIndicator(strokeWidth: 1.5,
-                valueColor: AlwaysStoppedAnimation(AdminColors.inkPrincipal))))
+                valueColor: AlwaysStoppedAnimation(TClubColors.redPrincipal))))
           : Row(children: [
               AdminStatChip(label: 'USERS',   value: '${ctrl.stats.totalUsers}',
                 icon: Icons.people_outline_rounded),
@@ -303,22 +303,22 @@ class _AdminPanelPageState extends State<AdminPanelPage>
 
     return Container(
       decoration: BoxDecoration(
-        color: AdminColors.bgCard,
+        color: TClubColors.bgCard,
         border: const Border(bottom: BorderSide(
-          color: AdminColors.border, width: 0.5))),
+          color: TClubColors.border, width: 0.5))),
       child: TabBar(
         controller:           _tabCtrl,
-        indicatorColor:       AdminColors.inkPrincipal,
+        indicatorColor:       TClubColors.redPrincipal,
         indicatorWeight:      2,
-        labelColor:           AdminColors.inkDeep,
-        unselectedLabelColor: AdminColors.inkSubtle,
+        labelColor:           TClubColors.branco,
+        unselectedLabelColor: TClubColors.textoSecundario,
         isScrollable:         false,
         labelStyle: const TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      9, fontWeight: FontWeight.w700,
           letterSpacing: 2),
         unselectedLabelStyle: const TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      9, fontWeight: FontWeight.w700,
           letterSpacing: 2),
         tabs: [
@@ -372,14 +372,14 @@ class _AdminPanelPageState extends State<AdminPanelPage>
                       ? 'SEM DENÚNCIAS ARQUIVADAS'
                       : 'SEM DENÚNCIAS PENDENTES')
           : RefreshIndicator(
-              color:           AdminColors.inkPrincipal,
-              backgroundColor: AdminColors.bgCard,
+              color:           TClubColors.redPrincipal,
+              backgroundColor: TClubColors.bgCard,
               onRefresh:       ctrl.refreshReports,
               child: ListView.separated(
                 padding:     const EdgeInsets.only(top: 4, bottom: 80),
                 itemCount:   exibindo.length,
                 separatorBuilder: (_, __) =>
-                    Container(height: 0.5, color: AdminColors.border),
+                    Container(height: 0.5, color: TClubColors.border),
                 itemBuilder: (_, i) {
                   final report = exibindo[i];
                   return ReportTile(
@@ -403,30 +403,30 @@ class _AdminPanelPageState extends State<AdminPanelPage>
   Widget _buildSearchBar() {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
-      color: AdminColors.bg,
+      color: TClubColors.bg,
       child: Container(
         height: 40,
         decoration: BoxDecoration(
-          color:  AdminColors.fill,
-          border: Border.all(color: AdminColors.border, width: 0.8)),
+          color:  TClubColors.bgAlt,
+          border: Border.all(color: TClubColors.border, width: 0.8)),
         child: Row(children: [
           const SizedBox(width: 12),
           const Icon(Icons.search_rounded,
-            color: AdminColors.inkGhost, size: 16),
+            color: TClubColors.textoMuted, size: 16),
           const SizedBox(width: 8),
           Expanded(child: TextField(
             controller: _searchCtrl,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize:   12,
-              color:      AdminColors.inkDeep),
-            cursorColor: AdminColors.inkPrincipal,
+              color:      TClubColors.branco),
+            cursorColor: TClubColors.redPrincipal,
             decoration: const InputDecoration(
               hintText: 'Buscar por protocolo...',
               hintStyle: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   11,
-                color:      AdminColors.inkGhost),
+                color:      TClubColors.textoMuted),
               border:         InputBorder.none,
               isDense:        true,
               contentPadding: EdgeInsets.zero),
@@ -441,7 +441,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Icon(Icons.close_rounded,
-                  color: AdminColors.inkSubtle, size: 16),
+                  color: TClubColors.textoSecundario, size: 16),
               ),
             ),
         ]),
@@ -456,7 +456,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>
   }) {
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 8, 12, 0),
-      color: AdminColors.bg,
+      color: TClubColors.bg,
       child: Row(children: [
         _ToggleChip(
           label:    'PENDENTES',
@@ -489,15 +489,15 @@ class _AdminPanelPageState extends State<AdminPanelPage>
       label: 'SEM USUÁRIOS');
 
     return RefreshIndicator(
-      color:           AdminColors.inkPrincipal,
-      backgroundColor: AdminColors.bgCard,
+      color:           TClubColors.redPrincipal,
+      backgroundColor: TClubColors.bgCard,
       onRefresh:       ctrl.refreshUsers,
       child: ListView.separated(
         controller:  _usersScrollCtrl,
         padding:     const EdgeInsets.only(top: 4, bottom: 80),
         itemCount:   ctrl.users.length + (ctrl.hasMoreUsers ? 1 : 0),
         separatorBuilder: (_, __) =>
-            Container(height: 0.5, color: AdminColors.border),
+            Container(height: 0.5, color: TClubColors.border),
         itemBuilder: (_, i) {
           if (i == ctrl.users.length) {
             return Padding(
@@ -507,7 +507,7 @@ class _AdminPanelPageState extends State<AdminPanelPage>
                     ? const SizedBox(width: 18, height: 18,
                         child: CircularProgressIndicator(strokeWidth: 1.5,
                           valueColor:
-                              AlwaysStoppedAnimation(AdminColors.inkPrincipal)))
+                              AlwaysStoppedAnimation(TClubColors.redPrincipal)))
                     : const SizedBox.shrink()),
             );
           }
@@ -555,7 +555,7 @@ class _ToggleChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accent = danger ? AdminColors.pending : AdminColors.inkSubtle;
+    final accent = danger ? TClubColors.redClaro : TClubColors.textoSecundario;
 
     return GestureDetector(
       onTap: onTap,
@@ -564,19 +564,19 @@ class _ToggleChip extends StatelessWidget {
         curve:    Curves.easeOut,
         padding:  const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
-          color: selected ? AdminColors.inkPrincipal : AdminColors.fill,
+          color: selected ? TClubColors.redPrincipal : TClubColors.bgAlt,
           border: Border.all(
-            color: selected ? AdminColors.inkPrincipal : AdminColors.border,
+            color: selected ? TClubColors.redPrincipal : TClubColors.border,
             width: 0.8),
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Text(label,
             style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      9,
               fontWeight:    FontWeight.w700,
               letterSpacing: 1.5,
-              color: selected ? Colors.white : AdminColors.inkSubtle)),
+              color: selected ? Colors.white : TClubColors.textoSecundario)),
           if (count > 0) ...[
             const SizedBox(width: 6),
             Container(
@@ -585,12 +585,12 @@ class _ToggleChip extends StatelessWidget {
                 color: selected
                     ? Colors.white.withOpacity(0.20)
                     : (danger
-                        ? AdminColors.pending.withOpacity(0.12)
-                        : AdminColors.border),
+                        ? TClubColors.redClaro.withOpacity(0.12)
+                        : TClubColors.border),
                 borderRadius: BorderRadius.circular(4)),
               child: Text('$count',
                 style: TextStyle(
-                  fontFamily:    TabuTypography.bodyFont,
+                  fontFamily:    TClubTypography.bodyFont,
                   fontSize:      9,
                   fontWeight:    FontWeight.w700,
                   color: selected ? Colors.white : accent)),

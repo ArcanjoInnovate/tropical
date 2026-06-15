@@ -115,3 +115,4 @@ class CacheStats {
   String toString() =>
       'CacheStats(total: $totalEntries, valid: $validEntries, expired: $expiredEntries)';
 }
+

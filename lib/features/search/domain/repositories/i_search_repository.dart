@@ -1,6 +1,6 @@
-import 'package:tabuapp/features/search/domain/entities/paginated_result.dart';
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/search/domain/entities/user_search.dart';
+import 'package:tclub/features/search/domain/entities/paginated_result.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/entities/user_search.dart';
 
 /// Interface do repositório de busca.
 /// 
@@ -98,3 +98,4 @@ abstract class ISearchRepository {
   /// ao invés de usar páginas cacheadas com filtros antigos.
   void invalidateFiltersCache();
 }
+

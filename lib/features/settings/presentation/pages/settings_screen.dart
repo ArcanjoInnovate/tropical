@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/controllers/user_relationship_controller.dart';
-import 'package:tabuapp/features/settings/presentation/pages/delete_screen.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/controllers/user_relationship_controller.dart';
+import 'package:tclub/features/settings/presentation/pages/delete_screen.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Model simples de perfil
@@ -59,13 +59,13 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       appBar: AppBar(
         title: const Text('CONFIGURAÇÕES'),
-        backgroundColor: TabuColors.nav,
+        backgroundColor: TClubColors.nav,
       ),
       body: Container(
-        decoration: const BoxDecoration(gradient: TabuColors.fundoApp),
+        decoration: const BoxDecoration(gradient: TClubColors.fundoApp),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -106,7 +106,7 @@ class SettingsScreen extends StatelessWidget {
     return Text(
       title,
       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-            color: TabuColors.rosaClaro,
+            color: TClubColors.redClaro,
             letterSpacing: 1.5,
           ),
     );
@@ -115,8 +115,8 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildCard({required Widget child}) {
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.border, width: 0.8),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.border, width: 0.8),
       ),
       child: child,
     );
@@ -132,11 +132,11 @@ class SettingsScreen extends StatelessWidget {
     bool isDanger = false,
   }) {
     final Color iconColor = isDanger
-        ? TabuColors.rosaPrincipal.withOpacity(0.85)
-        : TabuColors.rosaClaro;
+        ? TClubColors.redPrincipal.withOpacity(0.85)
+        : TClubColors.redClaro;
     final Color titleColor = isDanger
-        ? TabuColors.rosaPrincipal.withOpacity(0.85)
-        : TabuColors.textoPrincipal;
+        ? TClubColors.redPrincipal.withOpacity(0.85)
+        : TClubColors.textoPrincipal;
 
     return InkWell(
       onTap: onTap,
@@ -147,8 +147,8 @@ class SettingsScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: TabuColors.bgAlt,
-                border: Border.all(color: TabuColors.border, width: 1),
+                color: TClubColors.bgAlt,
+                border: Border.all(color: TClubColors.border, width: 1),
               ),
               child: Icon(icon, color: iconColor, size: 22),
             ),
@@ -171,7 +171,7 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             trailing ??
-                Icon(Icons.chevron_right, color: TabuColors.subtle, size: 20),
+                Icon(Icons.chevron_right, color: TClubColors.subtle, size: 20),
           ],
         ),
       ),
@@ -194,8 +194,8 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         child: Container(
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.border, width: 0.8),
+            color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.border, width: 0.8),
           ),
           padding: const EdgeInsets.all(28),
           child: Column(
@@ -204,7 +204,7 @@ class SettingsScreen extends StatelessWidget {
             children: [
               Icon(
                 Icons.delete_outline,
-                color: TabuColors.rosaPrincipal.withOpacity(0.8),
+                color: TClubColors.redPrincipal.withOpacity(0.8),
                 size: 28,
               ),
               const SizedBox(height: 20),
@@ -223,7 +223,7 @@ class SettingsScreen extends StatelessWidget {
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        side: BorderSide(color: TabuColors.border, width: 1),
+                        side: BorderSide(color: TClubColors.border, width: 1),
                       ),
                       child: const Text('CANCELAR'),
                     ),
@@ -244,12 +244,12 @@ class SettingsScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         backgroundColor:
-                            TabuColors.rosaPrincipal.withOpacity(0.15),
+                            TClubColors.redPrincipal.withOpacity(0.15),
                         foregroundColor:
-                            TabuColors.rosaPrincipal.withOpacity(0.9),
+                            TClubColors.redPrincipal.withOpacity(0.9),
                         elevation: 0,
                         side: BorderSide(
-                          color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                          color: TClubColors.redPrincipal.withOpacity(0.4),
                           width: 1,
                         ),
                       ),
@@ -337,10 +337,10 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
         content: Text(
           message,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: TabuColors.textoPrincipal,
+                color: TClubColors.textoPrincipal,
               ),
         ),
-        backgroundColor: TabuColors.bgCard,
+        backgroundColor: TClubColors.bgCard,
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
@@ -348,8 +348,8 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
           borderRadius: BorderRadius.zero,
           side: BorderSide(
             color: success
-                ? TabuColors.rosaClaro.withOpacity(0.4)
-                : TabuColors.rosaPrincipal.withOpacity(0.5),
+                ? TClubColors.redClaro.withOpacity(0.4)
+                : TClubColors.redPrincipal.withOpacity(0.5),
             width: 1,
           ),
         ),
@@ -363,15 +363,15 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.7,
       decoration: BoxDecoration(
-        gradient: TabuColors.fundoApp,
+        gradient: TClubColors.fundoApp,
         border: const Border(
-          top: BorderSide(color: TabuColors.border, width: 1),
+          top: BorderSide(color: TClubColors.border, width: 1),
         ),
       ),
       child: Column(
         children: [
           const SizedBox(height: 12),
-          Container(width: 40, height: 3, color: TabuColors.subtle),
+          Container(width: 40, height: 3, color: TClubColors.subtle),
           const SizedBox(height: 24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -380,11 +380,11 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: TabuColors.bgAlt,
-                    border: Border.all(color: TabuColors.border, width: 1),
+                    color: TClubColors.bgAlt,
+                    border: Border.all(color: TClubColors.border, width: 1),
                   ),
                   child: const Icon(Icons.block,
-                      color: TabuColors.rosaClaro, size: 22),
+                      color: TClubColors.redClaro, size: 22),
                 ),
                 const SizedBox(width: 16),
                 Text(
@@ -406,7 +406,7 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
       return const Center(
         child: CircularProgressIndicator(
           strokeWidth: 1.5,
-          color: TabuColors.rosaClaro,
+          color: TClubColors.redClaro,
         ),
       );
     }
@@ -424,7 +424,7 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       itemCount: _profiles.length,
       separatorBuilder: (_, __) =>
-          Divider(height: 1, color: TabuColors.border),
+          Divider(height: 1, color: TClubColors.border),
       itemBuilder: (context, index) => _buildProfileTile(_profiles[index]),
     );
   }
@@ -439,8 +439,8 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
             width: 52,
             height: 52,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 1),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 1),
             ),
             child: profile.avatar != null
                 ? CachedNetworkImage(
@@ -452,17 +452,17 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
                         height: 16,
                         child: CircularProgressIndicator(
                           strokeWidth: 1,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         ),
                       ),
                     ),
                     errorWidget: (_, __, ___) => const Icon(
                       Icons.person,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                       size: 26,
                     ),
                   )
-                : const Icon(Icons.person, color: TabuColors.subtle, size: 26),
+                : const Icon(Icons.person, color: TClubColors.subtle, size: 26),
           ),
 
           const SizedBox(width: 14),
@@ -476,7 +476,7 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
                   profile.name,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: TabuColors.textoPrincipal,
+                        color: TClubColors.textoPrincipal,
                       ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -485,12 +485,12 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
                   Row(
                     children: [
                       Icon(Icons.location_on_outlined,
-                          size: 11, color: TabuColors.subtle),
+                          size: 11, color: TClubColors.subtle),
                       const SizedBox(width: 3),
                       Text(
                         profile.location,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: TabuColors.subtle,
+                              color: TClubColors.subtle,
                               fontSize: 11,
                             ),
                       ),
@@ -509,13 +509,13 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
             style: OutlinedButton.styleFrom(
               padding:
                   const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              side: BorderSide(color: TabuColors.border, width: 1),
+              side: BorderSide(color: TClubColors.border, width: 1),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             child: Text(
               'DESBLOQUEAR',
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: TabuColors.rosaClaro,
+                    color: TClubColors.redClaro,
                     fontSize: 11,
                   ),
             ),
@@ -525,3 +525,4 @@ class _BlockedUsersSheetState extends State<_BlockedUsersSheet> {
     );
   }
 }
+

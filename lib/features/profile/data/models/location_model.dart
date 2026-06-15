@@ -94,3 +94,4 @@ class BairroSuggestion {
     this.placeId,
   });
 }
+

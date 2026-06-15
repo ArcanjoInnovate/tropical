@@ -91,3 +91,4 @@ class ReportModel {
     if (reportedName   != null) 'reported_name':    reportedName,
   };
 }
+

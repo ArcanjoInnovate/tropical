@@ -1,8 +1,8 @@
 // lib/screens/admin/presentation/widgets/report_tile.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
 import '../../data/models/report_model.dart';
 
 class ReportTile extends StatelessWidget {
@@ -21,9 +21,9 @@ class ReportTile extends StatelessWidget {
 
   Color get _statusColor {
     switch (report.status) {
-      case 'pending':   return AdminColors.pending;
-      case 'actioned':  return AdminColors.actioned;
-      default:          return AdminColors.dismissed;
+      case 'pending':   return TClubColors.redClaro;
+      case 'actioned':  return Color(0xFF4CAF50);
+      default:          return TClubColors.textoMuted;
     }
   }
 
@@ -48,11 +48,11 @@ class ReportTile extends StatelessWidget {
 
   Color get _tipoColor {
     switch (report.tipo) {
-      case 'posts':   return AdminColors.inkPrincipal;
-      case 'stories': return AdminColors.inkMid;
-      case 'users':   return AdminColors.accent;
-      case 'chats':   return AdminColors.accentLight;
-      default:        return AdminColors.inkSubtle;
+      case 'posts':   return TClubColors.redPrincipal;
+      case 'stories': return TClubColors.textoSecundario;
+      case 'users':   return TClubColors.redClaro;
+      case 'chats':   return TClubColors.redClaro;
+      default:        return TClubColors.textoSecundario;
     }
   }
 
@@ -72,10 +72,10 @@ class ReportTile extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap:          onTap,
-        splashColor:    AdminColors.inkPrincipal.withOpacity(0.05),
-        highlightColor: AdminColors.inkPrincipal.withOpacity(0.03),
+        splashColor:    TClubColors.redPrincipal.withOpacity(0.05),
+        highlightColor: TClubColors.redPrincipal.withOpacity(0.03),
         child: Container(
-          color:   report.isPending ? AdminColors.fill : Colors.transparent,
+          color:   report.isPending ? TClubColors.bgAlt : Colors.transparent,
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,12 +112,12 @@ class ReportTile extends StatelessWidget {
       _statusBadge(),
       const Spacer(),
       const Icon(Icons.chevron_right_rounded,
-        color: AdminColors.border, size: 14),
+        color: TClubColors.border, size: 14),
       const SizedBox(width: 4),
       Text(_formatTs(report.createdAt),
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
-          fontSize: 9, color: AdminColors.inkGhost,
+          fontFamily: TClubTypography.bodyFont,
+          fontSize: 9, color: TClubColors.textoMuted,
           letterSpacing: 0.3)),
     ]);
   }
@@ -127,7 +127,7 @@ class ReportTile extends StatelessWidget {
     color: _tipoColor.withOpacity(0.10),
     child: Text(_tipoDisplay,
       style: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      8, fontWeight: FontWeight.w700,
         letterSpacing: 2, color: _tipoColor)));
 
@@ -138,7 +138,7 @@ class ReportTile extends StatelessWidget {
         color: _statusColor.withOpacity(0.5), width: 0.7)),
     child: Text(_statusLabel,
       style: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      8, fontWeight: FontWeight.w700,
         letterSpacing: 2, color: _statusColor)));
 
@@ -147,45 +147,45 @@ class ReportTile extends StatelessWidget {
     children: [
       Text(report.motivo,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 13, fontWeight: FontWeight.w600,
-          color: AdminColors.inkDeep, letterSpacing: 0.3)),
+          color: TClubColors.branco, letterSpacing: 0.3)),
       const SizedBox(height: 3),
       Text(report.artigo,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 9, letterSpacing: 1.5,
-          color: AdminColors.inkSubtle)),
+          color: TClubColors.textoSecundario)),
     ],
   );
 
   Widget _buildDescricao() => Container(
     width:   double.infinity,
     padding: const EdgeInsets.all(10),
-    color:   AdminColors.bgAlt,
+    color:   TClubColors.bgAlt,
     child: Text(report.descricao,
       maxLines:        2,
       overflow:        TextOverflow.ellipsis,
       style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont,
+        fontFamily: TClubTypography.bodyFont,
         fontSize: 11, height: 1.5,
-        color: AdminColors.inkSubtle,
+        color: TClubColors.textoSecundario,
         letterSpacing: 0.2)));
 
   Widget _buildFooter() => Text(
     'Denunciado por: ${report.reporterUid}',
     style: const TextStyle(
-      fontFamily: TabuTypography.bodyFont,
-      fontSize: 9, color: AdminColors.inkGhost,
+      fontFamily: TClubTypography.bodyFont,
+      fontSize: 9, color: TClubColors.textoMuted,
       letterSpacing: 0.3));
 
   Widget _buildProtocolo() => Row(children: [
-    const Icon(Icons.tag_rounded, color: AdminColors.border, size: 10),
+    const Icon(Icons.tag_rounded, color: TClubColors.border, size: 10),
     const SizedBox(width: 4),
     Text(report.protocolo!,
       style: const TextStyle(
-        fontFamily: TabuTypography.bodyFont,
-        fontSize: 8, color: AdminColors.inkGhost,
+        fontFamily: TClubTypography.bodyFont,
+        fontSize: 8, color: TClubColors.textoMuted,
         letterSpacing: 1)),
   ]);
 
@@ -195,21 +195,21 @@ class ReportTile extends StatelessWidget {
       child: Container(
         height: 36,
         decoration: BoxDecoration(
-          color:  AdminColors.fillStrong,
+          color:  TClubColors.bgCard,
           border: Border.all(
-            color: AdminColors.borderStrong, width: 0.8)),
+            color: TClubColors.borderMid, width: 0.8)),
         child: const Center(child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.open_in_new_rounded,
-              color: AdminColors.inkMid, size: 11),
+              color: TClubColors.textoSecundario, size: 11),
             SizedBox(width: 6),
             Text('VER DETALHES',
               style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      9, fontWeight: FontWeight.w700,
                 letterSpacing: 1.5,
-                color:         AdminColors.inkPrincipal)),
+                color:         TClubColors.redPrincipal)),
           ]))))),
     const SizedBox(width: 6),
     GestureDetector(
@@ -217,13 +217,13 @@ class ReportTile extends StatelessWidget {
       child: Container(
         width: 70, height: 36,
         decoration: BoxDecoration(
-          color:  AdminColors.fill,
-          border: Border.all(color: AdminColors.border, width: 0.8)),
+          color:  TClubColors.bgAlt,
+          border: Border.all(color: TClubColors.border, width: 0.8)),
         child: const Center(child: Text('IGNORAR',
           style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      8, fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color:         AdminColors.inkSubtle))))),
+            color:         TClubColors.textoSecundario))))),
   ]);
 }

@@ -275,3 +275,4 @@ class ProfileUserModel {
         postCount:         postCount         ?? this.postCount,
       );
 }
+

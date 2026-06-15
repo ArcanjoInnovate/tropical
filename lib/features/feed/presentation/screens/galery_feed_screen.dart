@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/widgets/full_screen_image.dart';
-import 'package:tabuapp/core/widgets/full_screen_video.dart';
-import 'package:tabuapp/core/widgets/inline_video_card.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/core/widgets/full_screen_image.dart';
+import 'package:tclub/core/widgets/full_screen_video.dart';
+import 'package:tclub/core/widgets/inline_video_card.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class GalleryFeedScreen extends StatefulWidget {
@@ -118,28 +118,28 @@ class _GalleryFeedScreenState extends State<GalleryFeedScreen> {
           child: const Padding(
             padding: EdgeInsets.all(12),
             child: Icon(Icons.arrow_back_ios_new_rounded,
-                color: TabuColors.branco, size: 18),
+                color: TClubColors.branco, size: 18),
           ),
         ),
         title: Column(mainAxisSize: MainAxisSize.min, children: [
           Text(
             widget.userName.toUpperCase(),
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11,
               fontWeight: FontWeight.w700,
               letterSpacing: 3,
-              color: TabuColors.branco,
+              color: TClubColors.branco,
             ),
           ),
           const SizedBox(height: 2),
           Text(
             'GALERIA · ${_current + 1} / $total',
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9,
               letterSpacing: 2,
-              color: TabuColors.branco,
+              color: TClubColors.branco,
             ),
           ),
         ]),
@@ -161,7 +161,7 @@ class _GalleryFeedScreenState extends State<GalleryFeedScreen> {
                         ? Icons.volume_off_rounded
                         : Icons.volume_up_rounded,
                     color:
-                        isMuted ? TabuColors.subtle : TabuColors.rosaPrincipal,
+                        isMuted ? TClubColors.subtle : TClubColors.redPrincipal,
                     size: 18,
                   ),
                 ),
@@ -174,7 +174,7 @@ class _GalleryFeedScreenState extends State<GalleryFeedScreen> {
               child: const Padding(
                 padding: EdgeInsets.all(12),
                 child: Icon(Icons.open_in_full_rounded,
-                    color: TabuColors.subtle, size: 18),
+                    color: TClubColors.subtle, size: 18),
               ),
             ),
         ],
@@ -281,7 +281,7 @@ class _GalleryPhotoPage extends StatelessWidget {
             color: Colors.black,
             child: Center(
               child: Icon(Icons.broken_image_outlined,
-                  color: TabuColors.border, size: 48),
+                  color: TClubColors.border, size: 48),
             ),
           ),
         ),
@@ -305,30 +305,30 @@ class _GalleryPhotoPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: TabuColors.bgCard.withOpacity(0.70),
+                    color: TClubColors.bgCard.withOpacity(0.70),
                     border: Border.all(
-                        color: TabuColors.border.withOpacity(0.50), width: 0.6),
+                        color: TClubColors.border.withOpacity(0.50), width: 0.6),
                   ),
                   child: Row(mainAxisSize: MainAxisSize.min, children: const [
-                    Icon(Icons.image_outlined, size: 10, color: TabuColors.dim),
+                    Icon(Icons.image_outlined, size: 10, color: TClubColors.dim),
                     SizedBox(width: 5),
                     Text('FOTO',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 8,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 2,
-                          color: TabuColors.dim,
+                          color: TClubColors.dim,
                         )),
                   ]),
                 ),
                 const Spacer(),
                 const Text('TOQUE PARA EXPANDIR',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 7,
                       letterSpacing: 1.5,
-                      color: TabuColors.subtle,
+                      color: TClubColors.subtle,
                     )),
               ],
             ),
@@ -354,17 +354,17 @@ class _PositionDots extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         margin: const EdgeInsets.only(bottom: 80),
         decoration: BoxDecoration(
-          color: TabuColors.bgCard.withOpacity(0.85),
-          border: Border.all(color: TabuColors.border, width: 0.6),
+          color: TClubColors.bgCard.withOpacity(0.85),
+          border: Border.all(color: TClubColors.border, width: 0.6),
         ),
         child: Text(
           '${current + 1}/$total',
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color: TabuColors.dim,
+            color: TClubColors.dim,
           ),
         ),
       );
@@ -385,8 +385,8 @@ class _PositionDots extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: active
-                  ? TabuColors.rosaPrincipal
-                  : TabuColors.border.withOpacity(0.60),
+                  ? TClubColors.redPrincipal
+                  : TClubColors.border.withOpacity(0.60),
             ),
           );
         }),
@@ -394,3 +394,4 @@ class _PositionDots extends StatelessWidget {
     );
   }
 }
+

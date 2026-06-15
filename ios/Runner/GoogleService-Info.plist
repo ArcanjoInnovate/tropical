@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDa00Dh6ruuFi3ZGKvTygaui7JxFonFMIg</string>
+	<string>AIzaSyCYLeQrizv-doMJENJiTh2fq3WgWtAaczg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>962739787299</string>
+	<string>871350869965</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tabu.app</string>
+	<string>com.tropical.app</string>
 	<key>PROJECT_ID</key>
-	<string>tabuapp-4325a</string>
+	<string>tropical-64d1b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>tabuapp-4325a.firebasestorage.app</string>
+	<string>tropical-64d1b.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,8 +25,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:962739787299:ios:8028440fe1dac993824396</string>
+	<string>1:871350869965:ios:dc8f4a95624336bfa66e84</string>
 	<key>DATABASE_URL</key>
-	<string>https://tabuapp-4325a-default-rtdb.firebaseio.com</string>
+	<string>https://tropical-64d1b-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>

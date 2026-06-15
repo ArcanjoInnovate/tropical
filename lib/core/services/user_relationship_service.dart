@@ -247,3 +247,4 @@ class UserRelationshipService {
   Stream<DatabaseEvent> watchBlockedMe(String myUserId) =>
       _db.child('blocked_by/$myUserId').onValue;
 }
+

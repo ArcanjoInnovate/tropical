@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/feed/presentation/screens/feed_administrative_screen.dart';
-import 'package:tabuapp/features/feed/presentation/screens/feed_screen.dart';
-import 'package:tabuapp/features/match/presentation/pages/match_profile_page.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/own_profile_screen.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
-import 'package:tabuapp/core/controllers/tabu_shell_controller.dart';
-import 'package:tabuapp/features/search/presentation/screens/search_screen.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_list_screen.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/feed/presentation/screens/feed_administrative_screen.dart';
+import 'package:tclub/features/feed/presentation/screens/feed_screen.dart';
+import 'package:tclub/features/match/presentation/pages/match_profile_page.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/own_profile_screen.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
+import 'package:tclub/core/controllers/tclub_shell_controller.dart';
+import 'package:tclub/features/search/presentation/screens/search_screen.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_list_screen.dart';
 
 
 class TabuShell extends StatefulWidget {
@@ -42,8 +42,8 @@ class _TabuShellState extends State<TabuShell> {
              ?? widget.userData['id']  as String? ?? '';
     if (uid.isNotEmpty) UserAvatarService.instance.invalidate(uid);
 
-    TabuShellController.instance.initialize(isAdmin: widget.isAdmin);
-    TabuShellController.instance.addListener(_onControllerChanged);
+    TclubShellController.instance.initialize(isAdmin: widget.isAdmin);
+    TclubShellController.instance.addListener(_onControllerChanged);
 
     if (widget.isAdmin) {
       _screens = [
@@ -67,7 +67,7 @@ class _TabuShellState extends State<TabuShell> {
 
   @override
   void dispose() {
-    TabuShellController.instance.removeListener(_onControllerChanged);
+    TclubShellController.instance.removeListener(_onControllerChanged);
     super.dispose();
   }
 
@@ -75,20 +75,20 @@ class _TabuShellState extends State<TabuShell> {
 
   void _onTabTapped(int index) {
     HapticFeedback.lightImpact();
-    TabuShellController.instance.setTabIndex(index);
+    TclubShellController.instance.setTabIndex(index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       extendBody: true,
       body: IndexedStack(
-        index: TabuShellController.instance.currentTabIndex,
+        index: TclubShellController.instance.currentTabIndex,
         children: _screens,
       ),
-      bottomNavigationBar: _TabuNavBar(
-        currentIndex: TabuShellController.instance.currentTabIndex,
+      bottomNavigationBar: _TclubNavBar(
+        currentIndex: TclubShellController.instance.currentTabIndex,
         isAdmin:      widget.isAdmin,
         myUid:        _myUid,
         onTap:        _onTabTapped,
@@ -100,8 +100,8 @@ class _TabuShellState extends State<TabuShell> {
 // ════════════════════════════════════════════════════════════════════════════
 //  BOTTOM NAV BAR
 // ════════════════════════════════════════════════════════════════════════════
-class _TabuNavBar extends StatelessWidget {
-  const _TabuNavBar({
+class _TclubNavBar extends StatelessWidget {
+  const _TclubNavBar({
     required this.currentIndex,
     required this.isAdmin,
     required this.myUid,
@@ -150,8 +150,8 @@ class _TabuNavBar extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-        color: TabuColors.nav,
-        border: Border(top: BorderSide(color: TabuColors.borderMid, width: 0.8)),
+        color: TClubColors.nav,
+        border: Border(top: BorderSide(color: TClubColors.borderMid, width: 0.8)),
       ),
       child: SafeArea(
         top: false,
@@ -233,7 +233,7 @@ class _NavButton extends StatelessWidget {
               child: Icon(
                 isActive ? item.activeIcon : item.icon,
                 key: ValueKey(isActive),
-                color: isActive ? TabuColors.rosaPrincipal : TabuColors.subtle,
+                color: isActive ? TClubColors.redPrincipal : TClubColors.subtle,
                 size: 26,
               ),
             ),
@@ -244,18 +244,18 @@ class _NavButton extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 4),
                   constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
                   decoration: BoxDecoration(
-                    color:  TabuColors.rosaPrincipal,
+                    color:  TClubColors.redPrincipal,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: TabuColors.bg, width: 1.5),
+                    border: Border.all(color: TClubColors.bg, width: 1.5),
                   ),
                   child: Text(
                     badge > 99 ? '99+' : '$badge',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontFamily:  TabuTypography.bodyFont,
+                      fontFamily:  TClubTypography.bodyFont,
                       fontSize:    9,
                       fontWeight:  FontWeight.w700,
-                      color:       TabuColors.textoPrincipal,
+                      color:       TClubColors.textoPrincipal,
                       height:      1.4,
                     ),
                   ),
@@ -269,7 +269,7 @@ class _NavButton extends StatelessWidget {
             height: 2,
             width:  isActive ? 24 : 0,
             decoration: BoxDecoration(
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
               borderRadius: BorderRadius.circular(1),
             ),
           ),
@@ -278,3 +278,4 @@ class _NavButton extends StatelessWidget {
     );
   }
 }
+

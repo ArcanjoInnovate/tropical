@@ -1,7 +1,7 @@
 // lib/widgets/user_avatar_image.dart
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/services/user_profile_cache.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
+import 'package:tclub/core/services/user_profile_cache.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
 
 class UserAvatarImage extends StatefulWidget {
   final String uid;
@@ -71,3 +71,4 @@ class _UserAvatarImageState extends State<UserAvatarImage> {
     child: const Icon(Icons.person_outline, color: Colors.white38),
   );
 }
+

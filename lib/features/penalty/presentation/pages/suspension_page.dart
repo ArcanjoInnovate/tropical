@@ -3,10 +3,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/auth/presentation/pages/login_screen.dart';
-import 'package:tabuapp/features/penalty/data/services/penalty_service.dart';
-import 'package:tabuapp/features/penalty/presentation/widgets/contest_sheet.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/auth/presentation/pages/login_screen.dart';
+import 'package:tclub/features/penalty/data/services/penalty_service.dart';
+import 'package:tclub/features/penalty/presentation/widgets/contest_sheet.dart';
 
 
 class SuspensionPage extends StatefulWidget {
@@ -156,7 +156,7 @@ class _SuspensionPageState extends State<SuspensionPage>
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: SafeArea(
           child: FadeTransition(
             opacity: _fade,
@@ -181,7 +181,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                 // ── Título ─────────────────────────────────────────────────
                 Text('CONTA SUSPENSA',
                     style: TextStyle(
-                      fontFamily:    TabuTypography.displayFont,
+                      fontFamily:    TClubTypography.displayFont,
                       fontSize:      24,
                       letterSpacing: 3,
                       color:         _cor,
@@ -192,9 +192,9 @@ class _SuspensionPageState extends State<SuspensionPage>
                   'por violação dos Termos de Uso.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   13,
-                    color:      TabuColors.textoMuted,
+                    color:      TClubColors.textoMuted,
                     height:     1.6,
                   ),
                 ),
@@ -213,7 +213,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                     Text(
                       expirou ? 'PRAZO ENCERRADO' : 'TEMPO RESTANTE',
                       style: const TextStyle(
-                        fontFamily:    TabuTypography.bodyFont,
+                        fontFamily:    TClubTypography.bodyFont,
                         fontSize:      9,
                         fontWeight:    FontWeight.w700,
                         letterSpacing: 3,
@@ -245,7 +245,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                           'O prazo da suspensão chegou ao fim.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize:   13,
                             color:      _cor,
                             fontWeight: FontWeight.w500,
@@ -259,9 +259,9 @@ class _SuspensionPageState extends State<SuspensionPage>
                           ? 'Faça login novamente para retomar o acesso.'
                           : 'Suspensão encerra em $fimStr',
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize:   11,
-                        color:      TabuColors.textoMuted,
+                        color:      TClubColors.textoMuted,
                       ),
                     ),
                   ]),
@@ -286,7 +286,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                           'Após o prazo encerrar, faça login novamente '
                           'para retomar o acesso à plataforma.',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize:   12,
                             color:      _cor,
                             height:     1.6,
@@ -302,9 +302,9 @@ class _SuspensionPageState extends State<SuspensionPage>
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color:  TabuColors.bgCard,
+                    color:  TClubColors.bgCard,
                     border: Border.all(
-                        color: TabuColors.border, width: 0.8),
+                        color: TClubColors.border, width: 0.8),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,7 +321,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                       ]),
                       const SizedBox(height: 16),
                       const Divider(
-                          color: TabuColors.border,
+                          color: TClubColors.border,
                           height: 1, thickness: 0.8),
                       const SizedBox(height: 16),
                       _Campo(label: 'ARTIGO VIOLADO', valor: artigo),
@@ -332,7 +332,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                           multiline: true),
                       const SizedBox(height: 16),
                       const Divider(
-                          color: TabuColors.border,
+                          color: TClubColors.border,
                           height: 1, thickness: 0.8),
                       const SizedBox(height: 16),
                       const _InfoRow(
@@ -363,7 +363,7 @@ class _SuspensionPageState extends State<SuspensionPage>
                               ? 'VERIFICANDO...'
                               : 'VERIFICAR E FAZER LOGIN',
                           style: const TextStyle(
-                            fontFamily:    TabuTypography.bodyFont,
+                            fontFamily:    TClubTypography.bodyFont,
                             fontSize:      12,
                             fontWeight:    FontWeight.w700,
                             letterSpacing: 2,
@@ -394,15 +394,15 @@ class _SuspensionPageState extends State<SuspensionPage>
                     icon: const Icon(Icons.mail_outline, size: 17),
                     label: const Text('CONTESTAR SUSPENSÃO',
                         style: TextStyle(
-                          fontFamily:    TabuTypography.bodyFont,
+                          fontFamily:    TClubTypography.bodyFont,
                           fontSize:      12,
                           fontWeight:    FontWeight.w700,
                           letterSpacing: 2,
                         )),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: TabuColors.textoMuted,
+                      foregroundColor: TClubColors.textoMuted,
                       side: const BorderSide(
-                          color: TabuColors.border, width: 0.8),
+                          color: TClubColors.border, width: 0.8),
                       shape: const RoundedRectangleBorder(),
                     ),
                   ),
@@ -410,9 +410,9 @@ class _SuspensionPageState extends State<SuspensionPage>
                 const SizedBox(height: 10),
                 Text('Protocolo $proto · guarde para referência',
                     style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   10,
-                      color:      TabuColors.textoMuted,
+                      color:      TClubColors.textoMuted,
                     )),
                 const SizedBox(height: 16),
               ]),
@@ -436,7 +436,7 @@ class _Unit extends StatelessWidget {
   Widget build(BuildContext context) => Column(children: [
         Text(valor.toString().padLeft(2, '0'),
             style: TextStyle(
-              fontFamily: TabuTypography.displayFont,
+              fontFamily: TClubTypography.displayFont,
               fontSize:   36,
               color:      cor,
               height:     1,
@@ -444,11 +444,11 @@ class _Unit extends StatelessWidget {
         const SizedBox(height: 4),
         Text(label,
             style: const TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      8,
               fontWeight:    FontWeight.w700,
               letterSpacing: 2,
-              color:         TabuColors.textoMuted,
+              color:         TClubColors.textoMuted,
             )),
       ]);
 }
@@ -488,19 +488,19 @@ class _Campo extends StatelessWidget {
         children: [
           Text(label,
               style: const TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      9,
                 fontWeight:    FontWeight.w700,
                 letterSpacing: 2,
-                color:         TabuColors.textoMuted,
+                color:         TClubColors.textoMuted,
               )),
           const SizedBox(height: 4),
           Text(valor,
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   13,
                 fontWeight: FontWeight.w500,
-                color:      corValor ?? TabuColors.textoPrincipal,
+                color:      corValor ?? TClubColors.textoPrincipal,
                 height:     multiline ? 1.6 : 1.3,
               )),
         ],
@@ -516,13 +516,13 @@ class _InfoRow extends StatelessWidget {
   Widget build(BuildContext context) => Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icone, size: 15, color: TabuColors.textoMuted),
+          Icon(icone, size: 15, color: TClubColors.textoMuted),
           const SizedBox(width: 10),
           Expanded(child: Text(corpo,
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   12,
-                color:      TabuColors.textoMuted,
+                color:      TClubColors.textoMuted,
                 height:     1.6,
               ))),
         ],
@@ -540,3 +540,4 @@ String _formatarData(dynamic ms) {
       '${dt.hour.toString().padLeft(2, '0')}:'
       '${dt.minute.toString().padLeft(2, '0')}';
 }
+

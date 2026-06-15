@@ -9,7 +9,8 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'package:tabuapp/core/services/media/video_watermark_service.dart';
+import 'package:tclub/core/constants/app_constants.dart';
+import 'package:tclub/core/services/media/video_watermark_service.dart';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -17,20 +18,20 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tabuapp/core/services/media/watermark_service.dart';
+import 'package:tclub/core/services/media/watermark_service.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/helpers/media_permission_helper.dart';
-import 'package:tabuapp/features/post/data/services/cloudinary_service.dart';
-import 'package:tabuapp/core/services/media/videos_trim_service.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/helpers/media_permission_helper.dart';
+import 'package:tclub/features/post/data/services/cloudinary_service.dart';
+import 'package:tclub/core/services/media/videos_trim_service.dart';
 import 'package:video_compress/video_compress.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/post/data/services/post_service.dart';
-import 'package:tabuapp/core/services/media/video_compress_service.dart';
-import 'package:tabuapp/core/services/media/watermark_service.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/post/data/services/post_service.dart';
+import 'package:tclub/core/services/media/video_compress_service.dart';
+import 'package:tclub/core/services/media/watermark_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class CreatePostScreen extends StatefulWidget {
@@ -381,32 +382,32 @@ class _CriarPostScreenState extends State<CreatePostScreen>
   void _showFotoSheet() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
         _sheetHandle(),
         const Text('SELECIONAR FOTO',
             style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 16,
                 letterSpacing: 5,
-                color: TabuColors.textoPrincipal)),
+                color: TClubColors.textoPrincipal)),
         const SizedBox(height: 16),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         _SheetTile(
             icon: Icons.photo_camera_outlined,
             label: 'CÂMERA',
             sublabel: 'Tirar foto agora',
             onTap: () => _pickFoto(ImageSource.camera)),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         _SheetTile(
             icon: Icons.photo_library_outlined,
             label: 'GALERIA',
             sublabel: 'Escolher da galeria',
             onTap: () => _pickFoto(ImageSource.gallery)),
         if (_foto != null) ...[
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
               icon: Icons.delete_outline,
               label: 'REMOVER FOTO',
@@ -425,40 +426,40 @@ class _CriarPostScreenState extends State<CreatePostScreen>
   void _showVideoSheet() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (_) => SafeArea(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
         _sheetHandle(),
         const Text('SELECIONAR VÍDEO',
             style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 16,
                 letterSpacing: 5,
-                color: TabuColors.textoPrincipal)),
+                color: TClubColors.textoPrincipal)),
         const SizedBox(height: 4),
         Text(
             'máximo $_maxVideoSeconds segundos • comprimido automaticamente',
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 letterSpacing: 1.5,
-                color: TabuColors.subtle)),
+                color: TClubColors.subtle)),
         const SizedBox(height: 16),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         _SheetTile(
             icon: Icons.videocam_outlined,
             label: 'CÂMERA',
             sublabel: 'Gravar vídeo agora',
             onTap: () => _pickVideo(ImageSource.camera)),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         _SheetTile(
             icon: Icons.video_library_outlined,
             label: 'GALERIA',
             sublabel: 'Escolher da galeria',
             onTap: () => _pickVideo(ImageSource.gallery)),
         if (_video != null) ...[
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           _SheetTile(
               icon: Icons.delete_outline,
               label: 'REMOVER VÍDEO',
@@ -479,7 +480,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
       height: 3,
       margin: const EdgeInsets.only(top: 12, bottom: 20),
       decoration: BoxDecoration(
-          color: TabuColors.border,
+          color: TClubColors.border,
           borderRadius: BorderRadius.circular(2)));
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -675,18 +676,18 @@ class _CriarPostScreenState extends State<CreatePostScreen>
   void _snack(String msg, {bool success = false}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor:
-            success ? TabuColors.rosaDeep : const Color(0xFF3D0A0A),
+            success ? TClubColors.redDeep : const Color(0xFF3D0A0A),
         behavior: SnackBarBehavior.floating,
         shape: const RoundedRectangleBorder(),
         margin: const EdgeInsets.all(16),
         duration: const Duration(seconds: 3),
         content: Text(msg,
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 1.5,
-                color: TabuColors.textoPrincipal))));
+                color: TClubColors.textoPrincipal))));
   }
 
   // ── BUILD ─────────────────────────────────────────────────────────────────
@@ -697,7 +698,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
         (widget.userData['name'] as String? ?? 'Você').toUpperCase();
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         Positioned.fill(child: CustomPaint(painter: _PostBg())),
         Positioned(
@@ -708,16 +709,16 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 height: 3,
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(colors: [
-                  TabuColors.rosaDeep,
-                  TabuColors.rosaPrincipal,
-                  TabuColors.rosaClaro,
-                  TabuColors.rosaPrincipal,
-                  TabuColors.rosaDeep
+                  TClubColors.redDeep,
+                  TClubColors.redPrincipal,
+                  TClubColors.redClaro,
+                  TClubColors.redPrincipal,
+                  TClubColors.redDeep
                 ])))),
         SafeArea(
             child: Column(children: [
           _buildTopBar(),
-          Container(height: 0.5, color: TabuColors.border),
+          Container(height: 0.5, color: TClubColors.border),
           Expanded(
               child: GestureDetector(
                   onTap: () => FocusScope.of(context).unfocus(),
@@ -761,11 +762,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             margin: const EdgeInsets.symmetric(horizontal: 32),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
+              color: TClubColors.bgCard,
               border: Border.all(
                 color: isError
                     ? const Color(0xFFE85D5D).withOpacity(0.5)
-                    : TabuColors.rosaPrincipal.withOpacity(0.3),
+                    : TClubColors.redPrincipal.withOpacity(0.3),
                 width: 1,
               ),
             ),
@@ -777,12 +778,12 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                   child: Stack(alignment: Alignment.center, children: [
                     CircularProgressIndicator(
                       value: _videoProcessProgress,
-                      color: TabuColors.rosaPrincipal,
-                      backgroundColor: TabuColors.border,
+                      color: TClubColors.redPrincipal,
+                      backgroundColor: TClubColors.border,
                       strokeWidth: 3,
                     ),
                     const Icon(Icons.movie_creation_outlined,
-                        color: TabuColors.rosaPrincipal, size: 32),
+                        color: TClubColors.redPrincipal, size: 32),
                   ]),
                 )
               else
@@ -802,39 +803,39 @@ class _CriarPostScreenState extends State<CreatePostScreen>
               Text(
                 isError ? 'PROCESSAMENTO FALHOU' : 'PROCESSANDO VÍDEO',
                 style: TextStyle(
-                  fontFamily: TabuTypography.displayFont,
+                  fontFamily: TClubTypography.displayFont,
                   fontSize: 16,
                   letterSpacing: 4,
                   color:
-                      isError ? const Color(0xFFE85D5D) : TabuColors.textoPrincipal,
+                      isError ? const Color(0xFFE85D5D) : TClubColors.textoPrincipal,
                 ),
               ),
               const SizedBox(height: 12),
               Text(_videoProcessStep,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 12,
                       letterSpacing: 1,
-                      color: TabuColors.subtle)),
+                      color: TClubColors.subtle)),
               if (!isError) ...[
                 const SizedBox(height: 16),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: LinearProgressIndicator(
                     value: _videoProcessProgress,
-                    backgroundColor: TabuColors.border,
-                    color: TabuColors.rosaPrincipal,
+                    backgroundColor: TClubColors.border,
+                    color: TClubColors.redPrincipal,
                     minHeight: 4,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text('${(_videoProcessProgress * 100).toInt()}%',
                     style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                         letterSpacing: 2)),
               ],
               const SizedBox(height: 20),
@@ -843,11 +844,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 decoration: BoxDecoration(
                   color: isError
                       ? const Color(0xFF3D0A0A)
-                      : TabuColors.rosaPrincipal.withOpacity(0.08),
+                      : TClubColors.redPrincipal.withOpacity(0.08),
                   border: Border.all(
                     color: isError
                         ? const Color(0xFFE85D5D).withOpacity(0.3)
-                        : TabuColors.rosaPrincipal.withOpacity(0.2),
+                        : TClubColors.redPrincipal.withOpacity(0.2),
                     width: 0.8,
                   ),
                 ),
@@ -859,7 +860,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                     size: 14,
                     color: isError
                         ? const Color(0xFFE85D5D)
-                        : TabuColors.rosaPrincipal,
+                        : TClubColors.redPrincipal,
                   ),
                   const SizedBox(width: 8),
                   Flexible(
@@ -869,12 +870,12 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                           : 'Otimizando para melhor qualidade...',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 10,
                           letterSpacing: 0.5,
                           color: isError
                               ? const Color(0xFFE85D5D)
-                              : TabuColors.rosaPrincipal.withOpacity(0.9)),
+                              : TClubColors.redPrincipal.withOpacity(0.9)),
                     ),
                   ),
                 ]),
@@ -908,14 +909,14 @@ class _CriarPostScreenState extends State<CreatePostScreen>
               child: Stack(alignment: Alignment.center, children: [
                 CircularProgressIndicator(
                   value: _uploadProgress > 0 ? _uploadProgress : null,
-                  color: TabuColors.rosaPrincipal,
+                  color: TClubColors.redPrincipal,
                   backgroundColor: Colors.white.withOpacity(0.1),
                   strokeWidth: 3,
                 ),
                 if (_uploadProgress > 0)
                   Text('${(_uploadProgress * 100).toInt()}%',
                       style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Colors.white)),
@@ -924,7 +925,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             const SizedBox(height: 20),
             Text(label,
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
@@ -941,26 +942,26 @@ class _CriarPostScreenState extends State<CreatePostScreen>
       child: Row(children: [
         IconButton(
             icon: const Icon(Icons.arrow_back_ios_new,
-                color: TabuColors.dim, size: 18),
+                color: TClubColors.dim, size: 18),
             onPressed:
                 _publicando ? null : () => Navigator.pop(context)),
         const Expanded(
             child: Text('NOVO POST',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 18,
                     letterSpacing: 5,
-                    color: TabuColors.textoPrincipal))),
+                    color: TClubColors.textoPrincipal))),
         GestureDetector(
             onTap: () => _snack('Preview — em breve!'),
             child: const Text('VER',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
-                    color: TabuColors.rosaPrincipal))),
+                    color: TClubColors.redPrincipal))),
       ]));
 
   Widget _buildAutor(String name, String avatarUrl) => Padding(
@@ -972,9 +973,9 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border:
-                    Border.all(color: TabuColors.borderMid, width: 1),
+                    Border.all(color: TClubColors.borderMid, width: 1),
                 gradient: const LinearGradient(
-                    colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+                    colors: [TClubColors.redDeep, TClubColors.redPrincipal],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight)),
             child: ClipRRect(
@@ -984,39 +985,39 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                         fit: BoxFit.cover, fadeInDuration: const Duration(milliseconds: 200),
                         placeholder: (_, __) => const Icon(
                             Icons.person_outline,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             size: 20),
                         errorWidget: (_, __, ___) => const Icon(
                             Icons.person_outline,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             size: 20))
                     : const Icon(Icons.person_outline,
-                        color: TabuColors.rosaPrincipal, size: 20))),
+                        color: TClubColors.redPrincipal, size: 20))),
         const SizedBox(width: 12),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(name,
               style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1.5,
-                  color: TabuColors.textoPrincipal)),
+                  color: TClubColors.textoPrincipal)),
           const SizedBox(height: 3),
           Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.12),
+                  color: TClubColors.redPrincipal.withOpacity(0.12),
                   border: Border.all(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.3),
+                      color: TClubColors.redPrincipal.withOpacity(0.3),
                       width: 0.8)),
               child: const Text('PUBLICAR AGORA',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 8,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2,
-                      color: TabuColors.rosaPrincipal))),
+                      color: TClubColors.redPrincipal))),
         ]),
       ]));
 
@@ -1035,17 +1036,17 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 FocusScope.of(context).requestFocus(_descFocus),
             onChanged: (_) => setState(() {}),
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: TabuColors.textoPrincipal,
+                color: TClubColors.textoPrincipal,
                 letterSpacing: 0.3),
             decoration: InputDecoration(
                 hintText: 'Dá um nome incrível pro post...',
                 hintStyle: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 17,
-                    color: TabuColors.subtle.withOpacity(0.5),
+                    color: TClubColors.subtle.withOpacity(0.5),
                     letterSpacing: 0.2),
                 counterText: '',
                 border: InputBorder.none,
@@ -1056,7 +1057,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             height: 1,
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-              TabuColors.rosaPrincipal
+              TClubColors.redPrincipal
                   .withOpacity(_tituloFocus.hasFocus ? 0.7 : 0.2),
               Colors.transparent
             ]))),
@@ -1069,24 +1070,24 @@ class _CriarPostScreenState extends State<CreatePostScreen>
         const SizedBox(height: 10),
         Container(
             decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border:
-                    Border.all(color: TabuColors.border, width: 0.8)),
+                    Border.all(color: TClubColors.border, width: 0.8)),
             child: TabBar(
                 controller: _tabController,
-                indicatorColor: TabuColors.rosaPrincipal,
+                indicatorColor: TClubColors.redPrincipal,
                 indicatorWeight: 2,
                 indicatorSize: TabBarIndicatorSize.tab,
-                labelColor: TabuColors.rosaPrincipal,
-                unselectedLabelColor: TabuColors.subtle,
+                labelColor: TClubColors.redPrincipal,
+                unselectedLabelColor: TClubColors.subtle,
                 dividerColor: Colors.transparent,
                 labelStyle: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2),
                 unselectedLabelStyle: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 2),
@@ -1141,11 +1142,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 width: double.infinity,
                 height: _foto != null ? 280 : 180,
                 decoration: BoxDecoration(
-                    color: TabuColors.bgCard,
+                    color: TClubColors.bgCard,
                     border: Border.all(
                         color: _foto != null
-                            ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                            : TabuColors.border,
+                            ? TClubColors.redPrincipal.withOpacity(0.4)
+                            : TClubColors.border,
                         width: _foto != null ? 1 : 0.8)),
                 child: _foto != null
                     ? Stack(fit: StackFit.expand, children: [
@@ -1160,7 +1161,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                             child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.25),
                                         width: 1)))),
                         Positioned(
@@ -1185,45 +1186,45 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                               height: 56,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: TabuColors.rosaPrincipal
+                                  color: TClubColors.redPrincipal
                                       .withOpacity(0.1),
                                   border: Border.all(
-                                      color: TabuColors.rosaPrincipal
+                                      color: TClubColors.redPrincipal
                                           .withOpacity(0.3),
                                       width: 1)),
                               child: const Icon(
                                   Icons.add_photo_alternate_outlined,
-                                  color: TabuColors.rosaPrincipal,
+                                  color: TClubColors.redPrincipal,
                                   size: 26)),
                           const SizedBox(height: 12),
                           const Text('TOQUE PARA ADICIONAR FOTO',
                               style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 2.5,
-                                  color: TabuColors.subtle)),
+                                  color: TClubColors.subtle)),
                           const SizedBox(height: 4),
                           const Text('câmera ou galeria',
                               style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 11,
-                                  color: TabuColors.subtle)),
+                                  color: TClubColors.subtle)),
                         ]))),
         if (_foto != null)
           Padding(
               padding: const EdgeInsets.only(top: 6),
               child: Row(children: [
                 const Icon(Icons.verified_outlined,
-                    size: 11, color: TabuColors.rosaPrincipal),
+                    size: 11, color: TClubColors.redPrincipal),
                 const SizedBox(width: 5),
-                Text('marca d\'água TABU será aplicada no upload',
+                Text('marca d\'água TCLUB será aplicada no upload',
                     style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         letterSpacing: 1,
                         color:
-                            TabuColors.rosaPrincipal.withOpacity(0.7))),
+                            TClubColors.redPrincipal.withOpacity(0.7))),
               ])),
         const SizedBox(height: 16),
         _buildCampoDescricao(
@@ -1240,11 +1241,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             width: double.infinity,
             height: 160,
             decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border: Border.all(
                     color: _emojiSelecionado != null
-                        ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                        : TabuColors.border,
+                        ? TClubColors.redPrincipal.withOpacity(0.4)
+                        : TClubColors.border,
                     width: 0.8)),
             child: Center(
                 child: _emojiSelecionado != null
@@ -1252,15 +1253,15 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                         style: const TextStyle(fontSize: 96))
                     : Column(mainAxisSize: MainAxisSize.min, children: const [
                         Icon(Icons.emoji_emotions_outlined,
-                            color: TabuColors.border, size: 36),
+                            color: TClubColors.border, size: 36),
                         SizedBox(height: 8),
                         Text('ESCOLHA UM EMOJI ABAIXO',
                             style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 2.5,
-                                color: TabuColors.subtle)),
+                                color: TClubColors.subtle)),
                       ]))),
         const SizedBox(height: 16),
         ..._emojiGroups.entries.map((group) =>
@@ -1269,11 +1270,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                   padding: const EdgeInsets.only(bottom: 8, top: 4),
                   child: Text(group.key,
                       style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 2.5,
-                          color: TabuColors.rosaPrincipal))),
+                          color: TClubColors.redPrincipal))),
               GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -1297,13 +1298,13 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                             duration: const Duration(milliseconds: 150),
                             decoration: BoxDecoration(
                                 color: sel
-                                    ? TabuColors.rosaPrincipal
+                                    ? TClubColors.redPrincipal
                                         .withOpacity(0.15)
-                                    : TabuColors.bgCard,
+                                    : TClubColors.bgCard,
                                 border: Border.all(
                                     color: sel
-                                        ? TabuColors.rosaPrincipal
-                                        : TabuColors.border,
+                                        ? TClubColors.redPrincipal
+                                        : TClubColors.border,
                                     width: sel ? 1.5 : 0.8)),
                             child: Center(
                                 child: Text(emoji,
@@ -1326,11 +1327,11 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 width: double.infinity,
                 height: _video != null ? 300 : 180,
                 decoration: BoxDecoration(
-                    color: TabuColors.bgCard,
+                    color: TClubColors.bgCard,
                     border: Border.all(
                         color: _video != null
-                            ? TabuColors.rosaPrincipal.withOpacity(0.4)
-                            : TabuColors.border,
+                            ? TClubColors.redPrincipal.withOpacity(0.4)
+                            : TClubColors.border,
                         width: _video != null ? 1 : 0.8)),
                 child: _video != null &&
                         _videoCtrl != null &&
@@ -1352,7 +1353,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                             child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
-                                        color: TabuColors.rosaPrincipal
+                                        color: TClubColors.redPrincipal
                                             .withOpacity(0.25),
                                         width: 1)))),
                         Positioned(
@@ -1375,7 +1376,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                                             .withOpacity(0.55),
                                         border: Border.all(
                                             color:
-                                                TabuColors.rosaPrincipal,
+                                                TClubColors.redPrincipal,
                                             width: 1.5)),
                                     child: const Icon(
                                         Icons.play_arrow_rounded,
@@ -1412,31 +1413,31 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                               height: 56,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: TabuColors.rosaPrincipal
+                                  color: TClubColors.redPrincipal
                                       .withOpacity(0.1),
                                   border: Border.all(
-                                      color: TabuColors.rosaPrincipal
+                                      color: TClubColors.redPrincipal
                                           .withOpacity(0.3),
                                       width: 1)),
                               child: const Icon(
                                   Icons.video_call_outlined,
-                                  color: TabuColors.rosaPrincipal,
+                                  color: TClubColors.redPrincipal,
                                   size: 28)),
                           const SizedBox(height: 12),
                           const Text('TOQUE PARA ADICIONAR VÍDEO',
                               style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 2.5,
-                                  color: TabuColors.subtle)),
+                                  color: TClubColors.subtle)),
                           const SizedBox(height: 4),
                           Text(
                               'câmera ou galeria · máx $_maxVideoSeconds seg',
                               style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 11,
-                                  color: TabuColors.subtle)),
+                                  color: TClubColors.subtle)),
                         ]))),
         if (_video != null &&
             _videoCtrl != null &&
@@ -1461,15 +1462,15 @@ class _CriarPostScreenState extends State<CreatePostScreen>
               padding: const EdgeInsets.only(top: 6),
               child: Row(children: [
                 const Icon(Icons.verified_outlined,
-                    size: 11, color: TabuColors.rosaPrincipal),
+                    size: 11, color: TClubColors.redPrincipal),
                 const SizedBox(width: 5),
-                Text('marca d\'água TABU aplicada na thumbnail do vídeo',
+                Text('marca d\'água TCLUB aplicada na thumbnail do vídeo',
                     style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         letterSpacing: 1,
                         color:
-                            TabuColors.rosaPrincipal.withOpacity(0.7))),
+                            TClubColors.redPrincipal.withOpacity(0.7))),
               ])),
         const SizedBox(height: 16),
         _buildCampoDescricao(
@@ -1483,12 +1484,12 @@ class _CriarPostScreenState extends State<CreatePostScreen>
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
               color: _capaPersonalizada
-                  ? TabuColors.rosaPrincipal.withOpacity(0.12)
-                  : TabuColors.bgCard,
+                  ? TClubColors.redPrincipal.withOpacity(0.12)
+                  : TClubColors.bgCard,
               border: Border.all(
                   color: _capaPersonalizada
-                      ? TabuColors.rosaPrincipal.withOpacity(0.6)
-                      : TabuColors.border,
+                      ? TClubColors.redPrincipal.withOpacity(0.6)
+                      : TClubColors.border,
                   width: _capaPersonalizada ? 1.2 : 0.8)),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -1499,7 +1500,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                   margin: const EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                       border: Border.all(
-                          color: TabuColors.rosaPrincipal.withOpacity(0.5),
+                          color: TClubColors.redPrincipal.withOpacity(0.5),
                           width: 1)),
                   child: Image.memory(_thumbBytes!, fit: BoxFit.cover)),
             Icon(
@@ -1507,8 +1508,8 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                     ? Icons.check_circle_rounded
                     : Icons.photo_camera_outlined,
                 color: _capaPersonalizada
-                    ? TabuColors.rosaPrincipal
-                    : TabuColors.subtle,
+                    ? TClubColors.redPrincipal
+                    : TClubColors.subtle,
                 size: 15),
             const SizedBox(width: 8),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -1517,22 +1518,22 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                       ? 'CAPA PERSONALIZADA'
                       : 'ESCOLHER CAPA',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 2,
                       color: _capaPersonalizada
-                          ? TabuColors.rosaPrincipal
-                          : TabuColors.subtle)),
+                          ? TClubColors.redPrincipal
+                          : TClubColors.subtle)),
               Text(
                   _capaPersonalizada
                       ? 'toque para trocar o frame'
                       : 'selecione um frame do vídeo',
                   style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       letterSpacing: 0.5,
-                      color: TabuColors.subtle)),
+                      color: TClubColors.subtle)),
             ]),
           ])));
 
@@ -1543,45 +1544,45 @@ class _CriarPostScreenState extends State<CreatePostScreen>
         padding:
             const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             border: Border.all(
-                color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                color: TClubColors.redPrincipal.withOpacity(0.25),
                 width: 0.8)),
         child: Row(children: [
           const Icon(Icons.compress_rounded,
-              color: TabuColors.rosaPrincipal, size: 14),
+              color: TClubColors.redPrincipal, size: 14),
           const SizedBox(width: 8),
           if (comprimido != null) ...[
             Text('$original → $comprimido',
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1,
-                    color: TabuColors.textoPrincipal)),
+                    color: TClubColors.textoPrincipal)),
             const SizedBox(width: 6),
             Container(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.15),
+                    color: TClubColors.redPrincipal.withOpacity(0.15),
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                        color: TClubColors.redPrincipal.withOpacity(0.4),
                         width: 0.8)),
                 child: const Text('COMPRIMIDO',
                     style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 7,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2,
-                        color: TabuColors.rosaPrincipal))),
+                        color: TClubColors.redPrincipal))),
           ] else
             Text('Original: $original',
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     letterSpacing: 1,
-                    color: TabuColors.subtle)),
+                    color: TClubColors.subtle)),
         ]));
   }
 
@@ -1596,22 +1597,22 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             color: Colors.black.withOpacity(0.65),
             border: Border.all(
                 color: ok
-                    ? TabuColors.rosaPrincipal.withOpacity(0.5)
+                    ? TClubColors.redPrincipal.withOpacity(0.5)
                     : const Color(0xFFE85D5D),
                 width: 0.8)),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(Icons.timer_outlined,
               size: 11,
               color:
-                  ok ? TabuColors.rosaPrincipal : const Color(0xFFE85D5D)),
+                  ok ? TClubColors.redPrincipal : const Color(0xFFE85D5D)),
           const SizedBox(width: 4),
           Text('${secs}s / ${_maxVideoSeconds}s',
               style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 1,
-                  color: ok ? TabuColors.textoPrincipal : const Color(0xFFE85D5D))),
+                  color: ok ? TClubColors.textoPrincipal : const Color(0xFFE85D5D))),
         ]));
   }
 
@@ -1630,7 +1631,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             child: Text(
                 'Vídeo muito longo (${_videoDuration!.inSeconds}s). Máximo: $_maxVideoSeconds segundos.',
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     letterSpacing: 0.5,
                     color: Color(0xFFE85D5D)))),
@@ -1645,18 +1646,18 @@ class _CriarPostScreenState extends State<CreatePostScreen>
             const SizedBox(width: 8),
             const Text('opcional',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                     letterSpacing: 1))
           ],
         ]),
         const SizedBox(height: 8),
         Container(
             decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border:
-                    Border.all(color: TabuColors.border, width: 0.8)),
+                    Border.all(color: TClubColors.border, width: 0.8)),
             child: TextField(
                 controller: _descCtrl,
                 focusNode: _descFocus,
@@ -1666,31 +1667,31 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                 textInputAction: TextInputAction.newline,
                 onChanged: (_) => setState(() {}),
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 14,
-                    color: TabuColors.textoPrincipal,
+                    color: TClubColors.textoPrincipal,
                     letterSpacing: 0.2,
                     height: 1.55),
                 decoration: InputDecoration(
                     hintText: hint,
                     hintStyle: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 14,
-                        color: TabuColors.subtle.withOpacity(0.5),
+                        color: TClubColors.subtle.withOpacity(0.5),
                         letterSpacing: 0.2),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.all(14),
                     counterStyle: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
-                        color: TabuColors.subtle,
+                        color: TClubColors.subtle,
                         letterSpacing: 1)))),
       ]);
 
   Widget _buildVisibilidade() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(height: 8),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         const SizedBox(height: 16),
         _Label('VISIBILIDADE'),
         const SizedBox(height: 10),
@@ -1706,29 +1707,29 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                           color: sel
-                              ? TabuColors.rosaPrincipal.withOpacity(0.1)
-                              : TabuColors.bgCard,
+                              ? TClubColors.redPrincipal.withOpacity(0.1)
+                              : TClubColors.bgCard,
                           border: Border.all(
                               color: sel
-                                  ? TabuColors.rosaPrincipal.withOpacity(0.6)
-                                  : TabuColors.border,
+                                  ? TClubColors.redPrincipal.withOpacity(0.6)
+                                  : TClubColors.border,
                               width: sel ? 1.2 : 0.8)),
                       child: Column(children: [
                         Icon(v.icon,
                             size: 16,
                             color: sel
-                                ? TabuColors.rosaPrincipal
-                                : TabuColors.subtle),
+                                ? TClubColors.redPrincipal
+                                : TClubColors.subtle),
                         const SizedBox(height: 5),
                         Text(v.label,
                             style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 8,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 2,
                                 color: sel
-                                    ? TabuColors.rosaPrincipal
-                                    : TabuColors.subtle)),
+                                    ? TClubColors.redPrincipal
+                                    : TClubColors.subtle)),
                       ]))));
         }).toList()),
       ]);
@@ -1737,9 +1738,9 @@ class _CriarPostScreenState extends State<CreatePostScreen>
     final can = _podePublicar;
     return Container(
         decoration: const BoxDecoration(
-            color: TabuColors.bgAlt,
+            color: TClubColors.bgAlt,
             border: Border(
-                top: BorderSide(color: TabuColors.border, width: 0.5))),
+                top: BorderSide(color: TClubColors.border, width: 0.5))),
         padding: EdgeInsets.fromLTRB(
             20, 12, 20, MediaQuery.of(context).padding.bottom + 12),
         child: GestureDetector(
@@ -1752,17 +1753,17 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                     color: _publishStep == _PublishStep.erro
                         ? const Color(0xFFE85D5D)
                         : can
-                            ? TabuColors.rosaPrincipal
-                            : TabuColors.bgCard,
+                            ? TClubColors.redPrincipal
+                            : TClubColors.bgCard,
                     border: Border.all(
                         color: can
-                            ? TabuColors.rosaPrincipal
-                            : TabuColors.border,
+                            ? TClubColors.redPrincipal
+                            : TClubColors.border,
                         width: 0.8),
                     boxShadow: can
                         ? [
                             BoxShadow(
-                                color: TabuColors.glow.withOpacity(0.35),
+                                color: TClubColors.glow.withOpacity(0.35),
                                 blurRadius: 16,
                                 spreadRadius: 1)
                           ]
@@ -1773,7 +1774,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                                color: TabuColors.textoPrincipal, strokeWidth: 2))
+                                color: TClubColors.textoPrincipal, strokeWidth: 2))
                         : _publishStep == _PublishStep.erro
                             ? Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -1784,7 +1785,7 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                                     Text('TENTAR NOVAMENTE',
                                         style: TextStyle(
                                             fontFamily:
-                                                TabuTypography.bodyFont,
+                                                TClubTypography.bodyFont,
                                             fontSize: 13,
                                             fontWeight: FontWeight.w700,
                                             letterSpacing: 2,
@@ -1795,20 +1796,20 @@ class _CriarPostScreenState extends State<CreatePostScreen>
                                 children: [
                                     Icon(Icons.send_rounded,
                                         color: can
-                                            ? TabuColors.textoPrincipal
-                                            : TabuColors.subtle,
+                                            ? TClubColors.textoPrincipal
+                                            : TClubColors.subtle,
                                         size: 16),
                                     const SizedBox(width: 10),
                                     Text('PUBLICAR',
                                         style: TextStyle(
                                             fontFamily:
-                                                TabuTypography.bodyFont,
+                                                TClubTypography.bodyFont,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                             letterSpacing: 3,
                                             color: can
-                                                ? TabuColors.textoPrincipal
-                                                : TabuColors.subtle)),
+                                                ? TClubColors.textoPrincipal
+                                                : TClubColors.subtle)),
                                   ])))));
   }
 }
@@ -1836,9 +1837,9 @@ class _WatermarkPreviewBar extends StatelessWidget {
         Container(
             width: 1.5, height: 16, color: Colors.white.withOpacity(0.9)),
         const SizedBox(width: 7),
-        const Text('TABU',
+        const Text(AppConstants.appName,
             style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 13,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 3,
@@ -1849,22 +1850,22 @@ class _WatermarkPreviewBar extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 7),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: TabuColors.rosaClaro.withOpacity(0.85)),
+              color: TClubColors.redClaro.withOpacity(0.85)),
         ),
         Text('@${userName.toLowerCase()}',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
                 color: Colors.white.withOpacity(0.85))),
         const Spacer(),
         Text('EXCLUSIVO',
             style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 8,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2,
-                color: TabuColors.rosaClaro.withOpacity(0.9))),
+                color: TClubColors.redClaro.withOpacity(0.9))),
       ]),
     );
   }
@@ -1962,9 +1963,9 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
             content: Text(
                 'Não foi possível capturar o frame. Tente novamente.',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
-                    color: TabuColors.textoPrincipal,
+                    color: TClubColors.textoPrincipal,
                     letterSpacing: 1))));
       }
     }
@@ -1991,17 +1992,17 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.88,
       decoration: const BoxDecoration(
-          color: TabuColors.bgAlt,
+          color: TClubColors.bgAlt,
           border: Border(
               top: BorderSide(
-                  color: TabuColors.rosaPrincipal, width: 1.5))),
+                  color: TClubColors.redPrincipal, width: 1.5))),
       child: Column(children: [
         Container(
             width: 36,
             height: 3,
             margin: const EdgeInsets.only(top: 12, bottom: 8),
             decoration: BoxDecoration(
-                color: TabuColors.border,
+                color: TClubColors.border,
                 borderRadius: BorderRadius.circular(2))),
         Padding(
             padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
@@ -2012,18 +2013,18 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                       children: [
                     Text('ESCOLHER CAPA',
                         style: TextStyle(
-                            fontFamily: TabuTypography.displayFont,
+                            fontFamily: TClubTypography.displayFont,
                             fontSize: 16,
                             letterSpacing: 4,
-                            color: TabuColors.textoPrincipal)),
+                            color: TClubColors.textoPrincipal)),
                     SizedBox(height: 3),
                     Text(
                         'arraste o slider para selecionar o frame',
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             letterSpacing: 1,
-                            color: TabuColors.subtle)),
+                            color: TClubColors.subtle)),
                   ])),
               GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -2031,13 +2032,13 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                          color: TabuColors.bgCard,
+                          color: TClubColors.bgCard,
                           border: Border.all(
-                              color: TabuColors.border, width: 0.8)),
+                              color: TClubColors.border, width: 0.8)),
                       child: const Icon(Icons.close,
-                          color: TabuColors.subtle, size: 16))),
+                          color: TClubColors.subtle, size: 16))),
             ])),
-        Container(height: 0.5, color: TabuColors.border),
+        Container(height: 0.5, color: TClubColors.border),
         Expanded(
             child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -2069,7 +2070,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                                     width: 24,
                                     height: 24,
                                     child: CircularProgressIndicator(
-                                        color: TabuColors.rosaPrincipal,
+                                        color: TClubColors.redPrincipal,
                                         strokeWidth: 2))))),
                   Positioned(
                       bottom: 10,
@@ -2080,12 +2081,12 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                           decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.75),
                               border: Border.all(
-                                  color: TabuColors.rosaPrincipal
+                                  color: TClubColors.redPrincipal
                                       .withOpacity(0.6),
                                   width: 0.8)),
                           child: Text(_formatDuration(posMs),
                               style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 1,
@@ -2096,7 +2097,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                       child: Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 4),
-                          color: TabuColors.rosaPrincipal.withOpacity(0.9),
+                          color: TClubColors.redPrincipal.withOpacity(0.9),
                           child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -2106,7 +2107,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                                 Text('CAPA',
                                     style: TextStyle(
                                         fontFamily:
-                                            TabuTypography.bodyFont,
+                                            TClubTypography.bodyFont,
                                         fontSize: 8,
                                         fontWeight: FontWeight.w700,
                                         letterSpacing: 2,
@@ -2119,31 +2120,31 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                   Row(children: [
                     Text(_formatDuration(posMs),
                         style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1,
-                            color: TabuColors.rosaPrincipal)),
+                            color: TClubColors.redPrincipal)),
                     const Spacer(),
                     Text(_formatDuration(totalMs),
                         style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
                             letterSpacing: 1,
-                            color: TabuColors.subtle)),
+                            color: TClubColors.subtle)),
                   ]),
                   const SizedBox(height: 10),
                   SliderTheme(
                       data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: TabuColors.rosaPrincipal,
-                          inactiveTrackColor: TabuColors.border,
-                          thumbColor: TabuColors.rosaPrincipal,
+                          activeTrackColor: TClubColors.redPrincipal,
+                          inactiveTrackColor: TClubColors.border,
+                          thumbColor: TClubColors.redPrincipal,
                           thumbShape: const RoundSliderThumbShape(
                               enabledThumbRadius: 8, elevation: 0),
                           overlayShape: const RoundSliderOverlayShape(
                               overlayRadius: 16),
                           overlayColor:
-                              TabuColors.rosaPrincipal.withOpacity(0.15),
+                              TClubColors.redPrincipal.withOpacity(0.15),
                           trackHeight: 3),
                       child: Slider(
                           value: _sliderValue,
@@ -2160,10 +2161,10 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                   const SizedBox(height: 8),
                   const Text('← arraste para navegar pelo vídeo →',
                       style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           letterSpacing: 1.5,
-                          color: TabuColors.subtle)),
+                          color: TClubColors.subtle)),
                 ])),
             Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -2171,22 +2172,22 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 14, vertical: 12),
                     decoration: BoxDecoration(
-                        color: TabuColors.bgCard,
+                        color: TClubColors.bgCard,
                         border: Border.all(
-                            color: TabuColors.rosaPrincipal.withOpacity(0.2),
+                            color: TClubColors.redPrincipal.withOpacity(0.2),
                             width: 0.8)),
                     child: const Row(children: [
                       Icon(Icons.info_outline_rounded,
-                          color: TabuColors.rosaPrincipal, size: 14),
+                          color: TClubColors.redPrincipal, size: 14),
                       SizedBox(width: 10),
                       Expanded(
                           child: Text(
                               'A capa aparece no feed antes do vídeo ser reproduzido.',
                               style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 11,
                                   letterSpacing: 0.3,
-                                  color: TabuColors.subtle,
+                                  color: TClubColors.subtle,
                                   height: 1.5))),
                     ]))),
             const SizedBox(height: 100),
@@ -2194,10 +2195,10 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
         )),
         Container(
           decoration: const BoxDecoration(
-              color: TabuColors.bgAlt,
+              color: TClubColors.bgAlt,
               border: Border(
                   top: BorderSide(
-                      color: TabuColors.border, width: 0.5))),
+                      color: TClubColors.border, width: 0.5))),
           padding: EdgeInsets.fromLTRB(
               20, 12, 20, MediaQuery.of(context).padding.bottom + 12),
           child: GestureDetector(
@@ -2207,10 +2208,10 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                   width: double.infinity,
                   height: 52,
                   decoration: BoxDecoration(
-                      color: TabuColors.rosaPrincipal,
+                      color: TClubColors.redPrincipal,
                       boxShadow: [
                         BoxShadow(
-                            color: TabuColors.glow.withOpacity(0.35),
+                            color: TClubColors.glow.withOpacity(0.35),
                             blurRadius: 16,
                             spreadRadius: 1)
                       ]),
@@ -2231,7 +2232,7 @@ class _FramePickerSheetState extends State<_FramePickerSheet> {
                                       'USAR ESTE FRAME COMO CAPA',
                                       style: TextStyle(
                                           fontFamily:
-                                              TabuTypography.bodyFont,
+                                              TClubTypography.bodyFont,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
                                           letterSpacing: 2,
@@ -2283,8 +2284,8 @@ class _VideoProgressBarState extends State<_VideoProgressBar> {
             child: Container(
                 decoration: const BoxDecoration(
                     gradient: LinearGradient(colors: [
-              TabuColors.rosaDeep,
-              TabuColors.rosaPrincipal
+              TClubColors.redDeep,
+              TClubColors.redPrincipal
             ])))));
   }
 }
@@ -2308,11 +2309,11 @@ class _Label extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(text,
       style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 9,
           fontWeight: FontWeight.w700,
           letterSpacing: 3,
-          color: TabuColors.rosaPrincipal));
+          color: TClubColors.redPrincipal));
 }
 
 class _MiniBtn extends StatelessWidget {
@@ -2328,8 +2329,8 @@ class _MiniBtn extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.65),
               border:
-                  Border.all(color: TabuColors.borderMid, width: 0.8)),
-          child: Icon(icon, color: TabuColors.textoPrincipal, size: 15)));
+                  Border.all(color: TClubColors.borderMid, width: 0.8)),
+          child: Icon(icon, color: TClubColors.textoPrincipal, size: 15)));
 }
 
 class _SheetTile extends StatelessWidget {
@@ -2347,7 +2348,7 @@ class _SheetTile extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final color = danger ? const Color(0xFFE85D5D) : TabuColors.textoPrincipal;
+    final color = danger ? const Color(0xFFE85D5D) : TClubColors.textoPrincipal;
     return InkWell(
         onTap: onTap,
         child: Padding(
@@ -2368,17 +2369,17 @@ class _SheetTile extends StatelessWidget {
                   children: [
                     Text(label,
                         style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 2,
                             color: color)),
                     Text(sublabel,
                         style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 10,
                             letterSpacing: 0.5,
-                            color: TabuColors.subtle)),
+                            color: TClubColors.subtle)),
                   ]),
             ])));
   }
@@ -2388,13 +2389,13 @@ class _PostBg extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height),
-        Paint()..color = TabuColors.bg);
+        Paint()..color = TClubColors.bg);
     canvas.drawCircle(
         Offset(size.width * 0.9, size.height * 0.04),
         size.width * 0.6,
         Paint()
           ..shader = RadialGradient(colors: [
-            TabuColors.rosaPrincipal.withOpacity(0.06),
+            TClubColors.redPrincipal.withOpacity(0.06),
             Colors.transparent
           ]).createShader(Rect.fromCircle(
               center:
@@ -2405,3 +2406,4 @@ class _PostBg extends CustomPainter {
   @override
   bool shouldRepaint(_PostBg old) => false;
 }
+

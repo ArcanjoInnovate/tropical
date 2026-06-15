@@ -1,10 +1,10 @@
 // lib/features/search/data/repositories/search_repository_impl.dart
 
-import 'package:tabuapp/features/search/data/datasources/search_remote_datasource.dart';
-import 'package:tabuapp/features/search/domain/entities/paginated_result.dart';
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/search/domain/entities/user_search.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/data/datasources/search_remote_datasource.dart';
+import 'package:tclub/features/search/domain/entities/paginated_result.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/entities/user_search.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
 
 class SearchRepositoryImpl implements ISearchRepository {
   final SearchRemoteDataSource _remoteDataSource;
@@ -175,3 +175,4 @@ class SearchRepositoryException implements Exception {
   @override
   String toString() => 'SearchRepositoryException: $message';
 }
+

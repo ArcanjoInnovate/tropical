@@ -5,13 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
-import 'package:tabuapp/features/admin/controller/report_detail_controller.dart';
-import 'package:tabuapp/core/widgets/inline_video_card.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
+import 'package:tclub/features/admin/controller/report_detail_controller.dart';
+import 'package:tclub/core/widgets/inline_video_card.dart';
 // ── NOVO: import para navegar ao perfil público ───────────────────────────────
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
 import '../../data/models/report_model.dart';
 import '../../data/models/user_model.dart';
 import '../../data/services/report_service.dart';
@@ -106,14 +106,14 @@ const List<ArtigoTabu> kArtigosTabu = [
     titulo: 'Violação sujeita a denúncia',
     descricaoBase:
         'Você está sendo penalizado porque sua conduta foi denunciada por outros usuários '
-        'e a equipe do Tabu confirmou a violação após análise. '
+        'e a equipe do Tclub confirmou a violação após análise. '
         'Reincidências serão tratadas com punições cada vez mais severas.',
   ),
   ArtigoTabu(
     codigo: 'Art. 19º – TU', fonte: 'Termos de Uso',
     titulo: 'Aplicação de penalidade formal',
     descricaoBase:
-        'Você está sendo penalizado formalmente após análise da equipe do Tabu. '
+        'Você está sendo penalizado formalmente após análise da equipe do Tclub. '
         'Esta penalidade foi aplicada dentro dos critérios previstos nos Termos de Uso '
         'e representa uma medida oficial da plataforma contra sua conduta.',
   ),
@@ -121,8 +121,8 @@ const List<ArtigoTabu> kArtigosTabu = [
     codigo: 'Art. 20º – TU', fonte: 'Termos de Uso',
     titulo: 'Violação grave – medidas legais',
     descricaoBase:
-        'Você está sendo penalizado por uma violação considerada grave pela equipe do Tabu. '
-        'Além da punição na plataforma, o Tabu se reserva o direito de tomar as medidas '
+        'Você está sendo penalizado por uma violação considerada grave pela equipe do Tclub. '
+        'Além da punição na plataforma, o Tclub se reserva o direito de tomar as medidas '
         'legais cabíveis, incluindo registro de boletim de ocorrência e acionamento judicial.',
   ),
   ArtigoTabu(
@@ -154,7 +154,7 @@ const List<ArtigoTabu> kArtigosTabu = [
     titulo: 'Violação da política de privacidade',
     descricaoBase:
         'Você está sendo penalizado porque seu conteúdo ou comportamento viola '
-        'diretamente a Política de Privacidade do Tabu. O conteúdo em questão '
+        'diretamente a Política de Privacidade do Tclub. O conteúdo em questão '
         'foi ou será removido, e punições adicionais podem ser aplicadas.',
   ),
   ArtigoTabu(
@@ -288,7 +288,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
 
     final selecionado = await showModalBottomSheet<ArtigoTabu>(
       context:            context,
-      backgroundColor:    AdminColors.bgAlt,
+      backgroundColor:    TClubColors.bgAlt,
       isScrollControlled: true,
       shape:              const RoundedRectangleBorder(),
       builder: (ctx) => DraggableScrollableSheet(
@@ -301,20 +301,20 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
             margin: const EdgeInsets.symmetric(vertical: 12),
             width: 36, height: 3,
             decoration: BoxDecoration(
-              color:        AdminColors.border,
+              color:        TClubColors.border,
               borderRadius: BorderRadius.circular(2))),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
             child: Row(children: [
-              Container(width: 2, height: 14, color: AdminColors.accent),
+              Container(width: 2, height: 14, color: TClubColors.redClaro),
               const SizedBox(width: 10),
               const Text('SELECIONAR ARTIGO VIOLADO', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      9, fontWeight: FontWeight.w700,
-                letterSpacing: 2.5, color: AdminColors.inkPrincipal)),
+                letterSpacing: 2.5, color: TClubColors.branco)),
             ]),
           ),
-          Container(height: 0.6, color: AdminColors.border),
+          Container(height: 0.6, color: TClubColors.border),
           Expanded(child: ListView(
             controller: scrollCtrl,
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -326,15 +326,15 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                     Container(
                       width:  2, height: 10,
                       color: entry.key == 'Termos de Uso'
-                          ? AdminColors.inkPrincipal
+                          ? TClubColors.redPrincipal
                           : const Color(0xFF4FC3F7)),
                     const SizedBox(width: 8),
                     Text(entry.key.toUpperCase(), style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      7, fontWeight: FontWeight.w700,
                       letterSpacing: 2.5,
                       color: entry.key == 'Termos de Uso'
-                          ? AdminColors.inkPrincipal.withOpacity(0.6)
+                          ? TClubColors.redPrincipal.withOpacity(0.6)
                           : const Color(0xFF4FC3F7).withOpacity(0.8))),
                   ]),
                 ),
@@ -346,32 +346,32 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: _artigoSelecionado?.codigo == artigo.codigo
-                            ? AdminColors.inkPrincipal.withOpacity(0.06)
-                            : AdminColors.fill,
+                            ? TClubColors.redPrincipal.withOpacity(0.06)
+                            : TClubColors.bgAlt,
                         border: Border.all(
                           color: _artigoSelecionado?.codigo == artigo.codigo
-                              ? AdminColors.inkPrincipal.withOpacity(0.4)
-                              : AdminColors.border,
+                              ? TClubColors.redPrincipal.withOpacity(0.4)
+                              : TClubColors.border,
                           width: 0.6)),
                       child: Row(children: [
                         Expanded(child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(artigo.codigo, style: TextStyle(
-                              fontFamily:    TabuTypography.bodyFont,
+                              fontFamily:    TClubTypography.bodyFont,
                               fontSize:      11, fontWeight: FontWeight.w700,
                               letterSpacing: 0.3,
-                              color:         AdminColors.inkDeep)),
+                              color:         TClubColors.branco)),
                             const SizedBox(height: 2),
                             Text(artigo.titulo, style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10,
-                              color: AdminColors.inkDeep.withOpacity(0.55))),
+                              color: TClubColors.branco.withOpacity(0.55))),
                           ],
                         )),
                         if (_artigoSelecionado?.codigo == artigo.codigo)
                           const Icon(Icons.check_rounded,
-                            color: AdminColors.inkPrincipal, size: 14),
+                            color: TClubColors.redPrincipal, size: 14),
                       ]),
                     ),
                   ),
@@ -421,7 +421,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
   Future<void> _mostrarSucesso(String protocolo, AcaoAdmin acao) async {
     await showModalBottomSheet(
       context:            context,
-      backgroundColor:    AdminColors.bg,
+      backgroundColor:    TClubColors.bg,
       isDismissible:      false,
       isScrollControlled: true,
       shape:              const RoundedRectangleBorder(),
@@ -437,9 +437,9 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 11, letterSpacing: 0.5, color: Colors.white)),
-      backgroundColor: AdminColors.inkDeep,
+      backgroundColor: TClubColors.branco,
     ));
   }
 
@@ -450,9 +450,9 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     final isPending = ctrl.report.isPending;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor:          AdminColors.bg,
+        backgroundColor:          TClubColors.bg,
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: Column(children: [
@@ -483,11 +483,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
   Widget _buildHeader(ReportDetailController ctrl) {
     return Container(
       decoration: BoxDecoration(
-        color:     AdminColors.bg,
+        color:     TClubColors.bg,
         border:    Border(bottom: BorderSide(
-          color: AdminColors.border, width: 0.8)),
+          color: TClubColors.border, width: 0.8)),
         boxShadow: [BoxShadow(
-          color: AdminColors.glow, blurRadius: 10,
+          color: TClubColors.glow, blurRadius: 10,
           offset: const Offset(0, 2))],
       ),
       child: Padding(
@@ -498,7 +498,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
             child: Container(width: 38, height: 38,
               color: Colors.transparent,
               child: const Icon(Icons.arrow_back_ios_new_rounded,
-                color: AdminColors.inkPrincipal, size: 18))),
+                color: TClubColors.redPrincipal, size: 18))),
           const SizedBox(width: 8),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -506,23 +506,19 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
               Row(children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  color: AdminColors.inkPrincipal,
+                  color: TClubColors.redPrincipal,
                   child: Text(_tipoLabel, style: const TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      8, fontWeight: FontWeight.w700,
                     letterSpacing: 2, color: Colors.white))),
                 const SizedBox(width: 10),
-                const Text('DENÚNCIA · DETALHES', style: TextStyle(
-                  fontFamily: TabuTypography.displayFont,
-                  fontSize: 11, letterSpacing: 3,
-                  color: AdminColors.inkDeep)),
+                const Text('DENÚNCIA DETALHES', style: TextStyle(
+                  fontFamily: TClubTypography.displayFont,
+                  fontSize: 10, letterSpacing: 3,
+                  color: TClubColors.branco)),
               ]),
               const SizedBox(height: 3),
-              Text(ctrl.report.key, style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
-                fontSize: 8, letterSpacing: 0.5,
-                color: AdminColors.inkPrincipal.withOpacity(0.35))),
-            ],
+            ]
           )),
         ]),
       ),
@@ -559,16 +555,16 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _sectionLabel('DETALHES DA DENÚNCIA'),
         const SizedBox(height: 14),
-        _infoRow('MOTIVO', r.motivo, AdminColors.inkPrincipal),
+        _infoRow('MOTIVO', r.motivo, TClubColors.redPrincipal),
         const SizedBox(height: 8),
-        _infoRow('ARTIGO', r.artigo, AdminColors.inkDeep.withOpacity(0.6)),
+        _infoRow('ARTIGO', r.artigo, TClubColors.branco.withOpacity(0.6)),
         const SizedBox(height: 8),
 
         // ── Denunciante clicável ─────────────────────────────────────────
         _infoRowClickable(
           label:    'DENUNCIANTE',
           value:    reporterName,
-          color:    AdminColors.inkDeep.withOpacity(0.55),
+          color:    TClubColors.branco.withOpacity(0.55),
           avatar:   reporterAvatar,
           onTap:    () => _abrirPerfil(
             r.reporterUid,
@@ -584,7 +580,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           _infoRowClickable(
             label:  'DENUNCIADO',
             value:  reportedName,
-            color:  AdminColors.inkDeep.withOpacity(0.55),
+            color:  TClubColors.branco.withOpacity(0.55),
             avatar: reportedAvatar,
             onTap:  () => _abrirPerfil(
               reportedUid,
@@ -596,7 +592,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
         ],
 
         if (r.createdAt != null) ...[
-          _infoRow('DATA', _formatData(r.createdAt!), AdminColors.inkDeep.withOpacity(0.45)),
+          _infoRow('DATA', _formatData(r.createdAt!), TClubColors.branco.withOpacity(0.45)),
           const SizedBox(height: 8),
         ],
         _infoRow('STATUS', r.status.toUpperCase(), _statusColor(r.status)),
@@ -605,18 +601,18 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           Container(
             width:   double.infinity,
             padding: const EdgeInsets.all(12),
-            color:   AdminColors.fill,
+            color:   TClubColors.bgAlt,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('DESCRIÇÃO', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      8, fontWeight: FontWeight.w700,
                 letterSpacing: 2,
-                color:         AdminColors.inkPrincipal.withOpacity(0.4))),
+                color:         TClubColors.redPrincipal.withOpacity(0.4))),
               const SizedBox(height: 6),
               Text(r.descricao, style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12, height: 1.6,
-                color: AdminColors.inkDeep.withOpacity(0.75))),
+                color: TClubColors.branco.withOpacity(0.75))),
             ]),
           ),
         ],
@@ -627,10 +623,10 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
   // ── Usuário denunciado ────────────────────────────────────────────────────
   Widget _buildReportedUser(UserModel u) {
     final borderColor = u.banido
-        ? AdminColors.danger.withOpacity(0.4)
+        ? TClubColors.error.withOpacity(0.4)
         : u.suspenso
-            ? AdminColors.warning.withOpacity(0.4)
-            : AdminColors.border;
+            ? Color(0xFFFFA726).withOpacity(0.4)
+            : TClubColors.border;
 
     return _card(
       margin:      const EdgeInsets.fromLTRB(16, 10, 16, 0),
@@ -651,19 +647,19 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
             Container(
               width: 46, height: 46,
               decoration: BoxDecoration(
-                color:  AdminColors.fillStrong,
-                border: Border.all(color: AdminColors.border)),
+                color:  TClubColors.bgCard,
+                border: Border.all(color: TClubColors.border)),
               child: u.avatar != null && u.avatar!.isNotEmpty
                   ? CachedNetworkImage(
                       imageUrl:    u.avatar!,
                       fit:         BoxFit.cover,
                       placeholder: (_, __) => const Icon(Icons.person_outline,
-                        color: AdminColors.inkPrincipal, size: 20),
+                        color: TClubColors.redPrincipal, size: 20),
                       errorWidget: (_, __, ___) => const Icon(Icons.person_outline,
-                        color: AdminColors.inkPrincipal, size: 20),
+                        color: TClubColors.redPrincipal, size: 20),
                     )
                   : const Icon(Icons.person_outline,
-                      color: AdminColors.inkPrincipal, size: 20)),
+                      color: TClubColors.redPrincipal, size: 20)),
             const SizedBox(width: 14),
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -671,36 +667,36 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 Row(children: [
                   Expanded(
                     child: Text(u.name.toUpperCase(), style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      14, fontWeight: FontWeight.w700,
-                      letterSpacing: 1.5, color: AdminColors.inkDeep)),
+                      letterSpacing: 1.5, color: TClubColors.branco)),
                   ),
                   // ← Ícone indica que é clicável
                   Icon(Icons.open_in_new_rounded,
-                    color: AdminColors.inkPrincipal.withOpacity(0.35), size: 13),
+                    color: TClubColors.redPrincipal.withOpacity(0.35), size: 13),
                 ]),
                 if (u.email.isNotEmpty)
                   Text(u.email, style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10, letterSpacing: 0.3,
-                    color: AdminColors.inkDeep.withOpacity(0.45))),
+                    color: TClubColors.branco.withOpacity(0.45))),
                 if (u.city.isNotEmpty)
                   Text('${u.city} · ${u.state}', style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont, fontSize: 9,
-                    color: AdminColors.inkDeep.withOpacity(0.35))),
+                    fontFamily: TClubTypography.bodyFont, fontSize: 9,
+                    color: TClubColors.branco.withOpacity(0.35))),
               ],
             )),
             Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
               if (u.banido)
-                _statusBadge('BANIDO', AdminColors.danger)
+                _statusBadge('BANIDO', TClubColors.error)
               else if (u.suspenso)
-                _statusBadge('SUSPENSO', AdminColors.warning)
+                _statusBadge('SUSPENSO', Color(0xFFFFA726))
               else if (u.penalidadeAtiva != null)
-                _statusBadge(u.penalidadeAtiva!.toUpperCase(), AdminColors.pending),
+                _statusBadge(u.penalidadeAtiva!.toUpperCase(), TClubColors.redClaro),
               if (u.reportCount > 0) ...[
                 const SizedBox(height: 4),
                 _statusBadge('${u.reportCount} REPORTS',
-                  AdminColors.inkPrincipal.withOpacity(0.45)),
+                  TClubColors.redPrincipal.withOpacity(0.45)),
               ],
             ]),
           ]),
@@ -721,9 +717,9 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
         if (ctrl.contentData == null)
           Text('Conteúdo não encontrado ou já removido.',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12,
-              color: AdminColors.inkDeep.withOpacity(0.4)))
+              color: TClubColors.branco.withOpacity(0.4)))
         else if (ctrl.report.tipo == 'posts' || ctrl.report.tipo == 'stories')
           _buildConteudoPost(ctrl.contentData!, ctrl.report)
         else if (ctrl.report.tipo == 'chats')
@@ -751,16 +747,16 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       Row(children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-          color: AdminColors.fill,
+          color: TClubColors.bgAlt,
           child: Text(tipo.toUpperCase(), style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      8, fontWeight: FontWeight.w700,
             letterSpacing: 2,
-            color:         AdminColors.inkPrincipal.withOpacity(0.7)))),
+            color:         TClubColors.redPrincipal.withOpacity(0.7)))),
         const SizedBox(width: 8),
         Text('por $userName', style: TextStyle(
-          fontFamily: TabuTypography.bodyFont, fontSize: 10,
-          color: AdminColors.inkDeep.withOpacity(0.45))),
+          fontFamily: TClubTypography.bodyFont, fontSize: 10,
+          color: TClubColors.branco.withOpacity(0.45))),
       ]),
       const SizedBox(height: 10),
 
@@ -787,7 +783,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       if (!isVideo && emoji != null) ...[
         Center(child: Container(
           width: double.infinity, height: 100,
-          color: AdminColors.fill,
+          color: TClubColors.bgAlt,
           child: Center(child: Text(emoji,
             style: const TextStyle(fontSize: 48))))),
         const SizedBox(height: 10),
@@ -801,11 +797,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
             fit:            BoxFit.cover,
             fadeInDuration: const Duration(milliseconds: 200),
             placeholder:    (_, __) =>
-              Container(height: 80, color: AdminColors.fill),
+              Container(height: 80, color: TClubColors.bgAlt),
             errorWidget: (_, __, ___) => Container(
-              height: 80, color: AdminColors.fill,
+              height: 80, color: TClubColors.bgAlt,
               child: Center(child: Icon(Icons.broken_image_outlined,
-                color: AdminColors.inkPrincipal.withOpacity(0.3)))),
+                color: TClubColors.redPrincipal.withOpacity(0.3)))),
           ))),
         const SizedBox(height: 10),
       ],
@@ -813,35 +809,35 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       if (titulo != null && titulo.isNotEmpty) ...[
         if (isVideo) const SizedBox(height: 10),
         Text(titulo, style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      14, fontWeight: FontWeight.w600,
-          color:         AdminColors.inkDeep, letterSpacing: 0.3)),
+          color:         TClubColors.branco, letterSpacing: 0.3)),
       ],
 
       if (descricao.isNotEmpty) ...[
         const SizedBox(height: 6),
         Text(descricao, style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 12, height: 1.5,
-          color: AdminColors.inkDeep.withOpacity(0.55))),
+          color: TClubColors.branco.withOpacity(0.55))),
       ],
 
       const SizedBox(height: 10),
       Row(children: [
         Icon(Icons.favorite_border_rounded,
-          color: AdminColors.inkPrincipal.withOpacity(0.35), size: 12),
+          color: TClubColors.redPrincipal.withOpacity(0.35), size: 12),
         const SizedBox(width: 4),
         Text('$likes curtidas', style: TextStyle(
-          fontFamily: TabuTypography.bodyFont, fontSize: 9,
-          color: AdminColors.inkPrincipal.withOpacity(0.35))),
+          fontFamily: TClubTypography.bodyFont, fontSize: 9,
+          color: TClubColors.redPrincipal.withOpacity(0.35))),
         if (views > 0) ...[
           const SizedBox(width: 12),
           Icon(Icons.visibility_outlined,
-            color: AdminColors.inkPrincipal.withOpacity(0.35), size: 12),
+            color: TClubColors.redPrincipal.withOpacity(0.35), size: 12),
           const SizedBox(width: 4),
           Text('$views visualizações', style: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 9,
-            color: AdminColors.inkPrincipal.withOpacity(0.35))),
+            fontFamily: TClubTypography.bodyFont, fontSize: 9,
+            color: TClubColors.redPrincipal.withOpacity(0.35))),
         ],
       ]),
     ]);
@@ -868,35 +864,35 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: isReported
-                ? AdminColors.danger.withOpacity(0.05)
-                : AdminColors.fill,
+                ? TClubColors.error.withOpacity(0.05)
+                : TClubColors.bgAlt,
             border: Border.all(
               color: isReported
-                  ? AdminColors.danger.withOpacity(0.2)
-                  : AdminColors.border,
+                  ? TClubColors.error.withOpacity(0.2)
+                  : TClubColors.border,
               width: 0.6)),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
             if (isReported)
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 margin:  const EdgeInsets.only(right: 8, top: 2),
-                color:   AdminColors.danger.withOpacity(0.15),
+                color:   TClubColors.error.withOpacity(0.15),
                 child: const Text('●', style: TextStyle(
-                  fontSize: 6, color: AdminColors.danger))),
+                  fontSize: 6, color: TClubColors.error))),
             Expanded(child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(text, style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 12, height: 1.5,
                   color: isReported
-                      ? AdminColors.inkDeep.withOpacity(0.8)
-                      : AdminColors.inkDeep.withOpacity(0.45))),
+                      ? TClubColors.branco.withOpacity(0.8)
+                      : TClubColors.branco.withOpacity(0.45))),
                 if (ts != null)
                   Text(_formatData(ts), style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      8, letterSpacing: 0.3,
-                    color:         AdminColors.inkPrincipal.withOpacity(0.35))),
+                    color:         TClubColors.redPrincipal.withOpacity(0.35))),
               ],
             )),
           ]),
@@ -931,11 +927,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           final proto  = p['protocolo']       as String? ?? '—';
           final em     = p['aplicada_em']     as int?;
 
-          Color tCor = AdminColors.inkPrincipal.withOpacity(0.45);
-          if (tipo == 'banimento')        tCor = AdminColors.danger;
-          if (tipo == 'suspensao')        tCor = AdminColors.warning;
-          if (tipo == 'advertencia')      tCor = AdminColors.pending;
-          if (tipo == 'remover_conteudo') tCor = AdminColors.danger;
+          Color tCor = TClubColors.redPrincipal.withOpacity(0.45);
+          if (tipo == 'banimento')        tCor = TClubColors.error;
+          if (tipo == 'suspensao')        tCor = Color(0xFFFFA726);
+          if (tipo == 'advertencia')      tCor = TClubColors.redClaro;
+          if (tipo == 'remover_conteudo') tCor = TClubColors.error;
 
           return Container(
             margin:  const EdgeInsets.only(bottom: 8),
@@ -948,29 +944,29 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(tipo.toUpperCase().replaceAll('_', ' '), style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      10, fontWeight: FontWeight.w700,
                     letterSpacing: 1.5, color: tCor)),
                   Text(artigo, style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9, letterSpacing: 0.5,
                     color: tCor.withOpacity(0.65))),
                   if (motivo.isNotEmpty)
                     Text(motivo, style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10, height: 1.4,
-                      color: AdminColors.inkDeep.withOpacity(0.5))),
+                      color: TClubColors.branco.withOpacity(0.5))),
                 ],
               )),
               Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 Text(proto, style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 8, letterSpacing: 0.5,
-                  color: AdminColors.inkPrincipal.withOpacity(0.35))),
+                  color: TClubColors.redPrincipal.withOpacity(0.35))),
                 if (em != null)
                   Text(_formatData(em), style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont, fontSize: 8,
-                    color: AdminColors.inkPrincipal.withOpacity(0.35))),
+                    fontFamily: TClubTypography.bodyFont, fontSize: 8,
+                    color: TClubColors.redPrincipal.withOpacity(0.35))),
               ]),
             ]),
           );
@@ -988,8 +984,8 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     return _card(
       margin:      const EdgeInsets.fromLTRB(16, 10, 16, 0),
       borderColor: r.status == 'actioned'
-          ? AdminColors.actioned.withOpacity(0.3)
-          : AdminColors.border,
+          ? Color(0xFF4CAF50).withOpacity(0.3)
+          : TClubColors.border,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           Icon(
@@ -997,8 +993,8 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 ? Icons.check_circle_rounded
                 : Icons.cancel_outlined,
             color: r.status == 'actioned'
-                ? AdminColors.actioned
-                : AdminColors.inkDeep.withOpacity(0.3),
+                ? Color(0xFF4CAF50)
+                : TClubColors.branco.withOpacity(0.3),
             size: 16),
           const SizedBox(width: 8),
           Text(
@@ -1006,40 +1002,40 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 ? 'DENÚNCIA RESOLVIDA'
                 : 'DENÚNCIA IGNORADA',
             style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      10, fontWeight: FontWeight.w700,
               letterSpacing: 2,
-              color:         AdminColors.inkDeep.withOpacity(0.6))),
+              color:         TClubColors.branco.withOpacity(0.6))),
         ]),
         if (acao != null) ...[
           const SizedBox(height: 8),
           Text('Ação: ${acao.toUpperCase().replaceAll('_', ' ')}',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 11,
-              color: AdminColors.inkDeep.withOpacity(0.6))),
+              fontFamily: TClubTypography.bodyFont, fontSize: 11,
+              color: TClubColors.branco.withOpacity(0.6))),
         ],
         if (em != null) ...[
           const SizedBox(height: 4),
           Text('Resolvido em: ${_formatData(em)}',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 10,
-              color: AdminColors.inkDeep.withOpacity(0.45))),
+              fontFamily: TClubTypography.bodyFont, fontSize: 10,
+              color: TClubColors.branco.withOpacity(0.45))),
         ],
         if (proto != null) ...[
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
-              color:  AdminColors.fillStrong,
-              border: Border.all(color: AdminColors.borderStrong)),
+              color:  TClubColors.bgCard,
+              border: Border.all(color: TClubColors.borderMid)),
             child: Row(children: [
               const Icon(Icons.tag_rounded,
-                color: AdminColors.accent, size: 12),
+                color: TClubColors.redClaro, size: 12),
               const SizedBox(width: 6),
               Text(proto, style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 13, letterSpacing: 2,
-                color: AdminColors.inkPrincipal)),
+                color: TClubColors.redPrincipal)),
             ]),
           ),
         ],
@@ -1056,16 +1052,16 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           width: double.infinity,
           padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
           decoration: BoxDecoration(
-            color:  AdminColors.fillStrong,
-            border: Border.all(color: AdminColors.borderStrong, width: 0.8)),
+            color:  TClubColors.bgCard,
+            border: Border.all(color: TClubColors.borderMid, width: 0.8)),
           child: Row(children: [
             const Icon(Icons.gavel_rounded,
-              color: AdminColors.accent, size: 16),
+              color: TClubColors.redClaro, size: 16),
             const SizedBox(width: 10),
             const Text('TOMAR MEDIDA DISCIPLINAR', style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      10, fontWeight: FontWeight.w700,
-              letterSpacing: 2, color: AdminColors.inkPrincipal)),
+              letterSpacing: 2, color: TClubColors.redPrincipal)),
           ]),
         ),
         const SizedBox(height: 12),
@@ -1085,9 +1081,9 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
         const SizedBox(height: 8),
         Text('Emails serão enviados automaticamente ao denunciante e ao denunciado.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 9,
+            fontFamily: TClubTypography.bodyFont, fontSize: 9,
             letterSpacing: 0.3,
-            color: AdminColors.inkPrincipal.withOpacity(0.35))),
+            color: TClubColors.branco.withOpacity(0.35))),
       ]),
     );
   }
@@ -1103,28 +1099,28 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
         margin:  const EdgeInsets.only(bottom: 6),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color:  sel ? a.cor.withOpacity(0.08) : AdminColors.fill,
+          color:  sel ? a.cor.withOpacity(0.08) : TClubColors.bgAlt,
           border: Border.all(
-            color: sel ? a.cor.withOpacity(0.6) : AdminColors.border,
+            color: sel ? a.cor.withOpacity(0.6) : TClubColors.border,
             width: sel ? 1.0 : 0.6)),
         child: Row(children: [
           Icon(a.icon,
-            color: sel ? a.cor : AdminColors.inkPrincipal.withOpacity(0.45),
+            color: sel ? a.cor : TClubColors.redPrincipal.withOpacity(0.45),
             size: 16),
           const SizedBox(width: 12),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(a.label, style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      11, fontWeight: FontWeight.w700,
                 letterSpacing: 1.5,
-                color:         sel ? a.cor : AdminColors.inkDeep.withOpacity(0.65))),
+                color:         sel ? a.cor : TClubColors.branco.withOpacity(0.65))),
               const SizedBox(height: 2),
               Text(a.descricao, style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9, height: 1.4,
-                color: AdminColors.inkDeep.withOpacity(0.4))),
+                color: TClubColors.branco.withOpacity(0.4))),
             ],
           )),
           if (sel)
@@ -1181,26 +1177,26 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color:  AdminColors.fill,
+          color:  TClubColors.bgAlt,
           border: Border.all(
             color: value != null
-                ? AdminColors.warning.withOpacity(0.5)
-                : AdminColors.border,
+                ? Color(0xFFFFA726).withOpacity(0.5)
+                : TClubColors.border,
             width: 0.8)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(label, style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      8, fontWeight: FontWeight.w700,
             letterSpacing: 2,
-            color:         AdminColors.inkPrincipal.withOpacity(0.4))),
+            color:         TClubColors.redPrincipal.withOpacity(0.4))),
           const SizedBox(height: 6),
           Text(
             value != null ? fmt.format(value) : 'Selecionar',
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 12,
+              fontFamily: TClubTypography.bodyFont, fontSize: 12,
               color: value != null
-                  ? AdminColors.inkDeep
-                  : AdminColors.inkPrincipal.withOpacity(0.45))),
+                  ? TClubColors.branco
+                  : TClubColors.redPrincipal.withOpacity(0.45))),
         ]),
       ),
     );
@@ -1209,9 +1205,9 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
   Widget _datePickerTheme(Widget child) => Theme(
     data: ThemeData.light().copyWith(
       colorScheme: ColorScheme.light(
-        primary:   AdminColors.inkPrincipal,
+        primary:   TClubColors.redPrincipal,
         onPrimary: Colors.white,
-        surface:   AdminColors.bgAlt,
+        surface:   TClubColors.bgAlt,
       )),
     child: child);
 
@@ -1222,21 +1218,21 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
 
     return Container(
       decoration: BoxDecoration(
-        color:  AdminColors.fill,
+        color:  TClubColors.bgAlt,
         border: Border.all(
-          color: temArtigo ? AdminColors.borderStrong : AdminColors.border,
+          color: temArtigo ? TClubColors.borderMid : TClubColors.border,
           width: 0.8)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(14, 12, 14, 0),
           child: Row(children: [
-            Container(width: 2, height: 12, color: AdminColors.accent),
+            Container(width: 2, height: 12, color: TClubColors.redClaro),
             const SizedBox(width: 8),
             Text('ARTIGO VIOLADO *', style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      8, fontWeight: FontWeight.w700,
               letterSpacing: 2.5,
-              color:         AdminColors.inkPrincipal.withOpacity(0.5))),
+              color:         TClubColors.redPrincipal.withOpacity(0.5))),
             const Spacer(),
             GestureDetector(
               onTap: () {
@@ -1254,27 +1250,27 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color:  _editandoArtigo
-                      ? AdminColors.fillStrong
-                      : AdminColors.fill,
+                      ? TClubColors.bgCard
+                      : TClubColors.bgAlt,
                   border: Border.all(
                     color: _editandoArtigo
-                        ? AdminColors.borderStrong
-                        : AdminColors.border,
+                        ? TClubColors.borderMid
+                        : TClubColors.border,
                     width: 0.6)),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   Icon(
                     _editandoArtigo
                         ? Icons.list_rounded
                         : Icons.edit_rounded,
-                    color: AdminColors.inkPrincipal, size: 10),
+                    color: TClubColors.branco, size: 10),
                   const SizedBox(width: 5),
                   Text(
-                    _editandoArtigo ? 'USAR LISTA' : 'INSERIR MANUALMENTE',
+                    _editandoArtigo ? 'USAR LISTA' : 'ESCREVER',
                     style: const TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      7, fontWeight: FontWeight.w700,
                       letterSpacing: 1.5,
-                      color:         AdminColors.inkPrincipal)),
+                      color:         TClubColors.branco)),
                 ]),
               ),
             ),
@@ -1291,11 +1287,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 width:   double.infinity,
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color:  AdminColors.bg,
+                  color:  TClubColors.bg,
                   border: Border.all(
                     color: _artigoSelecionado != null
-                        ? AdminColors.borderStrong
-                        : AdminColors.border,
+                        ? TClubColors.borderMid
+                        : TClubColors.border,
                     width: 0.8)),
                 child: Row(children: [
                   Expanded(child: _artigoSelecionado != null
@@ -1303,22 +1299,22 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(_artigoSelecionado!.codigo, style: TextStyle(
-                              fontFamily:    TabuTypography.bodyFont,
+                              fontFamily:    TClubTypography.bodyFont,
                               fontSize:      11, fontWeight: FontWeight.w700,
                               letterSpacing: 0.3,
-                              color:         AdminColors.inkDeep)),
+                              color:         TClubColors.branco)),
                             const SizedBox(height: 2),
                             Text(_artigoSelecionado!.titulo, style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 9,
-                              color: AdminColors.inkDeep.withOpacity(0.55))),
+                              color: TClubColors.branco.withOpacity(0.55))),
                           ],
                         )
                       : Text('Selecionar artigo violado...', style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont, fontSize: 12,
-                          color: AdminColors.inkPrincipal.withOpacity(0.35)))),
+                          fontFamily: TClubTypography.bodyFont, fontSize: 12,
+                          color: TClubColors.branco.withOpacity(0.35)))),
                   const Icon(Icons.keyboard_arrow_down_rounded,
-                    color: AdminColors.inkPrincipal, size: 18),
+                    color: TClubColors.redPrincipal, size: 18),
                 ]),
               ),
             ),
@@ -1356,30 +1352,30 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             color:   isTU
-                ? AdminColors.fillStrong
+                ? TClubColors.bgCard
                 : const Color(0xFF4FC3F7).withOpacity(0.12),
             child: Text(_artigoSelecionado!.fonte.toUpperCase(), style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      7, fontWeight: FontWeight.w700,
               letterSpacing: 1.5,
               color:         isTU
-                  ? AdminColors.inkPrincipal
+                  ? TClubColors.redPrincipal
                   : const Color(0xFF4FC3F7)))),
           const SizedBox(width: 8),
-          Text('JUSTIFICATIVA / DESCRIÇÃO DA INFRAÇÃO', style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+          Text('JUSTIFICATIVA', style: TextStyle(
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      7, fontWeight: FontWeight.w700,
             letterSpacing: 2,
-            color:         AdminColors.inkPrincipal.withOpacity(0.35))),
+            color:         TClubColors.branco.withOpacity(0.35))),
           const Spacer(),
           if (_descricaoEditada)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              color:   AdminColors.pending.withOpacity(0.15),
+              color:   TClubColors.redClaro.withOpacity(0.15),
               child: const Text('EDITADO', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      7, fontWeight: FontWeight.w700,
-                letterSpacing: 1.5, color: AdminColors.pending))),
+                letterSpacing: 1.5, color: TClubColors.redClaro))),
         ]),
         const SizedBox(height: 8),
         _buildDescricaoManual(mostrarLabel: false),
@@ -1391,28 +1387,28 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (mostrarLabel) ...[
         const Text('JUSTIFICATIVA / DESCRIÇÃO DA INFRAÇÃO *', style: TextStyle(
-          fontFamily:    TabuTypography.bodyFont,
+          fontFamily:    TClubTypography.bodyFont,
           fontSize:      8, fontWeight: FontWeight.w700,
           letterSpacing: 2,
-          color:         AdminColors.inkSubtle)),
+          color:         TClubColors.textoSecundario)),
         const SizedBox(height: 6),
       ],
       Container(
         decoration: BoxDecoration(
-          color:  AdminColors.bg,
+          color:  TClubColors.bg,
           border: Border.all(
             color: _descricaoEditada
-                ? AdminColors.pending.withOpacity(0.45)
-                : AdminColors.border,
+                ? TClubColors.redClaro.withOpacity(0.45)
+                : TClubColors.border,
             width: 0.8)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           TextField(
             controller: _motivoCtrl,
             maxLines:   5,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
-              fontSize: 12, color: AdminColors.inkDeep, height: 1.6),
-            cursorColor: AdminColors.inkPrincipal,
+              fontFamily: TClubTypography.bodyFont,
+              fontSize: 12, color: TClubColors.branco, height: 1.6),
+            cursorColor: TClubColors.redPrincipal,
             onChanged: (_) {
               if (!_descricaoEditada && _artigoSelecionado != null) {
                 setState(() {
@@ -1424,8 +1420,8 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
             decoration: InputDecoration(
               hintText:  'Descreva o motivo da infração e a medida tomada...',
               hintStyle: TextStyle(
-                fontFamily: TabuTypography.bodyFont, fontSize: 11,
-                color: AdminColors.inkPrincipal.withOpacity(0.3)),
+                fontFamily: TClubTypography.bodyFont, fontSize: 11,
+                color: TClubColors.branco.withOpacity(0.3)),
               contentPadding: const EdgeInsets.all(12),
               border: InputBorder.none),
           ),
@@ -1443,15 +1439,15 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   border: Border(top: BorderSide(
-                    color: AdminColors.pending.withOpacity(0.35), width: 0.4))),
+                    color: TClubColors.redClaro.withOpacity(0.35), width: 0.4))),
                 child: Row(children: [
                   const Icon(Icons.refresh_rounded,
-                    color: AdminColors.pending, size: 11),
+                    color: TClubColors.redClaro, size: 11),
                   const SizedBox(width: 6),
                   const Text('RESTAURAR TEXTO SUGERIDO', style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      8, fontWeight: FontWeight.w700,
-                    letterSpacing: 1.5, color: AdminColors.pending)),
+                    letterSpacing: 1.5, color: TClubColors.redClaro)),
                 ]),
               ),
             ),
@@ -1477,10 +1473,10 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                   begin: Alignment.centerLeft,
                   end:   Alignment.centerRight)
               : null,
-          color:  ctrl.acaoSelecionada == null ? AdminColors.fill : null,
+          color:  ctrl.acaoSelecionada == null ? TClubColors.bgAlt : null,
           border: Border.all(
             color: ctrl.acaoSelecionada == null
-                ? AdminColors.border
+                ? TClubColors.border
                 : ctrl.acaoSelecionada!.cor,
             width: 0.8)),
         child: Center(child: ctrl.processando
@@ -1497,11 +1493,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
                       ? 'SELECIONE UMA AÇÃO'
                       : 'CONFIRMAR · ${ctrl.acaoSelecionada!.label}',
                   style: TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      10, fontWeight: FontWeight.w700,
                     letterSpacing: 2,
                     color:         ctrl.acaoSelecionada == null
-                        ? AdminColors.inkPrincipal.withOpacity(0.4)
+                        ? TClubColors.branco.withOpacity(0.4)
                         : Colors.white)),
               ])),
       ),
@@ -1516,20 +1512,20 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color:  AdminColors.bg,
-        border: Border.all(color: AdminColors.border, width: 0.8)),
+        color:  TClubColors.bg,
+        border: Border.all(color: TClubColors.border, width: 0.8)),
       child: TextField(
         controller: controller,
         maxLines:   maxLines,
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
-          fontSize: 12, color: AdminColors.inkDeep, height: 1.5),
-        cursorColor: AdminColors.inkPrincipal,
+          fontFamily: TClubTypography.bodyFont,
+          fontSize: 12, color: TClubColors.branco, height: 1.5),
+        cursorColor: TClubColors.redPrincipal,
         decoration: InputDecoration(
           hintText:  hint,
           hintStyle: TextStyle(
-            fontFamily: TabuTypography.bodyFont, fontSize: 11,
-            color: AdminColors.inkPrincipal.withOpacity(0.3)),
+            fontFamily: TClubTypography.bodyFont, fontSize: 11,
+            color: TClubColors.redPrincipal.withOpacity(0.3)),
           contentPadding: const EdgeInsets.all(12),
           border: InputBorder.none),
       ),
@@ -1545,11 +1541,11 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       margin:  margin,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:     AdminColors.bgCard,
+        color:     TClubColors.bgCard,
         border:    Border.all(
-          color: borderColor ?? AdminColors.border, width: 0.8),
+          color: borderColor ?? TClubColors.border, width: 0.8),
         boxShadow: [BoxShadow(
-          color: AdminColors.glow, blurRadius: 8,
+          color: TClubColors.glow, blurRadius: 8,
           offset: const Offset(0, 2))],
       ),
       child: child,
@@ -1560,32 +1556,32 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     margin: const EdgeInsets.fromLTRB(16, 10, 16, 0),
     height: 80,
     decoration: BoxDecoration(
-      color:  AdminColors.bgCard,
-      border: Border.all(color: AdminColors.border, width: 0.8)),
+      color:  TClubColors.bgCard,
+      border: Border.all(color: TClubColors.border, width: 0.8)),
     child: Center(child: SizedBox(width: 20, height: 20,
       child: CircularProgressIndicator(
         strokeWidth: 1.5,
-        valueColor: AlwaysStoppedAnimation(AdminColors.accent)))));
+        valueColor: AlwaysStoppedAnimation(TClubColors.redClaro)))));
 
   Widget _sectionLabel(String text) => Row(children: [
-    Container(width: 2, height: 12, color: AdminColors.accent),
+    Container(width: 2, height: 12, color: TClubColors.redClaro),
     const SizedBox(width: 8),
     Text(text, style: TextStyle(
-      fontFamily:    TabuTypography.bodyFont,
+      fontFamily:    TClubTypography.bodyFont,
       fontSize:      8, fontWeight: FontWeight.w700,
       letterSpacing: 2.5,
-      color:         AdminColors.inkPrincipal.withOpacity(0.5))),
+      color:         TClubColors.redPrincipal.withOpacity(0.5))),
   ]);
 
   Widget _infoRow(String label, String value, Color color) => Row(children: [
     SizedBox(width: 90,
       child: Text(label, style: TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      8, fontWeight: FontWeight.w700,
         letterSpacing: 1.5,
-        color:         AdminColors.inkPrincipal.withOpacity(0.35)))),
+        color:         TClubColors.redPrincipal.withOpacity(0.35)))),
     Expanded(child: Text(value, style: TextStyle(
-      fontFamily: TabuTypography.bodyFont,
+      fontFamily: TClubTypography.bodyFont,
       fontSize: 11, color: color, letterSpacing: 0.3))),
   ]);
 
@@ -1602,18 +1598,18 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
       child: Row(children: [
         SizedBox(width: 90,
           child: Text(label, style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      8, fontWeight: FontWeight.w700,
             letterSpacing: 1.5,
-            color:         AdminColors.inkPrincipal.withOpacity(0.35)))),
+            color:         TClubColors.redPrincipal.withOpacity(0.35)))),
         // Mini avatar
         if (avatar != null && avatar.isNotEmpty)
           Container(
             width: 18, height: 18,
             margin: const EdgeInsets.only(right: 6),
             decoration: BoxDecoration(
-              color:  AdminColors.fillStrong,
-              border: Border.all(color: AdminColors.border, width: 0.5)),
+              color:  TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.5)),
             child: CachedNetworkImage(
               imageUrl:    avatar,
               fit:         BoxFit.cover,
@@ -1624,7 +1620,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
         Expanded(child: Row(children: [
           Flexible(
             child: Text(value, style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      11, color: color,
               letterSpacing: 0.3,
               decoration:    TextDecoration.underline,
@@ -1633,7 +1629,7 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
           ),
           const SizedBox(width: 4),
           Icon(Icons.open_in_new_rounded,
-            color: AdminColors.inkPrincipal.withOpacity(0.3), size: 10),
+            color: TClubColors.redPrincipal.withOpacity(0.3), size: 10),
         ])),
       ]),
     );
@@ -1644,15 +1640,15 @@ class _ReportDetailViewState extends State<_ReportDetailView> {
     decoration: BoxDecoration(
       border: Border.all(color: color.withOpacity(0.5), width: 0.7)),
     child: Text(label, style: TextStyle(
-      fontFamily:    TabuTypography.bodyFont,
+      fontFamily:    TClubTypography.bodyFont,
       fontSize:      8, fontWeight: FontWeight.w700,
       letterSpacing: 1.5, color: color)));
 
   Color _statusColor(String status) {
     switch (status) {
-      case 'pending':   return AdminColors.pending;
-      case 'actioned':  return AdminColors.actioned;
-      default:          return AdminColors.inkPrincipal.withOpacity(0.35);
+      case 'pending':   return TClubColors.redClaro;
+      case 'actioned':  return Color(0xFF4CAF50);
+      default:          return TClubColors.redPrincipal.withOpacity(0.35);
     }
   }
 
@@ -1687,7 +1683,7 @@ class _SucessoSheet extends StatelessWidget {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(width: 36, height: 3,
             decoration: BoxDecoration(
-              color:        AdminColors.border,
+              color:        TClubColors.border,
               borderRadius: BorderRadius.circular(2))),
           const SizedBox(height: 24),
           Container(width: 60, height: 60,
@@ -1695,31 +1691,31 @@ class _SucessoSheet extends StatelessWidget {
             child: Icon(acao.icon, color: acao.cor, size: 26)),
           const SizedBox(height: 16),
           const Text('MEDIDA APLICADA', style: TextStyle(
-            fontFamily:    TabuTypography.displayFont,
+            fontFamily:    TClubTypography.displayFont,
             fontSize:      16, letterSpacing: 4,
-            color:         AdminColors.inkDeep)),
+            color:         TClubColors.branco)),
           const SizedBox(height: 6),
           Text(acao.label, style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      12, letterSpacing: 2, color: acao.cor)),
           const SizedBox(height: 20),
           Container(
             width:   double.infinity,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color:  AdminColors.fillStrong,
-              border: Border.all(color: AdminColors.borderStrong)),
+              color:  TClubColors.bgCard,
+              border: Border.all(color: TClubColors.borderMid)),
             child: Column(children: [
               Text('PROTOCOLO DA DENÚNCIA', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      8, fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color:         AdminColors.inkPrincipal.withOpacity(0.45))),
+                color:         TClubColors.redPrincipal.withOpacity(0.45))),
               const SizedBox(height: 8),
               Text(protocolo, style: const TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize: 20, letterSpacing: 3,
-                color: AdminColors.inkPrincipal)),
+                color: TClubColors.redPrincipal)),
             ]),
           ),
           const SizedBox(height: 12),
@@ -1728,9 +1724,9 @@ class _SucessoSheet extends StatelessWidget {
             'Guarde o protocolo para referências futuras.',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10, height: 1.6,
-              color: AdminColors.inkDeep.withOpacity(0.4))),
+              color: TClubColors.branco.withOpacity(0.4))),
           const SizedBox(height: 24),
           GestureDetector(
             onTap: onOk,
@@ -1738,11 +1734,11 @@ class _SucessoSheet extends StatelessWidget {
               width: double.infinity, height: 52,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AdminColors.inkDeep, AdminColors.inkPrincipal],
+                  colors: [TClubColors.branco, TClubColors.redPrincipal],
                   begin:  Alignment.centerLeft,
                   end:    Alignment.centerRight)),
               child: const Center(child: Text('CONCLUIR', style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      11, fontWeight: FontWeight.w700,
                 letterSpacing: 3, color: Colors.white))))),
         ]),

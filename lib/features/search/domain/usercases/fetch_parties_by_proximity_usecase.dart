@@ -1,7 +1,7 @@
 // lib/features/search/domain/usercases/fetch_parties_by_proximity_usecase.dart
 
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
 
 /// Parâmetros para busca de festas por proximidade.
 class FetchPartiesByProximityParams {
@@ -65,3 +65,4 @@ class FetchPartiesByProximityUseCase {
     return all.where((party) => !party.isExpired).toList();
   }
 }
+

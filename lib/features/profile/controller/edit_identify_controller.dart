@@ -2,10 +2,10 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/profile/data/models/identify_model.dart';
-import 'package:tabuapp/features/profile/data/services/identify_service.dart';
-import 'package:tabuapp/features/profile/data/services/profile_service.dart'; // ← adicionado
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_enums.dart';
+import 'package:tclub/features/profile/data/models/identify_model.dart';
+import 'package:tclub/features/profile/data/services/identify_service.dart';
+import 'package:tclub/features/profile/data/services/profile_service.dart'; // ← adicionado
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_enums.dart';
 
 enum SaveStatus { idle, saving, success, error }
 
@@ -276,3 +276,4 @@ class EditIdentityController extends ChangeNotifier {
     }
   }
 }
+

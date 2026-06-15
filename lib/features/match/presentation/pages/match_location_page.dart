@@ -1,8 +1,8 @@
 // lib/features/match/presentation/pages/match_location_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/match/data/models/match_filter_model.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/match/data/models/match_filter_model.dart';
 
 // ── paleta ────────────────────────────────────────────────────────────────
 const _ink       = Color(0xFF080808);
@@ -220,7 +220,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                                 child: Text.rich(
                                   TextSpan(
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize:   12,
                                       height:     1.55,
                                       color: const Color(0xFF4CAF8A).withOpacity(0.75),
@@ -279,7 +279,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color:  _ink,
-        border: Border(bottom: BorderSide(color: TabuColors.rosaPrincipal.withOpacity(0.14), width: 0.8)),
+        border: Border(bottom: BorderSide(color: TClubColors.redPrincipal.withOpacity(0.14), width: 0.8)),
       ),
       child: Row(
         children: [
@@ -294,7 +294,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               Text(
                 'LOCALIZAÇÃO',
                 style: TextStyle(
-                  fontFamily:    TabuTypography.displayFont,
+                  fontFamily:    TClubTypography.displayFont,
                   fontSize:      14,
                   fontWeight:    FontWeight.w800,
                   letterSpacing: 3.5,
@@ -306,7 +306,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                 height: 1, width: 28,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [TabuColors.rosaPrincipal.withOpacity(0), TabuColors.rosaPrincipal, TabuColors.rosaPrincipal.withOpacity(0)],
+                    colors: [TClubColors.redPrincipal.withOpacity(0), TClubColors.redPrincipal, TClubColors.redPrincipal.withOpacity(0)],
                   ),
                 ),
               ),
@@ -330,7 +330,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               TextSpan(
                 text: 'Onde você\n',
                 style: TextStyle(
-                  fontFamily:    TabuTypography.displayFont,
+                  fontFamily:    TClubTypography.displayFont,
                   fontSize:      30,
                   fontWeight:    FontWeight.w900,
                   color:         Colors.white,
@@ -341,10 +341,10 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               TextSpan(
                 text: 'quer se conectar?',
                 style: TextStyle(
-                  fontFamily:    TabuTypography.displayFont,
+                  fontFamily:    TClubTypography.displayFont,
                   fontSize:      30,
                   fontWeight:    FontWeight.w900,
-                  color:         TabuColors.rosaPrincipal,
+                  color:         TClubColors.redPrincipal,
                   height:        1.2,
                   letterSpacing: -0.5,
                 ),
@@ -356,7 +356,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
         Text(
           'Sua localização nunca é compartilhada\npublicamente com outros usuários.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   13,
             height:     1.6,
             color:      Colors.white.withOpacity(0.35),
@@ -380,10 +380,10 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
-          color:        isSelected ? TabuColors.rosaPrincipal.withOpacity(0.08) : _surfaceHi,
+          color:        isSelected ? TClubColors.redPrincipal.withOpacity(0.08) : _surfaceHi,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: isSelected ? TabuColors.rosaPrincipal.withOpacity(0.60) : TabuColors.rosaPrincipal.withOpacity(0.12),
+            color: isSelected ? TClubColors.redPrincipal.withOpacity(0.60) : TClubColors.redPrincipal.withOpacity(0.12),
             width: isSelected ? 1.0 : 0.7,
           ),
         ),
@@ -394,17 +394,17 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               width: 46, height: 46,
               decoration: BoxDecoration(
                 color: isSelected
-                    ? TabuColors.rosaPrincipal.withOpacity(0.18)
-                    : TabuColors.rosaPrincipal.withOpacity(0.07),
+                    ? TClubColors.redPrincipal.withOpacity(0.18)
+                    : TClubColors.redPrincipal.withOpacity(0.07),
                 borderRadius: BorderRadius.circular(13),
                 border: Border.all(
-                  color: isSelected ? TabuColors.rosaPrincipal : TabuColors.rosaPrincipal.withOpacity(0.18),
+                  color: isSelected ? TClubColors.redPrincipal : TClubColors.redPrincipal.withOpacity(0.18),
                   width: 0.8,
                 ),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? TabuColors.rosaPrincipal : TabuColors.rosaPrincipal.withOpacity(0.50),
+                color: isSelected ? TClubColors.redPrincipal : TClubColors.redPrincipal.withOpacity(0.50),
                 size:  22,
               ),
             ),
@@ -416,7 +416,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                   Text(
                     title,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   15,
                       fontWeight: FontWeight.w600,
                       color:      isSelected ? Colors.white : Colors.white.withOpacity(0.75),
@@ -426,7 +426,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                   Text(
                     subtitle,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   12,
                       height:     1.4,
                       color:      Colors.white.withOpacity(0.35),
@@ -440,10 +440,10 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               duration: const Duration(milliseconds: 200),
               width: 22, height: 22,
               decoration: BoxDecoration(
-                color:  isSelected ? TabuColors.rosaPrincipal : Colors.transparent,
+                color:  isSelected ? TClubColors.redPrincipal : Colors.transparent,
                 shape:  BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? TabuColors.rosaPrincipal : Colors.white.withOpacity(0.20),
+                  color: isSelected ? TClubColors.redPrincipal : Colors.white.withOpacity(0.20),
                   width: 1.5,
                 ),
               ),
@@ -466,21 +466,21 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
           color:        _surfaceHi,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: _searchFocused ? TabuColors.rosaPrincipal.withOpacity(0.55) : TabuColors.rosaPrincipal.withOpacity(0.18),
+            color: _searchFocused ? TClubColors.redPrincipal.withOpacity(0.55) : TClubColors.redPrincipal.withOpacity(0.18),
             width: _searchFocused ? 1.0 : 0.7,
           ),
         ),
         child: Row(
           children: [
             const SizedBox(width: 14),
-            Icon(Icons.search_rounded, color: TabuColors.rosaPrincipal.withOpacity(0.60), size: 20),
+            Icon(Icons.search_rounded, color: TClubColors.redPrincipal.withOpacity(0.60), size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(
                 controller:   _searchCtrl,
                 onChanged:    _onSearchChanged,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   14,
                   color:      Colors.white,
                 ),
@@ -488,7 +488,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                   border:      InputBorder.none,
                   hintText:    'Digite uma cidade…',
                   hintStyle:   TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   14,
                     color:      Colors.white.withOpacity(0.28),
                   ),
@@ -520,7 +520,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
       decoration: BoxDecoration(
         color:        _surface,
         borderRadius: BorderRadius.circular(14),
-        border:       Border.all(color: TabuColors.rosaPrincipal.withOpacity(0.18), width: 0.7),
+        border:       Border.all(color: TClubColors.redPrincipal.withOpacity(0.18), width: 0.7),
       ),
       child: Column(
         children: _resultados.asMap().entries.map((entry) {
@@ -544,13 +544,13 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
               child: Row(
                 children: [
                   Icon(Icons.location_on_outlined,
-                      color: TabuColors.rosaPrincipal.withOpacity(0.55), size: 16),
+                      color: TClubColors.redPrincipal.withOpacity(0.55), size: 16),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
                       cidade,
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize:   14,
                         color:      Colors.white.withOpacity(0.85),
                       ),
@@ -559,11 +559,11 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
                   Text(
                     estado,
                     style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      11,
                       fontWeight:    FontWeight.w600,
                       letterSpacing: 1.5,
-                      color:         TabuColors.rosaPrincipal.withOpacity(0.55),
+                      color:         TClubColors.redPrincipal.withOpacity(0.55),
                     ),
                   ),
                 ],
@@ -587,14 +587,14 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                TabuColors.rosaPrincipal.withOpacity(0.85),
-                TabuColors.rosaPrincipal,
+                TClubColors.redPrincipal.withOpacity(0.85),
+                TClubColors.redPrincipal,
               ],
             ),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color:      TabuColors.rosaPrincipal.withOpacity(0.30),
+                color:      TClubColors.redPrincipal.withOpacity(0.30),
                 blurRadius: 20,
                 offset:     const Offset(0, 6),
               ),
@@ -604,7 +604,7 @@ class _MatchLocationPageState extends State<MatchLocationPage> {
             child: Text(
               'CONFIRMAR',
               style: TextStyle(
-                fontFamily:    TabuTypography.displayFont,
+                fontFamily:    TClubTypography.displayFont,
                 fontSize:      13,
                 fontWeight:    FontWeight.w800,
                 letterSpacing: 3.0,
@@ -632,11 +632,12 @@ class _HeaderBtn extends StatelessWidget {
     child: Container(
       width: 38, height: 38,
       decoration: BoxDecoration(
-        color:        TabuColors.bg,
+        color:        TClubColors.bg,
         borderRadius: BorderRadius.circular(11),
-        border:       Border.all(color: TabuColors.rosaPrincipal.withOpacity(0.18), width: 0.7),
+        border:       Border.all(color: TClubColors.redPrincipal.withOpacity(0.18), width: 0.7),
       ),
       child: Icon(icon, color: Colors.white.withOpacity(0.60), size: 18),
     ),
   );
 }
+

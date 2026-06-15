@@ -1,9 +1,9 @@
 // lib/features/search/presentation/widgets/filter_dropdown.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/search/data/services/ibge_service.dart';
+import 'package:tclub/features/search/data/services/ibge_service.dart';
 
-import '../../../../core/theme/tabu_theme.dart';
+import '../../../../core/theme/tclub_theme.dart';
 
 /// Widget de dropdown para filtros de localização (estado, cidade, bairro).
 class FilterDropdown extends StatefulWidget {
@@ -183,7 +183,7 @@ class _FilterDropdownState extends State<FilterDropdown> {
   Widget _buildEstadoDropdown() {
     return DropdownButtonFormField<String>(
       value: _estadoSigla,
-      dropdownColor: TabuTheme.main.scaffoldBackgroundColor,
+      dropdownColor: TClubTheme.main.scaffoldBackgroundColor,
       decoration: InputDecoration(
         labelText: 'Estado',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -222,7 +222,7 @@ class _FilterDropdownState extends State<FilterDropdown> {
 
     return DropdownButtonFormField<String>(
       value: _cidadeNome,
-      dropdownColor: TabuTheme.main.scaffoldBackgroundColor,
+      dropdownColor: TClubTheme.main.scaffoldBackgroundColor,
       decoration: InputDecoration(
         labelText: 'Cidade',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -256,7 +256,7 @@ class _FilterDropdownState extends State<FilterDropdown> {
   Widget _buildBairroDropdown() {
     return DropdownButtonFormField<String>(
       value: _bairro,
-      dropdownColor: TabuTheme.main.scaffoldBackgroundColor,
+      dropdownColor: TClubTheme.main.scaffoldBackgroundColor,
       decoration: InputDecoration(
         labelText: 'Bairro',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -402,3 +402,4 @@ class _ErrorField extends StatelessWidget {
     );
   }
 }
+

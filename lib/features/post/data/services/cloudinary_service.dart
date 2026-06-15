@@ -13,7 +13,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 // ─── Configuração ────────────────────────────────────────────────────────────
-const _kCloudName    = 'dc09lenom';
+const _kCloudName    = 'dh7ixbnzc';
 const _kUploadPreset = 'ml_default'; // fallback only
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -195,3 +195,4 @@ class CloudinaryService {
     }
   }
 }
+

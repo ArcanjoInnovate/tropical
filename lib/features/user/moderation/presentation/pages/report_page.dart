@@ -13,8 +13,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/user/moderation/data/models/report_motives.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/user/moderation/data/models/report_motives.dart';
 import '../../controller/report_controller.dart';
 import '../../data/models/report_models.dart';
 import '../../data/models/report_motives.dart';
@@ -228,9 +228,9 @@ class _ReportPageState extends State<ReportPage>
         margin: const EdgeInsets.all(16),
         content: Text('ERRO: ${_ctrl.erro}',
             style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11, fontWeight: FontWeight.w700,
-                letterSpacing: 1.5, color: TabuColors.textoPrincipal)),
+                letterSpacing: 1.5, color: TClubColors.textoPrincipal)),
       ));
     }
   }
@@ -241,7 +241,7 @@ class _ReportPageState extends State<ReportPage>
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        backgroundColor: TabuColors.bgAlt,
+        backgroundColor: TClubColors.bgAlt,
         body: FadeTransition(
           opacity: _fadeAnim,
           child: SlideTransition(
@@ -271,7 +271,7 @@ class _ReportPageState extends State<ReportPage>
   Widget _buildLoading() => const Center(
     child: SizedBox(width: 18, height: 18,
       child: CircularProgressIndicator(
-          color: TabuColors.rosaPrincipal, strokeWidth: 1.5)));
+          color: TClubColors.redPrincipal, strokeWidth: 1.5)));
 
   // ── Já denunciou ───────────────────────────────────────────────────────────
   Widget _buildJaReportou() => SafeArea(child: Column(children: [
@@ -333,8 +333,8 @@ class _ReportPageState extends State<ReportPage>
         const SizedBox(height: 6),
         const Text(
           'Selecione a categoria que melhor descreve o problema',
-          style: TextStyle(fontFamily: TabuTypography.bodyFont,
-              fontSize: 10, letterSpacing: 0.5, color: TabuColors.subtle)),
+          style: TextStyle(fontFamily: TClubTypography.bodyFont,
+              fontSize: 10, letterSpacing: 0.5, color: TClubColors.subtle)),
         const SizedBox(height: 14),
 
         // ── FIX: Column em vez de spread para evitar RangeError ──────────────
@@ -355,18 +355,18 @@ class _ReportPageState extends State<ReportPage>
         const SizedBox(height: 6),
         Row(children: [
           Text('Mínimo de ${_ctrl.minChars} caracteres',
-              style: const TextStyle(fontFamily: TabuTypography.bodyFont,
-                  fontSize: 10, letterSpacing: 0.5, color: TabuColors.subtle)),
+              style: const TextStyle(fontFamily: TClubTypography.bodyFont,
+                  fontSize: 10, letterSpacing: 0.5, color: TClubColors.subtle)),
           const Spacer(),
           AnimatedDefaultTextStyle(
             duration: const Duration(milliseconds: 200),
             style: TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10, letterSpacing: 0.5,
               color: _ctrl.descValida
-                  ? TabuColors.rosaPrincipal
+                  ? TClubColors.redPrincipal
                   : _descCtrl.text.isEmpty
-                      ? TabuColors.border
+                      ? TClubColors.border
                       : const Color(0xFFE85D5D)),
             child: Text(
                 '${_descCtrl.text.trim().length}/${_ctrl.minChars}'),
@@ -390,7 +390,7 @@ class _ReportPageState extends State<ReportPage>
               Text(
                 'Faltam ${_ctrl.minChars - _descCtrl.text.trim().length} caracteres',
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10, letterSpacing: 0.8,
                     color: Color(0xFFE85D5D))),
             ])),
@@ -414,8 +414,8 @@ class _ReportPageState extends State<ReportPage>
           const SizedBox(height: 6),
           const Text(
             'Leia e confirme os itens abaixo antes de enviar',
-            style: TextStyle(fontFamily: TabuTypography.bodyFont,
-                fontSize: 10, letterSpacing: 0.5, color: TabuColors.subtle)),
+            style: TextStyle(fontFamily: TClubTypography.bodyFont,
+                fontSize: 10, letterSpacing: 0.5, color: TClubColors.subtle)),
           const SizedBox(height: 14),
           ReportCheckConfirm(
             valor:     _ctrl.confirmaVerdade,
@@ -461,13 +461,13 @@ class _ReportPageState extends State<ReportPage>
       child: Row(children: [
         IconButton(
           icon: const Icon(Icons.arrow_back_ios_new,
-              color: TabuColors.dim, size: 16),
+              color: TClubColors.dim, size: 16),
           onPressed: () => Navigator.pop(context)),
         const Spacer(),
         Text(_cfg.tituloTela, style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9, fontWeight: FontWeight.w700,
-            letterSpacing: 3, color: TabuColors.subtle)),
+            letterSpacing: 3, color: TClubColors.subtle)),
         const SizedBox(width: 6),
       ]),
     );
@@ -486,9 +486,9 @@ class _ReportPageState extends State<ReportPage>
               color: Color(0xFFE85D5D), size: 16)),
         const SizedBox(width: 12),
         Expanded(child: Text(_cfg.tituloTela, style: const TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 17, letterSpacing: 4,
-            color: TabuColors.textoPrincipal))),
+            color: TClubColors.textoPrincipal))),
       ]),
       const SizedBox(height: 14),
 
@@ -496,17 +496,17 @@ class _ReportPageState extends State<ReportPage>
       Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.6)),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.6)),
         child: Row(children: [
           Container(
             width: 36, height: 36,
             decoration: BoxDecoration(
-              color: TabuColors.bg,
+              color: TClubColors.bg,
               border: Border.all(
-                  color: TabuColors.border.withOpacity(0.8), width: 0.7)),
+                  color: TClubColors.border.withOpacity(0.8), width: 0.7)),
             child: Icon(_cfg.iconeCard,
-                color: TabuColors.subtle, size: 15)),
+                color: TClubColors.subtle, size: 15)),
           const SizedBox(width: 12),
           Expanded(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -514,31 +514,31 @@ class _ReportPageState extends State<ReportPage>
               Row(children: [
                 Text('${_cfg.subtituloCard}  ',
                     style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9, letterSpacing: 1.5,
-                        color: TabuColors.subtle)),
+                        color: TClubColors.subtle)),
                 if (_cfg.targetName != null)
                   Text(_cfg.targetName!.toUpperCase(),
                       style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 12, fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
-                          color: TabuColors.textoPrincipal)),
+                          color: TClubColors.textoPrincipal)),
                 if (_cfg.targetTitulo != null)
                   Flexible(child: Text(_cfg.targetTitulo!,
                       maxLines: 1, overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11, fontWeight: FontWeight.w600,
-                          color: TabuColors.dim))),
+                          color: TClubColors.dim))),
               ]),
               const SizedBox(height: 4),
               const Text(
                 'O conteúdo será usado como base para a análise.',
                 style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9, letterSpacing: 0.3,
-                    color: TabuColors.subtle, height: 1.4)),
+                    color: TClubColors.subtle, height: 1.4)),
             ])),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
@@ -548,16 +548,16 @@ class _ReportPageState extends State<ReportPage>
                   color: const Color(0xFFE85D5D).withOpacity(0.4), width: 0.6)),
             child: Text(_cfg.subtituloCard,
                 style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 7, fontWeight: FontWeight.w700,
                     letterSpacing: 2, color: Color(0xFFE85D5D)))),
         ])),
       const SizedBox(height: 10),
       const Text(
         'Denúncias são tratadas de forma confidencial, conforme nossa Política de Privacidade e LGPD.',
-        style: TextStyle(fontFamily: TabuTypography.bodyFont,
+        style: TextStyle(fontFamily: TClubTypography.bodyFont,
             fontSize: 9, letterSpacing: 0.3,
-            color: TabuColors.subtle, height: 1.5)),
+            color: TClubColors.subtle, height: 1.5)),
     ]);
   }
 
@@ -565,50 +565,50 @@ class _ReportPageState extends State<ReportPage>
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.border, width: 0.6)),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.border, width: 0.6)),
       child: _ctrl.motivoSelecionado != null
           ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const Icon(Icons.gavel_outlined,
-                    color: TabuColors.subtle, size: 12),
+                    color: TClubColors.subtle, size: 12),
                 const SizedBox(width: 8),
                 Expanded(child: Text(_ctrl.motivoSelecionado!.label,
                     style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 11, fontWeight: FontWeight.w700,
                         letterSpacing: 0.3,
-                        color: TabuColors.textoPrincipal))),
+                        color: TClubColors.textoPrincipal))),
               ]),
               const SizedBox(height: 8),
               Text(_ctrl.motivoSelecionado!.descricao,
                   style: const TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10, letterSpacing: 0.3,
-                      color: TabuColors.dim, height: 1.55)),
+                      color: TClubColors.dim, height: 1.55)),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.07),
+                  color: TClubColors.redPrincipal.withOpacity(0.07),
                   border: Border.all(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.25),
+                      color: TClubColors.redPrincipal.withOpacity(0.25),
                       width: 0.6)),
                 child: Text(_ctrl.motivoSelecionado!.artigo,
                     style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9, letterSpacing: 1,
-                        color: TabuColors.rosaPrincipal))),
+                        color: TClubColors.redPrincipal))),
             ])
           : const Row(children: [
-              Icon(Icons.gavel_outlined, color: TabuColors.border, size: 12),
+              Icon(Icons.gavel_outlined, color: TClubColors.border, size: 12),
               SizedBox(width: 8),
               Expanded(child: Text(
                   'Selecione um motivo para ver a base legal aplicável.',
                   style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 10, letterSpacing: 0.3,
-                      color: TabuColors.subtle, height: 1.5))),
+                      color: TClubColors.subtle, height: 1.5))),
             ]),
     );
   }
@@ -617,16 +617,16 @@ class _ReportPageState extends State<ReportPage>
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: TabuColors.bgCard,
-        border: Border.all(color: TabuColors.border, width: 0.6)),
+        color: TClubColors.bgCard,
+        border: Border.all(color: TClubColors.border, width: 0.6)),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Row(children: [
-          Icon(Icons.info_outline_rounded, color: TabuColors.subtle, size: 12),
+          Icon(Icons.info_outline_rounded, color: TClubColors.subtle, size: 12),
           SizedBox(width: 8),
           Text('O QUE ACONTECE APÓS O ENVIO', style: TextStyle(
-              fontFamily: TabuTypography.bodyFont, fontSize: 8,
+              fontFamily: TClubTypography.bodyFont, fontSize: 8,
               fontWeight: FontWeight.w700, letterSpacing: 2,
-              color: TabuColors.subtle)),
+              color: TClubColors.subtle)),
         ]),
         const SizedBox(height: 12),
         const ReportProcessoItem(numero: '1',
@@ -644,3 +644,4 @@ class _ReportPageState extends State<ReportPage>
     );
   }
 }
+

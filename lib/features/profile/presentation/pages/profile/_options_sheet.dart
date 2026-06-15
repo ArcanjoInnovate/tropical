@@ -1,7 +1,7 @@
 // features/profile/presentation/pages/profile/_options_sheet.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 class ProfileOptionsSheet extends StatelessWidget {
   const ProfileOptionsSheet({
@@ -18,7 +18,7 @@ class ProfileOptionsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: TabuColors.bgAlt),
+      decoration: const BoxDecoration(color: TClubColors.bgAlt),
       child: SafeArea(
         top: false,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -53,7 +53,7 @@ class ProfileOptionsSheet extends StatelessWidget {
         height: 2,
         margin: const EdgeInsets.only(top: 14),
         decoration: BoxDecoration(
-          color: TabuColors.border,
+          color: TClubColors.border,
           borderRadius: BorderRadius.circular(1),
         ),
       );
@@ -64,11 +64,11 @@ class ProfileOptionsSheet extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Colors.transparent,
-            TabuColors.rosaDeep,
-            TabuColors.rosaPrincipal,
-            TabuColors.rosaClaro,
-            TabuColors.rosaPrincipal,
-            TabuColors.rosaDeep,
+            TClubColors.redDeep,
+            TClubColors.redPrincipal,
+            TClubColors.redClaro,
+            TClubColors.redPrincipal,
+            TClubColors.redDeep,
             Colors.transparent,
           ]),
         ),
@@ -77,16 +77,16 @@ class ProfileOptionsSheet extends StatelessWidget {
   Widget _header(String name) => Padding(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 4),
         child: Row(children: [
-          const Icon(Icons.more_horiz, color: TabuColors.subtle, size: 14),
+          const Icon(Icons.more_horiz, color: TClubColors.subtle, size: 14),
           const SizedBox(width: 10),
           Text(
             name.toUpperCase(),
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 2.5,
-              color: TabuColors.subtle,
+              color: TClubColors.subtle,
             ),
           ),
         ]),
@@ -98,7 +98,7 @@ class ProfileOptionsSheet extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Colors.transparent,
-            TabuColors.border,
+            TClubColors.border,
             Colors.transparent,
           ]),
         ),
@@ -118,7 +118,7 @@ class ProfileOptionsSheet extends StatelessWidget {
         padding:
             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: TabuColors.bgCard.withOpacity(0.50),
+          color: TClubColors.bgCard.withOpacity(0.50),
           border: Border.all(
             color: const Color(0xFFE85D5D).withOpacity(0.25),
             width: 0.7,
@@ -143,7 +143,7 @@ class ProfileOptionsSheet extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5,
@@ -154,10 +154,10 @@ class ProfileOptionsSheet extends StatelessWidget {
                 Text(
                   subtitle,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     letterSpacing: 0.5,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
               ],
@@ -175,22 +175,23 @@ class ProfileOptionsSheet extends StatelessWidget {
           margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           height: 46,
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
+            color: TClubColors.bgCard,
             border:
-                Border.all(color: TabuColors.border, width: 0.8),
+                Border.all(color: TClubColors.border, width: 0.8),
           ),
           child: const Center(
             child: Text(
               'CANCELAR',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2.5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
           ),
         ),
       );
 }
+

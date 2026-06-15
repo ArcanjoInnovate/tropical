@@ -7,7 +7,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/auth/data/services/auth_service.dart';
+import 'package:tclub/features/auth/data/services/auth_service.dart';
 
 enum AuthStatus { idle, loading, success, error }
 
@@ -121,3 +121,4 @@ class AuthController extends ChangeNotifier {
     else                                           debugPrint('[AUTH]    Tipo: ERRO DESCONHECIDO');
   }
 }
+

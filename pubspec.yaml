@@ -1,5 +1,5 @@
-name: tabuapp
-description: "A new Flutter project."
+name: tclub
+description: "TCLUB - O app de eventos e entretenimento para todos os gostos!"
 publish_to: "none"
 
 version: 1.0.1+1
@@ -65,9 +65,9 @@ flutter:
 
   assets:
     - assets/tabu_logo.png
-    - assets/logo.jpeg
+    - assets/logo.png
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo.jpeg"
+  image_path: "assets/logo.png"

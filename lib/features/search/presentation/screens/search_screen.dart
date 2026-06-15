@@ -5,22 +5,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_bloc.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_event.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_filters.dart';
-import 'package:tabuapp/features/search/presentation/bloc/search_state.dart';
-import 'package:tabuapp/features/search/presentation/widgets/search_bar_widget.dart';
-import 'package:tabuapp/features/search/presentation/widgets/filter_dropdown.dart';
-import 'package:tabuapp/features/search/presentation/widgets/proximity_controls.dart';
-import 'package:tabuapp/features/search/presentation/widgets/user_tile.dart';
-import 'package:tabuapp/features/search/presentation/widgets/party_tile.dart';
-import 'package:tabuapp/features/search/presentation/widgets/party_detail_sheet.dart';
-import 'package:tabuapp/features/search/di/search_injection.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
-import 'package:tabuapp/features/search/data/services/ibge_service.dart';
-import 'package:tabuapp/features/admin/data/services/location_service.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/search/presentation/bloc/search_bloc.dart';
+import 'package:tclub/features/search/presentation/bloc/search_event.dart';
+import 'package:tclub/features/search/presentation/bloc/search_filters.dart';
+import 'package:tclub/features/search/presentation/bloc/search_state.dart';
+import 'package:tclub/features/search/presentation/widgets/search_bar_widget.dart';
+import 'package:tclub/features/search/presentation/widgets/filter_dropdown.dart';
+import 'package:tclub/features/search/presentation/widgets/proximity_controls.dart';
+import 'package:tclub/features/search/presentation/widgets/user_tile.dart';
+import 'package:tclub/features/search/presentation/widgets/party_tile.dart';
+import 'package:tclub/features/search/presentation/widgets/party_detail_sheet.dart';
+import 'package:tclub/features/search/di/search_injection.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/features/search/data/services/ibge_service.dart';
+import 'package:tclub/features/admin/data/services/location_service.dart';
 
 class SearchScreen extends StatelessWidget {
   final String myUid;
@@ -476,7 +476,7 @@ class _SearchViewState extends State<_SearchView> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: TabuTheme.main.scaffoldBackgroundColor,
+      backgroundColor: TClubTheme.main.scaffoldBackgroundColor,
       barrierColor: Colors.black54,
       elevation: 0,
       useSafeArea: true,
@@ -486,7 +486,7 @@ class _SearchViewState extends State<_SearchView> {
       builder: (_) => BlocProvider.value(
         value: bloc,
         child: Material(
-          color: TabuTheme.main.scaffoldBackgroundColor,
+          color: TClubTheme.main.scaffoldBackgroundColor,
           child: DraggableScrollableSheet(
             expand: false,
             initialChildSize: 0.5,
@@ -494,7 +494,7 @@ class _SearchViewState extends State<_SearchView> {
             maxChildSize: 0.85,
             builder: (sheetContext, scrollController) {
               return Container(
-                color: TabuTheme.main.scaffoldBackgroundColor,
+                color: TClubTheme.main.scaffoldBackgroundColor,
                 child: SingleChildScrollView(
                   controller: scrollController,
                   padding: EdgeInsets.only(
@@ -636,3 +636,4 @@ class _Tab extends StatelessWidget {
     );
   }
 }
+

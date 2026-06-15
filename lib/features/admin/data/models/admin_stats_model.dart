@@ -22,3 +22,4 @@ class AdminStatsModel {
         totalFestas    = 0,
         pendingReports = 0;
 }
+

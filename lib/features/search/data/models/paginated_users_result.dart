@@ -1,6 +1,6 @@
 // lib/features/search/data/models/paginated_result_model.dart
 
-import 'package:tabuapp/features/search/domain/entities/paginated_result.dart';
+import 'package:tclub/features/search/domain/entities/paginated_result.dart';
 
 
 /// Model genérico para resultados paginados.
@@ -71,3 +71,4 @@ class PaginatedResultModel<T> extends PaginatedResultEntity<T> {
     );
   }
 }
+

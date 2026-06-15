@@ -257,3 +257,4 @@ class MatchService {
 
   double _toRad(double deg) => deg * math.pi / 180;
 }
+

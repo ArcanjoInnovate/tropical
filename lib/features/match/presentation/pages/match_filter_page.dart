@@ -1,9 +1,9 @@
 // lib/features/match/presentation/pages/match_filter_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/match/data/models/match_filter_model.dart';
-import 'package:tabuapp/features/match/presentation/pages/match_location_page.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/match/data/models/match_filter_model.dart';
+import 'package:tclub/features/match/presentation/pages/match_location_page.dart';
 
 enum MatchLocationSource { profile, profileCoords, gps, none }
 
@@ -81,7 +81,7 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark, // ← tema claro = ícones escuros na status bar
       child: Scaffold(
-        backgroundColor: TabuColors.bg,
+        backgroundColor: TClubColors.bg,
         body: SafeArea(
           child: Column(
             children: [
@@ -111,9 +111,9 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
-        color:  TabuColors.bg,
+        color:  TClubColors.bg,
         border: Border(
-          bottom: BorderSide(color: TabuColors.border, width: 0.8),
+          bottom: BorderSide(color: TClubColors.border, width: 0.8),
         ),
       ),
       child: Row(
@@ -126,11 +126,11 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
               Text(
                 'PREFERÊNCIAS',
                 style: TextStyle(
-                  fontFamily:    TabuTypography.displayFont,
+                  fontFamily:    TClubTypography.displayFont,
                   fontSize:      14,
                   fontWeight:    FontWeight.w800,
                   letterSpacing: 3.5,
-                  color:         TabuColors.textoPrincipal, // ← era Colors.white
+                  color:         TClubColors.textoPrincipal, // ← era Colors.white
                 ),
               ),
               const SizedBox(height: 3),
@@ -139,9 +139,9 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      TabuColors.rosaPrincipal.withOpacity(0.0),
-                      TabuColors.rosaPrincipal,
-                      TabuColors.rosaPrincipal.withOpacity(0.0),
+                      TClubColors.redPrincipal.withOpacity(0.0),
+                      TClubColors.redPrincipal,
+                      TClubColors.redPrincipal.withOpacity(0.0),
                     ],
                   ),
                 ),
@@ -151,7 +151,7 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
           const Spacer(),
           _HeaderBtn(
             icon:  Icons.check_rounded,
-            color: TabuColors.rosaPrincipal,
+            color: TClubColors.redPrincipal,
             onTap: _save,
           ),
         ],
@@ -195,10 +195,10 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
         Text(
           'Vazio = sem filtro (mostra todos)',
           style: TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      11,
             letterSpacing: 0.3,
-            color:         TabuColors.textoMuted,
+            color:         TClubColors.textoMuted,
           ),
         ),
       ],
@@ -232,7 +232,7 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
     } else {
       locationStatusText  = 'Sem localização definida. O filtro de distância não funcionará até que você defina cidade/estado no perfil ou permita o GPS.';
       locationStatusIcon  = Icons.location_off_rounded;
-      locationStatusColor = TabuColors.error;
+      locationStatusColor = TClubColors.error;
     }
 
     return _Section(
@@ -256,7 +256,7 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
                 child: Text(
                   locationStatusText,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   12,
                     height:     1.5,
                     color:      locationStatusColor,
@@ -276,10 +276,10 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
           Text(
             'Defina sua localização para habilitar o filtro de distância.',
             style: TextStyle(
-              fontFamily:    TabuTypography.bodyFont,
+              fontFamily:    TClubTypography.bodyFont,
               fontSize:      11,
               letterSpacing: 0.2,
-              color:         TabuColors.error,
+              color:         TClubColors.error,
             ),
           ),
         ] else ...[
@@ -304,18 +304,18 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
                   TextSpan(
                     text: '$km',
                     style: TextStyle(
-                      fontFamily: TabuTypography.displayFont,
+                      fontFamily: TClubTypography.displayFont,
                       fontSize:   32,
                       fontWeight: FontWeight.w800,
-                      color:      TabuColors.textoPrincipal, // ← era Colors.white
+                      color:      TClubColors.textoPrincipal, // ← era Colors.white
                     ),
                   ),
                   TextSpan(
                     text: ' km',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize:   14,
-                      color:      TabuColors.textoMuted,
+                      color:      TClubColors.textoMuted,
                     ),
                   ),
                 ],
@@ -324,10 +324,10 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
             Text(
               'máx 320 km',
               style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      10,
                 letterSpacing: 1.5,
-                color:         TabuColors.textoMuted,
+                color:         TClubColors.textoMuted,
               ),
             ),
           ],
@@ -388,10 +388,10 @@ class _MatchFilterPageState extends State<MatchFilterPage> {
         Text(
           'Mude sua localização para se conectar com\npessoas em outros locais.',
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   13,
             height:     1.65,
-            color:      TabuColors.textoMuted,
+            color:      TClubColors.textoMuted,
           ),
         ),
         const SizedBox(height: 20),
@@ -417,11 +417,11 @@ class _ChipGroupLabel extends StatelessWidget {
   Widget build(BuildContext context) => Text(
     text,
     style: TextStyle(
-      fontFamily:    TabuTypography.bodyFont,
+      fontFamily:    TClubTypography.bodyFont,
       fontSize:      11,
       fontWeight:    FontWeight.w600,
       letterSpacing: 1.2,
-      color:         TabuColors.textoMuted,
+      color:         TClubColors.textoMuted,
     ),
   );
 }
@@ -457,13 +457,13 @@ class _ChipGroup<T> extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
             decoration: BoxDecoration(
               color: active
-                  ? TabuColors.rosaPrincipal.withOpacity(0.10)
-                  : TabuColors.bgCard,
+                  ? TClubColors.redPrincipal.withOpacity(0.10)
+                  : TClubColors.bgCard,
               borderRadius: BorderRadius.circular(50),
               border: Border.all(
                 color: active
-                    ? TabuColors.rosaPrincipal
-                    : TabuColors.border,
+                    ? TClubColors.redPrincipal
+                    : TClubColors.border,
                 width: active ? 1.4 : 0.8,
               ),
             ),
@@ -472,18 +472,18 @@ class _ChipGroup<T> extends StatelessWidget {
               children: [
                 if (active) ...[
                   Icon(Icons.check_rounded,
-                      size: 13, color: TabuColors.rosaPrincipal),
+                      size: 13, color: TClubColors.redPrincipal),
                   const SizedBox(width: 5),
                 ],
                 Text(
                   label(opt),
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   13,
                     fontWeight: active ? FontWeight.w700 : FontWeight.w400,
                     color: active
-                        ? TabuColors.rosaPrincipal
-                        : TabuColors.textoSecundario, // ← era Colors.white.withOpacity(0.65)
+                        ? TClubColors.redPrincipal
+                        : TClubColors.textoSecundario, // ← era Colors.white.withOpacity(0.65)
                   ),
                 ),
               ],
@@ -519,10 +519,10 @@ class _AgePickerRow extends StatelessWidget {
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        color:        TabuColors.bgCard,
+        color:        TClubColors.bgCard,
         borderRadius: BorderRadius.circular(18),
         border:       Border.all(
-          color: TabuColors.rosaPrincipal.withOpacity(0.35), width: 0.7),
+          color: TClubColors.redPrincipal.withOpacity(0.35), width: 0.7),
       ),
       child: Row(
         children: [
@@ -534,11 +534,11 @@ class _AgePickerRow extends StatelessWidget {
                   child: Text(
                     'DE',
                     style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      9,
                       fontWeight:    FontWeight.w800,
                       letterSpacing: 2.5,
-                      color:         TabuColors.rosaPrincipal.withOpacity(0.7),
+                      color:         TClubColors.redPrincipal.withOpacity(0.7),
                     ),
                   ),
                 ),
@@ -560,7 +560,7 @@ class _AgePickerRow extends StatelessWidget {
               children: [
                 Container(
                     width: 1, height: 40,
-                    color: TabuColors.rosaPrincipal.withOpacity(0.22)),
+                    color: TClubColors.redPrincipal.withOpacity(0.22)),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: Text(
@@ -568,13 +568,13 @@ class _AgePickerRow extends StatelessWidget {
                     style: TextStyle(
                       fontSize:   20,
                       fontWeight: FontWeight.w200,
-                      color:      TabuColors.rosaPrincipal.withOpacity(0.55),
+                      color:      TClubColors.redPrincipal.withOpacity(0.55),
                     ),
                   ),
                 ),
                 Container(
                     width: 1, height: 40,
-                    color: TabuColors.rosaPrincipal.withOpacity(0.22)),
+                    color: TClubColors.redPrincipal.withOpacity(0.22)),
               ],
             ),
           ),
@@ -586,11 +586,11 @@ class _AgePickerRow extends StatelessWidget {
                   child: Text(
                     'ATÉ',
                     style: TextStyle(
-                      fontFamily:    TabuTypography.bodyFont,
+                      fontFamily:    TClubTypography.bodyFont,
                       fontSize:      9,
                       fontWeight:    FontWeight.w800,
                       letterSpacing: 2.5,
-                      color:         TabuColors.rosaPrincipal.withOpacity(0.7),
+                      color:         TClubColors.redPrincipal.withOpacity(0.7),
                     ),
                   ),
                 ),
@@ -681,12 +681,12 @@ class _AgeWheelState extends State<_AgeWheel> {
             child: Text(
               '$age',
               style: TextStyle(
-                fontFamily: TabuTypography.displayFont,
+                fontFamily: TClubTypography.displayFont,
                 fontSize:   isCenter ? 26 : 18,
                 fontWeight: isCenter ? FontWeight.w800 : FontWeight.w300,
                 color: isCenter
-                    ? TabuColors.textoPrincipal          // ← era Colors.white
-                    : TabuColors.textoMuted,             // ← era Colors.white.withOpacity(0.28)
+                    ? TClubColors.textoPrincipal          // ← era Colors.white
+                    : TClubColors.textoMuted,             // ← era Colors.white.withOpacity(0.28)
               ),
             ),
           );
@@ -728,8 +728,8 @@ class _SectionLabel extends StatelessWidget {
             begin: Alignment.topCenter,
             end:   Alignment.bottomCenter,
             colors: [
-              TabuColors.rosaPrincipal,
-              TabuColors.rosaPrincipal.withOpacity(0.3),
+              TClubColors.redPrincipal,
+              TClubColors.redPrincipal.withOpacity(0.3),
             ],
           ),
           borderRadius: BorderRadius.circular(2),
@@ -742,7 +742,7 @@ class _SectionLabel extends StatelessWidget {
           fontSize:      10,
           fontWeight:    FontWeight.w800,
           letterSpacing: 3.0,
-          color:         TabuColors.rosaPrincipal,
+          color:         TClubColors.redPrincipal,
         ),
       ),
     ],
@@ -766,9 +766,9 @@ class _ToggleRow extends StatelessWidget {
         child: Text(
           label,
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize:   13,
-            color:      TabuColors.textoSecundario, // ← era Colors.white.withOpacity(0.50)
+            color:      TClubColors.textoSecundario, // ← era Colors.white.withOpacity(0.50)
           ),
         ),
       ),
@@ -776,10 +776,10 @@ class _ToggleRow extends StatelessWidget {
       Switch(
         value:              value,
         onChanged:          onChanged,
-        activeColor:        TabuColors.bg,
-        activeTrackColor:   TabuColors.rosaPrincipal,
-        inactiveThumbColor: TabuColors.textoMuted,
-        inactiveTrackColor: TabuColors.border,
+        activeColor:        TClubColors.bg,
+        activeTrackColor:   TClubColors.redPrincipal,
+        inactiveThumbColor: TClubColors.textoMuted,
+        inactiveTrackColor: TClubColors.border,
       ),
     ],
   );
@@ -802,23 +802,23 @@ class _LocationTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color:        TabuColors.bgCard,
+          color:        TClubColors.bgCard,
           borderRadius: BorderRadius.circular(14),
-          border:       Border.all(color: TabuColors.border, width: 0.8),
+          border:       Border.all(color: TClubColors.border, width: 0.8),
         ),
         child: Row(
           children: [
             Container(
               width: 36, height: 36,
               decoration: BoxDecoration(
-                color:        TabuColors.rosaPrincipal.withOpacity(0.10),
+                color:        TClubColors.redPrincipal.withOpacity(0.10),
                 borderRadius: BorderRadius.circular(10),
                 border:       Border.all(
-                  color: TabuColors.rosaPrincipal.withOpacity(0.25), width: 0.8),
+                  color: TClubColors.redPrincipal.withOpacity(0.25), width: 0.8),
               ),
               child: Icon(
                 isGps ? Icons.my_location_rounded : Icons.location_on_outlined,
-                color: TabuColors.rosaPrincipal,
+                color: TClubColors.redPrincipal,
                 size:  17,
               ),
             ),
@@ -827,15 +827,15 @@ class _LocationTile extends StatelessWidget {
               child: Text(
                 label,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   14,
                   fontWeight: FontWeight.w500,
-                  color:      TabuColors.textoPrincipal, // ← era Colors.white
+                  color:      TClubColors.textoPrincipal, // ← era Colors.white
                 ),
               ),
             ),
             Icon(Icons.chevron_right_rounded,
-                color: TabuColors.textoMuted, size: 20),
+                color: TClubColors.textoMuted, size: 20),
           ],
         ),
       ),
@@ -858,10 +858,10 @@ class _LuxSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) => SliderTheme(
     data: SliderTheme.of(context).copyWith(
-      activeTrackColor:   TabuColors.rosaPrincipal,
-      inactiveTrackColor: TabuColors.rosaPale,
-      thumbColor:         TabuColors.rosaPrincipal,
-      overlayColor:       TabuColors.rosaPrincipal.withOpacity(0.12),
+      activeTrackColor:   TClubColors.redPrincipal,
+      inactiveTrackColor: TClubColors.redPale,
+      thumbColor:         TClubColors.redPrincipal,
+      overlayColor:       TClubColors.redPrincipal.withOpacity(0.12),
       trackHeight:        3.0,
       thumbShape:         const _LuxThumb(),
       overlayShape:       const RoundSliderOverlayShape(overlayRadius: 22),
@@ -904,17 +904,17 @@ class _LuxThumb extends SliderComponentShape {
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4),
     );
     // fundo branco
-    c.drawCircle(center, 10, Paint()..color = TabuColors.bg);
+    c.drawCircle(center, 10, Paint()..color = TClubColors.bg);
     // borda rosa
     c.drawCircle(
       center, 10,
       Paint()
-        ..color     = TabuColors.rosaPrincipal
+        ..color     = TClubColors.redPrincipal
         ..style     = PaintingStyle.stroke
         ..strokeWidth = 2.0,
     );
     // ponto central
-    c.drawCircle(center, 4, Paint()..color = TabuColors.rosaPrincipal);
+    c.drawCircle(center, 4, Paint()..color = TClubColors.redPrincipal);
   }
 }
 
@@ -926,10 +926,10 @@ class _MinLabel extends StatelessWidget {
   Widget build(BuildContext context) => Text(
     text,
     style: TextStyle(
-      fontFamily:    TabuTypography.bodyFont,
+      fontFamily:    TClubTypography.bodyFont,
       fontSize:      10,
       letterSpacing: 0.5,
-      color:         TabuColors.textoMuted,
+      color:         TClubColors.textoMuted,
     ),
   );
 }
@@ -946,16 +946,17 @@ class _HeaderBtn extends StatelessWidget {
     child: Container(
       width: 38, height: 38,
       decoration: BoxDecoration(
-        color:        TabuColors.rosaPrincipal.withOpacity(0.08),
+        color:        TClubColors.redPrincipal.withOpacity(0.08),
         borderRadius: BorderRadius.circular(11),
         border:       Border.all(
-          color: TabuColors.rosaPrincipal.withOpacity(0.35), width: 0.8),
+          color: TClubColors.redPrincipal.withOpacity(0.35), width: 0.8),
       ),
       child: Icon(
         icon,
-        color: color ?? TabuColors.textoSecundario, // ← era Colors.white.withOpacity(0.60)
+        color: color ?? TClubColors.textoSecundario, // ← era Colors.white.withOpacity(0.60)
         size: 18,
       ),
     ),
   );
 }
+

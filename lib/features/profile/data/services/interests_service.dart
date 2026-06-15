@@ -1,7 +1,7 @@
 // lib/features/profile/data/services/interests_service.dart
 
-import 'package:tabuapp/features/profile/data/models/interests_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/interests_repository.dart';
+import 'package:tclub/features/profile/data/models/interests_model.dart';
+import 'package:tclub/features/profile/data/repositories/interests_repository.dart';
 
 /// Número máximo de interesses permitidos.
 const int kMaxInterests = 10;
@@ -57,3 +57,4 @@ class InterestsServiceException implements Exception {
   @override
   String toString() => 'InterestsServiceException: $message';
 }
+

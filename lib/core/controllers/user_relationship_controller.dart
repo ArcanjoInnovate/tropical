@@ -1,6 +1,6 @@
 // lib/core/controllers/user_relationship_controller.dart
 
-import 'package:tabuapp/core/services/user_relationship_service.dart'; 
+import 'package:tclub/core/services/user_relationship_service.dart'; 
 
 class UserRelationShipController {
   final _service = UserRelationshipService();
@@ -32,3 +32,4 @@ class UserRelationShipController {
     return rel.iBlockedThem || rel.theyBlockedMe;
   }
 }
+

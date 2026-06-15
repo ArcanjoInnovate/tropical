@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:tabuapp/features/profile/data/models/location_model.dart';
+import 'package:tclub/features/profile/data/models/location_model.dart';
 
 const _kApiKey = 'AIzaSyDCtecstIb_eu3cSEdlwW2PdEgCWCzfcVo';
 
@@ -282,3 +282,4 @@ class LocationRepositoryException implements Exception {
   @override
   String toString() => 'LocationRepositoryException: $message';
 }
+

@@ -25,11 +25,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/controllers/tabu_shell_controller.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/controllers/tclub_shell_controller.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
 import 'package:video_player/video_player.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -115,7 +115,7 @@ class InlineVideoCard extends StatefulWidget {
 
   /// Quando true, ignora completamente as checagens de rota, aba e stack.
   /// Use em telas de detalhe (admin, preview) onde o vídeo deve sempre
-  /// tocar se o widget estiver visível — sem depender do TabuShell ou do
+  /// tocar se o widget estiver visível — sem depender do TclubShell ou do
   /// videoStackObserver.
   final bool ignoreRouteCheck;
 
@@ -170,7 +170,7 @@ class _InlineVideoCardState extends State<InlineVideoCard>
   bool get _stackIsClean => videoStackObserver.depth.value <= _baseDepth;
 
   bool get _feedTabIsActive =>
-      TabuShellController.instance.currentTabIndex == _feedTabIndex;
+      TclubShellController.instance.currentTabIndex == _feedTabIndex;
 
   bool get _routeIsTop {
     if (!mounted) return false;
@@ -199,7 +199,7 @@ class _InlineVideoCardState extends State<InlineVideoCard>
     // FIX 11: não ouve stack/tab se ignoreRouteCheck — evita pausas indevidas
     if (!widget.ignoreRouteCheck) {
       videoStackObserver.depth.addListener(_onStackChanged);
-      TabuShellController.instance.addListener(_onTabChanged);
+      TclubShellController.instance.addListener(_onTabChanged);
     }
 
     if (widget.forceVisible) {
@@ -238,7 +238,7 @@ class _InlineVideoCardState extends State<InlineVideoCard>
     WidgetsBinding.instance.removeObserver(this);
     if (!widget.ignoreRouteCheck) {
       videoStackObserver.depth.removeListener(_onStackChanged);
-      TabuShellController.instance.removeListener(_onTabChanged);
+      TclubShellController.instance.removeListener(_onTabChanged);
     }
     _secondaryAnim?.removeListener(_onSecondaryAnim);
     if (!widget.forceVisible) {
@@ -540,8 +540,8 @@ void didPopNext() {
       decoration: BoxDecoration(
         color: Colors.black,
         border: Border(
-          top: BorderSide(color: TabuColors.borderMid, width: 0.5),
-          bottom: BorderSide(color: TabuColors.borderMid, width: 0.5),
+          top: BorderSide(color: TClubColors.borderMid, width: 0.5),
+          bottom: BorderSide(color: TClubColors.borderMid, width: 0.5),
         ),
       ),
       child: ValueListenableBuilder<bool>(
@@ -605,10 +605,10 @@ void didPopNext() {
                           shape: BoxShape.circle,
                           color: Colors.black.withOpacity(0.55),
                           border: Border.all(
-                              color: TabuColors.rosaPrincipal, width: 1.5),
+                              color: TClubColors.redPrincipal, width: 1.5),
                           boxShadow: [
                             BoxShadow(
-                              color: TabuColors.glow.withOpacity(0.4),
+                              color: TClubColors.glow.withOpacity(0.4),
                               blurRadius: 20,
                             ),
                           ],
@@ -643,7 +643,7 @@ void didPopNext() {
                               : Icons.volume_up_rounded,
                           color: isMuted
                               ? Colors.white54
-                              : TabuColors.rosaPrincipal,
+                              : TClubColors.redPrincipal,
                           size: 16,
                         ),
                       ),
@@ -662,17 +662,17 @@ void didPopNext() {
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.6),
                           border: Border.all(
-                              color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                              color: TClubColors.redPrincipal.withOpacity(0.4),
                               width: 0.7),
                         ),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
                           const Icon(Icons.play_circle_outline_rounded,
-                              color: TabuColors.rosaPrincipal, size: 9),
+                              color: TClubColors.redPrincipal, size: 9),
                           const SizedBox(width: 3),
                           Text(
                             _fmtDuration(widget.duration!),
                             style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 9,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1,
@@ -706,7 +706,7 @@ void didPopNext() {
                           const Text(
                             'TELA CHEIA',
                             style: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 7,
                               letterSpacing: 1.5,
                               color: Colors.white54,
@@ -725,7 +725,7 @@ void didPopNext() {
                         width: 32,
                         height: 32,
                         child: CircularProgressIndicator(
-                            color: TabuColors.rosaPrincipal, strokeWidth: 2),
+                            color: TClubColors.redPrincipal, strokeWidth: 2),
                       ),
                     ),
                   ),
@@ -740,7 +740,7 @@ void didPopNext() {
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.7),
                           border: Border.all(
-                              color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                              color: TClubColors.redPrincipal.withOpacity(0.4),
                               width: 0.8),
                         ),
                         child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -748,14 +748,14 @@ void didPopNext() {
                             isMuted
                                 ? Icons.volume_off_rounded
                                 : Icons.volume_up_rounded,
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             size: 14,
                           ),
                           const SizedBox(width: 7),
                           Text(
                             isMuted ? 'SOM DESATIVADO' : 'SOM ATIVADO',
                             style: const TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 2,
@@ -781,11 +781,11 @@ void didPopNext() {
                           shape: BoxShape.circle,
                           color: Colors.black.withOpacity(0.55),
                           border: Border.all(
-                              color: TabuColors.rosaPrincipal.withOpacity(0.6),
+                              color: TClubColors.redPrincipal.withOpacity(0.6),
                               width: 1.5),
                           boxShadow: [
                             BoxShadow(
-                              color: TabuColors.glow.withOpacity(0.3),
+                              color: TClubColors.glow.withOpacity(0.3),
                               blurRadius: 16,
                             ),
                           ],
@@ -890,7 +890,7 @@ class _InlineProgressBarState extends State<_InlineProgressBar> {
         child: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+              colors: [TClubColors.redDeep, TClubColors.redPrincipal],
             ),
           ),
         ),
@@ -898,3 +898,4 @@ class _InlineProgressBarState extends State<_InlineProgressBar> {
     );
   }
 }
+

@@ -4,15 +4,15 @@ import 'dart:async';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
-import 'package:tabuapp/features/party/presentation/pages/edit_party_screen.dart';
-import 'package:tabuapp/features/admin/data/services/location_service.dart';
-import 'package:tabuapp/features/admin/data/services/party_service.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
+import 'package:tclub/features/party/presentation/pages/edit_party_screen.dart';
+import 'package:tclub/features/admin/data/services/location_service.dart';
+import 'package:tclub/features/admin/data/services/party_service.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class PartyDetailSheet extends StatefulWidget {
@@ -276,23 +276,23 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: TabuColors.bgAlt,
+        backgroundColor: TClubColors.bgAlt,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         title: const Text(
           'EXCLUIR FESTA',
           style: TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 16,
             letterSpacing: 2,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           ),
         ),
         content: Text(
           'Tem certeza que deseja excluir "${widget.festa.nome}"? Esta ação não pode ser desfeita.',
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 13,
-            color: TabuColors.dim,
+            color: TClubColors.dim,
             height: 1.5,
           ),
         ),
@@ -302,10 +302,10 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
             child: const Text(
               'CANCELAR',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 letterSpacing: 2,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
           ),
@@ -314,7 +314,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
             child: const Text(
               'EXCLUIR',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 2,
@@ -423,9 +423,9 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
         padding: EdgeInsets.only(bottom: keyboardHeight),
         child: Container(
           decoration: const BoxDecoration(
-            color: TabuColors.bgAlt,
+            color: TClubColors.bgAlt,
             border: Border(
-              top: BorderSide(color: TabuColors.rosaPrincipal, width: 1.5),
+              top: BorderSide(color: TClubColors.redPrincipal, width: 1.5),
             ),
           ),
           child: Column(
@@ -436,7 +436,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                 height: 3,
                 margin: const EdgeInsets.only(top: 12),
                 decoration: BoxDecoration(
-                  color: TabuColors.border,
+                  color: TClubColors.border,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -456,9 +456,9 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                           fit: BoxFit.cover,
                           fadeInDuration: const Duration(milliseconds: 200),
                           placeholder: (_, __) => Container(
-                              height: 200, color: TabuColors.bgCard),
+                              height: 200, color: TClubColors.bgCard),
                           errorWidget: (_, __, ___) => Container(
-                              height: 200, color: TabuColors.bgCard),
+                              height: 200, color: TClubColors.bgCard),
                         ),
                       ),
 
@@ -472,11 +472,11 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                           Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 4),
-                            color: TabuColors.rosaPrincipal,
+                            color: TClubColors.redPrincipal,
                             child: Text(
                               _fd(festa.dataInicio),
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 2,
@@ -490,10 +490,10 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                           Text(
                             festa.nome.toUpperCase(),
                             style: const TextStyle(
-                              fontFamily: TabuTypography.displayFont,
+                              fontFamily: TClubTypography.displayFont,
                               fontSize: 26,
                               letterSpacing: 3,
-                              color: TabuColors.textoPrincipal,
+                              color: TClubColors.textoPrincipal,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -506,8 +506,8 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                     ? Icons.location_on_outlined
                                     : Icons.location_off_outlined,
                                 color: festa.hasLocal
-                                    ? TabuColors.rosaPrincipal
-                                    : TabuColors.subtle,
+                                    ? TClubColors.redPrincipal
+                                    : TClubColors.subtle,
                                 size: 13,
                               ),
                               const SizedBox(width: 5),
@@ -517,14 +517,14 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                       ? festa.local!
                                       : 'Local não confirmado',
                                   style: TextStyle(
-                                    fontFamily: TabuTypography.bodyFont,
+                                    fontFamily: TClubTypography.bodyFont,
                                     fontSize: 13,
                                     fontStyle: festa.hasLocal
                                         ? FontStyle.normal
                                         : FontStyle.italic,
                                     color: festa.hasLocal
-                                        ? TabuColors.rosaClaro
-                                        : TabuColors.subtle,
+                                        ? TClubColors.redClaro
+                                        : TClubColors.subtle,
                                   ),
                                 ),
                               ),
@@ -534,10 +534,10 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 5),
                                   decoration: BoxDecoration(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.12),
                                     border: Border.all(
-                                      color: TabuColors.rosaPrincipal
+                                      color: TClubColors.redPrincipal
                                           .withOpacity(0.5),
                                       width: 0.8,
                                     ),
@@ -546,17 +546,17 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       const Icon(Icons.near_me_rounded,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                           size: 11),
                                       const SizedBox(width: 5),
                                       Text(
                                         dist,
                                         style: const TextStyle(
-                                          fontFamily: TabuTypography.bodyFont,
+                                          fontFamily: TClubTypography.bodyFont,
                                           fontSize: 11,
                                           fontWeight: FontWeight.w700,
                                           letterSpacing: 1,
-                                          color: TabuColors.rosaPrincipal,
+                                          color: TClubColors.redPrincipal,
                                         ),
                                       ),
                                     ],
@@ -571,14 +571,14 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                           Row(
                             children: [
                               const Icon(Icons.schedule_outlined,
-                                  color: TabuColors.subtle, size: 13),
+                                  color: TClubColors.subtle, size: 13),
                               const SizedBox(width: 5),
                               Text(
                                 '${_fh(festa.dataInicio)} – ${_fh(festa.dataFim)}',
                                 style: const TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 12,
-                                  color: TabuColors.dim,
+                                  color: TClubColors.dim,
                                 ),
                               ),
                             ],
@@ -596,7 +596,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                   ativo: _presenca ==
                                       FestaPresenca.interessado,
                                   loading: _loadingPres,
-                                  color: TabuColors.rosaClaro,
+                                  color: TClubColors.redClaro,
                                   onTap: () => _togglePresenca(
                                       FestaPresenca.interessado),
                                 ),
@@ -618,7 +618,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Container(height: 0.5, color: TabuColors.border),
+                          Container(height: 0.5, color: TClubColors.border),
                           const SizedBox(height: 16),
 
                           // ── Descrição ─────────────────────────────────────
@@ -626,25 +626,25 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                             const Text(
                               'SOBRE A NOITE',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 3,
-                                color: TabuColors.subtle,
+                                color: TClubColors.subtle,
                               ),
                             ),
                             const SizedBox(height: 10),
                             Text(
                               descricao,
                               style: const TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 14,
-                                color: TabuColors.dim,
+                                color: TClubColors.dim,
                                 height: 1.6,
                               ),
                             ),
                             const SizedBox(height: 16),
-                            Container(height: 0.5, color: TabuColors.border),
+                            Container(height: 0.5, color: TClubColors.border),
                             const SizedBox(height: 16),
                           ],
 
@@ -658,10 +658,10 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 7, vertical: 3),
                                   decoration: BoxDecoration(
-                                    color: TabuColors.rosaPrincipal
+                                    color: TClubColors.redPrincipal
                                         .withOpacity(0.12),
                                     border: Border.all(
-                                      color: TabuColors.rosaPrincipal
+                                      color: TClubColors.redPrincipal
                                           .withOpacity(0.4),
                                       width: 0.7,
                                     ),
@@ -669,11 +669,11 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                   child: const Text(
                                     'ADMIN',
                                     style: TextStyle(
-                                      fontFamily: TabuTypography.bodyFont,
+                                      fontFamily: TClubTypography.bodyFont,
                                       fontSize: 7,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 2,
-                                      color: TabuColors.rosaPrincipal,
+                                      color: TClubColors.redPrincipal,
                                     ),
                                   ),
                                 ),
@@ -691,9 +691,9 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                     child: Container(
                                       height: 44,
                                       decoration: BoxDecoration(
-                                        color: TabuColors.bgCard,
+                                        color: TClubColors.bgCard,
                                         border: Border.all(
-                                          color: TabuColors.rosaPrincipal
+                                          color: TClubColors.redPrincipal
                                               .withOpacity(0.5),
                                           width: 0.8,
                                         ),
@@ -704,19 +704,19 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                         children: const [
                                           Icon(Icons.edit_rounded,
                                               color:
-                                                  TabuColors.rosaPrincipal,
+                                                  TClubColors.redPrincipal,
                                               size: 14),
                                           SizedBox(width: 7),
                                           Text(
                                             'EDITAR',
                                             style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
                                               color:
-                                                  TabuColors.rosaPrincipal,
+                                                  TClubColors.redPrincipal,
                                             ),
                                           ),
                                         ],
@@ -751,7 +751,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                             'EXCLUIR',
                                             style: TextStyle(
                                               fontFamily:
-                                                  TabuTypography.bodyFont,
+                                                  TClubTypography.bodyFont,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w700,
                                               letterSpacing: 2.5,
@@ -768,7 +768,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                           ],
 
                           const SizedBox(height: 20),
-                          Container(height: 0.5, color: TabuColors.border),
+                          Container(height: 0.5, color: TClubColors.border),
                           const SizedBox(height: 16),
 
                           // ── Comentários ───────────────────────────────────
@@ -776,11 +776,11 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                             const Text(
                               'COMENTÁRIOS',
                               style: TextStyle(
-                                fontFamily: TabuTypography.bodyFont,
+                                fontFamily: TClubTypography.bodyFont,
                                 fontSize: 9,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 3,
-                                color: TabuColors.rosaPrincipal,
+                                color: TClubColors.redPrincipal,
                               ),
                             ),
                             const SizedBox(width: 10),
@@ -789,7 +789,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                               width: 5,
                               height: 5,
                               decoration: const BoxDecoration(
-                                color: TabuColors.rosaPrincipal,
+                                color: TClubColors.redPrincipal,
                                 shape: BoxShape.circle,
                               ),
                             ),
@@ -802,7 +802,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                                 width: 16,
                                 height: 16,
                                 child: CircularProgressIndicator(
-                                  color: TabuColors.rosaPrincipal,
+                                  color: TClubColors.redPrincipal,
                                   strokeWidth: 1.5,
                                 ),
                               ),
@@ -814,9 +814,9 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                               child: Text(
                                 'Seja o primeiro a comentar',
                                 style: TextStyle(
-                                  fontFamily: TabuTypography.bodyFont,
+                                  fontFamily: TClubTypography.bodyFont,
                                   fontSize: 11,
-                                  color: TabuColors.subtle,
+                                  color: TClubColors.subtle,
                                 ),
                               ),
                             )
@@ -835,9 +835,9 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
               // ── Barra de envio (fixada no fundo) ─────────────────────────
               Container(
                 decoration: const BoxDecoration(
-                  color: TabuColors.bgAlt,
+                  color: TClubColors.bgAlt,
                   border: Border(
-                    top: BorderSide(color: TabuColors.border, width: 0.5),
+                    top: BorderSide(color: TClubColors.border, width: 0.5),
                   ),
                 ),
                 padding: EdgeInsets.fromLTRB(
@@ -861,27 +861,27 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: TabuColors.bgCard,
+                          color: TClubColors.bgCard,
                           border: Border.all(
-                              color: TabuColors.border, width: 0.8),
+                              color: TClubColors.border, width: 0.8),
                         ),
                         child: TextField(
                           controller: _comCtrl,
                           focusNode: _comFocus,
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 13,
-                            color: TabuColors.textoPrincipal,
+                            color: TClubColors.textoPrincipal,
                           ),
-                          cursorColor: TabuColors.rosaPrincipal,
+                          cursorColor: TClubColors.redPrincipal,
                           decoration: const InputDecoration(
                             hintText: 'Comentar...',
                             border: InputBorder.none,
                             isDense: true,
                             hintStyle: TextStyle(
-                              fontFamily: TabuTypography.bodyFont,
+                              fontFamily: TClubTypography.bodyFont,
                               fontSize: 13,
-                              color: TabuColors.subtle,
+                              color: TClubColors.subtle,
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 10),
@@ -896,7 +896,7 @@ class _PartyDetailSheetState extends State<PartyDetailSheet> {
                       child: Container(
                         width: 36,
                         height: 36,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                         child: _enviando
                             ? const Center(
                                 child: SizedBox(
@@ -953,9 +953,9 @@ class _PresenceButton extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         height: 52,
         decoration: BoxDecoration(
-          color: ativo ? color.withOpacity(0.15) : TabuColors.bgCard,
+          color: ativo ? color.withOpacity(0.15) : TClubColors.bgCard,
           border: Border.all(
-            color: ativo ? color.withOpacity(0.7) : TabuColors.border,
+            color: ativo ? color.withOpacity(0.7) : TClubColors.border,
             width: ativo ? 1.2 : 0.8,
           ),
         ),
@@ -972,7 +972,7 @@ class _PresenceButton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(icon,
-                      color: ativo ? color : TabuColors.subtle,
+                      color: ativo ? color : TClubColors.subtle,
                       size: 16),
                   const SizedBox(width: 6),
                   Column(
@@ -982,22 +982,22 @@ class _PresenceButton extends StatelessWidget {
                       Text(
                         label,
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
-                          color: ativo ? color : TabuColors.subtle,
+                          color: ativo ? color : TClubColors.subtle,
                         ),
                       ),
                       Text(
                         '$count',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: ativo
                               ? color
-                              : TabuColors.textoPrincipal,
+                              : TClubColors.textoPrincipal,
                         ),
                       ),
                     ],
@@ -1048,11 +1048,11 @@ class _CommentTile extends StatelessWidget {
                     Text(
                       name.toUpperCase(),
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.5,
-                        color: TabuColors.textoPrincipal,
+                        color: TClubColors.textoPrincipal,
                       ),
                     ),
                     if (ts != null) ...[
@@ -1060,9 +1060,9 @@ class _CommentTile extends StatelessWidget {
                       Text(
                         _formatTime(ts),
                         style: const TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 9,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                         ),
                       ),
                     ],
@@ -1072,9 +1072,9 @@ class _CommentTile extends StatelessWidget {
                 Text(
                   texto,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
-                    color: TabuColors.dim,
+                    color: TClubColors.dim,
                     height: 1.4,
                   ),
                 ),
@@ -1086,3 +1086,4 @@ class _CommentTile extends StatelessWidget {
     );
   }
 }
+

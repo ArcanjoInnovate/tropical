@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/chat/data/models/chat_model.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/chat/data/models/chat_model.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
 
 class ChatTile extends StatefulWidget {
   final TabuChat chat;
@@ -137,8 +137,8 @@ class _ActiveChatTile extends StatelessWidget {
             color: Colors.transparent,
             child: InkWell(
               onTap: onTap,
-              splashColor: TabuColors.rosaPrincipal.withOpacity(0.05),
-              highlightColor: TabuColors.bgCard.withOpacity(0.5),
+              splashColor: TClubColors.redPrincipal.withOpacity(0.05),
+              highlightColor: TClubColors.bgCard.withOpacity(0.5),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -224,7 +224,7 @@ class _BlockedChatTile extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: const Color(0xFFDC2626),
                         shape: BoxShape.circle,
-                        border: Border.all(color: TabuColors.bg, width: 2),
+                        border: Border.all(color: TClubColors.bg, width: 2),
                       ),
                       child: const Icon(
                         Icons.lock_rounded,
@@ -247,10 +247,10 @@ class _BlockedChatTile extends StatelessWidget {
                         Text(
                           formatTime(chat.metadata.lastTimestamp),
                           style: const TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 9,
                             letterSpacing: 1,
-                            color: TabuColors.subtle,
+                            color: TClubColors.subtle,
                           ),
                         ),
                         const SizedBox(width: 6),
@@ -260,10 +260,10 @@ class _BlockedChatTile extends StatelessWidget {
                       const Text(
                         'Conversa bloqueada',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 11,
                           letterSpacing: 0.2,
-                          color: TabuColors.subtle,
+                          color: TClubColors.subtle,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -301,10 +301,10 @@ class _AvatarWithPresence extends StatelessWidget {
           width: isOnline ? 13 : 10,
           height: isOnline ? 13 : 10,
           decoration: BoxDecoration(
-            color: isOnline ? const Color(0xFF22C55E) : TabuColors.bgCard,
+            color: isOnline ? const Color(0xFF22C55E) : TClubColors.bgCard,
             shape: BoxShape.circle,
             border: Border.all(
-              color: isOnline ? TabuColors.bg : TabuColors.border.withOpacity(0.5),
+              color: isOnline ? TClubColors.bg : TClubColors.border.withOpacity(0.5),
               width: isOnline ? 2 : 1.5,
             ),
             boxShadow: isOnline
@@ -351,7 +351,7 @@ class _TileTopRow extends StatelessWidget {
                 ? const Text(
                     'online agora',
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 9,
                       letterSpacing: 0.5,
                       color: Color(0xFF22C55E),
@@ -365,10 +365,10 @@ class _TileTopRow extends StatelessWidget {
       Text(
         formatTime(timestamp),
         style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 9,
           letterSpacing: 1,
-          color: unread > 0 ? TabuColors.rosaPrincipal : TabuColors.subtle,
+          color: unread > 0 ? TClubColors.redPrincipal : TClubColors.subtle,
         ),
       ),
     ]);
@@ -406,7 +406,7 @@ class _TileBottomRow extends StatelessWidget {
                 size: 13,
                 color: isRead
                     ? const Color(0xFF60A5FA)
-                    : TabuColors.subtle,
+                    : TClubColors.subtle,
               );
             },
           ),
@@ -417,14 +417,14 @@ class _TileBottomRow extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 12,
             letterSpacing: 0.2,
             color: isEmpty
-                ? TabuColors.border
+                ? TClubColors.border
                 : unread > 0
-                    ? TabuColors.dim
-                    : TabuColors.subtle,
+                    ? TClubColors.dim
+                    : TClubColors.subtle,
             fontWeight:
                 unread > 0 ? FontWeight.w600 : FontWeight.normal,
             fontStyle: isEmpty ? FontStyle.italic : FontStyle.normal,
@@ -448,20 +448,20 @@ class _UnreadBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: TabuColors.rosaPrincipal.withOpacity(0.15),
+        color: TClubColors.redPrincipal.withOpacity(0.15),
         border: Border.all(
-          color: TabuColors.rosaPrincipal.withOpacity(0.4),
+          color: TClubColors.redPrincipal.withOpacity(0.4),
           width: 0.8,
         ),
       ),
       child: Text(
         count > 99 ? '99+' : '$count',
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 10,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.5,
-          color: TabuColors.rosaPrincipal,
+          color: TClubColors.redPrincipal,
         ),
       ),
     );
@@ -483,7 +483,7 @@ class _BlockedBadge extends StatelessWidget {
       child: const Text(
         'BLOQUEADO',
         style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 7,
           fontWeight: FontWeight.w700,
           letterSpacing: 1.5,
@@ -506,7 +506,7 @@ class _TileDivider extends StatelessWidget {
         height: 0.5,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [TabuColors.border, Colors.transparent],
+            colors: [TClubColors.border, Colors.transparent],
           ),
         ),
       ),
@@ -528,11 +528,11 @@ class _OtherUserName extends StatelessWidget {
         return Text(
           name.toUpperCase(),
           style: TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 13,
             fontWeight: bold ? FontWeight.w700 : FontWeight.w500,
             letterSpacing: 1.5,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -579,12 +579,13 @@ class _LastSeenTextState extends State<_LastSeenText> {
       builder: (_, snap) => Text(
         _format(snap.data ?? 0),
         style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 9,
           letterSpacing: 0.5,
-          color: TabuColors.subtle.withOpacity(0.7),
+          color: TClubColors.subtle.withOpacity(0.7),
         ),
       ),
     );
   }
 }
+

@@ -4,8 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/controllers/tabu_shell_controller.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_screen.dart';
+import 'package:tclub/core/controllers/tclub_shell_controller.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_screen.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -67,7 +67,7 @@ class NotificationHandler {
 
   /// App encerrado — usuário tocou na notificação.
   ///
-  /// Estratégia: configura o destino no [TabuShellController] ANTES do delay.
+  /// Estratégia: configura o destino no [TclubShellController] ANTES do delay.
   /// O [TabuShell] lê esse estado no [addPostFrameCallback] do initState e
   /// navega corretamente já dentro do shell (com bottom nav bar visível).
   static Future<void> handleInitialMessage(
@@ -85,21 +85,21 @@ class NotificationHandler {
     // O TabuShell vai ler e aplicar no addPostFrameCallback.
     switch (type) {
       case 'chat_request':
-        TabuShellController.instance.openChatList(listTab: 1);
+        TclubShellController.instance.openChatList(listTab: 1);
         break;
       case 'chat_accepted':
       case 'chat_message':
-        TabuShellController.instance.openChatList(listTab: 0);
+        TclubShellController.instance.openChatList(listTab: 0);
         break;
       case 'party':
         // Nova festa: abre Home e agenda abertura do modal
         final partyId = initial.data['targetId'] as String?;
         if (partyId != null && partyId.isNotEmpty) {
-          TabuShellController.instance.openPartyDetail(partyId);
+          TclubShellController.instance.openPartyDetail(partyId);
         }
         break;
       default:
-        TabuShellController.instance.setTabIndex(0);
+        TclubShellController.instance.setTabIndex(0);
     }
 
     // Para chat_message, adicionalmente empurra o ChatRoom.
@@ -220,10 +220,10 @@ class NotificationHandler {
 
     switch (type) {
       case 'chat_request':
-        TabuShellController.instance.openChatList(listTab: 1);
+        TclubShellController.instance.openChatList(listTab: 1);
         break;
       case 'chat_accepted':
-        TabuShellController.instance.openChatList(listTab: 0);
+        TclubShellController.instance.openChatList(listTab: 0);
         break;
       case 'chat_message':
         _navigateChatMessage(context, data, userData);
@@ -232,11 +232,11 @@ class NotificationHandler {
         // Nova festa: navega para Home e abre modal
         final partyId = data['targetId'] as String?;
         if (partyId != null && partyId.isNotEmpty) {
-          TabuShellController.instance.openPartyDetail(partyId);
+          TclubShellController.instance.openPartyDetail(partyId);
         }
         break;
       default:
-        TabuShellController.instance.setTabIndex(0);
+        TclubShellController.instance.setTabIndex(0);
     }
   }
 
@@ -257,7 +257,7 @@ class NotificationHandler {
         _OtherUserChatRoom(myUid: myUid, otherUid: resolvedUid),
       ));
     } else {
-      TabuShellController.instance.openChatList(listTab: 0);
+      TclubShellController.instance.openChatList(listTab: 0);
     }
   }
 
@@ -313,3 +313,4 @@ class _OtherUserChatRoom extends StatelessWidget {
     );
   }
 }
+

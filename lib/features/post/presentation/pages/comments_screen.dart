@@ -2,13 +2,13 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/post/data/models/comment_model.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
-import 'package:tabuapp/features/profile/presentation/pages/profile/public_profile_screen.dart';
-import 'package:tabuapp/core/services/cached_avatar.dart';
-import 'package:tabuapp/features/post/data/services/post_service.dart';
-import 'package:tabuapp/core/services/user_data_notifier.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/post/data/models/comment_model.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
+import 'package:tclub/features/profile/presentation/pages/profile/public_profile_screen.dart';
+import 'package:tclub/core/services/cached_avatar.dart';
+import 'package:tclub/features/post/data/services/post_service.dart';
+import 'package:tclub/core/services/user_data_notifier.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  HELPER PÚBLICO
@@ -203,9 +203,9 @@ class _CommentsSheetState extends State<_CommentsSheet>
     return Container(
       height: MediaQuery.of(context).size.height * 0.88,
       decoration: const BoxDecoration(
-        color: TabuColors.bgAlt,
+        color: TClubColors.bgAlt,
         border: Border(
-            top: BorderSide(color: TabuColors.rosaPrincipal, width: 1.5)),
+            top: BorderSide(color: TClubColors.redPrincipal, width: 1.5)),
       ),
       child: Column(children: [
         Container(
@@ -213,7 +213,7 @@ class _CommentsSheetState extends State<_CommentsSheet>
           height: 3,
           margin: const EdgeInsets.only(top: 12),
           decoration: BoxDecoration(
-              color: TabuColors.border,
+              color: TClubColors.border,
               borderRadius: BorderRadius.circular(2)),
         ),
         _buildHeader(),
@@ -240,39 +240,39 @@ class _CommentsSheetState extends State<_CommentsSheet>
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 12,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.5,
-              color: TabuColors.textoPrincipal,
+              color: TClubColors.textoPrincipal,
             ),
           ),
           const SizedBox(height: 2),
           Row(children: [
             const Icon(Icons.chat_bubble_outline_rounded,
-                color: TabuColors.subtle, size: 10),
+                color: TClubColors.subtle, size: 10),
             const SizedBox(width: 5),
             Text(
               '${_loadingComments ? '—' : _comments.length} comentários',
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 10,
                 letterSpacing: 0.5,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               ),
             ),
             if (_isOwnPost) ...[
               const SizedBox(width: 10),
               const Icon(Icons.favorite_border_rounded,
-                  color: TabuColors.subtle, size: 10),
+                  color: TClubColors.subtle, size: 10),
               const SizedBox(width: 5),
               Text(
                 '${_loadingLikers ? '—' : _likers.length} curtidas',
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 10,
                   letterSpacing: 0.5,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
               ),
             ],
@@ -285,11 +285,11 @@ class _CommentsSheetState extends State<_CommentsSheet>
             width: 34,
             height: 34,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
             ),
             child:
-                const Icon(Icons.close, color: TabuColors.subtle, size: 15),
+                const Icon(Icons.close, color: TClubColors.subtle, size: 15),
           ),
         ),
       ]),
@@ -301,24 +301,24 @@ class _CommentsSheetState extends State<_CommentsSheet>
       padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
       child: Container(
         decoration: BoxDecoration(
-          color: TabuColors.bgCard,
-          border: Border.all(color: TabuColors.border, width: 0.8),
+          color: TClubColors.bgCard,
+          border: Border.all(color: TClubColors.border, width: 0.8),
         ),
         child: TabBar(
           controller: _tabController,
-          indicatorColor: TabuColors.rosaPrincipal,
+          indicatorColor: TClubColors.redPrincipal,
           indicatorWeight: 2,
-          labelColor: TabuColors.rosaPrincipal,
-          unselectedLabelColor: TabuColors.subtle,
+          labelColor: TClubColors.redPrincipal,
+          unselectedLabelColor: TClubColors.subtle,
           dividerColor: Colors.transparent,
           labelStyle: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10,
             fontWeight: FontWeight.w700,
             letterSpacing: 2.5,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 10,
             fontWeight: FontWeight.w600,
             letterSpacing: 2.5,
@@ -349,7 +349,7 @@ class _CommentsSheetState extends State<_CommentsSheet>
           width: 20,
           height: 20,
           child: CircularProgressIndicator(
-              color: TabuColors.rosaPrincipal, strokeWidth: 1.5),
+              color: TClubColors.redPrincipal, strokeWidth: 1.5),
         ),
       );
     }
@@ -361,27 +361,27 @@ class _CommentsSheetState extends State<_CommentsSheet>
             width: 52,
             height: 52,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
             ),
             child: const Icon(Icons.chat_bubble_outline_rounded,
-                color: TabuColors.border, size: 22),
+                color: TClubColors.border, size: 22),
           ),
           const SizedBox(height: 14),
           const Text('NENHUM COMENTÁRIO',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
           const SizedBox(height: 6),
           const Text('Seja o primeiro a comentar',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
         ]),
       );
@@ -392,7 +392,7 @@ class _CommentsSheetState extends State<_CommentsSheet>
       itemCount: _comments.length,
       separatorBuilder: (_, __) => Container(
         height: 0.5,
-        color: TabuColors.border.withOpacity(0.5),
+        color: TClubColors.border.withOpacity(0.5),
         margin: const EdgeInsets.symmetric(vertical: 4),
       ),
       itemBuilder: (_, i) => _CommentTile(
@@ -415,7 +415,7 @@ class _CommentsSheetState extends State<_CommentsSheet>
           width: 20,
           height: 20,
           child: CircularProgressIndicator(
-              color: TabuColors.rosaPrincipal, strokeWidth: 1.5),
+              color: TClubColors.redPrincipal, strokeWidth: 1.5),
         ),
       );
     }
@@ -427,27 +427,27 @@ class _CommentsSheetState extends State<_CommentsSheet>
             width: 52,
             height: 52,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
             ),
             child: const Icon(Icons.favorite_border_rounded,
-                color: TabuColors.border, size: 22),
+                color: TClubColors.border, size: 22),
           ),
           const SizedBox(height: 14),
           const Text('NENHUMA CURTIDA',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 3,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
           const SizedBox(height: 6),
           const Text('Ainda não há curtidas neste post',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize: 12,
-                color: TabuColors.subtle,
+                color: TClubColors.subtle,
               )),
         ]),
       );
@@ -460,7 +460,7 @@ class _CommentsSheetState extends State<_CommentsSheet>
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 24),
       itemCount: visible.length + (hasMore ? 1 : 0),
       separatorBuilder: (_, __) =>
-          Container(height: 0.5, color: TabuColors.border.withOpacity(0.4)),
+          Container(height: 0.5, color: TClubColors.border.withOpacity(0.4)),
       itemBuilder: (_, i) {
         if (i == visible.length) {
           return GestureDetector(
@@ -475,24 +475,24 @@ class _CommentsSheetState extends State<_CommentsSheet>
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               height: 44,
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
+                color: TClubColors.bgCard,
                 border: Border.all(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                    color: TClubColors.redPrincipal.withOpacity(0.4),
                     width: 0.8),
               ),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 const Icon(Icons.expand_more_rounded,
-                    color: TabuColors.rosaPrincipal, size: 16),
+                    color: TClubColors.redPrincipal, size: 16),
                 const SizedBox(width: 8),
                 Text(
                   'VER MAIS ${(_likers.length - _likersVisible).clamp(0, 10)} DE ${_likers.length - _likersVisible}',
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                   ),
                 ),
               ]),
@@ -519,9 +519,9 @@ class _CommentsSheetState extends State<_CommentsSheet>
           bottom: keyboardHeight > 0 ? keyboardHeight : safeBottom),
       child: Container(
         decoration: const BoxDecoration(
-          color: TabuColors.bgAlt,
+          color: TClubColors.bgAlt,
           border:
-              Border(top: BorderSide(color: TabuColors.border, width: 0.5)),
+              Border(top: BorderSide(color: TClubColors.border, width: 0.5)),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Row(children: [
@@ -536,26 +536,26 @@ class _CommentsSheetState extends State<_CommentsSheet>
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: TabuColors.bgCard,
-                border: Border.all(color: TabuColors.border, width: 0.8),
+                color: TClubColors.bgCard,
+                border: Border.all(color: TClubColors.border, width: 0.8),
               ),
               child: TextField(
                 controller: _textController,
                 focusNode: _focusNode,
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
-                  color: TabuColors.textoPrincipal,
+                  color: TClubColors.textoPrincipal,
                 ),
-                cursorColor: TabuColors.rosaPrincipal,
+                cursorColor: TClubColors.redPrincipal,
                 maxLines: null,
                 textCapitalization: TextCapitalization.sentences,
                 decoration: const InputDecoration(
                   hintText: 'Adicionar comentário...',
                   hintStyle: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 13,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                   border: InputBorder.none,
                   isDense: true,
@@ -574,8 +574,8 @@ class _CommentsSheetState extends State<_CommentsSheet>
               width: 40,
               height: 40,
               color: _sending
-                  ? TabuColors.rosaPrincipal.withOpacity(0.5)
-                  : TabuColors.rosaPrincipal,
+                  ? TClubColors.redPrincipal.withOpacity(0.5)
+                  : TClubColors.redPrincipal,
               child: _sending
                   ? const Center(
                       child: SizedBox(
@@ -688,7 +688,7 @@ class _CommentTileState extends State<_CommentTile> {
     HapticFeedback.selectionClick();
     showModalBottomSheet(
       context: context,
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       shape: const RoundedRectangleBorder(),
       builder: (sheetCtx) => SafeArea(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -697,7 +697,7 @@ class _CommentTileState extends State<_CommentTile> {
             height: 3,
             margin: const EdgeInsets.only(top: 12, bottom: 16),
             decoration: BoxDecoration(
-                color: TabuColors.bg,
+                color: TClubColors.bg,
                 borderRadius: BorderRadius.circular(2)),
           ),
           // Badge administrativo — visível apenas para admin em comentário alheio
@@ -711,19 +711,19 @@ class _CommentTileState extends State<_CommentTile> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: TabuColors.accent.withOpacity(0.6),
+                      color: TClubColors.accent.withOpacity(0.6),
                       border: Border.all(
-                          color: TabuColors.bg.withOpacity(0.5),
+                          color: TClubColors.bg.withOpacity(0.5),
                           width: 0.8),
                     ),
                     child: const Text(
                       'AÇÃO ADMINISTRATIVA',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 8,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 2,
-                        color: TabuColors.branco,
+                        color: TClubColors.branco,
                       ),
                     ),
                   ),
@@ -741,9 +741,9 @@ class _CommentTileState extends State<_CommentTile> {
                 width: double.infinity,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: TabuColors.bg.withOpacity(0.5),
+                  color: TClubColors.bg.withOpacity(0.5),
                   border: Border.all(
-                      color: TabuColors.accent.withOpacity(0.3),
+                      color: TClubColors.accent.withOpacity(0.3),
                       width: 0.8),
                 ),
                 child: Row(
@@ -754,7 +754,7 @@ class _CommentTileState extends State<_CommentTile> {
                       SizedBox(width: 8),
                       Text('EXCLUIR COMENTÁRIO',
                           style: TextStyle(
-                            fontFamily: TabuTypography.bodyFont,
+                            fontFamily: TClubTypography.bodyFont,
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 2,
@@ -816,13 +816,13 @@ class _CommentTileState extends State<_CommentTile> {
                 child: Text(
                   displayName,
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 1.5,
                     color: _isDeleted
-                        ? TabuColors.subtle
-                        : TabuColors.textoPrincipal,
+                        ? TClubColors.subtle
+                        : TClubColors.textoPrincipal,
                   ),
                 ),
               ),
@@ -841,7 +841,7 @@ class _CommentTileState extends State<_CommentTile> {
                   ),
                   child: const Text('EXCLUÍDO',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 7,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.5,
@@ -857,18 +857,18 @@ class _CommentTileState extends State<_CommentTile> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 5, vertical: 1),
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.12),
+                    color: TClubColors.redPrincipal.withOpacity(0.12),
                     border: Border.all(
-                        color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                        color: TClubColors.redPrincipal.withOpacity(0.4),
                         width: 0.6),
                   ),
                   child: const Text('VOCÊ',
                       style: TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 7,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 1.5,
-                        color: TabuColors.rosaPrincipal,
+                        color: TClubColors.redPrincipal,
                       )),
                 ),
               ],
@@ -877,9 +877,9 @@ class _CommentTileState extends State<_CommentTile> {
               Text(
                 _formatTime(widget.comment.createdAt),
                 style: const TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 9,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
               ),
 
@@ -894,7 +894,7 @@ class _CommentTileState extends State<_CommentTile> {
                     // Admin em comentário alheio → roxo; dono do próprio → cinza
                     color: widget.isAdmin && !_isOwn
                         ? const Color(0xFFB06AFF).withOpacity(0.7)
-                        : TabuColors.border,
+                        : TClubColors.border,
                     size: 14,
                   ),
                 ),
@@ -909,14 +909,14 @@ class _CommentTileState extends State<_CommentTile> {
                 color: _isDeleted
                     ? const Color(0xFF3D0A0A).withOpacity(0.3)
                     : _isOwn
-                        ? TabuColors.rosaPrincipal.withOpacity(0.08)
-                        : TabuColors.bgCard,
+                        ? TClubColors.redPrincipal.withOpacity(0.08)
+                        : TClubColors.bgCard,
                 border: Border.all(
                   color: _isDeleted
                       ? const Color(0xFFE85D5D).withOpacity(0.2)
                       : _isOwn
-                          ? TabuColors.rosaPrincipal.withOpacity(0.2)
-                          : TabuColors.border.withOpacity(0.6),
+                          ? TClubColors.redPrincipal.withOpacity(0.2)
+                          : TClubColors.border.withOpacity(0.6),
                   width: 0.6,
                 ),
               ),
@@ -925,11 +925,11 @@ class _CommentTileState extends State<_CommentTile> {
                     ? 'Este comentário foi excluído.'
                     : widget.comment.texto,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize: 13,
                   color: _isDeleted
-                      ? TabuColors.subtle.withOpacity(0.7)
-                      : TabuColors.dim,
+                      ? TClubColors.subtle.withOpacity(0.7)
+                      : TClubColors.dim,
                   height: 1.45,
                   fontStyle:
                       _isDeleted ? FontStyle.italic : FontStyle.normal,
@@ -953,7 +953,7 @@ class _CommentTileState extends State<_CommentTile> {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: TabuColors.bgCard.withOpacity(0.85),
+                color: TClubColors.bgCard.withOpacity(0.85),
                 border: Border.all(
                     color: const Color(0xFFE85D5D).withOpacity(0.4),
                     width: 0.8),
@@ -1085,8 +1085,8 @@ class _LikeTileState extends State<_LikeTile> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 0.6),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.6),
             ),
           ),
           const SizedBox(width: 14),
@@ -1098,7 +1098,7 @@ class _LikeTileState extends State<_LikeTile> {
                   width: 110,
                   height: 11,
                   decoration: BoxDecoration(
-                    color: TabuColors.border.withOpacity(0.3),
+                    color: TClubColors.border.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -1107,7 +1107,7 @@ class _LikeTileState extends State<_LikeTile> {
                   width: 70,
                   height: 9,
                   decoration: BoxDecoration(
-                    color: TabuColors.border.withOpacity(0.2),
+                    color: TClubColors.border.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ),
@@ -1167,9 +1167,9 @@ class _LikeTileState extends State<_LikeTile> {
                 decoration: BoxDecoration(
                   color: _userDeleted
                       ? const Color(0xFFE85D5D).withOpacity(0.8)
-                      : TabuColors.rosaPrincipal,
+                      : TClubColors.redPrincipal,
                   shape: BoxShape.circle,
-                  border: Border.all(color: TabuColors.bgAlt, width: 1.5),
+                  border: Border.all(color: TClubColors.bgAlt, width: 1.5),
                 ),
                 child: Icon(
                   _userDeleted ? Icons.close_rounded : Icons.favorite_rounded,
@@ -1191,13 +1191,13 @@ class _LikeTileState extends State<_LikeTile> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontFamily: TabuTypography.bodyFont,
+                      fontFamily: TClubTypography.bodyFont,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1.8,
                       color: _userDeleted
-                          ? TabuColors.subtle
-                          : TabuColors.textoPrincipal,
+                          ? TClubColors.subtle
+                          : TClubColors.textoPrincipal,
                     ),
                   ),
                 ),
@@ -1214,7 +1214,7 @@ class _LikeTileState extends State<_LikeTile> {
                     ),
                     child: const Text('EXCLUÍDO',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 7,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
@@ -1228,18 +1228,18 @@ class _LikeTileState extends State<_LikeTile> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 5, vertical: 2),
                     decoration: BoxDecoration(
-                      color: TabuColors.rosaPrincipal.withOpacity(0.12),
+                      color: TClubColors.redPrincipal.withOpacity(0.12),
                       border: Border.all(
-                          color: TabuColors.rosaPrincipal.withOpacity(0.4),
+                          color: TClubColors.redPrincipal.withOpacity(0.4),
                           width: 0.6),
                     ),
                     child: const Text('VOCÊ',
                         style: TextStyle(
-                          fontFamily: TabuTypography.bodyFont,
+                          fontFamily: TClubTypography.bodyFont,
                           fontSize: 7,
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.5,
-                          color: TabuColors.rosaPrincipal,
+                          color: TClubColors.redPrincipal,
                         )),
                   ),
                 ],
@@ -1251,9 +1251,9 @@ class _LikeTileState extends State<_LikeTile> {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 10,
-                    color: TabuColors.subtle,
+                    color: TClubColors.subtle,
                   ),
                 ),
               ],
@@ -1262,7 +1262,7 @@ class _LikeTileState extends State<_LikeTile> {
                 const Text(
                   'Este usuário não existe mais',
                   style: TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 9,
                     fontStyle: FontStyle.italic,
                     color: Color(0xFFE85D5D),
@@ -1277,18 +1277,18 @@ class _LikeTileState extends State<_LikeTile> {
             decoration: BoxDecoration(
               color: _userDeleted
                   ? const Color(0xFF3D0A0A).withOpacity(0.3)
-                  : TabuColors.rosaPrincipal.withOpacity(0.08),
+                  : TClubColors.redPrincipal.withOpacity(0.08),
               border: Border.all(
                   color: _userDeleted
                       ? const Color(0xFFE85D5D).withOpacity(0.25)
-                      : TabuColors.rosaPrincipal.withOpacity(0.25),
+                      : TClubColors.redPrincipal.withOpacity(0.25),
                   width: 0.6),
             ),
             child: Icon(
               _userDeleted ? Icons.close_rounded : Icons.favorite_rounded,
               color: _userDeleted
                   ? const Color(0xFFE85D5D)
-                  : TabuColors.rosaPrincipal,
+                  : TClubColors.redPrincipal,
               size: 12,
             ),
           ),
@@ -1297,3 +1297,4 @@ class _LikeTileState extends State<_LikeTile> {
     );
   }
 }
+

@@ -4,11 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/profile/controller/edit_interests_controller.dart';
-import 'package:tabuapp/features/profile/data/repositories/interests_repository.dart';
-import 'package:tabuapp/features/profile/data/services/interests_service.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/edit_profile_shareds.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/profile/controller/edit_interests_controller.dart';
+import 'package:tclub/features/profile/data/repositories/interests_repository.dart';
+import 'package:tclub/features/profile/data/services/interests_service.dart';
+import 'package:tclub/features/profile/presentation/widgets/edit_profile_shareds.dart';
 
 // ════════════════════════════════════════════════════════════════════════════
 //  MODELO DE DADOS
@@ -247,10 +247,10 @@ class _EditInterestsPageState extends State<EditInterestsPage>
             fontFamily: 'Barlow Condensed',
             fontSize: 13,
             letterSpacing: 1.4,
-            color: TabuColors.errorLight,
+            color: TClubColors.errorLight,
           ),
         ),
-        backgroundColor: TabuColors.errorDeep,
+        backgroundColor: TClubColors.errorDeep,
         behavior:        SnackBarBehavior.floating,
         shape:           const RoundedRectangleBorder(),
         duration:        const Duration(seconds: 2),
@@ -266,9 +266,9 @@ class _EditInterestsPageState extends State<EditInterestsPage>
       content: Text(
         msg.toUpperCase(),
         style: const TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 11, fontWeight: FontWeight.w700,
-          letterSpacing: 2, color: TabuColors.textoPrincipal,
+          letterSpacing: 2, color: TClubColors.textoPrincipal,
         ),
       ),
     ));
@@ -319,7 +319,7 @@ class _EditInterestsPageState extends State<EditInterestsPage>
                 scrollCtrl:     _catScrollCtrl,
                 onSelect:       (i) => setState(() => _activeCatIndex = i),
               ),
-              Container(width: 0.5, color: TabuColors.border),
+              Container(width: 0.5, color: TClubColors.border),
               // ── Painel direito: chips ───────────────────────────────────
               Expanded(
                 child: _ChipsPanel(
@@ -352,10 +352,10 @@ class _CounterBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final pct      = selected / max;
     final isAtMax  = selected >= max;
-    final barColor = isAtMax ? TabuColors.error : TabuColors.rosaPrincipal;
+    final barColor = isAtMax ? TClubColors.error : TClubColors.redPrincipal;
 
     return Container(
-      color:   TabuColors.bgAlt,
+      color:   TClubColors.bgAlt,
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
       child: Column(
         children: [
@@ -369,7 +369,7 @@ class _CounterBar extends StatelessWidget {
                   fontSize:   9,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 3,
-                  color: TabuColors.subtle,
+                  color: TClubColors.subtle,
                 ),
               ),
               RichText(
@@ -380,13 +380,13 @@ class _CounterBar extends StatelessWidget {
                       text:  '$selected',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        color: isAtMax ? TabuColors.error : TabuColors.textoPrincipal,
+                        color: isAtMax ? TClubColors.error : TClubColors.textoPrincipal,
                         fontSize: 14,
                       ),
                     ),
                     TextSpan(
                       text:  ' / $max',
-                      style: const TextStyle(color: TabuColors.subtle),
+                      style: const TextStyle(color: TClubColors.subtle),
                     ),
                   ],
                 ),
@@ -403,7 +403,7 @@ class _CounterBar extends StatelessWidget {
               builder: (_, value, __) => LinearProgressIndicator(
                 value:           value,
                 minHeight:       2.5,
-                backgroundColor: TabuColors.border,
+                backgroundColor: TClubColors.border,
                 valueColor:      AlwaysStoppedAnimation(barColor),
               ),
             ),
@@ -483,14 +483,14 @@ class _CatItem extends StatelessWidget {
         padding:  const EdgeInsets.symmetric(horizontal: 10, vertical: 13),
         decoration: BoxDecoration(
           color: isActive
-              ? TabuColors.rosaPrincipal.withOpacity(0.12)
+              ? TClubColors.redPrincipal.withOpacity(0.12)
               : Colors.transparent,
           border: Border(
             left: BorderSide(
-              color: isActive ? TabuColors.rosaPrincipal : Colors.transparent,
+              color: isActive ? TClubColors.redPrincipal : Colors.transparent,
               width: 2.5,
             ),
-            bottom: BorderSide(color: TabuColors.border.withOpacity(0.4), width: 0.5),
+            bottom: BorderSide(color: TClubColors.border.withOpacity(0.4), width: 0.5),
           ),
         ),
         child: Column(
@@ -508,7 +508,7 @@ class _CatItem extends StatelessWidget {
                 fontWeight:  isActive ? FontWeight.w700 : FontWeight.w500,
                 letterSpacing: 0.8,
                 height:      1.3,
-                color: isActive ? TabuColors.rosaPrincipal : TabuColors.dim,
+                color: isActive ? TClubColors.redPrincipal : TClubColors.dim,
               ),
             ),
             if (selCount > 0) ...[
@@ -516,10 +516,10 @@ class _CatItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 1.5),
                 decoration: BoxDecoration(
-                  color:        TabuColors.rosaPrincipal.withOpacity(0.20),
+                  color:        TClubColors.redPrincipal.withOpacity(0.20),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.40),
+                    color: TClubColors.redPrincipal.withOpacity(0.40),
                     width: 0.6,
                   ),
                 ),
@@ -529,7 +529,7 @@ class _CatItem extends StatelessWidget {
                     fontFamily:  'Barlow Condensed',
                     fontSize:    9,
                     fontWeight:  FontWeight.w700,
-                    color:       TabuColors.rosaPrincipal,
+                    color:       TClubColors.redPrincipal,
                     letterSpacing: 0.5,
                   ),
                 ),
@@ -580,7 +580,7 @@ class _ChipsPanel extends StatelessWidget {
                       fontSize:     13,
                       fontWeight:   FontWeight.w700,
                       letterSpacing: 3,
-                      color:        TabuColors.textoPrincipal,
+                      color:        TClubColors.textoPrincipal,
                     ),
                   ),
                 ),
@@ -635,16 +635,16 @@ class _InterestChip extends StatelessWidget {
         padding:  const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
           color: isSelected
-              ? TabuColors.rosaPrincipal.withOpacity(0.20)
-              : TabuColors.bgCard,
+              ? TClubColors.redPrincipal.withOpacity(0.20)
+              : TClubColors.bgCard,
           border: Border.all(
-            color: isSelected ? TabuColors.rosaPrincipal : TabuColors.border,
+            color: isSelected ? TClubColors.redPrincipal : TClubColors.border,
             width: isSelected ? 1.2 : 0.8,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color:      TabuColors.rosaPrincipal.withOpacity(0.18),
+                    color:      TClubColors.redPrincipal.withOpacity(0.18),
                     blurRadius: 10,
                     spreadRadius: 0,
                   ),
@@ -656,7 +656,7 @@ class _InterestChip extends StatelessWidget {
           children: [
             if (isSelected) ...[
               Icon(Icons.check_rounded,
-                  size: 11, color: TabuColors.rosaPrincipal),
+                  size: 11, color: TClubColors.redPrincipal),
               const SizedBox(width: 4),
             ],
             Text(
@@ -666,7 +666,7 @@ class _InterestChip extends StatelessWidget {
                 fontSize:    12,
                 fontWeight:  isSelected ? FontWeight.w700 : FontWeight.w500,
                 letterSpacing: 0.6,
-                color: isSelected ? TabuColors.rosaPrincipal : TabuColors.dim,
+                color: isSelected ? TClubColors.redPrincipal : TClubColors.dim,
               ),
             ),
           ],
@@ -691,11 +691,11 @@ class _SelectedBar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: TabuColors.bgAlt,
-        border: Border(top: BorderSide(color: TabuColors.border, width: 0.8)),
+        color: TClubColors.bgAlt,
+        border: Border(top: BorderSide(color: TClubColors.border, width: 0.8)),
         boxShadow: [
           BoxShadow(
-            color:      TabuColors.rosaPrincipal.withOpacity(0.06),
+            color:      TClubColors.redPrincipal.withOpacity(0.06),
             blurRadius: 16,
             offset:     const Offset(0, -4),
           ),
@@ -715,7 +715,7 @@ class _SelectedBar extends StatelessWidget {
                 fontSize:     8,
                 fontWeight:   FontWeight.w700,
                 letterSpacing: 3,
-                color:        TabuColors.subtle,
+                color:        TClubColors.subtle,
               ),
             ),
           ),
@@ -750,11 +750,11 @@ class _MiniChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
-            colors: [TabuColors.rosaDeep, TabuColors.rosaPrincipal],
+            colors: [TClubColors.redDeep, TClubColors.redPrincipal],
           ),
           boxShadow: [
             BoxShadow(
-              color:      TabuColors.rosaPrincipal.withOpacity(0.25),
+              color:      TClubColors.redPrincipal.withOpacity(0.25),
               blurRadius: 8,
             ),
           ],
@@ -769,15 +769,16 @@ class _MiniChip extends StatelessWidget {
                 fontSize:     11,
                 fontWeight:   FontWeight.w700,
                 letterSpacing: 0.5,
-                color:        TabuColors.textoPrincipal,
+                color:        TClubColors.textoPrincipal,
               ),
             ),
             const SizedBox(width: 5),
             const Icon(Icons.close_rounded,
-                size: 11, color: TabuColors.rosaClaro),
+                size: 11, color: TClubColors.redClaro),
           ],
         ),
       ),
     );
   }
 }
+

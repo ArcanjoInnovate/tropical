@@ -8,7 +8,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
 
 class ChatPresenceManager {
   ChatPresenceManager({
@@ -107,3 +107,4 @@ class ChatPresenceManager {
     });
   }
 }
+

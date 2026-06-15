@@ -1,8 +1,8 @@
 // lib/features/search/domain/usecases/fetch_parties_usecase.dart
 
-import 'package:tabuapp/features/search/domain/entities/paginated_result.dart';
-import 'package:tabuapp/features/search/domain/entities/party_search.dart';
-import 'package:tabuapp/features/search/domain/repositories/i_search_repository.dart';
+import 'package:tclub/features/search/domain/entities/paginated_result.dart';
+import 'package:tclub/features/search/domain/entities/party_search.dart';
+import 'package:tclub/features/search/domain/repositories/i_search_repository.dart';
 
 /// Parâmetros para busca de festas.
 class FetchPartiesParams {
@@ -69,3 +69,4 @@ class FetchPartiesUseCase {
         hasMore: result.hasMore);
   }
 }
+

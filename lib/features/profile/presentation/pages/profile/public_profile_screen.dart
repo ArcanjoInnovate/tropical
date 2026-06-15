@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tabuapp/features/chat/controller/chat_controller.dart';
-import 'package:tabuapp/features/chat/data/repositories/chat_repository.dart';
-import 'package:tabuapp/features/chat/data/services/chat_service.dart';
-import 'package:tabuapp/core/providers/block_provider.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
-import 'package:tabuapp/features/profile/controller/public_profile_controller.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/perfil_screen_widgets.dart';
-import 'package:tabuapp/features/story/presentation/pages/story_viewer_screen.dart';
-import 'package:tabuapp/features/user/moderation/moderation.dart';
-import 'package:tabuapp/features/feed/presentation/screens/galery_feed_screen.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/media_grid_tile.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/profile_avatar_section.dart';
-import 'package:tabuapp/features/profile/presentation/widgets/profile_identity_widgets.dart';
-import 'package:tabuapp/features/chat/presentation/pages/chat_screen.dart';
+import 'package:tclub/features/chat/controller/chat_controller.dart';
+import 'package:tclub/features/chat/data/repositories/chat_repository.dart';
+import 'package:tclub/features/chat/data/services/chat_service.dart';
+import 'package:tclub/core/providers/block_provider.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/features/profile/controller/public_profile_controller.dart';
+import 'package:tclub/features/profile/presentation/widgets/perfil_screen_widgets.dart';
+import 'package:tclub/features/story/presentation/pages/story_viewer_screen.dart';
+import 'package:tclub/features/user/moderation/moderation.dart';
+import 'package:tclub/features/feed/presentation/screens/galery_feed_screen.dart';
+import 'package:tclub/features/profile/presentation/widgets/media_grid_tile.dart';
+import 'package:tclub/features/profile/presentation/widgets/profile_avatar_section.dart';
+import 'package:tclub/features/profile/presentation/widgets/profile_identity_widgets.dart';
+import 'package:tclub/features/chat/presentation/pages/chat_screen.dart';
 import '../../../data/models/profile_user_model.dart';
 import '_profile_painters.dart';
 import '_public_profile_actions.dart';
@@ -258,17 +258,17 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
   void _snack(String msg) {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: TabuColors.bgAlt,
+      backgroundColor: TClubColors.bgAlt,
       behavior: SnackBarBehavior.floating,
       shape: const RoundedRectangleBorder(),
       margin: const EdgeInsets.all(16),
       duration: const Duration(seconds: 2),
       content: Text(msg,
           style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 11,
             letterSpacing: 0.5,
-            color: TabuColors.dim,
+            color: TClubColors.dim,
           )),
     ));
   }
@@ -281,7 +281,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
     final gradient = _gradient(widget.userId);
 
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Stack(children: [
         Positioned.fill(
           child: CustomPaint(painter: AtmospherePainter(gradient: gradient)),
@@ -341,11 +341,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
           width: 38,
           height: 38,
           decoration: BoxDecoration(
-            color: TabuColors.bgCard,
-            border: Border.all(color: TabuColors.border, width: 0.8),
+            color: TClubColors.bgCard,
+            border: Border.all(color: TClubColors.border, width: 0.8),
           ),
           child: const Icon(Icons.arrow_back_ios_new,
-              color: TabuColors.dim, size: 16),
+              color: TClubColors.dim, size: 16),
         ),
       ),
       const Spacer(),
@@ -356,11 +356,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
             width: 38,
             height: 38,
             decoration: BoxDecoration(
-              color: TabuColors.bgCard,
-              border: Border.all(color: TabuColors.border, width: 0.8),
+              color: TClubColors.bgCard,
+              border: Border.all(color: TClubColors.border, width: 0.8),
             ),
             child: const Icon(Icons.more_horiz,
-                color: TabuColors.subtle, size: 18),
+                color: TClubColors.subtle, size: 18),
           ),
         )
       else
@@ -391,12 +391,12 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
           widget.userName.toUpperCase(),
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: TabuTypography.displayFont,
+            fontFamily: TClubTypography.displayFont,
             fontSize: 28,
             letterSpacing: 6,
-            color: TabuColors.textoPrincipal,
+            color: TClubColors.textoPrincipal,
             fontWeight: FontWeight.w400,
-            shadows: [Shadow(color: TabuColors.glow, blurRadius: 20)],
+            shadows: [Shadow(color: TClubColors.glow, blurRadius: 20)],
           ),
         ),
         if (_ctrl.vip) ...[
@@ -415,7 +415,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
       padding: const EdgeInsets.only(top: 6),
       child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Icon(Icons.location_on_outlined,
-            color: TabuColors.rosaPrincipal, size: 11),
+            color: TClubColors.redPrincipal, size: 11),
         const SizedBox(width: 4),
         Flexible(
           child: Text(
@@ -423,11 +423,11 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 11,
               fontWeight: FontWeight.w500,
               letterSpacing: 1,
-              color: TabuColors.rosaPrincipal,
+              color: TClubColors.redPrincipal,
             ),
           ),
         ),
@@ -467,10 +467,10 @@ class _PublicProfileScreenState extends State<PublicProfileScreen>
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
         style: TextStyle(
-          fontFamily: TabuTypography.bodyFont,
+          fontFamily: TClubTypography.bodyFont,
           fontSize: 13,
           letterSpacing: 0.3,
-          color: TabuColors.dim.withOpacity(0.85),
+          color: TClubColors.dim.withOpacity(0.85),
           height: 1.65,
           fontStyle: FontStyle.italic,
         ),
@@ -589,11 +589,11 @@ class _TopAccentLine extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Colors.transparent,
-            TabuColors.rosaDeep,
-            TabuColors.rosaPrincipal,
-            TabuColors.rosaClaro,
-            TabuColors.rosaPrincipal,
-            TabuColors.rosaDeep,
+            TClubColors.redDeep,
+            TClubColors.redPrincipal,
+            TClubColors.redClaro,
+            TClubColors.redPrincipal,
+            TClubColors.redDeep,
             Colors.transparent,
           ]),
         ),
@@ -601,3 +601,4 @@ class _TopAccentLine extends StatelessWidget {
     );
   }
 }
+

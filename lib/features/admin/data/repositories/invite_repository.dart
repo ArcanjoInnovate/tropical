@@ -19,3 +19,4 @@ class InviteRepository {
           (b.createdAt ?? 0).compareTo(a.createdAt ?? 0));
   }
 }
+

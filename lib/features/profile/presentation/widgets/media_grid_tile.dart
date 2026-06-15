@@ -1,11 +1,11 @@
 // features/profile/presentation/widgets/shared/media_grid_tile.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/helpers/cloudinary_helper.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/features/post/data/models/post_model.dart';
-import 'package:tabuapp/features/gallery/data/models/gallery_item_model.dart';
-import 'package:tabuapp/core/services/media/video_preload_service.dart';
+import 'package:tclub/core/helpers/cloudinary_helper.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+import 'package:tclub/features/post/data/models/post_model.dart';
+import 'package:tclub/features/gallery/data/models/gallery_item_model.dart';
+import 'package:tclub/core/services/media/video_preload_service.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -47,7 +47,7 @@ class PostGridTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         child: Stack(fit: StackFit.expand, children: [
           // ── fundo ─────────────────────────────────────────────────────────
           if (post.tipo == 'foto' && post.mediaUrl != null)
@@ -87,7 +87,7 @@ class PostGridTile extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.black.withOpacity(0.60),
                   border: Border.all(
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     width: 1.2,
                   ),
                 ),
@@ -119,7 +119,7 @@ class PostGridTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize: 8,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
@@ -178,7 +178,7 @@ class PostGridTile extends StatelessWidget {
         ),
         child: Text(text,
             style: const TextStyle(
-              fontFamily: TabuTypography.bodyFont,
+              fontFamily: TClubTypography.bodyFont,
               fontSize: 9,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -222,7 +222,7 @@ class GalleryGridTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        color: TabuColors.bgCard,
+        color: TClubColors.bgCard,
         child: Stack(fit: StackFit.expand, children: [
           if (item.type == 'video' && item.thumbUrl != null)
             CachedNetworkImage(imageUrl: CloudinaryHelper.videoThumbnail(item.thumbUrl!),
@@ -260,7 +260,7 @@ class GalleryGridTile extends StatelessWidget {
                   border: Border.all(
                     color: isPreloaded
                         ? const Color(0xFF22C55E)
-                        : TabuColors.rosaPrincipal,
+                        : TClubColors.redPrincipal,
                     width: 1.2,
                   ),
                 ),
@@ -281,7 +281,7 @@ class GalleryGridTile extends StatelessWidget {
                   ),
                   child: Text(_fmt(item.videoDuration!),
                       style: const TextStyle(
-                        fontFamily: TabuTypography.bodyFont,
+                        fontFamily: TClubTypography.bodyFont,
                         fontSize: 9,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -319,3 +319,4 @@ class GalleryGridTile extends StatelessWidget {
         ),
       );
 }
+

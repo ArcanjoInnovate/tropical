@@ -1,4 +1,4 @@
-// functions/src/user_index.ts
+﻿// functions/src/user_index.ts
 //
 // Cloud Function: syncUserIndex
 //
@@ -48,7 +48,7 @@ function indexFieldsChanged(
 }
 
 export const syncUserIndex = onValueWritten(
-  { ref: "Users/{uid}", region: "us-central1", instance: "tabuapp-4325a-default-rtdb" },
+  { ref: "Users/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
   async (event) => {
     const uid = event.params.uid;
     const db  = getDatabase();

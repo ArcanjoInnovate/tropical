@@ -1,7 +1,7 @@
 // lib/features/profile/data/repositories/personal_data_repository.dart
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/features/profile/data/models/personal_data_model.dart';
+import 'package:tclub/features/profile/data/models/personal_data_model.dart';
 
 abstract class IPersonalDataRepository {
   Future<void> savePersonalData({
@@ -99,3 +99,4 @@ class PersonalDataRepository implements IPersonalDataRepository {
     }
   }
 }
+

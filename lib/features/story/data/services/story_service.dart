@@ -27,9 +27,9 @@
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/feed/data/services/cloudinary_cleanup_helper.dart';
-import 'package:tabuapp/features/story/data/models/story_model.dart';
-import 'package:tabuapp/core/services/user_avatar_service.dart';
+import 'package:tclub/features/feed/data/services/cloudinary_cleanup_helper.dart';
+import 'package:tclub/features/story/data/models/story_model.dart';
+import 'package:tclub/core/services/user_avatar_service.dart';
 
 // ══════════════════════════════════════════════════════════════════════════════
 //  ÍNDICE DE VISIBILIDADE — calculado uma vez por chamada de fetchStoriesForUser
@@ -517,3 +517,4 @@ class StoryService {
     });
   }
 }
+

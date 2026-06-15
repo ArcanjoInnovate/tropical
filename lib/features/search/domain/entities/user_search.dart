@@ -48,3 +48,4 @@ class UserSearchEntity {
   /// Retorna true se o usuário tem localização preenchida
   bool get hasLocation => city.isNotEmpty || state.isNotEmpty;
 }
+

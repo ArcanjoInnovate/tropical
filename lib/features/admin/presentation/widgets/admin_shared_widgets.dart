@@ -1,8 +1,8 @@
 // lib/screens/admin/presentation/widgets/admin_shared_widgets.dart
 
 import 'package:flutter/material.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
-import 'package:tabuapp/core/theme/admin_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
+
 
 // ── Stat Chip ─────────────────────────────────────────────────────────────────
 class AdminStatChip extends StatelessWidget {
@@ -23,17 +23,17 @@ class AdminStatChip extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
     child: Column(mainAxisSize: MainAxisSize.min, children: [
       Icon(icon, size: 12,
-        color: highlight ? AdminColors.pending : AdminColors.inkGhost),
+        color: highlight ? TClubColors.redClaro : TClubColors.textoMuted),
       const SizedBox(height: 4),
       Text(value, style: TextStyle(
-        fontFamily: TabuTypography.displayFont,
+        fontFamily: TClubTypography.displayFont,
         fontSize: 16, letterSpacing: 1,
-        color: highlight ? AdminColors.inkDeep : AdminColors.inkPrincipal)),
+        color: highlight ? TClubColors.branco : TClubColors.redPrincipal)),
       const SizedBox(height: 2),
       Text(label, style: const TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      7, fontWeight: FontWeight.w700,
-        letterSpacing: 1.5, color: AdminColors.inkGhost)),
+        letterSpacing: 1.5, color: TClubColors.textoMuted)),
     ]),
   );
 }
@@ -44,7 +44,7 @@ class AdminStatDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-    Container(width: 0.5, height: 30, color: AdminColors.border);
+    Container(width: 0.5, height: 30, color: TClubColors.border);
 }
 
 // ── Section Label ─────────────────────────────────────────────────────────────
@@ -57,12 +57,12 @@ class AdminSectionLabel extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Row(children: [
-      Container(width: 2, height: 12, color: AdminColors.inkPrincipal),
+      Container(width: 2, height: 12, color: TClubColors.redPrincipal),
       const SizedBox(width: 8),
       Text(label, style: const TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      9, fontWeight: FontWeight.w700,
-        letterSpacing: 2.5, color: AdminColors.inkSubtle)),
+        letterSpacing: 2.5, color: TClubColors.textoSecundario)),
     ]),
   );
 }
@@ -86,28 +86,28 @@ class SistemaCard extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(14),
     decoration: BoxDecoration(
-      color:  AdminColors.fill,
-      border: Border.all(color: AdminColors.border, width: 0.8)),
+      color:  TClubColors.bgAlt,
+      border: Border.all(color: TClubColors.border, width: 0.8)),
     child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Icon(icon, color: AdminColors.inkMid, size: 18),
+      Icon(icon, color: TClubColors.textoSecundario, size: 18),
       const SizedBox(width: 12),
       Expanded(child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(titulo, style: const TextStyle(
-            fontFamily:    TabuTypography.bodyFont,
+            fontFamily:    TClubTypography.bodyFont,
             fontSize:      12, fontWeight: FontWeight.w700,
-            color:         AdminColors.inkDeep, letterSpacing: 0.5)),
+            color:         TClubColors.branco, letterSpacing: 0.5)),
           const SizedBox(height: 2),
           Text(subtitulo, style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 9, letterSpacing: 1.5,
-            color: AdminColors.inkSubtle)),
+            color: TClubColors.textoSecundario)),
           const SizedBox(height: 8),
           Text(descricao, style: const TextStyle(
-            fontFamily: TabuTypography.bodyFont,
+            fontFamily: TClubTypography.bodyFont,
             fontSize: 11, height: 1.6,
-            color: AdminColors.inkSubtle,
+            color: TClubColors.textoSecundario,
             letterSpacing: 0.2)),
         ],
       )),
@@ -123,7 +123,7 @@ class AdminLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) => const Center(
     child: SizedBox(width: 22, height: 22,
       child: CircularProgressIndicator(strokeWidth: 1.5,
-        valueColor: AlwaysStoppedAnimation(AdminColors.inkPrincipal))));
+        valueColor: AlwaysStoppedAnimation(TClubColors.redPrincipal))));
 }
 
 // ── Empty State ───────────────────────────────────────────────────────────────
@@ -140,11 +140,11 @@ class AdminEmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
     child: Column(mainAxisSize: MainAxisSize.min, children: [
-      Icon(icon, color: AdminColors.border, size: 36),
+      Icon(icon, color: TClubColors.border, size: 36),
       const SizedBox(height: 12),
       Text(label, style: const TextStyle(
-        fontFamily:    TabuTypography.bodyFont,
+        fontFamily:    TClubTypography.bodyFont,
         fontSize:      9, fontWeight: FontWeight.w700,
-        letterSpacing: 2.5, color: AdminColors.inkGhost)),
+        letterSpacing: 2.5, color: TClubColors.textoMuted)),
     ]));
 }

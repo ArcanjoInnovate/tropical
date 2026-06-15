@@ -94,3 +94,4 @@ class NotificationModel {
     actorUids:    actorUids ?? this.actorUids,
   );
 }
+

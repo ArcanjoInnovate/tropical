@@ -8,7 +8,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/constants/app_constants.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 class MaintenanceGuard extends StatefulWidget {
   final Widget child;
@@ -114,7 +115,7 @@ class MaintenancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -125,12 +126,12 @@ class MaintenancePage extends StatelessWidget {
                 // Logo
                 ShaderMask(
                   shaderCallback: (b) => const LinearGradient(
-                    colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+                    colors: [TClubColors.redPrincipal, TClubColors.redClaro],
                   ).createShader(b),
                   child: const Text(
-                    'TABU',
+                    AppConstants.appName,
                     style: TextStyle(
-                      fontFamily: TabuTypography.displayFont,
+                      fontFamily: TClubTypography.displayFont,
                       fontSize: 36,
                       letterSpacing: 10,
                       color: Colors.white,
@@ -145,13 +146,13 @@ class MaintenancePage extends StatelessWidget {
                   width: 72,
                   height: 72,
                   decoration: BoxDecoration(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.08),
+                    color: TClubColors.redPrincipal.withOpacity(0.08),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.construction_rounded,
                     size: 36,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                   ),
                 ),
 
@@ -161,10 +162,10 @@ class MaintenancePage extends StatelessWidget {
                 const Text(
                   'Em manutenção',
                   style: TextStyle(
-                    fontFamily: TabuTypography.displayFont,
+                    fontFamily: TClubTypography.displayFont,
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
-                    color: TabuColors.rosaPrincipal,
+                    color: TClubColors.redPrincipal,
                     letterSpacing: 1,
                   ),
                 ),
@@ -178,7 +179,7 @@ class MaintenancePage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 15,
                     height: 1.5,
-                    color: TabuColors.rosaPrincipal.withOpacity(0.6),
+                    color: TClubColors.redPrincipal.withOpacity(0.6),
                   ),
                 ),
 
@@ -189,7 +190,7 @@ class MaintenancePage extends StatelessWidget {
                   width: 24,
                   height: 24,
                   child: CircularProgressIndicator(
-                    color: TabuColors.rosaPrincipal.withOpacity(0.3),
+                    color: TClubColors.redPrincipal.withOpacity(0.3),
                     strokeWidth: 2,
                   ),
                 ),
@@ -212,16 +213,16 @@ class _LoadingSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TabuColors.bg,
+      backgroundColor: TClubColors.bg,
       body: Center(
         child: ShaderMask(
           shaderCallback: (b) => const LinearGradient(
-            colors: [TabuColors.rosaPrincipal, TabuColors.rosaClaro],
+            colors: [TClubColors.redPrincipal, TClubColors.redClaro],
           ).createShader(b),
           child: const Text(
-            'TABU',
+            AppConstants.appName,
             style: TextStyle(
-              fontFamily: TabuTypography.displayFont,
+              fontFamily: TClubTypography.displayFont,
               fontSize: 36,
               letterSpacing: 10,
               color: Colors.white,
@@ -232,3 +233,4 @@ class _LoadingSplash extends StatelessWidget {
     );
   }
 }
+

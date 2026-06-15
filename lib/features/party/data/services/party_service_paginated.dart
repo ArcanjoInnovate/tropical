@@ -3,8 +3,8 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:tabuapp/features/party/data/models/party_model.dart';
-import 'package:tabuapp/core/services/cache_service.dart';
+import 'package:tclub/features/party/data/models/party_model.dart';
+import 'package:tclub/core/services/cache_service.dart';
 
 class PartyServicePaginated {
   PartyServicePaginated._();
@@ -325,3 +325,4 @@ class PaginatedPartiesResult {
   bool get isEmpty => parties.isEmpty;
   bool get isNotEmpty => parties.isNotEmpty;
 }
+

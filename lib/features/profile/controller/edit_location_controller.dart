@@ -2,10 +2,10 @@
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:tabuapp/features/profile/data/models/location_model.dart';
-import 'package:tabuapp/features/profile/data/repositories/location_repository.dart';
-import 'package:tabuapp/features/profile/data/services/ibge_service.dart';
-import 'package:tabuapp/features/profile/data/services/location_service.dart';
+import 'package:tclub/features/profile/data/models/location_model.dart';
+import 'package:tclub/features/profile/data/repositories/location_repository.dart';
+import 'package:tclub/features/profile/data/services/ibge_service.dart';
+import 'package:tclub/features/profile/data/services/location_service.dart';
 
 
 enum SaveStatus { idle, loading, success, error }
@@ -289,3 +289,4 @@ class EditLocationController extends ChangeNotifier {
     super.dispose();
   }
 }
+

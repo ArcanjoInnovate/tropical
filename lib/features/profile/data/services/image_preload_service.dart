@@ -78,3 +78,4 @@ class ImagePreloadService {
 
 // Helper para não esperar futures
 void unawaited(Future<void> future) {}
+

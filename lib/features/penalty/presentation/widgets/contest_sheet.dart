@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:tabuapp/core/theme/tabu_theme.dart';
+import 'package:tclub/core/theme/tclub_theme.dart';
 
 enum TipoContestacao { banimento, suspensao }
 
@@ -22,17 +22,17 @@ class ContestSheet extends StatelessWidget {
     required this.tipo,
   });
 
-  static const _suporte = 'suporte@tabu.app';
+  static const _suporte = 'tclubadministrative@gmail.com';
 
   // ── Paleta vermelha para ban, âmbar para suspensão ────────────────────────
   Color get _cor      => tipo == TipoContestacao.banimento
-      ? TabuColors.errorDeep
+      ? TClubColors.errorDeep
       : const Color(0xFF92400E);
   Color get _corFundo => tipo == TipoContestacao.banimento
-      ? TabuColors.errorPale
+      ? TClubColors.errorPale
       : const Color(0xFFFFFBEB);
   Color get _corBorda => tipo == TipoContestacao.banimento
-      ? TabuColors.errorBorder
+      ? TClubColors.errorBorder
       : const Color(0xFFFDE68A);
 
   String get _tituloSheet => tipo == TipoContestacao.banimento
@@ -91,9 +91,9 @@ class ContestSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color:        TabuColors.bg,
+        color:        TClubColors.bg,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-        border:       Border.all(color: TabuColors.border, width: 0.5),
+        border:       Border.all(color: TClubColors.border, width: 0.5),
       ),
       padding: EdgeInsets.fromLTRB(
           24, 20, 24,
@@ -106,7 +106,7 @@ class ContestSheet extends StatelessWidget {
           Center(child: Container(
             width: 36, height: 4,
             decoration: BoxDecoration(
-              color:        TabuColors.border,
+              color:        TClubColors.border,
               borderRadius: BorderRadius.circular(2),
             ),
           )),
@@ -115,17 +115,17 @@ class ContestSheet extends StatelessWidget {
           // Título
           Text(_tituloSheet,
               style: const TextStyle(
-                fontFamily:    TabuTypography.displayFont,
+                fontFamily:    TClubTypography.displayFont,
                 fontSize:      16,
                 letterSpacing: 1,
-                color:         TabuColors.textoPrincipal,
+                color:         TClubColors.textoPrincipal,
               )),
           const SizedBox(height: 4),
           const Text('Siga os passos abaixo para enviar sua contestação.',
               style: TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   12,
-                color:      TabuColors.textoMuted,
+                color:      TClubColors.textoMuted,
               )),
           const SizedBox(height: 20),
 
@@ -134,7 +134,7 @@ class ContestSheet extends StatelessWidget {
             numero:  '1',
             titulo:  'Abra seu e-mail',
             corpo:   'Acesse a caixa de entrada do e-mail cadastrado na sua '
-                     'conta Tabu e localize o e-mail com o assunto '
+                     'conta Tclub e localize o e-mail com o assunto '
                      '"Notificação de penalidade".',
             cor:     _cor,
             corFundo: _corFundo,
@@ -184,7 +184,7 @@ class ContestSheet extends StatelessWidget {
               icon:  const Icon(Icons.open_in_new, size: 17),
               label: Text(_labelBotao,
                   style: const TextStyle(
-                    fontFamily:    TabuTypography.bodyFont,
+                    fontFamily:    TClubTypography.bodyFont,
                     fontSize:      12,
                     fontWeight:    FontWeight.w700,
                     letterSpacing: 2,
@@ -201,9 +201,9 @@ class ContestSheet extends StatelessWidget {
           const SizedBox(height: 10),
           Center(child: Text('Para $_suporte',
               style: const TextStyle(
-                fontFamily: TabuTypography.bodyFont,
+                fontFamily: TClubTypography.bodyFont,
                 fontSize:   11,
-                color:      TabuColors.textoMuted,
+                color:      TClubColors.textoMuted,
               ))),
         ],
       ),
@@ -245,7 +245,7 @@ class _Passo extends StatelessWidget {
             ),
             child: Center(child: Text(numero,
                 style: TextStyle(
-                  fontFamily: TabuTypography.bodyFont,
+                  fontFamily: TClubTypography.bodyFont,
                   fontSize:   11,
                   fontWeight: FontWeight.w700,
                   color:      cor,
@@ -257,17 +257,17 @@ class _Passo extends StatelessWidget {
             children: [
               Text(titulo,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   13,
                     fontWeight: FontWeight.w700,
-                    color:      TabuColors.textoPrincipal,
+                    color:      TClubColors.textoPrincipal,
                   )),
               const SizedBox(height: 3),
               Text(corpo,
                   style: const TextStyle(
-                    fontFamily: TabuTypography.bodyFont,
+                    fontFamily: TClubTypography.bodyFont,
                     fontSize:   12,
-                    color:      TabuColors.textoMuted,
+                    color:      TClubColors.textoMuted,
                     height:     1.5,
                   )),
               if (extra != null) extra!,
@@ -306,7 +306,7 @@ class _ProtoBox extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(child: Text(proto,
               style: TextStyle(
-                fontFamily:    TabuTypography.bodyFont,
+                fontFamily:    TClubTypography.bodyFont,
                 fontSize:      13,
                 fontWeight:    FontWeight.w700,
                 color:         cor,
@@ -327,3 +327,4 @@ class _ProtoBox extends StatelessWidget {
         ]),
       );
 }
+
