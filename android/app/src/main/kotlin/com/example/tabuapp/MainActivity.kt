@@ -1,4 +1,4 @@
-package com.tropical.app
+package com.arcanjotclub.app
 
 import android.os.Bundle
 import android.view.WindowManager

@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.tropical.app</string>
+	<string>com.arcanjotclub.app</string>
 	<key>PROJECT_ID</key>
 	<string>tropical-64d1b</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,7 +25,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:871350869965:ios:dc8f4a95624336bfa66e84</string>
+	<string>1:871350869965:ios:1683c540729f63aaa66e84</string>
 	<key>DATABASE_URL</key>
 	<string>https://tropical-64d1b-default-rtdb.firebaseio.com</string>
 </dict>

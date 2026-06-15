@@ -49,7 +49,7 @@ export const searchUsers = onCall(
   {
     region: "us-central1",
     memory: "512MiB",
-    timeoutSeconds: 30,
+    timeoutSeconds: 100,
   },
   async (request) => {
     const uid = request.auth?.uid;

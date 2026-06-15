@@ -106,7 +106,7 @@ async function sendFcmNotif(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const notificarNovoSeguidor = onValueCreated(
-  { ref: "Followers/{followedUid}/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Followers/{followedUid}/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const followedUid = event.params.followedUid;
     const followerUid = event.params.followerUid;
@@ -194,7 +194,7 @@ export const notificarNovoSeguidor = onValueCreated(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const notificarNovaCurtida = onValueCreated(
-  { ref: "PostLikes/{postId}/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "PostLikes/{postId}/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const postId   = event.params.postId;
     const likerUid = event.params.likerUid;
@@ -262,7 +262,7 @@ export const notificarNovaCurtida = onValueCreated(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const notificarNovoComentario = onValueCreated(
-  { ref: "Comments/{postId}/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Comments/{postId}/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const postId    = event.params.postId;
     const commentId = event.params.commentId;
@@ -331,7 +331,7 @@ export const notificarNovoComentario = onValueCreated(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const notificarMeCurtiu = onValueCreated(
-  { ref: "Matchs/{uid}/like_me/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Matchs/{uid}/like_me/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid      = event.params.uid;
     const likerUid = event.params.likerUid;

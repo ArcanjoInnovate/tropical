@@ -49,7 +49,6 @@ class _TabuShellState extends State<TabuShell> {
       _screens = [
         HomeScreen(userData: widget.userData, isAdmin: true),
         HomeScreenAdministrative(userData: widget.userData),
-        MatchProfilePage(),
         SearchScreen(myUid: _myUid),
         const ChatListScreen(),
         OwnProfileScreen(userData: widget.userData),
@@ -57,7 +56,6 @@ class _TabuShellState extends State<TabuShell> {
     } else {
       _screens = [
         HomeScreen(userData: widget.userData, isAdmin: false),
-        MatchProfilePage(),
         SearchScreen(myUid: _myUid),
         const ChatListScreen(),
         OwnProfileScreen(userData: widget.userData),
@@ -116,7 +114,6 @@ class _TclubNavBar extends StatelessWidget {
   static final _adminItems = [
     _NavItem(icon: Icons.home_outlined,                  activeIcon: Icons.home,                  label: 'FEED'),
     _NavItem(icon: Icons.local_fire_department_outlined, activeIcon: Icons.local_fire_department,  label: 'FESTAS'),
-    _NavItem(icon: Icons.favorite_rounded,               activeIcon: Icons.favorite_rounded,       label: 'MATCH'),
     _NavItem(icon: Icons.search,                         activeIcon: Icons.search,                 label: 'SEARCH'),
     _NavItem(icon: Icons.chat_bubble_outline,            activeIcon: Icons.chat_bubble,            label: 'CHAT'),
     _NavItem(icon: Icons.person_outline,                 activeIcon: Icons.person,                 label: 'PERFIL'),
@@ -124,7 +121,6 @@ class _TclubNavBar extends StatelessWidget {
 
   static final _userItems = [
     _NavItem(icon: Icons.home_outlined,       activeIcon: Icons.home,               label: 'FEED'),
-    _NavItem(icon: Icons.favorite_rounded,    activeIcon: Icons.favorite_rounded,   label: 'MATCH'),
     _NavItem(icon: Icons.search,              activeIcon: Icons.search,             label: 'SEARCH'),
     _NavItem(icon: Icons.chat_bubble_outline, activeIcon: Icons.chat_bubble,        label: 'CHAT'),
     _NavItem(icon: Icons.person_outline,      activeIcon: Icons.person,             label: 'PERFIL'),

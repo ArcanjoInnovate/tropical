@@ -12,6 +12,7 @@ export const getUploadSignature = onCall(
     secrets: [cloudinaryApiSecret, cloudinaryApiKey],
     // TODO: reativar quando App Check for implementado no cliente
     // enforceAppCheck: true,
+    timeoutSeconds: 100,
   },
   async (request) => {
     if (!request.auth) {

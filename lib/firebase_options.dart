@@ -53,42 +53,39 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAJ1OWLtzzEYx3z9MStOMxHmM3YCgRw_N0',
-    appId: '1:871350869965:android:422d724e338b8c88a66e84',
+    appId: '1:871350869965:android:61eb153dd5625d62a66e84',
     messagingSenderId: '871350869965',
     projectId: 'tropical-64d1b',
     databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
     storageBucket: 'tropical-64d1b.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCYLeQrizv-doMJENJiTh2fq3WgWtAaczg',
-    appId: '1:871350869965:ios:dc8f4a95624336bfa66e84',
+    appId: '1:871350869965:ios:1683c540729f63aaa66e84',
     messagingSenderId: '871350869965',
     projectId: 'tropical-64d1b',
     databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
     storageBucket: 'tropical-64d1b.firebasestorage.app',
-    iosBundleId: 'com.tropical.app',
+    iosBundleId: 'com.arcanjotclub.app',
   );
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCYLeQrizv-doMJENJiTh2fq3WgWtAaczg',
-    appId: '1:871350869965:ios:dc8f4a95624336bfa66e84',
+    appId: '1:871350869965:ios:1683c540729f63aaa66e84',
     messagingSenderId: '871350869965',
     projectId: 'tropical-64d1b',
     databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
     storageBucket: 'tropical-64d1b.firebasestorage.app',
-    iosBundleId: 'com.tropical.app',
+    iosBundleId: 'com.arcanjotclub.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyAMINWgupdAzhdW60Q8PFGVe3T82CGtFwY',
-    appId: '1:871350869965:web:fe6d6ea5b9681c27a66e84',
+    appId: '1:871350869965:web:ee189a293d203637a66e84',
     messagingSenderId: '871350869965',
     projectId: 'tropical-64d1b',
     authDomain: 'tropical-64d1b.firebaseapp.com',
     databaseURL: 'https://tropical-64d1b-default-rtdb.firebaseio.com',
     storageBucket: 'tropical-64d1b.firebasestorage.app',
-    measurementId: 'G-5JNF48WCTG',
+    measurementId: 'G-0G4H0QFT1Y',
   );
 }
-

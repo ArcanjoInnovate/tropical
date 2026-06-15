@@ -48,7 +48,7 @@ function indexFieldsChanged(
 }
 
 export const syncUserIndex = onValueWritten(
-  { ref: "Users/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     const db  = getDatabase();

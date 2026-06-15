@@ -33,7 +33,7 @@ export function formatarDataCurta(ms: number): string {
 export function gerarProtocolo(): string {
   const ts   = Date.now().toString(36).toUpperCase();
   const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
-  return `TABU-${ts}-${rand}`;
+  return `TCLUB-${ts}-${rand}`;
 }
 
 export async function getEmail(uid: string): Promise<string | null> {

@@ -12,7 +12,7 @@ import { onValueWritten } from "firebase-functions/v2/database";
 import { getDatabase }    from "firebase-admin/database";
 
 export const syncVipOf = onValueWritten(
-  { ref: "Users/{uid}/vip_friends/{friendUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/vip_friends/{friendUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { uid, friendUid } = event.params;
     const db = getDatabase();

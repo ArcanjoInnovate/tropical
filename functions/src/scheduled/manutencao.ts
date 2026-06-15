@@ -11,7 +11,7 @@ import { HttpsError, onCall } from "firebase-functions/https";
 
 // callable/deletePostComplete.ts
 export const deletePostComplete = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 120 },
   async (request) => {
     if (!request.auth) throw new HttpsError("unauthenticated", "Login necessário");
     

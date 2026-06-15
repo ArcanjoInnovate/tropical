@@ -11,6 +11,7 @@ export const deleteCloudinaryAsset = onCall(
   {
     region:  "us-central1",
     secrets: [cloudinaryApiSecret, cloudinaryApiKey, cloudinaryCloudName],
+  timeoutSeconds: 100,
   },
   async (request) => {
     if (!request.auth) {

@@ -30,7 +30,7 @@ const REGION = "us-central1";
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onFollowerAdded = onValueCreated(
-  { ref: "Users/{uid}/followers/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/followers/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     await db.ref(`Users/${uid}/followers_count`).set(ServerValue.increment(1));
@@ -38,7 +38,7 @@ export const onFollowerAdded = onValueCreated(
 );
 
 export const onFollowerRemoved = onValueDeleted(
-  { ref: "Users/{uid}/followers/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/followers/{followerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     await db.ref(`Users/${uid}/followers_count`).transaction((c: number | null) => {
@@ -49,7 +49,7 @@ export const onFollowerRemoved = onValueDeleted(
 );
 
 export const onFollowingAdded = onValueCreated(
-  { ref: "Users/{uid}/following/{targetUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/following/{targetUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     await db.ref(`Users/${uid}/following_count`).set(ServerValue.increment(1));
@@ -57,7 +57,7 @@ export const onFollowingAdded = onValueCreated(
 );
 
 export const onFollowingRemoved = onValueDeleted(
-  { ref: "Users/{uid}/following/{targetUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/following/{targetUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     await db.ref(`Users/${uid}/following_count`).transaction((c: number | null) => {
@@ -72,7 +72,7 @@ export const onFollowingRemoved = onValueDeleted(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onUserReportCreated = onValueCreated(
-  { ref: "Reports/users/{reportId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Reports/users/{reportId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const data = event.data.val() as Record<string, unknown> | null;
     if (!data) return;
@@ -88,7 +88,7 @@ export const onUserReportCreated = onValueCreated(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onNotificationCreated = onValueCreated(
-  { ref: "Notifications/{uid}/{notifId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Notifications/{uid}/{notifId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid  = event.params.uid;
     const data = event.data.val() as Record<string, unknown> | null;
@@ -102,7 +102,7 @@ export const onNotificationCreated = onValueCreated(
 );
 
 export const onNotificationUpdated = onValueWritten(
-  { ref: "Notifications/{uid}/{notifId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Notifications/{uid}/{notifId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const uid    = event.params.uid;
     const before = event.data.before.val() as Record<string, unknown> | null;
@@ -128,7 +128,7 @@ export const onNotificationUpdated = onValueWritten(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onFestaPresencaChanged = onValueWritten(
-  { ref: "Festas/{festaId}/presenca/{uid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Festas/{festaId}/presenca/{uid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const festaId = event.params.festaId;
     const before  = event.data.before.val() as string | null;
@@ -146,7 +146,7 @@ export const onFestaPresencaChanged = onValueWritten(
 );
 
 export const onFestaCommentAdded = onValueCreated(
-  { ref: "Festas/{festaId}/comentarios/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Festas/{festaId}/comentarios/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     await db.ref(`Festas/${event.params.festaId}/comment_count`).set(
       ServerValue.increment(1)
@@ -159,7 +159,7 @@ export const onFestaCommentAdded = onValueCreated(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onLikeRemoved = onValueDeleted(
-  { ref: "PostLikes/{postId}/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "PostLikes/{postId}/{likerUid}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { postId } = event.params;
     await db.ref(`Posts/post/${postId}/likes`).transaction((c: number | null) => {
@@ -174,7 +174,7 @@ export const onLikeRemoved = onValueDeleted(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const onCommentRemoved = onValueDeleted(
-  { ref: "Comments/{postId}/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Comments/{postId}/{commentId}", region: REGION, instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { postId } = event.params;
     await db.ref(`Posts/post/${postId}/comment_count`).transaction((c: number | null) => {

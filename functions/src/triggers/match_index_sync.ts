@@ -40,7 +40,7 @@ const MATCHS_FIELDS = new Set([
 ]);
 
 export const syncMatchIndex = onValueWritten(
-  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { uid } = event.params;
     const db = getDatabase();
@@ -89,7 +89,7 @@ export const syncMatchIndex = onValueWritten(
 );
 
 export const removeMatchIndex = onValueDeleted(
-  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Matchs/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { uid } = event.params;
     await getDatabase().ref(`MatchIndex/${uid}`).remove();

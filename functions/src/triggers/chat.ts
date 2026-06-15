@@ -16,7 +16,7 @@ import { NotifData }                                      from "../lib/types";
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const sendChatRequest = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 100 },
   async (request) => {
     if (!request.auth) throw new HttpsError("unauthenticated", "Login necessário.");
 
@@ -62,7 +62,7 @@ export const sendChatRequest = onCall(
 );
 
 export const acceptChatRequest = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 100 },
   async (request) => {
     if (!request.auth) throw new HttpsError("unauthenticated", "Login necessário.");
 
@@ -131,7 +131,7 @@ export const acceptChatRequest = onCall(
 );
 
 export const declineChatRequest = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 100 },
   async (request) => {
     if (!request.auth) throw new HttpsError("unauthenticated", "Login necessário.");
 
@@ -166,7 +166,7 @@ export const declineChatRequest = onCall(
 );
 
 export const acceptLike = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 100 },
   async (request) => {
     if (!request.auth) throw new HttpsError("unauthenticated", "Login necessário.");
 
@@ -235,7 +235,7 @@ function buildKey(uid1: string, uid2: string): string {
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const notificarSolicitacaoChat = onValueCreated(
-  { ref: "ChatRequests/{requestId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "ChatRequests/{requestId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { requestId } = event.params;
     const request = event.data.val() as { from_uid?: string; to_uid?: string; from_name?: string; from_avatar?: string; status?: string } | null;
@@ -265,7 +265,7 @@ export const notificarSolicitacaoChat = onValueCreated(
 );
 
 export const notificarChatAceito = onValueWritten(
-  { ref: "UserChatRequests/{uid}/{chatId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "UserChatRequests/{uid}/{chatId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { uid, chatId } = event.params;
     if (event.data.before.val() !== "pending" || event.data.after.val() !== "accepted") return null;
@@ -306,7 +306,7 @@ export const notificarChatAceito = onValueWritten(
 );
 
 export const notificarNovaMensagem = onValueCreated(
-  { ref: "ChatMessages/{chatId}/{msgId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "ChatMessages/{chatId}/{msgId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { chatId, msgId } = event.params;
     if (msgId === "_placeholder") return null;
@@ -373,7 +373,7 @@ export const notificarNovaMensagem = onValueCreated(
 );
 
 export const notificarMatch = onValueCreated(
-  { ref: "Chats/{chatId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Chats/{chatId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { chatId } = event.params;
     const chat = event.data.val() as { user1?: string; user2?: string; origin?: string; block_dialog?: boolean } | null;
@@ -446,7 +446,7 @@ export const notificarMatch = onValueCreated(
 );
 
 export const onUserBlocked = onValueCreated(
-  { ref: "Users/{blockerUid}/blocked_users/{blockedUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{blockerUid}/blocked_users/{blockedUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { blockerUid, blockedUid } = event.params;
     const db      = getDatabase();
@@ -479,7 +479,7 @@ export const onUserBlocked = onValueCreated(
 );
 
 export const onUserUnblocked = onValueDeleted(
-  { ref: "Users/{blockerUid}/blocked_users/{blockedUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{blockerUid}/blocked_users/{blockedUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { blockerUid, blockedUid } = event.params;
     const db      = getDatabase();
@@ -560,7 +560,7 @@ async function recalcChatTabBadge(uid: string): Promise<void> {
 }
 
 export const updateChatTabBadgeOnMessage = onValueWritten(
-  { ref: "Chats/{chatId}/unreadCount/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Chats/{chatId}/unreadCount/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     await recalcChatTabBadge(event.params.uid);
     return null;
@@ -568,7 +568,7 @@ export const updateChatTabBadgeOnMessage = onValueWritten(
 );
 
 export const updateChatTabBadgeOnRequest = onValueWritten(
-  { ref: "ChatRequests/{requestId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "ChatRequests/{requestId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const req = (event.data.after.val() ?? event.data.before.val()) as { to_uid?: string } | null;
     if (!req?.to_uid) return null;
@@ -578,7 +578,7 @@ export const updateChatTabBadgeOnRequest = onValueWritten(
 );
 
 export const updateChatTabBadgeOnLike = onValueWritten(
-  { ref: "Matchs/{uid}/like_me/{likerUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Matchs/{uid}/like_me/{likerUid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     await recalcChatTabBadge(event.params.uid);
     return null;

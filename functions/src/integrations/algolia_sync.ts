@@ -67,6 +67,7 @@ export const syncUserToAlgolia = onValueWritten(
     ref:     "Users/{uid}",
     region:  "us-central1", instance: "tropical-64d1b-default-rtdb",
     secrets: [algoliaAppId, algoliaAdminKey],
+    timeoutSeconds: 100,
   },
   async (event) => {
     const { uid } = event.params;
@@ -116,6 +117,7 @@ export const removeUserFromAlgolia = onValueDeleted(
     ref:     "Users/{uid}",
     region:  "us-central1", instance: "tropical-64d1b-default-rtdb",
     secrets: [algoliaAppId, algoliaAdminKey],
+    timeoutSeconds: 100,
   },
   async (event) => {
     const { uid } = event.params;

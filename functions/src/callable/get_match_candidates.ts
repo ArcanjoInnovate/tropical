@@ -35,7 +35,7 @@ export const getMatchCandidates = onCall(
   {
     region: "us-central1",
     memory: "512MiB",
-    timeoutSeconds: 30,
+    timeoutSeconds: 100,
   },
   async (request) => {
     const myUid = request.auth?.uid;

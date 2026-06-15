@@ -80,7 +80,7 @@ async function cloudinaryDestroy(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const limparLocksAntigos = onSchedule(
-  { schedule: "every 6 hours", region: REGION },
+  { schedule: "every 6 hours", region: REGION, timeoutSeconds: 300 },
   async () => {
     const cutoff = Date.now() - 24 * 60 * 60 * 1000;
     const snap   = await db.ref("NotificationLocks")
@@ -106,7 +106,7 @@ export const limparLocksAntigos = onSchedule(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const purgarNotificacoesAntigas = onSchedule(
-  { schedule: "every 24 hours", region: REGION },
+  { schedule: "every 24 hours", region: REGION, timeoutSeconds: 300 },
   async () => {
     const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
 
@@ -156,7 +156,7 @@ export const purgarNotificacoesAntigas = onSchedule(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const purgarDislikesExpirados = onSchedule(
-  { schedule: "every 24 hours", region: REGION },
+  { schedule: "every 24 hours", region: REGION, timeoutSeconds: 300 },
   async () => {
     const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
 
@@ -223,6 +223,7 @@ export const purgarStoriesExpirados = onSchedule(
     schedule: "every 12 hours", // ⚠️ TESTE — trocar por "every 12 hours" em produção
     region:   REGION,
     secrets:  [cloudinaryApiSecret, cloudinaryApiKey, cloudinaryCloudName],
+    timeoutSeconds: 300,
   },
   async () => {
     const cutoff = Date.now() - 24 * 60 * 60 * 1000; // 24h atrás
@@ -295,7 +296,7 @@ export const purgarStoriesExpirados = onSchedule(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const purgarRateLimitsExpirados = onSchedule(
-  { schedule: "every 6 hours", region: REGION },
+  { schedule: "every 6 hours", region: REGION, timeoutSeconds: 300 },
   async () => {
     const cutoff = Date.now() - 24 * 60 * 60 * 1000;
 
@@ -344,7 +345,7 @@ export const purgarRateLimitsExpirados = onSchedule(
 // ══════════════════════════════════════════════════════════════════════════════
 
 export const limparContadoresAntigos = onSchedule(
-  { schedule: "every 24 hours", region: REGION },
+  { schedule: "every 24 hours", region: REGION, timeoutSeconds: 300 },
   async () => {
     const hoje = new Date().toISOString().slice(0, 10);
 

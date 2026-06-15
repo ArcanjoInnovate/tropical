@@ -20,7 +20,7 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { getDatabase }        from "firebase-admin/database";
 
 export const migrateUsersCleanup = onCall(
-  { region: "us-central1" },
+  { region: "us-central1", timeoutSeconds: 300 },
   async (request) => {
     // Apenas admins podem executar
     if (!request.auth) {

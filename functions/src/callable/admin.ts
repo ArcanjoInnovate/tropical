@@ -17,7 +17,7 @@ import {
 import { ProcessarDenunciaData, ProcessarPedidoConviteData, Denuncia, Penalidade } from "../lib/types";
 
 // ── Deletar comentário (admin) ────────────────────────────────────────────────
-export const adminDeleteComment = onCall({ region: "us-central1" }, async (request) => {
+export const adminDeleteComment = onCall({ region: "us-central1", timeoutSeconds: 100 }, async (request) => {
   if (!request.auth) throw new HttpsError("unauthenticated", "Não autenticado.");
 
   const db        = getDatabase();
@@ -51,6 +51,7 @@ export const processarDenuncia = onCall<ProcessarDenunciaData>(
   {
     region:  "us-central1",
     secrets: ["EMAIL_USER", "EMAIL_PASS"],
+    timeoutSeconds: 120,
   },
   async (request) => {
     const db = getDatabase();
@@ -222,6 +223,7 @@ export const processarPedidoConvite = onCall<ProcessarPedidoConviteData>(
   {
     region:  "us-central1",
     secrets: ["EMAIL_USER", "EMAIL_PASS"],
+    timeoutSeconds: 120,
   },
   async (request) => {
     const db = getDatabase();
@@ -304,7 +306,7 @@ export const processarPedidoConvite = onCall<ProcessarPedidoConviteData>(
 );
 
 // ── Deletar conta ─────────────────────────────────────────────────────────────
-export const deleteAccount = onCall({ region: "us-central1" }, async (request) => {
+export const deleteAccount = onCall({ region: "us-central1", timeoutSeconds: 300 }, async (request) => {
   if (!request.auth) throw new HttpsError("unauthenticated", "Não autenticado.");
  
   const uid = request.auth.uid;
@@ -519,7 +521,7 @@ export const deleteAccount = onCall({ region: "us-central1" }, async (request) =
 
 // ── Festas ────────────────────────────────────────────────────────────────────
 export const notificarNovaFesta = onValueCreated(
-  { ref: "Festas/{festaId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Festas/{festaId}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { festaId } = event.params;
     const festa = event.data.val() as { creator_uid?: string; creatorId?: string; user_uid?: string; name?: string; nome?: string; status?: string; data_inicio?: number; dataInicio?: number } | null;
@@ -554,7 +556,7 @@ export const notificarNovaFesta = onValueCreated(
 );
 
 export const inscreverEmTopicosAoSalvarToken = onValueWritten(
-  { ref: "Users/{uid}/fcmToken", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Users/{uid}/fcmToken", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { uid } = event.params;
     const token = event.data.after.val() as string | null;
@@ -569,7 +571,7 @@ export const inscreverEmTopicosAoSalvarToken = onValueWritten(
   }
 );
 
-export const migrarInscricoesTopicos = onRequest({ region: "us-central1" }, async (req, res) => {
+export const migrarInscricoesTopicos = onRequest({ region: "us-central1", timeoutSeconds: 300 }, async (req, res) => {
   const db = getDatabase();
   try {
     const usersSnap = await db.ref("Users").get();

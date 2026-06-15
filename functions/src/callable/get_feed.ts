@@ -26,7 +26,7 @@ export const getFeed = onCall(
   {
     region: "us-central1",
     memory: "256MiB",
-    timeoutSeconds: 30,
+    timeoutSeconds: 100,
     // TODO: reativar quando App Check for implementado no cliente
     // enforceAppCheck: true,
   },

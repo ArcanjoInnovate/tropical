@@ -25,9 +25,9 @@
 -keepnames class com.google.android.gms.** { *; }
 
 # Firebase Options (arquivo gerado pelo FlutterFire CLI)
--keep class com.tropical.app.firebase_options.** { *; }
--keep class com.tropical.app.FirebaseOptions { *; }
--keepclassmembers class com.tropical.app.firebase_options.** { *; }
+-keep class com.arcanjotclub.app.firebase_options.** { *; }
+-keep class com.arcanjotclub.app.FirebaseOptions { *; }
+-keepclassmembers class com.arcanjotclub.app.firebase_options.** { *; }
 
 # Firebase - NUNCA OBFUSCAR
 -keepattributes Signature
@@ -161,11 +161,11 @@
 # Seus Controllers/Providers (Dart → Java)
 # ═══════════════════════════════════════════════════════════════════════════════
 
--keep class com.tropical.app.controllers.** { *; }
--keep class com.tropical.app.core.** { *; }
--keep class com.tropical.app.services.** { *; }
--keep class com.tropical.app.utils.** { *; }
--keep class com.tropical.app.models.** { *; }
+-keep class com.arcanjotclub.app.controllers.** { *; }
+-keep class com.arcanjotclub.app.core.** { *; }
+-keep class com.arcanjotclub.app.services.** { *; }
+-keep class com.arcanjotclub.app.utils.** { *; }
+-keep class com.arcanjotclub.app.models.** { *; }
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Preservar Estruturas Básicas

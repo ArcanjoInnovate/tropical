@@ -11,7 +11,7 @@ import { onValueWritten } from "firebase-functions/v2/database";
 import { getDatabase }    from "firebase-admin/database";
 
 export const updateChatPreview = onValueWritten(
-  { ref: "Chats/{chatId}/metadata", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Chats/{chatId}/metadata", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { chatId } = event.params;
     const db = getDatabase();
@@ -60,7 +60,7 @@ export const updateChatPreview = onValueWritten(
 
 // Trigger adicional: atualiza preview quando unreadCount muda
 export const updateChatPreviewOnUnread = onValueWritten(
-  { ref: "Chats/{chatId}/unreadCount/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Chats/{chatId}/unreadCount/{uid}", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { chatId, uid } = event.params;
     const db = getDatabase();
@@ -74,7 +74,7 @@ export const updateChatPreviewOnUnread = onValueWritten(
 
 // Trigger: atualiza preview quando block_dialog muda
 export const updateChatPreviewOnBlock = onValueWritten(
-  { ref: "Chats/{chatId}/block_dialog", region: "us-central1", instance: "tropical-64d1b-default-rtdb" },
+  { ref: "Chats/{chatId}/block_dialog", region: "us-central1", instance: "tropical-64d1b-default-rtdb", timeoutSeconds: 100 },
   async (event) => {
     const { chatId } = event.params;
     const db = getDatabase();

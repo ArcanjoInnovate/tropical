@@ -46,7 +46,7 @@ const PUBLIC_FIELDS = [
 ] as const;
 
 export const syncUsersPublic = onValueWritten(
-  { ref: "Users/{uid}", region: REGION, instance: INSTANCE },
+  { ref: "Users/{uid}", region: REGION, instance: INSTANCE, timeoutSeconds: 100 },
   async (event) => {
     const uid = event.params.uid;
     const db  = getDatabase();
