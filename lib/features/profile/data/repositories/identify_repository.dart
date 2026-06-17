@@ -3,6 +3,7 @@
 import 'dart:typed_data';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:tclub/core/utils/map_utils.dart';
 import 'package:tclub/features/profile/data/models/identify_model.dart';
 
 abstract class IIdentityRepository {
@@ -23,7 +24,6 @@ class IdentityRepository implements IIdentityRepository {
   DatabaseReference get _usersPublicRef => _db.ref('UsersPublic');
   DatabaseReference get _matchsRef      => _db.ref('Matchs');
 
-  // Caminho fixo no Storage — sempre o mesmo por usuário.
   Reference _partnerAvatarRef(String uid) =>
       FirebaseStorage.instance.ref('partner_avatars/$uid/partner.jpg');
 
@@ -70,10 +70,6 @@ class IdentityRepository implements IIdentityRepository {
     }
 
     // ── Sincroniza identidade completa em UsersPublic/{uid} ───────────────
-    //
-    // Inclui uid obrigatório (validado pela regra newData.val() === $uid),
-    // todos os campos de identidade e partner quando aplicável.
-    // Calculamos age aqui para não depender do syncToPublic posterior.
     final publicIdentity = <String, dynamic>{
       'uid':                uid,
       'gender_identity':    finalData.genderIdentity,
@@ -82,9 +78,10 @@ class IdentityRepository implements IIdentityRepository {
       'profile_type':       finalData.profileType,
     };
 
-    // age calculado a partir de birth_date já gravado em Users
+    // ── FIX iOS: .toString() em vez de "as String?" ───────────────────────
     final birthSnap = await _usersRef.child(uid).child('birth_date').get();
-    final birthStr  = birthSnap.value as String?;
+    final birthStr  = birthSnap.value?.toString();
+
     if (birthStr != null && birthStr.isNotEmpty) {
       final birth = DateTime.tryParse(birthStr);
       if (birth != null) {
@@ -101,14 +98,13 @@ class IdentityRepository implements IIdentityRepository {
 
     if (finalData.profileType == 'couple' && finalData.partner != null) {
       publicIdentity['partner'] = {
-        'name':              finalData.partner!.name,
-        'birth_date':        finalData.partner!.birthDate,
-        'gender_identity':   finalData.partner!.genderIdentity,
-        'sexual_orientation':finalData.partner!.sexualOrientation,
-        'avatar_url':        finalData.partner!.avatarUrl,
+        'name':               finalData.partner!.name,
+        'birth_date':         finalData.partner!.birthDate,
+        'gender_identity':    finalData.partner!.genderIdentity,
+        'sexual_orientation': finalData.partner!.sexualOrientation,
+        'avatar_url':         finalData.partner!.avatarUrl,
       };
     } else {
-      // Remove partner de UsersPublic quando volta para solteiro
       publicIdentity['partner'] = null;
     }
 
@@ -126,6 +122,7 @@ class IdentityRepository implements IIdentityRepository {
         },
     };
 
+    // ── FIX iOS: safeMapCast no snapshot do Matchs ────────────────────────
     final matchSnap = await _matchsRef.child(uid).get();
     if (matchSnap.exists) {
       if (finalData.profileType != 'couple') {
@@ -175,4 +172,3 @@ class IdentityRepositoryException implements Exception {
   @override
   String toString() => 'IdentityRepositoryException: $message';
 }
-
