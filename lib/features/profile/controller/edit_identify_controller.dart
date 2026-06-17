@@ -2,9 +2,10 @@
 
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:tclub/core/utils/map_utils.dart';
 import 'package:tclub/features/profile/data/models/identify_model.dart';
 import 'package:tclub/features/profile/data/services/identify_service.dart';
-import 'package:tclub/features/profile/data/services/profile_service.dart'; // ← adicionado
+import 'package:tclub/features/profile/data/services/profile_service.dart';
 import 'package:tclub/features/profile/presentation/widgets/edit_profile_enums.dart';
 
 enum SaveStatus { idle, saving, success, error }
@@ -78,46 +79,51 @@ class EditIdentityController extends ChangeNotifier {
   // ── Inicialização ─────────────────────────────────────────────────────────
 
   void _initFromUserData() {
-    final d = _userData;
+    try {
+      final d = _userData;
 
-    final generoRaw =
-        (d['gender_identity'] as String?)?.trim().isNotEmpty == true
-            ? d['gender_identity'] as String
-            : (d['tipoPerfil'] as String?)?.trim() ?? '';
-    _tipoPerfil = _enumByName(TipoPerfil.values, generoRaw);
+      final generoRaw =
+          (d['gender_identity'] as String?)?.trim().isNotEmpty == true
+              ? d['gender_identity'] as String
+              : (d['tipoPerfil'] as String?)?.trim() ?? '';
+      _tipoPerfil = _enumByName(TipoPerfil.values, generoRaw);
 
-    final orientacaoRaw =
-        (d['sexual_orientation'] as String?)?.trim().isNotEmpty == true
-            ? d['sexual_orientation'] as String
-            : (d['orientacaoSexual'] as String?)?.trim() ?? '';
-    _orientacao = _enumByName(OrientacaoSexual.values, orientacaoRaw);
+      final orientacaoRaw =
+          (d['sexual_orientation'] as String?)?.trim().isNotEmpty == true
+              ? d['sexual_orientation'] as String
+              : (d['orientacaoSexual'] as String?)?.trim() ?? '';
+      _orientacao = _enumByName(OrientacaoSexual.values, orientacaoRaw);
 
-    final relRaw =
-        (d['relationship_type'] as String?)?.trim().isNotEmpty == true
-            ? d['relationship_type'] as String
-            : (d['tipoRelacionamento'] as String?)?.trim() ?? '';
-    _tipoRelacionamento = _enumByName(TipoRelacionamento.values, relRaw);
+      final relRaw =
+          (d['relationship_type'] as String?)?.trim().isNotEmpty == true
+              ? d['relationship_type'] as String
+              : (d['tipoRelacionamento'] as String?)?.trim() ?? '';
+      _tipoRelacionamento = _enumByName(TipoRelacionamento.values, relRaw);
 
-    final profileTypeRaw = (d['profile_type'] as String?)?.trim() ?? '';
-    _isCasal = profileTypeRaw == 'couple';
+      final profileTypeRaw = (d['profile_type'] as String?)?.trim() ?? '';
+      _isCasal = profileTypeRaw == 'couple';
 
-    if (_isCasal) {
-      final p    = d['partner'];
-      final pMap = p is Map ? Map<String, dynamic>.from(p) : null;
-      if (pMap != null) {
-        _partnerName = (pMap['name'] as String?)?.trim() ?? '';
-        _partnerGender = _enumByName(
-          TipoPerfil.values,
-          (pMap['gender_identity'] as String?)?.trim() ?? '',
-        );
-        _partnerOrientation = _enumByName(
-          OrientacaoSexual.values,
-          (pMap['sexual_orientation'] as String?)?.trim() ?? '',
-        );
-        final bd = (pMap['birth_date'] as String?)?.trim() ?? '';
-        if (bd.isNotEmpty) _partnerBirthDate = _parseIsoDate(bd);
-        _partnerAvatarUrl = (pMap['avatar_url'] as String?)?.trim() ?? '';
+      if (_isCasal && d['partner'] != null) {
+        // ── FIX iOS: safeMapCast evita o crash com Map<Object?, Object?>
+        final pMap = safeMapCast(d['partner']);
+        if (pMap.isNotEmpty) {
+          _partnerName = (pMap['name'] as String?)?.trim() ?? '';
+          _partnerGender = _enumByName(
+            TipoPerfil.values,
+            (pMap['gender_identity'] as String?)?.trim() ?? '',
+          );
+          _partnerOrientation = _enumByName(
+            OrientacaoSexual.values,
+            (pMap['sexual_orientation'] as String?)?.trim() ?? '',
+          );
+          final bd = (pMap['birth_date'] as String?)?.trim() ?? '';
+          if (bd.isNotEmpty) _partnerBirthDate = _parseIsoDate(bd);
+          _partnerAvatarUrl = (pMap['avatar_url'] as String?)?.trim() ?? '';
+        }
       }
+    } catch (e, st) {
+      debugPrint('❌ EditIdentityController._initFromUserData: $e');
+      debugPrint(st.toString());
     }
   }
 
@@ -172,12 +178,6 @@ class EditIdentityController extends ChangeNotifier {
   }
 
   // ── Save ──────────────────────────────────────────────────────────────────
-  //
-  // Fluxo:
-  //   1. IdentityService.saveIdentity → grava em Users/{uid}
-  //   2. ProfileService.syncToPublic  → propaga para UsersPublic/{uid}  ← NOVO
-  //   3. SaveStatus.success → tela fecha e retorna payload
-  // ─────────────────────────────────────────────────────────────────────────
 
   Future<void> save(String uid) async {
     _saveStatus = SaveStatus.saving;
@@ -218,9 +218,7 @@ class EditIdentityController extends ChangeNotifier {
 
       _partnerAvatarFile = null;
 
-      // 2. Propaga imediatamente para UsersPublic/{uid}
-      //    Fire-and-forget: não bloqueia o retorno da tela.
-      //    Se falhar, o log mostra — o próximo loadFullProfile corrige.
+      // 2. Propaga para UsersPublic/{uid} — fire-and-forget
       ProfileService.instance.syncToPublic(uid);
 
       // 3. Sucesso → tela fecha
@@ -276,4 +274,3 @@ class EditIdentityController extends ChangeNotifier {
     }
   }
 }
-

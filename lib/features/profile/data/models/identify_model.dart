@@ -1,5 +1,7 @@
 // lib/features/profile/data/models/identity_model.dart
 
+import 'package:tclub/core/utils/map_utils.dart';
+
 /// Modelo de identidade do usuário persistido em Users/{uid} e Matchs/{uid}.
 class IdentityModel {
   final String profileType; // 'single' | 'couple'
@@ -30,7 +32,7 @@ class IdentityModel {
         relationshipType:  map['relationship_type']   as String? ?? '',
         sexualOrientation: map['sexual_orientation']  as String? ?? '',
         partner: map['partner'] != null
-            ? PartnerModel.fromMap((map['partner'] as Map).cast<String, dynamic>())
+            ? PartnerModel.fromMap(safeMapCast(map['partner']))
             : null,
       );
 }
@@ -41,7 +43,7 @@ class PartnerModel {
   final String birthDate;
   final String genderIdentity;
   final String sexualOrientation;
-  final String avatarUrl;          // URL pública no Firebase Storage
+  final String avatarUrl;
 
   const PartnerModel({
     required this.name,
@@ -60,11 +62,10 @@ class PartnerModel {
       };
 
   factory PartnerModel.fromMap(Map<String, dynamic> map) => PartnerModel(
-        name:               map['name']               as String? ?? '',
-        birthDate:          map['birth_date']          as String? ?? '',
-        genderIdentity:     map['gender_identity']     as String? ?? '',
-        sexualOrientation:  map['sexual_orientation']  as String? ?? '',
-        avatarUrl:          map['avatar_url']          as String? ?? '',
+        name:              map['name']               as String? ?? '',
+        birthDate:         map['birth_date']          as String? ?? '',
+        genderIdentity:    map['gender_identity']     as String? ?? '',
+        sexualOrientation: map['sexual_orientation']  as String? ?? '',
+        avatarUrl:         map['avatar_url']          as String? ?? '',
       );
 }
-
